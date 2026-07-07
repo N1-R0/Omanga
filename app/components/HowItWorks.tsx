@@ -1,20 +1,23 @@
-import { UserPlus, CreditCard, Globe2 } from "lucide-react";
+import { UserPlus, CreditCard, Globe2, ArrowRight } from "lucide-react";
 import Reveal from "./Reveal";
 
 const STEPS = [
   {
+    number: "01",
     icon: UserPlus,
     title: "Sign Up & Fund Your Wallet",
     description:
       "Create your Omanga account in minutes and fund your wallet from your home currency (USD, GBP, CAD) with transparent, real-time exchange rates.",
   },
   {
+    number: "02",
     icon: CreditCard,
     title: "Transact Seamlessly",
     description:
       "After opening your Omanga account, enjoy all the payment solution services and select your preferred insurance plan on the platform.",
   },
   {
+    number: "03",
     icon: Globe2,
     title: "Explore Africa Confidently",
     description:
@@ -24,42 +27,48 @@ const STEPS = [
 
 export default function HowItWorks() {
   return (
-    <section className="bg-maroon-950 px-6 py-24 lg:px-10">
+    <section className="bg-cream px-6 py-24 lg:px-10">
       <div className="mx-auto max-w-7xl">
-        <Reveal className="max-w-2xl">
-          <p className="inline-block rounded-full bg-white/10 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.15em] text-white/80">
+        <Reveal className="mx-auto max-w-2xl text-center">
+          <p className="mx-auto inline-block rounded-full bg-mauve px-4 py-1.5 text-xs font-medium uppercase tracking-[0.15em] text-maroon">
             Simple Process
           </p>
-          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-black sm:text-4xl">
             How Omanga Works
           </h2>
-          <p className="mt-4 text-base text-white/60">
+          <p className="mt-4 text-base text-black/60">
             Create your Omanga account in minutes and fund your wallet in
             your home currency, utilizing transparent exchange rates in
             real-time.
           </p>
         </Reveal>
 
-        <div className="relative mt-14 flex flex-col gap-12">
-          <div
-            aria-hidden
-            className="absolute bottom-6 left-6 top-6 hidden w-px bg-white/15 sm:block"
-          />
+        <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-3">
           {STEPS.map((step, i) => (
-            <Reveal key={step.title} delay={i * 120}>
-              <div className="relative flex gap-6">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-maroon-950">
-                  <step.icon className="h-5 w-5" strokeWidth={2} />
-                </span>
-                <div>
-                  <h3 className="text-lg font-semibold text-white">
-                    {step.title}
-                  </h3>
-                  <p className="mt-2 max-w-2xl text-sm text-white/60">
-                    {step.description}
-                  </p>
+            <Reveal key={step.title} delay={i * 120} className="relative">
+              <div className="hover-lift h-full rounded-2xl border border-black/5 bg-white p-8 shadow-sm">
+                <div className="flex items-center justify-between">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-maroon-950 text-white">
+                    <step.icon className="h-5 w-5" strokeWidth={2} />
+                  </span>
+                  <span className="text-4xl font-semibold text-black/10">
+                    {step.number}
+                  </span>
                 </div>
+                <h3 className="mt-6 text-lg font-semibold text-black">
+                  {step.title}
+                </h3>
+                <p className="mt-2 text-sm text-black/60">
+                  {step.description}
+                </p>
               </div>
+
+              {i < STEPS.length - 1 && (
+                <ArrowRight
+                  aria-hidden
+                  className="absolute -right-3 top-1/2 hidden h-6 w-6 -translate-y-1/2 text-black/15 lg:block"
+                />
+              )}
             </Reveal>
           ))}
         </div>

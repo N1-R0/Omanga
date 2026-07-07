@@ -66,10 +66,10 @@ export default function Header() {
     >
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-10">
         <Link href="/" className="group flex items-center">
-          <Logo className="h-8 w-auto transition-transform duration-300 group-hover:scale-105" />
+          <Logo className="h-12 w-12 transition-transform duration-300 group-hover:scale-105" />
         </Link>
 
-        <nav className="hidden items-center gap-8 text-sm font-medium text-white/75 md:flex">
+        <nav className="hidden items-center gap-1 text-sm font-medium text-white/75 md:flex">
           {NAV_LINKS.map((link) => {
             const active = pathname === link.href;
             return (
@@ -78,13 +78,13 @@ export default function Header() {
                 href={link.href}
                 target={link.external ? "_blank" : undefined}
                 rel={link.external ? "noopener noreferrer" : undefined}
-                className="group relative py-1 transition-colors hover:text-white"
+                className="group relative rounded-full px-4 py-2.5 transition-colors hover:bg-white/10 hover:text-white"
               >
                 <span className={active ? "text-white" : ""}>
                   {link.label}
                 </span>
                 <span
-                  className={`absolute inset-x-0 -bottom-1 h-px origin-left scale-x-0 bg-white transition-transform duration-300 ease-out group-hover:scale-x-100 ${
+                  className={`absolute inset-x-4 -bottom-0.5 h-px origin-left scale-x-0 bg-white transition-transform duration-300 ease-out group-hover:scale-x-100 ${
                     active ? "scale-x-100" : ""
                   }`}
                 />
@@ -128,11 +128,11 @@ export default function Header() {
       </div>
 
       <div
-        className={`overflow-hidden bg-maroon-950 transition-[max-height,opacity] duration-300 ease-out md:hidden ${
+        className={`overflow-hidden bg-maroon-950/95 backdrop-blur transition-[max-height,opacity] duration-300 ease-out md:hidden ${
           menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <nav className="flex flex-col gap-1 border-t border-white/10 px-6 py-4">
+        <nav className="flex flex-col gap-2 px-6 py-5">
           {NAV_LINKS.map((link) => {
             const active = pathname === link.href;
             return (
@@ -141,7 +141,7 @@ export default function Header() {
                 href={link.href}
                 target={link.external ? "_blank" : undefined}
                 rel={link.external ? "noopener noreferrer" : undefined}
-                className={`rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+                className={`rounded-xl px-4 py-3.5 text-sm font-medium transition-colors ${
                   active
                     ? "bg-white/10 text-white"
                     : "text-white/75 hover:bg-white/5 hover:text-white"
@@ -153,7 +153,7 @@ export default function Header() {
           })}
           <Link
             href="/insurance"
-            className="mt-2 rounded-full bg-white px-5 py-2.5 text-center text-sm font-medium text-maroon-950 transition-transform active:scale-95"
+            className="mt-3 rounded-full bg-white px-5 py-3 text-center text-sm font-medium text-maroon-950 transition-transform active:scale-95"
           >
             Get Insurance
           </Link>

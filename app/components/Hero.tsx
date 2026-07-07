@@ -29,7 +29,7 @@ export default function Hero() {
           }}
         />
 
-        <div className="relative z-10 flex max-w-3xl flex-col items-center gap-6">
+        <div className="relative z-10 flex max-w-3xl flex-col items-center">
           <span
             className="hero-in rounded-full bg-white/15 px-4 py-2 text-xs font-medium uppercase tracking-[0.15em] text-white backdrop-blur"
             style={{ animationDelay: "0ms" }}
@@ -38,7 +38,7 @@ export default function Hero() {
           </span>
 
           <h1
-            className="hero-in text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl"
+            className="hero-in mt-6 text-4xl font-light leading-[1.15] tracking-normal text-white sm:text-5xl sm:leading-[1.15] lg:text-6xl lg:leading-[1.15]"
             style={{ animationDelay: "120ms" }}
           >
             Your Seamless Gateway to
@@ -46,18 +46,18 @@ export default function Hero() {
           </h1>
 
           <p
-            className="hero-in max-w-xl text-balance text-base text-white/85 sm:text-lg"
+            className="hero-in mt-6 max-w-xl text-balance text-base font-light leading-relaxed tracking-normal text-white/85 sm:text-lg"
             style={{ animationDelay: "240ms" }}
           >
             Powering seamless travel across{" "}
-            <span className="font-semibold text-white">
+            <span className="font-normal text-white">
               52 African countries
             </span>{" "}
             with instant insurance and multi-currency payments.
           </p>
 
           <div
-            className="hero-in mt-2 flex flex-col gap-3 sm:flex-row"
+            className="hero-in mt-10 flex flex-col gap-3 sm:flex-row"
             style={{ animationDelay: "360ms" }}
           >
             <a
@@ -75,25 +75,25 @@ export default function Hero() {
               Get Holiday Insurance
             </a>
           </div>
+        </div>
 
-          <div
-            className="hero-in mt-8 flex items-center gap-3"
-            style={{ animationDelay: "480ms" }}
-          >
-            <div className="flex -space-x-2">
-              {["A", "B", "C"].map((seed) => (
-                <span
-                  key={seed}
-                  className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-black/30 bg-white/20 text-[10px] font-semibold text-white backdrop-blur"
-                >
-                  {seed}
-                </span>
-              ))}
-            </div>
-            <span className="text-sm text-white/85">
-              Insurance active in under 5 minutes
-            </span>
+        <div
+          className="hero-in absolute inset-x-0 bottom-10 z-10 flex items-center justify-center gap-3"
+          style={{ animationDelay: "480ms" }}
+        >
+          <div className="flex -space-x-2">
+            {["A", "B", "C"].map((seed) => (
+              <span
+                key={seed}
+                className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-black/30 bg-white/20 text-[10px] font-semibold text-white backdrop-blur"
+              >
+                {seed}
+              </span>
+            ))}
           </div>
+          <span className="text-sm text-white/85">
+            Insurance active in under 5 minutes
+          </span>
         </div>
       </div>
     </section>

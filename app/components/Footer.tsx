@@ -33,7 +33,7 @@ export default function Footer() {
       <Reveal className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
           <div className="flex flex-col gap-4">
-            <Logo className="h-9 w-auto" />
+            <Logo className="h-12 w-12" />
             <p className="max-w-xs text-sm text-white/50">
               Travel tips, destination guides, and the infrastructure that
               makes African journeys seamless.

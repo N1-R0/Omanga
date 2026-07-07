@@ -12,23 +12,19 @@ const PARTNERS = [
 
 export default function PartnersStrip() {
   return (
-    <section className="border-b border-black/5 bg-white px-6 py-12 lg:px-10">
-      <Reveal className="mx-auto flex max-w-7xl flex-col items-center gap-6 lg:flex-row lg:justify-between">
+    <section className="border-b border-black/5 bg-white px-6 py-14 lg:px-10">
+      <Reveal className="mx-auto flex max-w-7xl flex-col items-center gap-8 lg:flex-row lg:justify-between">
         <p className="text-center text-xs font-medium uppercase tracking-[0.2em] text-black/40 lg:text-left">
           Trusted by hospitals &amp; partners
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-6">
+        <div className="flex flex-wrap items-center justify-center gap-x-16 gap-y-8">
           {PARTNERS.map((partner) => (
-            <div
+            <Image
               key={partner.name}
-              className="flex h-14 w-40 items-center justify-center rounded-xl border border-black/5 bg-white px-5 py-3 shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md"
-            >
-              <Image
-                src={partner.src}
-                alt={partner.name}
-                className="h-auto max-h-8 w-auto object-contain"
-              />
-            </div>
+              src={partner.src}
+              alt={partner.name}
+              className="h-auto max-h-16 w-auto object-contain grayscale opacity-60 transition-all duration-300 hover:-translate-y-0.5 hover:grayscale-0 hover:opacity-100"
+            />
           ))}
         </div>
       </Reveal>

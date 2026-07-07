@@ -23,7 +23,7 @@
   --color-maroon-dark: var(--color-maroon-dark);
   --color-mauve: var(--color-mauve);
   --color-cream: var(--color-cream);
-  --font-sans: var(--font-poppins);
+  --font-sans: var(--font-inter);
 }
 
 html {

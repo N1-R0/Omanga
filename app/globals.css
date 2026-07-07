@@ -2,25 +2,137 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1c1013;
+  /* Near-black brand maroon: dark section/card backgrounds */
+  --color-maroon-950: #180609;
+  --color-maroon-900: #260d12;
+  /* Brand burgundy: buttons, accents, active states */
+  --color-maroon: #6d2d38;
+  --color-maroon-dark: #611d28;
+  /* Light mauve: pill badges, soft card backgrounds */
+  --color-mauve: #ebe2e3;
+  --color-cream: #faf8f4;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-maroon-950: var(--color-maroon-950);
+  --color-maroon-900: var(--color-maroon-900);
+  --color-maroon: var(--color-maroon);
+  --color-maroon-dark: var(--color-maroon-dark);
+  --color-mauve: var(--color-mauve);
+  --color-cream: var(--color-cream);
+  --font-sans: var(--font-poppins);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Scroll-triggered reveal, used by the Reveal component */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.98);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.reveal {
+  opacity: 0;
+}
+
+.reveal.is-visible {
+  animation: reveal-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Hero entrance, plays once on load (no scroll trigger needed above the fold) */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-in {
+  opacity: 0;
+  animation: hero-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes kenburns {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.animate-kenburns {
+  animation: kenburns 12s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Gentle infinite float, used for decorative card graphics */
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--float-rotate, 6deg));
+  }
+  50% {
+    transform: translateY(-10px) rotate(var(--float-rotate, 6deg));
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+.hover-lift {
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.25s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px -20px rgba(24, 6, 9, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal,
+  .hero-in {
+    opacity: 1;
+    animation: none;
+    filter: none;
+    transform: none;
+  }
+
+  .animate-kenburns,
+  .animate-float-slow {
+    animation: none;
+  }
+
+  .hover-lift:hover {
+    transform: none;
+  }
 }

@@ -78,7 +78,7 @@ export default function Hero() {
         </div>
 
         <div
-          className="hero-in absolute inset-x-0 bottom-10 z-10 flex items-center justify-center gap-3"
+          className="hero-in absolute inset-x-0 bottom-10 z-10 flex items-center justify-center gap-3 px-6"
           style={{ animationDelay: "480ms" }}
         >
           <div className="flex -space-x-2">

@@ -23,7 +23,7 @@ export default function PartnersStrip() {
               key={partner.name}
               src={partner.src}
               alt={partner.name}
-              className="h-auto max-h-16 w-auto object-contain grayscale opacity-60 transition-all duration-300 hover:-translate-y-0.5 hover:grayscale-0 hover:opacity-100"
+              className="h-auto max-h-16 w-auto object-contain transition-all duration-300 hover:-translate-y-0.5 md:grayscale md:opacity-60 md:hover:grayscale-0 md:hover:opacity-100"
             />
           ))}
         </div>

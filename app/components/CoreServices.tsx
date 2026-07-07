@@ -70,10 +70,7 @@ export default function CoreServices() {
         </Reveal>
 
         <Reveal delay={150} className="relative mx-auto w-full max-w-sm">
-          <div
-            className="animate-float-slow"
-            style={{ "--float-rotate": "2deg" } as React.CSSProperties}
-          >
+          <div className="animate-float-slow [--float-rotate:0deg] sm:[--float-rotate:2deg]">
             <InsuranceCardGraphic />
           </div>
 

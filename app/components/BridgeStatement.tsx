@@ -1,5 +1,7 @@
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import Reveal from "./Reveal";
+import sectionInsurance from "@/public/section-insurance.png";
 
 export default function BridgeStatement() {
   return (
@@ -41,18 +43,41 @@ export default function BridgeStatement() {
           </div>
 
           <div className="relative min-h-[260px] overflow-hidden lg:min-h-full">
-            <div
-              aria-hidden
-              className="absolute -right-16 -top-16 h-72 w-72 rounded-full bg-maroon/50 blur-3xl"
+            <Image
+              src={sectionInsurance}
+              alt=""
+              fill
+              className="object-cover object-center"
             />
+
+            {/* Blend into the card on mobile, where this panel sits below the text */}
             <div
               aria-hidden
-              className="absolute -bottom-20 left-0 h-64 w-64 rounded-full bg-mauve/20 blur-3xl"
+              className="pointer-events-none absolute inset-0 lg:hidden"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(24,6,9,1) 0%, rgba(24,6,9,0.55) 22%, rgba(24,6,9,0) 55%)",
+              }}
             />
+
+            {/* Blend into the card on desktop, where this panel sits beside the text */}
             <div
               aria-hidden
-              className="animate-float-slow absolute inset-0 m-auto h-40 w-40 rounded-[2.5rem] border border-white/10 bg-white/5 backdrop-blur-sm"
-              style={{ "--float-rotate": "12deg" } as React.CSSProperties}
+              className="pointer-events-none absolute inset-0 hidden lg:block"
+              style={{
+                background:
+                  "linear-gradient(90deg, rgba(24,6,9,1) 0%, rgba(24,6,9,0.6) 18%, rgba(24,6,9,0) 45%)",
+              }}
+            />
+
+            {/* Ground the edges so the image reads as part of the card, not a pasted photo */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(24,6,9,0) 65%, rgba(24,6,9,0.55) 100%)",
+              }}
             />
           </div>
         </div>

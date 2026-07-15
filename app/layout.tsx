@@ -17,6 +17,10 @@ export const metadata: Metadata = {
   title: "Omanga — Your Seamless Gateway to African Adventures",
   description:
     "Omanga powers seamless travel across 52 African countries with instant insurance and multi-currency payments.",
+  icons: {
+    icon: "/logo-omanga.svg",
+    apple: "/logo-omanga.svg",
+  },
 };
 
 export default function RootLayout({

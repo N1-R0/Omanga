@@ -1,0 +1,192 @@
+/* =============================================================================
+   Omanga — Custom utilities
+   -----------------------------------------------------------------------------
+   Utilities exist here for exactly one reason: a token namespace that Tailwind
+   v4 does not generate utilities for (z-index, durations, focus ring), or a
+   rule the system states that must be applied identically everywhere and
+   therefore must not be re-expressed per component (the focus ring, the
+   scrim, the minimum hit area).
+
+   Nothing decorative belongs in this file. If a style is used by one
+   component, it belongs in that component.
+   ========================================================================== */
+
+/* -----------------------------------------------------------------------------
+   Z-index
+   Tailwind's `z-*` takes bare numbers, which would put raw layering values back
+   into markup. These name the rungs instead.
+   -------------------------------------------------------------------------- */
+@utility z-raised {
+  z-index: var(--z-raised);
+}
+
+@utility z-scrim {
+  z-index: var(--z-scrim);
+}
+
+@utility z-overlay-content {
+  z-index: var(--z-overlay-content);
+}
+
+@utility z-header {
+  z-index: var(--z-header);
+}
+
+@utility z-menu {
+  z-index: var(--z-menu);
+}
+
+@utility z-skip-link {
+  z-index: var(--z-skip-link);
+}
+
+/* -----------------------------------------------------------------------------
+   Focus ring
+   design-system.md: "Focus rings are identical across buttons, links, tabs and
+   inputs." One utility, applied by every interactive primitive. A component
+   that needs a different ring is a bug, not a variant.
+
+   `:focus-visible` rather than `:focus` so pointer users do not get a ring on
+   click, while keyboard users always do.
+   -------------------------------------------------------------------------- */
+@utility focus-ring {
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Emphasis border
+   card rules: "Emphasis is a border, never shadow, scale, or a different
+   padding." The emphasised comparison card is the only element that carries
+   it, at 5px. A utility rather than an arbitrary `border-[5px]`, so the one
+   non-1px border in the system is named and greppable.
+   -------------------------------------------------------------------------- */
+@utility border-emphasis {
+  border-width: 5px;
+}
+
+/* -----------------------------------------------------------------------------
+   Active underline
+   design-system.md § Color roles lists "active underline" as one of the five
+   things brand is reserved for, and § Motion principles gives it a "3px brand
+   rule". 3 is the system's one deliberate off-4px-grid value — it is a rule
+   weight, not spacing — so it is named here rather than written as an
+   arbitrary border width at each call site.
+
+   Applied in both the active and the inactive state, transparent when
+   inactive, so gaining the underline can never move the element.
+   -------------------------------------------------------------------------- */
+@utility border-active {
+  border-block-end-width: 3px;
+}
+
+/* -----------------------------------------------------------------------------
+   Minimum hit area
+   WCAG 2.1 AA target size + design-system.md's 44px button rule. Enforced by
+   the primitive so callers cannot ship an undersized control. Uses min-* so a
+   control still grows with its content.
+   -------------------------------------------------------------------------- */
+@utility hit-area {
+  min-block-size: 2.75rem; /* 44 */
+  min-inline-size: 2.75rem; /* 44 */
+}
+
+/* -----------------------------------------------------------------------------
+   Scrim
+   design-system.md: "Text never sits directly on an unscrimmed photograph."
+   Applied as an ::after on the image container so the caller cannot forget it
+   and cannot weaken it. Absolute positioning is permitted here — scrims are
+   one of the three sanctioned cases.
+   -------------------------------------------------------------------------- */
+@utility scrim {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: var(--z-scrim);
+    background-color: var(--color-scrim);
+    pointer-events: none;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Visually hidden
+   For accessible names that must not render — skip-link targets, live-region
+   status text, icon-only control labels. Content stays in the accessibility
+   tree, unlike `display: none`.
+   -------------------------------------------------------------------------- */
+@utility visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* -----------------------------------------------------------------------------
+   Page gutter
+   The horizontal rhythm of the whole page, in one place. Owned by the
+   Container primitive; no other component sets page padding.
+   -------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+   Header transition
+   The header changes two things at once — it slides on scroll (transform) and it
+   crosses from transparent to opaque (background, border and text colour). The
+   existing utilities cover one group or the other: `transition-emphasis` is
+   transform and opacity, `transition-standard` is colour. Applying both would put
+   two `transition-property` declarations on one element and the later one would
+   silently win.
+
+   300ms matches the benchmark's `transition-duration: 0.3s` on the header exactly.
+   No layout property is animated here, so the motion rules still hold.
+   -------------------------------------------------------------------------- */
+@utility transition-header {
+  transition-property: transform, background-color, border-color, color;
+  transition-duration: var(--duration-emphasis);
+  transition-timing-function: var(--ease-standard);
+}
+
+@utility page-gutter {
+  /* One fluid value rather than four breakpoint steps. See the
+     --spacing-gutter-fluid token for why this deviates from the Figma frame.
+     Four discrete steps meant four places for the horizontal rhythm to be wrong;
+     a clamp has one. */
+  padding-inline: var(--spacing-gutter-fluid);
+}
+
+/* -----------------------------------------------------------------------------
+   Section rhythm
+   Two desktop values only — 130 on dark, 100 on light — with the mobile and
+   tablet steps from the breakpoint table. Owned by the Section primitive.
+   -------------------------------------------------------------------------- */
+@utility section-rhythm-light {
+  padding-block: var(--spacing-section-mobile);
+
+  @media (width >= theme(--breakpoint-tablet)) {
+    padding-block: var(--spacing-section-tablet);
+  }
+
+  @media (width >= theme(--breakpoint-desktop)) {
+    padding-block: var(--spacing-section-light);
+  }
+}
+
+@utility section-rhythm-dark {
+  padding-block: var(--spacing-section-mobile);
+
+  @media (width >= theme(--breakpoint-tablet)) {
+    padding-block: var(--spacing-section-tablet);
+  }
+
+  @media (width >= theme(--breakpoint-desktop)) {
+    padding-block: var(--spacing-section-dark);
+  }
+}

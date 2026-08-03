@@ -1,0 +1,201 @@
+/* =============================================================================
+   Omanga — Global stylesheet (redesign entry point)
+   -----------------------------------------------------------------------------
+   This is the stylesheet the *new* root layout will import at cutover. It is
+   deliberately thin: imports, resets, and only those styles that must apply
+   document-wide. Anything that styles a specific thing belongs to that thing's
+   component.
+
+   Until cutover, the live app still boots from `app/globals.css`, which imports
+   this layer's token files so the new system is available without breaking the
+   pre-redesign components.
+
+   Order matters: Tailwind first, then tokens (so `@theme` is registered before
+   anything reads it), then the layers that consume them.
+   ========================================================================== */
+
+/* `source(none)` disables automatic detection so Tailwind does not also scan
+   `app/(legacy)/`. Without it, the old design system's classes would be
+   generated into this stylesheet and shipped to every redesigned page. */
+@import "tailwindcss" source(none);
+@source "../components";
+@source "../app/(redesign)";
+
+@import "./tokens.css";
+@import "./typography.css";
+@import "./animations.css";
+@import "./utilities.css";
+
+@layer base {
+  /* ---------------------------------------------------------------------------
+     Reset
+     Minimal and intentional. Tailwind Preflight already handles most of it;
+     these are the additions the system's rules actually require.
+     ------------------------------------------------------------------------ */
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  /* design-system.md: "The 37 padding exists only to compensate for a 5px
+     border; use 32 with box-sizing: border-box." The reset above is what makes
+     that normalisation safe. */
+
+  html {
+    /* No `scroll-behavior: smooth` here. It is opt-in via the skip link and
+       in-page anchors only, and is disabled under reduced motion. */
+    block-size: 100%;
+  }
+
+  body {
+    min-block-size: 100%;
+    /* Guarantee the 320px reflow requirement (WCAG 1.4.10) can never be broken
+       by a single wide child. */
+    min-inline-size: var(--viewport-min);
+    overflow-x: hidden;
+  }
+
+  /* Media defaults — every box declares its own ratio, but these stop an
+     unstyled asset from overflowing its column. */
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-inline-size: 100%;
+  }
+
+  /* Icons inherit the current text colour by rule; only the success and error
+     comparison glyphs override it. */
+  svg {
+    fill: none;
+    stroke: currentColor;
+  }
+
+  /* Lists used for structure carry no marker; prose lists opt back in. */
+  :where(ul, ol)[role="list"] {
+    list-style: none;
+    padding-inline-start: 0;
+    margin-block: 0;
+  }
+
+  /* Tables, if any legal content needs one. */
+  table {
+    border-collapse: collapse;
+  }
+
+  /* ---------------------------------------------------------------------------
+     Focus
+     A visible ring on every focusable element, identical everywhere, never
+     removed. This is the document-wide floor; primitives apply `focus-ring`
+     explicitly so the rule survives even if this base rule is ever scoped.
+     ------------------------------------------------------------------------ */
+  :focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  /* Never suppress the ring. Pointer users simply do not match
+     :focus-visible, so there is no reason to reach for :focus { outline: none }. */
+
+  /* Give an anchored heading room to clear the sticky header when focus or a
+     hash jump lands on it. */
+  :target {
+    scroll-margin-block-start: var(--spacing-section-mobile);
+  }
+
+  /* ---------------------------------------------------------------------------
+     Selection
+     Brand-tinted, with a foreground that stays legible on both surfaces.
+     ------------------------------------------------------------------------ */
+  ::selection {
+    background-color: var(--color-brand);
+    color: var(--color-on-dark);
+  }
+
+  /* ---------------------------------------------------------------------------
+     Scrollbar
+     Styled, not hidden — a hidden scrollbar removes a navigation affordance.
+     Standard properties first; the WebKit block is the fallback for engines
+     that have not shipped them.
+     ------------------------------------------------------------------------ */
+  html {
+    scrollbar-color: var(--color-disabled-surface) transparent;
+    scrollbar-width: thin;
+  }
+
+  ::-webkit-scrollbar {
+    inline-size: 0.75rem;
+    block-size: 0.75rem;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--color-disabled-surface);
+    border-radius: var(--radius-pill);
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-divider);
+  }
+
+  /* ---------------------------------------------------------------------------
+     Accessibility defaults
+     ------------------------------------------------------------------------ */
+
+  /* Anything hidden with the `hidden` attribute stays hidden regardless of the
+     display utilities applied to it. Prevents a tab panel from being
+     accidentally revealed by a layout class. */
+  [hidden] {
+    display: none !important;
+  }
+
+  /* Cursor communicates state; it is never the only signal. */
+  :disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+
+  /* Scroll lock, for while the mobile navigation panel is open.
+     An attribute rather than an inline style: components declare no `style`
+     props, so the hook that owns the lock toggles this flag and the rule lives
+     with every other document-wide concern.
+
+     `scrollbar-gutter: stable` is set unconditionally on the scroll container
+     so reserving and releasing the scrollbar cannot shift the page when the
+     panel opens — that shift would otherwise land straight in the CLS budget. */
+  html {
+    scrollbar-gutter: stable;
+  }
+
+  html[data-scroll-locked] {
+    overflow: hidden;
+  }
+
+  /* Forced-colors (Windows High Contrast): the system's colour tokens are
+     dropped by the OS, so restore the focus ring in a colour the OS provides. */
+  @media (forced-colors: active) {
+    :focus-visible {
+      outline-color: Highlight;
+    }
+  }
+
+  /* ---------------------------------------------------------------------------
+     Reduced motion
+     Smooth scrolling is opt-in and must also be revoked here. The full
+     reduced-motion policy lives in animations.css.
+     ------------------------------------------------------------------------ */
+  @media (prefers-reduced-motion: no-preference) {
+    :where(html) {
+      scroll-behavior: smooth;
+    }
+  }
+}

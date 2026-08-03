@@ -1,0 +1,463 @@
+/* =============================================================================
+   Omanga — Design tokens
+   -----------------------------------------------------------------------------
+   Single source of design values for the redesign. Nothing in `components/`
+   may declare a colour, size, radius, duration or breakpoint that is not
+   defined here.
+
+   Source of truth : design-system.md (extracted from Figma `Super-App`,
+                     frame `Homepage`, node 1265:12523)
+   Normalisation   : every value flagged ⚠ in design-system.md has already been
+                     collapsed onto a systematic token. The raw Figma value is
+                     recorded in a comment where the two differ, so the
+                     deviation is auditable rather than invisible.
+
+   Tailwind v4: this file is `@import`ed after `@import "tailwindcss"`, so each
+   `@theme` entry both emits a CSS custom property and generates its utility.
+   ========================================================================== */
+
+@theme {
+  /* ===========================================================================
+     COLOUR
+     design-system.md § Color roles
+     Brand is reserved for interaction and emphasis — never a surface behind
+     long-form text except the CTA band and the primary product card.
+     ========================================================================= */
+
+  /* Brand ------------------------------------------------------------------ */
+  --color-brand: #ae2448;
+  /* Button state rule: "hover darkens fill 8%". Precomputed so components
+     never perform colour maths. #ae2448 × 0.92. */
+  --color-brand-hover: #a02142;
+
+  /* Ink / dark surfaces ---------------------------------------------------- */
+  --color-ink: #161717; /* dark section background AND body text on light */
+  --color-ink-elevated: #2d2e2e; /* cards on dark sections */
+
+  /* Light surfaces --------------------------------------------------------- */
+  --color-surface-page: #ffffff; /* header, light sections */
+  --color-surface-light: #f6f6f6; /* light cards, timeline rail, media plates */
+  --color-surface-subtle: #fafafa; /* eyebrow pill fill */
+  /* ⚠ #f7f7f7, #edeef0, #e6e7e8 in Figma are one-off duplicates of
+     --color-surface-light / --color-surface-page. Collapsed, not tokenised. */
+
+  /* Foreground ------------------------------------------------------------- */
+  --color-on-dark: #ffffff;
+  --color-on-dark-muted: rgb(255 255 255 / 0.5); /* inactive tab label */
+
+  /* Borders and rules ------------------------------------------------------ */
+  --color-border-subtle: rgb(255 255 255 / 0.1); /* cards + tab lists on dark */
+  --color-border-light: #e5f2f2; /* eyebrow pill border */
+  --color-divider: #666666; /* deep-dive list rules */
+
+  /* Status ----------------------------------------------------------------- */
+  --color-success: #53d258;
+  --color-error: #e25c5c;
+
+  /* Overlays --------------------------------------------------------------- */
+  /* Hero scrim over photography. MEASURED, not assumed.
+     design-system.md said "ship at 45% minimum and verify against the actual
+     photograph" — so it was verified against `public/hero.png`, cover-cropped at
+     six frame sizes from 360x560 to 1920x611, computing the worst-case contrast
+     of white text over every pixel of the centred content band:
+
+       Figma  20%  ->  1.61:1   catastrophic
+              45%  ->  3.36:1   large text only, fails body text
+              55%  ->  4.74:1   minimum that clears AA
+       SHIPPED 60% ->  5.74:1
+
+     The result is identical at every breakpoint: the sun stays inside the
+     content band at every crop, so it always sets the worst case.
+
+     55% is the floor; 60% ships for headroom, because the sub-headline (18) and
+     helper text (14) are not "large text" and so need the full 4.5:1 — and
+     because the asset is expected to change (see hero.content.ts). Flat, not the
+     gradient the redesign spec suggests: the approved headline is 32 characters
+     longer than the one Figma draws, so it reflows, and a gradient's contrast
+     depends on exactly where the text lands. Flat is provable at any reflow.
+
+     RE-MEASURE THIS TOKEN IF THE PHOTOGRAPH CHANGES. */
+  --color-scrim: rgb(0 0 0 / 0.6);
+  --color-overlay-strong: rgb(255 255 255 / 0.2); /* secondary-on-dark fill */
+  --color-overlay-soft: rgb(255 255 255 / 0.1); /* secondary-on-brand fill */
+
+  /* Bordered-variant hover fills.
+     Button state rule: "fill a bordered variant at 10% of its border colour."
+     Precomputed rather than composed in markup, so an opacity modifier never
+     appears on a utility class. */
+  --color-overlay-strong-hover: rgb(255 255 255 / 0.3);
+  --color-overlay-soft-hover: rgb(255 255 255 / 0.2);
+  --color-ink-hover: rgb(22 23 23 / 0.1); /* secondary-on-light hover fill */
+
+  /* Field border.
+     [NOT IN FIGMA] design-system.md: "The frame contains no drawn form
+     fields." Its "1px subtle border" cannot be --color-border-subtle (white
+     @10%, a dark-surface token) and cannot be --color-border-light (#E5F2F2,
+     which sits at 1.05:1 on --color-surface-light and fails the 3:1 UI
+     boundary requirement). Set to ink @50%, measured at 3.37:1 on
+     --color-surface-light. Requires design confirmation. */
+  --color-border-field: rgb(22 23 23 / 0.5);
+
+  /* Hairline rule beneath the header in its opaque state.
+     The benchmark uses `#3532331a` — its ink at 10%. Expressed here against
+     Omanga's ink instead of importing the foreign value, and at 1px rather than
+     the benchmark's 0.5px: design-system.md already rules that sub-pixel borders
+     "render inconsistently across devices and disappear entirely at some zoom
+     levels".
+
+     On the dark/transparent state the equivalent is --color-border-subtle
+     (white @10%), which already exists. */
+  --color-border-hairline: rgb(22 23 23 / 0.1);
+
+  /* Inactive / disabled ----------------------------------------------------
+     design-system.md: the neutral steps exist "for disabled and inactive
+     states rather than inventing greys". Named for that purpose so a generic
+     grey can never be reached for by accident. */
+  --color-inactive-surface: #f3f3f3;
+  --color-disabled-surface: #cfcfcf;
+  --color-disabled-ink: rgb(36 36 36 / 0.4); /* #242424 @ 40% */
+
+  /* ===========================================================================
+     TYPOGRAPHY — families
+     Two families only, split by role. Any third family in the Figma file is an
+     artifact (⚠ Helvetica Light, Plus Jakarta Sans, SF Pro, Kantumruy Pro,
+     Arial, Julius Sans One are all discarded).
+     ========================================================================= */
+  /* Headings, body and section text.
+     [OVERRIDES design-system.md] The system specified Poppins and listed
+     "Helvetica Light (hero)" among the appearances to discard entirely. Reversed
+     by decision: Helvetica is now the project family.
+
+     A system-font stack, not a webfont, because Helvetica cannot be one. It is
+     licensed by Monotype, is not on Google Fonts, and cannot be self-hosted
+     through `next/font` without buying it. So what each visitor actually sees is:
+
+       macOS / iOS   real Helvetica (and Helvetica Neue Light for weight 300)
+       Windows       Arial substituted — no Light cut, so 300 renders as 400
+       Android       neither exists; Roboto or Liberation Sans substitutes
+
+     That matters more here than on most projects: project-context.md says the
+     audience is largely "mid-range Android over unreliable mobile networks", so
+     the majority of real visitors will never see Helvetica. Arimo — free, on
+     Google Fonts, metrically identical to Helvetica and Arial — would give every
+     platform the same metrics if that becomes a problem.
+
+     Upside: one fewer webfont to download than before. */
+  --font-heading: Helvetica, "Helvetica Neue", Arial, ui-sans-serif, sans-serif;
+
+  /* UI chrome: nav, buttons, labels, footer. Unchanged — the instruction named
+     Poppins only. Worth noting that the original two-family rationale was an
+     editorial face against a UI face, and Helvetica against Inter is two
+     neo-grotesques doing nearly the same job. Collapsing --font-ui into
+     --font-heading is a one-line change if that is wanted. */
+  --font-ui: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* 300 is the hero display's weight, from the frame's "Helvetica Light".
+     Available on macOS, absent on Windows and Android — see above. */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+
+  /* ===========================================================================
+     TYPOGRAPHY — scale
+     Fluid between the 360px mobile column and the 1440px wide canvas, per
+     design-system.md § Breakpoints ("type and spacing scale via fluid
+     clamping between mobile and wide"). Line height is unitless and tracking
+     is in `em` so both survive the clamp.
+
+     Roles whose mobile size design-system.md does not state are marked
+     [DERIVED] — they are engineering decisions pending design confirmation,
+     interpolated to keep the scale's ratios intact.
+     ========================================================================= */
+
+  /* Display — hero. One per page. 36 → 64 / 70.
+     [OVERRIDES design-system.md] Two of its rules are reversed here by decision,
+     both taken from the hero frame's export:
+
+       weight    600 SemiBold -> 300 Light  ("Helvetica Light", size 64)
+       tracking  -1.4 (-0.0219em) -> +2 (+0.03125em), from `.kerning(1.99865)`
+
+     design-system.md had said to drop the frame's positive tracking, and that
+     "negative tracking applies only at 24 and above". Both now stand reversed for
+     this role only; every other role keeps its specified tracking.
+
+     Tracking is in `em`, so it stays proportional as the size clamps down — 2px at
+     64 becomes about 1.1px at 36 rather than staying absolute and looking loose on
+     a phone.
+
+     Not reversed: the frame's uppercase. The instruction supplied the string in
+     sentence case, and typography.css pins `text-transform: none` on headings. */
+  --text-display: clamp(2.25rem, 1.6667rem + 2.5926vw, 4rem);
+  --text-display--line-height: 1.09375;
+  --text-display--letter-spacing: 0.03125em;
+  --text-display--font-weight: var(--font-weight-light);
+
+  /* H2 — the only section-level heading size. 28 → 48 / 52.8 / -1.44 */
+  --text-h2: clamp(1.75rem, 1.3333rem + 1.8519vw, 3rem);
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.03em;
+  --text-h2--font-weight: 400;
+
+  /* H3 — timeline step. 22 → 36 / 44 / -1.2 */
+  --text-h3: clamp(1.375rem, 1.0833rem + 1.2963vw, 2.25rem);
+  --text-h3--line-height: 1.2222;
+  --text-h3--letter-spacing: -0.0333em;
+  --text-h3--font-weight: 400;
+
+  /* H3 — deep-dive feature. [DERIVED mobile 20] → 28 / 36.4 / 0 */
+  --text-h3-feature: clamp(1.25rem, 1.0833rem + 0.7407vw, 1.75rem);
+  --text-h3-feature--line-height: 1.3;
+  --text-h3-feature--letter-spacing: 0em;
+  --text-h3-feature--font-weight: 400;
+
+  /* H4 — comparison column. [DERIVED mobile 18] → 24 / 32 / 0 */
+  --text-h4: clamp(1.125rem, 1rem + 0.5556vw, 1.5rem);
+  --text-h4--line-height: 1.3333;
+  --text-h4--letter-spacing: 0em;
+  --text-h4--font-weight: 400;
+
+  /* Eyebrow / tab label. [DERIVED mobile 16] → 20 / 30 / 0 */
+  --text-eyebrow: clamp(1rem, 0.9167rem + 0.3704vw, 1.25rem);
+  --text-eyebrow--line-height: 1.5;
+  --text-eyebrow--letter-spacing: 0em;
+  --text-eyebrow--font-weight: 400;
+
+  /* Body. 16 → 18 / 27 / 0 */
+  --text-body: clamp(1rem, 0.9583rem + 0.1852vw, 1.125rem);
+  --text-body--line-height: 1.5;
+  --text-body--letter-spacing: 0em;
+  --text-body--font-weight: 400;
+
+  /* Body small / badge. 14 / 22 / 0 — fixed, does not scale. */
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.5714;
+  --text-body-sm--letter-spacing: 0em;
+  --text-body-sm--font-weight: 400;
+
+  /* UI chrome (Inter). Fixed sizes — chrome does not participate in the
+     fluid scale, so controls keep a stable hit area at every width. */
+
+  /* Button + UI label. Inter SemiBold 14 / 17 */
+  --text-ui: 0.875rem;
+  --text-ui--line-height: 1.2143;
+  --text-ui--letter-spacing: 0em;
+  --text-ui--font-weight: 600;
+
+  /* Nav link. Inter Regular 14 / 17 */
+  --text-nav: 0.875rem;
+  --text-nav--line-height: 1.2143;
+  --text-nav--letter-spacing: 0em;
+  --text-nav--font-weight: 400;
+
+  /* Footer link. Inter Regular 14 / 24 */
+  --text-footer: 0.875rem;
+  --text-footer--line-height: 1.7143;
+  --text-footer--letter-spacing: 0em;
+  --text-footer--font-weight: 400;
+
+  /* Footer column heading. Inter SemiBold 14 / 24.
+     design-system.md § Typography hierarchy lists this as its own role, one row
+     below the footer link — same size and line height, different weight. It is
+     the only pairing in the table that differs by weight alone, which is exactly
+     why it needs its own token: writing `font-semibold` beside `text-footer`
+     would reach for a Tailwind default instead of --font-weight-semibold. */
+  --text-footer-heading: 0.875rem;
+  --text-footer-heading--line-height: 1.7143;
+  --text-footer-heading--letter-spacing: 0em;
+  --text-footer-heading--font-weight: 600;
+
+  /* Caption / legal. Inter Regular 12 / 20 / +1 */
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.6667;
+  --text-caption--letter-spacing: 0.0833em;
+  --text-caption--font-weight: 400;
+
+  /* Wordmark. Inter SemiBold 24 */
+  --text-wordmark: 1.5rem;
+  --text-wordmark--line-height: 1.2;
+  --text-wordmark--letter-spacing: 0em;
+  --text-wordmark--font-weight: 600;
+
+  /* ===========================================================================
+     SPACING
+     4px base, 8px rhythm. Tailwind's dynamic scale already resolves every
+     multiple of 4 from `--spacing` (p-2 = 8, p-6 = 24, p-12.5 = 50, p-32.5 =
+     130), so the numeric steps need no individual tokens and no arbitrary
+     values. Only values that carry *meaning* are named below.
+
+     ⚠ Figma's raw 9, 11, 13, 17, 21, 31, 37, 46 and 163 are off-grid and are
+     not tokenised. The 37 padding compensates for a 5px border — use 32 with
+     border-box instead.
+     ========================================================================= */
+  --spacing: 0.25rem;
+
+  /* Page gutter.
+     [DEVIATES FROM FIGMA] design-system.md gives four discrete steps
+     (20/40/64/100) and they are kept below, unused, so the change is one line to
+     revert. Shipped value is the benchmark's fluid margin — `clamp(1rem,
+     0.42857rem + 2.857vw, 3rem)`, which resolves to 16 at 360 and 48 at 1680+.
+
+     Markedly tighter than the Figma frame's 100 at the wide end. Deliberate: a
+     1520 column inside a 100 gutter would need a 1720 viewport before it stopped
+     being clipped. */
+  --spacing-gutter-fluid: clamp(1rem, 0.42857rem + 2.857vw, 3rem);
+
+  /* Retained, currently unreferenced — the Figma frame's discrete gutters. */
+  --spacing-gutter-mobile: 1.25rem; /* 20 */
+  --spacing-gutter-tablet: 2.5rem; /* 40 */
+  --spacing-gutter-desktop: 4rem; /* 64 */
+  --spacing-gutter-wide: 6.25rem; /* 100 */
+
+  /* Section vertical rhythm. Only two desktop values exist by rule:
+     130 on dark sections, 100 on light. Do not vary per section. */
+  --spacing-section-mobile: 4rem; /* 64 */
+  --spacing-section-tablet: 5.5rem; /* 88 */
+  --spacing-section-light: 6.25rem; /* 100 */
+  --spacing-section-dark: 8.125rem; /* 130 */
+
+  /* Measures — maximum line length for readable copy. */
+  --spacing-measure-body: 47.25rem; /* 756 */
+  --spacing-measure-narrow: 40.5rem; /* 648 */
+  --spacing-measure-feature: 30.375rem; /* 486 */
+
+  /* ===========================================================================
+     LAYOUT
+     Canvas 1440, content column 1240, 12 columns / 24 gutter within it.
+     ========================================================================= */
+  /* Aspect ratios, so no media box ever needs an arbitrary ratio value. */
+  --aspect-portrait: 3 / 4;
+  --aspect-landscape: 4 / 3;
+  --aspect-wide: 16 / 9;
+
+  /* Content column.
+     [DEVIATES FROM FIGMA] design-system.md § Grid system says "Canvas 1440.
+     Content column 1240. Page gutter 100", taken from the Omanga frame. This is
+     now 1520 — the structural benchmark's `--site--width: 95rem` — by explicit
+     decision, because the redesign follows claritybusinesstravel.com's skeleton.
+
+     Consequence, recorded so it is not rediscovered in review: the Header, Footer
+     and Hero no longer match the Figma frame's horizontal measurements, and the
+     footer's 322 brand column is now a smaller fraction of the row than the frame
+     drew. design-system.md § Grid system is stale until it is updated. */
+  --container-content: 95rem; /* 1520 */
+  --container-track: 30.375rem; /* 486 — timeline / deep-dive track */
+  --container-media-square: 42rem; /* 672 — deep-dive media plate */
+
+  /* Hero headline measure. The frame's `.frame(width: 1134)`.
+     1134 is off the 4px grid, so it normalises to 1136 — which is 71rem exactly.
+     Distinct from the body measures: the headline is display-size, so it can carry
+     a far longer line than the 648–756 that body copy caps at. */
+  --container-hero-heading: 71rem; /* 1136 — normalised from Figma's 1134 */
+
+  /* Hero band minimum height.
+     Figma pins the hero frame at 1440x611 with both minHeight and maxHeight.
+     611 is off the 4px grid, so it normalises to 612 per the instruction to map
+     stray Figma values onto the nearest step.
+
+     Only the minimum ships. Figma's fixed maxHeight would clip the content at
+     200% zoom and at 320px reflow, which WCAG 1.4.4 and 1.4.10 both forbid, so
+     the band is allowed to grow past 612 when the content needs it. */
+  --spacing-hero-min: 38.25rem; /* 612 — normalised from Figma's 611 */
+
+  /* Header height. The benchmark's `--nav_1--height: 4rem`.
+     The one fixed height in the system. Justified because the header is a bar of
+     controls rather than a container of content — its height is a design decision,
+     not a consequence of what is inside it. */
+  --spacing-header: 4rem; /* 64 */
+  /* Footer brand column. design-system.md § Grid system: "Footer: brand column
+     322, then four equal link columns, 40 gap, 93 page gutter." Only the brand
+     column needs a value — the four link columns are equal fractions, and the
+     93 gutter is ⚠ off-grid and is not tokenised: the footer uses the standard
+     Container gutter like every other band. */
+  --container-footer-brand: 20.125rem; /* 322 */
+
+  /* The footer band's column track list, so the 322 + four-equal-columns grid is
+     declared once as a token rather than as an arbitrary template in markup.
+     `minmax(0, 1fr)` rather than `1fr`: a bare `1fr` has an automatic minimum,
+     so one long label ("Coverage — 43 countries") would push its column wider
+     than its siblings and break the equal-column rule. */
+  --grid-template-columns-footer: var(--container-footer-brand) repeat(
+      4,
+      minmax(0, 1fr)
+    );
+
+  /* ===========================================================================
+     RADIUS
+     Six tokens. ⚠ Figma contains 8, 9, 10, 12, 15, 16, 40, 50, 100, 1822,
+     1864, 1894 and 33554400 — every one maps onto the set below.
+     Named by role, not by t-shirt size, so `rounded-lg` (a Tailwind default)
+     can never be mistaken for a system token.
+     ========================================================================= */
+  --radius-pill: 9999px; /* buttons, eyebrow badges, tab list, tab pill */
+  --radius-dot: 9999px; /* timeline markers */
+  --radius-card: 0.5rem; /* 8  — product cards */
+  --radius-chip: 0.75rem; /* 12 — stat chips, CTA-band controls */
+  --radius-panel: 1rem; /* 16 — comparison cards, media plates, panels */
+  --radius-device: 3.125rem; /* 50 — phone mockup frame only */
+
+  /* ===========================================================================
+     SHADOW
+     One elevation, one use. Cards, buttons, inputs and the header are flat;
+     separation comes from surface colour and border. There is no hover shadow.
+     ⚠ Zero-value shadows on the timeline dots are Figma artifacts — omitted.
+     ========================================================================= */
+  --shadow-elevated: 0 12px 24px rgb(0 0 0 / 0.1);
+
+  /* ===========================================================================
+     Z-INDEX
+     [NOT IN FIGMA] No layering scale exists in the design file. This ladder is
+     an engineering decision: wide gaps so a layer can be inserted without a
+     renumber, and only as many rungs as the page actually needs.
+     Exposed as utilities in utilities.css.
+     ========================================================================= */
+  --z-base: 0;
+  --z-raised: 10; /* card art, decorative offsets */
+  --z-scrim: 20; /* photography scrim */
+  --z-overlay-content: 30; /* text sitting above a scrim */
+  --z-header: 40; /* sticky header — the only fixed element */
+  --z-menu: 50; /* mobile nav panel */
+  --z-skip-link: 60; /* must clear everything when focused */
+
+  /* ===========================================================================
+     MOTION
+     design-system.md § Motion principles. Transform and opacity only.
+     Exposed as utilities in utilities.css; keyframes in animations.css.
+     ========================================================================= */
+  --ease-standard: cubic-bezier(0, 0, 0.2, 1); /* ease-out */
+
+  --duration-standard: 200ms; /* hover, focus, fill and border changes */
+  --duration-underline: 250ms; /* active tab underline slide */
+  --duration-emphasis: 300ms; /* tab panel change, accordion expand */
+  --duration-entrance: 400ms; /* one-shot entrance on intersection */
+  --duration-counter: 1200ms; /* stat count-up, once on first view */
+
+  --motion-entrance-offset: 1rem; /* 16px upward translate */
+  --motion-stagger-step: 80ms; /* between siblings */
+
+  /* ===========================================================================
+     FOCUS
+     One ring, identical across buttons, links, tabs and inputs. Never removed.
+     ========================================================================= */
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-color: var(--color-brand);
+
+  /* ===========================================================================
+     BREAKPOINTS
+     Named after the design-system.md table so a media query reads as the
+     design intent. Tailwind's sm/md/lg/xl defaults are intentionally left in
+     place — removing them would break the existing (pre-redesign) components
+     that still ship in `app/`.
+     ========================================================================= */
+  --breakpoint-tablet: 48rem; /* 768  */
+  --breakpoint-desktop: 64rem; /* 1024 */
+  --breakpoint-wide: 90rem; /* 1440 */
+}
+
+/* -----------------------------------------------------------------------------
+   Minimum supported viewport. design-system.md requires no horizontal scroll at
+   360 and survival of 320px reflow (WCAG 1.4.10).
+   -------------------------------------------------------------------------- */
+:root {
+  --viewport-min: 20rem; /* 320 */
+}

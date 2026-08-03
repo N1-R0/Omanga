@@ -1,0 +1,97 @@
+/* =============================================================================
+   Omanga — Motion
+   -----------------------------------------------------------------------------
+   design-system.md § Motion principles.
+
+   Three hard rules encoded here:
+     1. Transform and opacity only. Never height, width, top or left.
+     2. Entrances are one-shot on intersection, never scroll-linked.
+     3. `prefers-reduced-motion` removes entrance, slide and counting motion,
+        holds the final state, and freezes looping animation on frame one.
+
+   Motion never gates content: every animated element is authored so that if
+   the animation never runs, the content is still fully readable. The entrance
+   utility therefore only animates once a `data-visible` attribute is set by an
+   IntersectionObserver — and if no script runs, the element stays visible.
+   ========================================================================== */
+
+@theme {
+  --animate-entrance: entrance var(--duration-entrance) var(--ease-standard) both;
+}
+
+@keyframes entrance {
+  from {
+    opacity: 0;
+    transform: translateY(var(--motion-entrance-offset));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Entrance
+   Applied by a parent that observes intersection. The element is visible by
+   default and only *animates* when opted in, so a failed or absent script
+   leaves readable content rather than a blank page.
+
+   `--motion-index` lets the parent stagger siblings at 80ms without any
+   per-child timing values in the component.
+   -------------------------------------------------------------------------- */
+@utility animate-entrance {
+  animation: var(--animate-entrance);
+  animation-play-state: paused;
+  animation-delay: calc(var(--motion-index, 0) * var(--motion-stagger-step));
+
+  &[data-visible="true"] {
+    animation-play-state: running;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Transitions
+   Durations are tokens, not per-component values. Only the property groups the
+   system actually changes are transitioned — colour/border for state, and
+   transform/opacity for movement. Nothing here can animate layout.
+   -------------------------------------------------------------------------- */
+@utility transition-standard {
+  transition-property: color, background-color, border-color, outline-color,
+    text-decoration-color, opacity;
+  transition-duration: var(--duration-standard);
+  transition-timing-function: var(--ease-standard);
+}
+
+@utility transition-emphasis {
+  transition-property: opacity, transform;
+  transition-duration: var(--duration-emphasis);
+  transition-timing-function: var(--ease-standard);
+}
+
+@utility transition-underline {
+  transition-property: transform;
+  transition-duration: var(--duration-underline);
+  transition-timing-function: var(--ease-standard);
+}
+
+/* -----------------------------------------------------------------------------
+   Reduced motion
+   Global, not per-component, so a new component cannot forget to honour it.
+   `animation: none` on an entrance leaves the element at its authored (final)
+   state because the element is not hidden to begin with.
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Looping animation freezes on its first frame rather than disappearing. */
+  [data-motion="loop"] {
+    animation-play-state: paused !important;
+  }
+}

@@ -8,12 +8,16 @@ import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
 import { ArrowRight } from "@/components/icons/ArrowRight";
 import { Hero } from "@/components/sections/Hero";
+import { Services } from "@/components/sections/Services";
 import { SolutionsOverview } from "@/components/sections/SolutionsOverview";
+import { TrustPartners } from "@/components/sections/TrustPartners";
 import { HERO_HEADING_ID, heroContent } from "@/content/hero.content";
+import { SERVICES_HEADING_ID, servicesContent } from "@/content/services.content";
 import {
   SOLUTIONS_HEADING_ID,
   solutionsContent,
 } from "@/content/solutions.content";
+import { TRUST_HEADING_ID, trustContent } from "@/content/trust.content";
 
 /**
  * Foundation smoke check — a development surface, not a page of the site.
@@ -65,6 +69,16 @@ export default function FoundationPreviewPage() {
         content={solutionsContent}
         headingId={SOLUTIONS_HEADING_ID}
       />
+
+      {/*
+        The real Trust / Partners strip, in the frame's order — it sits below the
+        Solutions Overview at y 2066 on the homepage frame. Its label is an `h2`,
+        so the outline below it still opens at `h2` without skipping a level.
+      */}
+      <TrustPartners content={trustContent} headingId={TRUST_HEADING_ID} />
+
+      {/* Phase 3.3. Services — section 4 of the approved copy document. */}
+      <Services content={servicesContent} headingId={SERVICES_HEADING_ID} />
 
       <Section labelledBy="preview-light" tone="light">
         <Stack gap="2xl">

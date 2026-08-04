@@ -1,23 +1,41 @@
 import type { Metadata } from "next";
 
-import { Section } from "@/components/layout/Section";
-import { Stack } from "@/components/layout/Stack";
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
-import { Heading } from "@/components/ui/Heading";
-import { Text } from "@/components/ui/Text";
-import { ArrowRight } from "@/components/icons/ArrowRight";
+import { AfricanCoverage } from "@/components/sections/AfricanCoverage";
+import { CTA } from "@/components/sections/CTA";
 import { Hero } from "@/components/sections/Hero";
+import { HowItWorks } from "@/components/sections/HowItWorks";
+import { ProductDeepDive } from "@/components/sections/ProductDeepDive";
 import { Services } from "@/components/sections/Services";
 import { SolutionsOverview } from "@/components/sections/SolutionsOverview";
 import { TrustPartners } from "@/components/sections/TrustPartners";
+import { WhyOmanga } from "@/components/sections/WhyOmanga";
+import {
+  COVERAGE_HEADING_ID,
+  coverageContent,
+} from "@/content/coverage.content";
+import { CTA_HEADING_ID, ctaContent } from "@/content/cta.content";
+import {
+  DEEP_DIVE_HEADING_ID,
+  deepDiveContent,
+} from "@/content/deep-dive.content";
 import { HERO_HEADING_ID, heroContent } from "@/content/hero.content";
-import { SERVICES_HEADING_ID, servicesContent } from "@/content/services.content";
+import {
+  HOW_IT_WORKS_HEADING_ID,
+  howItWorksContent,
+} from "@/content/how-it-works.content";
+import {
+  SERVICES_HEADING_ID,
+  servicesContent,
+} from "@/content/services.content";
 import {
   SOLUTIONS_HEADING_ID,
   solutionsContent,
 } from "@/content/solutions.content";
 import { TRUST_HEADING_ID, trustContent } from "@/content/trust.content";
+import {
+  WHY_OMANGA_HEADING_ID,
+  whyOmangaContent,
+} from "@/content/why-omanga.content";
 
 /**
  * Foundation smoke check — a development surface, not a page of the site.
@@ -80,84 +98,46 @@ export default function FoundationPreviewPage() {
       {/* Phase 3.3. Services — section 4 of the approved copy document. */}
       <Services content={servicesContent} headingId={SERVICES_HEADING_ID} />
 
-      <Section labelledBy="preview-light" tone="light">
-        <Stack gap="2xl">
-          <Stack gap="sm" align="start">
-            <Badge tone="light">Light surface</Badge>
-            <Heading id="preview-light" level="h2" role="display">
-              Display role, Poppins SemiBold
-            </Heading>
-          </Stack>
+      {/* Phase 3.5. How Omanga Works — section 5 of the approved copy document. */}
+      <HowItWorks
+        content={howItWorksContent}
+        headingId={HOW_IT_WORKS_HEADING_ID}
+      />
 
-          <Stack gap="lg" align="start">
-            <Heading id="preview-light-section" level="h2" role="section">
-              Section role, the only section heading size
-            </Heading>
-            <Text role="body" measure="body">
-              Body role at the 756px measure. This paragraph exists to check the
-              fluid type scale, the line height, and the reading measure at every
-              breakpoint between 360 and 1440.
-            </Text>
-            <Text role="body" measure="body" isSecondary>
-              The same body role marked secondary — 80% opacity, not a second
-              grey.
-            </Text>
-          </Stack>
+      {/* Phase 3.4. Product Deep Dive — section 6 of the approved copy document. */}
+      <ProductDeepDive
+        content={deepDiveContent}
+        headingId={DEEP_DIVE_HEADING_ID}
+      />
 
-          <Stack gap="sm" direction="column-to-row" align="start">
-            <Button as="button" variant="primary" tone="light">
-              Primary
-            </Button>
-            <Button as="button" variant="secondary" tone="light">
-              Secondary
-            </Button>
-            <Button
-              as="button"
-              variant="text"
-              tone="light"
-              trailingIcon={<ArrowRight size="sm" />}
-            >
-              Text with arrow
-            </Button>
-          </Stack>
-        </Stack>
-      </Section>
+      {/*
+        Phase 3.6. African Coverage. Appended after the sections already mounted
+        rather than inserted at its position in the specified order — the brief
+        forbids touching a previous section, and re-ordering the calls above would
+        be doing exactly that. Its heading is an `h2`, so the outline below it
+        still opens at `h2` without skipping a level.
+      */}
+      <AfricanCoverage
+        content={coverageContent}
+        headingId={COVERAGE_HEADING_ID}
+      />
 
-      <Section labelledBy="preview-dark" tone="dark">
-        <Stack gap="2xl">
-          <Stack gap="sm" align="start">
-            <Badge tone="dark">Dark surface</Badge>
-            <Heading id="preview-dark" level="h2" role="section">
-              Same tokens inverted onto the dark surface
-            </Heading>
-          </Stack>
+      {/*
+        Phase 3.7. Why Omanga. Appended after the sections already mounted, for the
+        same reason African Coverage was — re-ordering the calls above would be
+        modifying a previous section. Dark surface, so the page alternates here.
+        Its heading is an `h2` and its column headings are `h3`s, so the outline
+        below it still opens at `h2` without skipping a level.
+      */}
+      <WhyOmanga content={whyOmangaContent} headingId={WHY_OMANGA_HEADING_ID} />
 
-          <Stack gap="sm" direction="column-to-row" align="start">
-            <Button as="button" variant="primary" tone="dark">
-              Primary
-            </Button>
-            <Button as="button" variant="secondary" tone="dark">
-              Secondary
-            </Button>
-          </Stack>
-        </Stack>
-      </Section>
-
-      <Section labelledBy="preview-brand" tone="brand">
-        <Stack gap="lg" align="start">
-          <Heading id="preview-brand" level="h2" role="section">
-            Brand band, the only brand-filled surface
-          </Heading>
-          <Stack gap="sm" direction="column-to-row" align="start">
-            <Button as="button" variant="primary" tone="brand">
-              Primary on brand
-            </Button>
-            <Button as="button" variant="secondary" tone="brand">
-              Secondary on brand
-            </Button>
-          </Stack>
-        </Stack>
-      </Section>
+      {/*
+        Phase 3.8. The closing CTA band — the only brand-filled section on the
+        page. Appended after the sections already mounted, for the same reason the
+        two before it were. Its heading is an `h2`, so the outline below it still
+        opens at `h2` without skipping a level.
+      */}
+      <CTA content={ctaContent} headingId={CTA_HEADING_ID} />
     </>
   );
 }

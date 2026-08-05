@@ -71,7 +71,7 @@ export function ComparisonCard({ group }: ComparisonCardProps) {
   const Mark = MARK[sentiment];
 
   return (
-    <div className="flex h-full flex-col gap-10">
+    <div className="flex h-full flex-col gap-6 tablet:gap-10">
       <div className="flex items-center gap-3">
         <Mark size="lg" />
 

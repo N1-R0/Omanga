@@ -43,7 +43,7 @@ export function FooterColumn({ column }: FooterColumnProps) {
         marker, and Safari drops list semantics when it does — so without this the
         column announces as four loose links instead of a list of four.
       */}
-      <ul role="list" className="flex flex-col gap-3">
+      <ul role="list" className="flex flex-col gap-1 desktop:gap-3">
         {column.links.map((link) => (
           <li key={link.href}>
             <FooterLink link={link} />
@@ -85,7 +85,7 @@ export function FooterColumn({ column }: FooterColumnProps) {
  */
 function FooterLink({ link }: { link: FooterLinkColumn["links"][number] }) {
   const className =
-    "inline-flex items-center font-ui text-footer text-on-dark text-secondary hover:opacity-100 focus-ring transition-standard";
+    "inline-flex min-h-11 items-center font-ui text-footer text-on-dark text-secondary hover:opacity-100 focus-ring transition-standard desktop:min-h-0";
 
   /**
    * An approved label whose route does not exist yet. Rendered as an attribute

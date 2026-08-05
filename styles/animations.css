@@ -17,6 +17,7 @@
 
 @theme {
   --animate-entrance: entrance var(--duration-entrance) var(--ease-standard) both;
+  --animate-marquee: marquee var(--duration-marquee) linear infinite;
 }
 
 @keyframes entrance {
@@ -46,6 +47,82 @@
 
   &[data-visible="true"] {
     animation-play-state: running;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Marquee
+   The partner strip drifts horizontally on narrow screens, where three logos
+   cannot sit in one row without shrinking past legibility.
+
+   [DEVIATES FROM component-rules.md § Animation guidelines] "Motion is entrance,
+   state change, and feedback. Never decoration that runs continuously." This is
+   continuous decoration, added on request. It ships under the conditions
+   design-system.md already sets for the page's other looping case, Lottie —
+   transform only, and it never gates content:
+
+     - `translateX` only, so it composites and never touches layout.
+     - Hover and keyboard focus pause it, so a logo can be held still.
+     - Reduced motion stops the drift *and* wraps the row, so every logo stays
+       visible. Freezing a clipped strip would hide two of the three partners
+       from exactly the users who asked for less movement.
+     - From tablet up there is no animation at all: the row fits, so it is static.
+
+   The seam is why the set carries trailing padding instead of the track carrying
+   a gap. Two identical sets translate by exactly -50% to loop invisibly, and a
+   gap on the track would make -50% land half a gap short of the seam.
+   -------------------------------------------------------------------------- */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@utility marquee-track {
+  display: flex;
+  inline-size: max-content;
+  animation: var(--animate-marquee);
+
+  &:hover,
+  &:focus-within {
+    animation-play-state: paused;
+  }
+
+  @media (width >= theme(--breakpoint-tablet)) {
+    inline-size: 100%;
+    animation: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    inline-size: 100%;
+    flex-wrap: wrap;
+    animation: none;
+  }
+}
+
+@utility marquee-set {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: calc(var(--spacing) * 8);
+  /* The seam spacing. Matches the gap, so the join is invisible. */
+  padding-inline-end: calc(var(--spacing) * 8);
+
+  @media (width >= theme(--breakpoint-tablet)) {
+    inline-size: 100%;
+    flex-shrink: 1;
+    justify-content: space-between;
+    padding-inline-end: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    inline-size: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-inline-end: 0;
   }
 }
 

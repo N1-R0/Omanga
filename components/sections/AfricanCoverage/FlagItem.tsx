@@ -54,7 +54,7 @@ import type { ImageAsset } from "@/types/content.types";
  * a missing `sizes` is the usual cause of a phone fetching a desktop-sized
  * asset.
  */
-const RENDERED_SIZE = "72px";
+const RENDERED_SIZE = "(min-width: 64rem) 72px, 40px";
 
 export type FlagItemProps = {
   /** Source, alt and intrinsic dimensions travel together as one value. */
@@ -63,7 +63,7 @@ export type FlagItemProps = {
 
 export function FlagItem({ flag }: FlagItemProps) {
   return (
-    <div className="flex size-24 shrink-0 items-center justify-center rounded-panel border border-border-hairline bg-surface-page shadow-elevated">
+    <div className="flex size-16 shrink-0 items-center justify-center rounded-panel border border-border-hairline bg-surface-page shadow-elevated desktop:size-24">
       <Image
         src={flag.src}
         alt={flag.alt}
@@ -72,7 +72,7 @@ export function FlagItem({ flag }: FlagItemProps) {
         sizes={RENDERED_SIZE}
         unoptimized
         loading="lazy"
-        className="size-18"
+        className="size-10 desktop:size-18"
       />
     </div>
   );

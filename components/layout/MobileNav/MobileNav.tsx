@@ -4,11 +4,12 @@ import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
 import { Navigation } from "@/components/layout/Navigation";
+import { Button } from "@/components/ui/Button";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import { useDismiss } from "@/hooks/useDismiss";
 import { useFocusReturn } from "@/hooks/useFocusReturn";
 import { cx } from "@/lib/cx";
-import type { LinkTarget } from "@/types/content.types";
+import type { CallToAction, LinkTarget } from "@/types/content.types";
 import type { Tone } from "@/types/ui.types";
 
 import { MobileNavToggle } from "./MobileNavToggle";
@@ -51,6 +52,13 @@ import { MobileNavToggle } from "./MobileNavToggle";
 
 export type MobileNavProps = {
   items: readonly LinkTarget[];
+  /**
+   * The header's primary call to action.
+   *
+   * Below `desktop` this panel is the only place it renders — the bar keeps the
+   * wordmark and the toggle and nothing else, as the mobile reference does.
+   */
+  action: CallToAction;
   /** Accessible name for the navigation landmark inside the panel. */
   landmarkLabel: string;
   openLabel: string;
@@ -69,6 +77,7 @@ export type MobileNavProps = {
 
 export function MobileNav({
   items,
+  action,
   landmarkLabel,
   openLabel,
   closeLabel,
@@ -183,20 +192,29 @@ export function MobileNav({
         )}
       >
         {/*
-          The panel carries the navigation and nothing else.
+          Navigation, then the primary call to action beneath it.
 
-          It deliberately does *not* repeat the primary call to action. Rule 12
-          requires the primary button at every breakpoint, and the header bar
-          already satisfies that — the bar stays visible above the open panel.
-          Adding a second copy here would put two filled brand buttons in one
-          viewport, which rule 3 calls a defect outright.
+          The button is not a second copy: the bar hides its own below `desktop`,
+          so exactly one filled brand button exists in the viewport at any width.
+          It sits last so the nav links stay closest to the toggle that revealed
+          them, and so the strongest action is the last thing read.
         */}
-        <Navigation
-          items={items}
-          landmarkLabel={landmarkLabel}
-          orientation="column"
-          tone="light"
-        />
+        <div className="flex flex-col gap-6">
+          <Navigation
+            items={items}
+            landmarkLabel={landmarkLabel}
+            orientation="column"
+            tone="light"
+          />
+
+          {/* Content width, centred — the panel's links are centred too, and a
+              full-bleed button would read as a surface rather than a control. */}
+          <div className="flex justify-center">
+            <Button as="link" variant="primary" tone="light" href={action.href}>
+              {action.label}
+            </Button>
+          </div>
+        </div>
       </div>
     </>
   );

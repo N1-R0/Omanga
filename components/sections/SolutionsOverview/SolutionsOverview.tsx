@@ -81,7 +81,7 @@ const PAYMENTS_HEADING_ID = "solutions-payments-heading";
  *                                                         gutter and the inset
  */
 const IMAGE_SIZES =
-  "(min-width: 90rem) 406px, (min-width: 64rem) 26vw, (min-width: 48rem) 39vw, calc(100vw - 5rem)";
+  "(min-width: 90rem) 406px, (min-width: 64rem) 26vw, (min-width: 48rem) 39vw, calc(100vw - 9rem)";
 
 export type SolutionsOverviewProps = {
   content: SolutionsOverviewContent;

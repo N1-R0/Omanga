@@ -76,8 +76,8 @@ export function Footer({
           order in the DOM is brand first then Services → Company → Support →
           Legal at every width, because nothing is ever reordered.
         */}
-        <div className="grid grid-cols-1 gap-10 tablet:grid-cols-2 desktop:grid-cols-footer">
-          <div className="flex flex-col gap-6 tablet:col-span-2 desktop:col-span-1">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-12 tablet:gap-10 desktop:grid-cols-footer">
+          <div className="col-span-2 flex flex-col gap-6 desktop:col-span-1">
             <Logo wordmark={wordmark} label={homeLabel} />
 
             <Text role="body" measure="feature" isSecondary>

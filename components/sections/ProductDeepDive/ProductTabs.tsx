@@ -10,7 +10,7 @@ import { ProductContent } from "./ProductContent";
 import { ProductTab } from "./ProductTab";
 
 const TAB_LIST_CLASS =
-  "inline-flex gap-2 rounded-pill border border-border-subtle p-2";
+  "grid w-full grid-cols-2 gap-2 rounded-pill border border-border-subtle p-2 tablet:inline-flex tablet:w-auto";
 
 export type ProductTabsProps = {
   products: DeepDiveContent["products"];

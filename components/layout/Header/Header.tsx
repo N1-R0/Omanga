@@ -179,13 +179,22 @@ export function Header({
           </div>
 
           <div className="flex flex-1 items-center justify-end gap-3">
-            {/* Present at every breakpoint, per rule 12. */}
-            <Button as="link" variant="primary" tone="light" href={action.href}>
-              {action.label}
-            </Button>
+            {/*
+              Desktop only below `desktop`, the primary call to action moves into
+              the disclosure panel, which is where the mobile reference puts it.
+              Rule 12 still holds — the button exists at every breakpoint and is one
+              press away on a phone — and so does rule 3, because only one copy of
+              it is ever rendered.
+            */}
+            <div className="hidden desktop:block">
+              <Button as="link" variant="primary" tone="light" href={action.href}>
+                {action.label}
+              </Button>
+            </div>
 
             <MobileNav
               items={items}
+              action={action}
               landmarkLabel={landmarkLabel}
               openLabel={openLabel}
               closeLabel={closeLabel}

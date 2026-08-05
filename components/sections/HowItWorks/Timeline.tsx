@@ -32,7 +32,7 @@ export function Timeline({ steps }: TimelineProps) {
     <div className="relative">
       <TimelineConnector />
 
-      <ol role="list" className="flex flex-col gap-20">
+      <ol role="list" className="flex flex-col gap-12 desktop:gap-20">
         {items.map(({ step, side }, index) => (
           <TimelineItem key={step.id} step={step} side={side} index={index} />
         ))}

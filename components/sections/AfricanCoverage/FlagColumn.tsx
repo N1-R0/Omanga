@@ -71,7 +71,7 @@ export function FlagColumn({ flags, elevation }: FlagColumnProps) {
   return (
     <li
       className={cx(
-        "flex flex-col gap-4 wide:gap-12",
+        "flex flex-row items-center gap-3 desktop:flex-col desktop:gap-4 wide:gap-12",
         ELEVATION_CLASS[elevation],
       )}
     >

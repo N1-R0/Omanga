@@ -431,6 +431,16 @@
   --duration-entrance: 400ms; /* one-shot entrance on intersection */
   --duration-counter: 1200ms; /* stat count-up, once on first view */
 
+  /* Partner-strip drift, for one full pass of the logo set.
+     Not a per-component value: it is the only continuous-loop duration the page
+     owns, and it belongs beside the others so the pace is tunable in one place.
+
+     20s over a 1152px track is about 29px per second — slow enough to read as a
+     drift rather than a slideshow, which is what keeps a decorative loop from
+     competing with the copy beside it. The set is 576px, so a full cycle returns
+     to its start every 10s. */
+  --duration-marquee: 20s;
+
   --motion-entrance-offset: 1rem; /* 16px upward translate */
   --motion-stagger-step: 80ms; /* between siblings */
 

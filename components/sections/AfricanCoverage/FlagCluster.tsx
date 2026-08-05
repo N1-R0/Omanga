@@ -96,7 +96,7 @@ export function FlagCluster({ flags, label }: FlagClusterProps) {
     <ul
       role="list"
       aria-label={label}
-      className="flex flex-wrap items-start justify-center gap-4 wide:flex-nowrap wide:justify-between"
+      className="flex flex-wrap items-center justify-center gap-3 desktop:items-start desktop:gap-4 wide:flex-nowrap wide:justify-between"
     >
       {columns.map((column) => (
         <FlagColumn

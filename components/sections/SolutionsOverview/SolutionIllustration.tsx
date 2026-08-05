@@ -78,12 +78,12 @@ import type { ImageAsset } from "@/types/content.types";
  */
 const PRESENTATION = {
   illustration: {
-    box: "p-12",
+    box: "p-8 tablet:p-12",
     image: "size-full object-contain",
     isUnoptimized: true,
   },
   device: {
-    box: "px-10 pt-20",
+    box: "px-6 pt-12 tablet:px-10 tablet:pt-20",
     image: "h-auto w-full",
     isUnoptimized: false,
   },

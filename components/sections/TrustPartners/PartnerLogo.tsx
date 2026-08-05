@@ -44,7 +44,7 @@ import type { ImageAsset } from "@/types/content.types";
  * because the row shrinks it — so a single fixed value is accurate here, which is
  * what stops a phone downloading a desktop-sized asset.
  */
-const RENDERED_WIDTH = "240px";
+const RENDERED_WIDTH = "(min-width: 48rem) 240px, 160px";
 
 export type PartnerLogoProps = {
   logo: ImageAsset;

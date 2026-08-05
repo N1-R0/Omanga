@@ -1,5 +1,6 @@
 import { Grid } from "@/components/layout/Grid";
 import { Section } from "@/components/layout/Section";
+import { Reveal } from "@/components/ui/Reveal";
 import type { SolutionsOverviewContent } from "@/content/solutions.content";
 
 import { SectionHeader } from "./SectionHeader";
@@ -122,46 +123,76 @@ export function SolutionsOverview({
           "Sections declare column spans; children never position themselves."
         */}
         <div className="desktop:col-span-4">
-          <SectionHeader
-            headingId={headingId}
-            eyebrow={content.eyebrow}
-            heading={content.heading}
-            intro={content.intro}
-          />
+          {/*
+            MOTION. The heading column enters first, then each card 80ms behind
+            the last — the reference's own order, and the reason the section reads
+            left to right on arrival rather than all at once.
+
+            `Reveal` renders a plain `div` under `prefers-reduced-motion`, so this
+            adds a wrapper element but never a hidden one. It is a client boundary
+            around otherwise-static children, which keeps the copy in the server
+            HTML: nothing below it hydrates.
+          */}
+          <Reveal index={0}>
+            <SectionHeader
+              headingId={headingId}
+              eyebrow={content.eyebrow}
+              heading={content.heading}
+              intro={content.intro}
+            />
+          </Reveal>
         </div>
 
         {/* Columns 5–12, holding the card pair as its own two-column grid. */}
         <div className="desktop:col-span-8">
           {/*
-            24 between the cards — the reference's own card gap, and the
-            system's "adjacent" step. Equal height is `Grid`'s default and is
-            load-bearing: it is what lets `Card` push both copy blocks to the
-            foot of the row so the two pills land on one line however much body
-            copy each offering carries.
+            [MEASURED] 40 between the cards, not 24.
+
+            The earlier figure came from reading the reference's twelve-column
+            gutter. Measured directly, its card grid is `gap: 40` — its
+            `--_spacing---space--6` at the wide end, and the same value it puts
+            between the heading column and the cards. 24 is the step for rows
+            inside a card, which is why using it between cards made the pair read
+            as one panel split down the middle rather than as two cards.
+
+            Equal height is `Grid`'s default and is load-bearing: it is what lets
+            `Card` push both copy blocks to the foot of the row so the two pills
+            land on one line however much body copy each offering carries.
           */}
-          <Grid columns={2} gap="lg">
+          <Grid columns={2} gap="2xl">
             {/*
               Insurance first, and emphasised. That is the frame's order and the
               frame's surface assignment; nothing here infers hierarchy, and
               swapping the two is a one-line change in this file.
             */}
-            <SolutionCard
-              content={content.insurance}
-              emphasis="primary"
-              presentation="illustration"
-              headingLevel="h3"
-              headingId={INSURANCE_HEADING_ID}
-              imageSizes={IMAGE_SIZES}
-            />
+            {/*
+              `Reveal` becomes the grid item, so the equal-height chain still
+              holds: `items-stretch` gives the wrapper the row's height, and
+              `Card`'s `h-full` resolves against it. Without the stretch the
+              wrapper would collapse to its content and the two pills would stop
+              lining up.
+            */}
+            <Reveal index={1}>
+              <SolutionCard
+                content={content.insurance}
+                emphasis="primary"
+                presentation="illustration"
+                headingLevel="h3"
+                headingId={INSURANCE_HEADING_ID}
+                imageSizes={IMAGE_SIZES}
+              />
+            </Reveal>
 
-            <SolutionCard
-              content={content.payments}
-              emphasis="secondary"
-              presentation="device"
-              headingLevel="h3"
-              headingId={PAYMENTS_HEADING_ID}
-              imageSizes={IMAGE_SIZES}
-            />
+            <Reveal index={2}>
+              <SolutionCard
+                content={content.payments}
+                emphasis="secondary"
+                presentation="device"
+                headingLevel="h3"
+                headingId={PAYMENTS_HEADING_ID}
+                imageSizes={IMAGE_SIZES}
+              />
+            </Reveal>
           </Grid>
         </div>
       </Grid>

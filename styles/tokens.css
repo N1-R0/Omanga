@@ -308,12 +308,59 @@
   --spacing-gutter-desktop: 4rem; /* 64 */
   --spacing-gutter-wide: 6.25rem; /* 100 */
 
-  /* Section vertical rhythm. Only two desktop values exist by rule:
-     130 on dark sections, 100 on light. Do not vary per section. */
+  /* Section vertical rhythm.
+     [SUPERSEDED by --spacing-section-* below] The four discrete steps are kept,
+     unreferenced, so the change is one line to revert. The rule they encoded —
+     "130 on dark, 100 on light, do not vary per section" — no longer holds; see
+     the fluid scale below for why. */
   --spacing-section-mobile: 4rem; /* 64 */
   --spacing-section-tablet: 5.5rem; /* 88 */
   --spacing-section-light: 6.25rem; /* 100 */
   --spacing-section-dark: 8.125rem; /* 130 */
+
+  /* -------------------------------------------------------------------------
+     Section rhythm — MEASURED from claritybusinesstravel.com, 2026-08-05.
+
+     The benchmark does not vary rhythm by surface. It has one value for a
+     normal section and two exceptions, and it applies them as spacer divs
+     before and after the section content rather than as padding. Verified
+     arithmetically on its second section: 144 + 506 + 144 = 794 exactly.
+
+     Omanga keeps padding rather than spacer divs — same rendered result, one
+     less empty element per section, and `Section` already owns the rhythm — but
+     takes the benchmark's values and its single-value-for-all-surfaces rule.
+
+     Consequence, recorded so it is not rediscovered in review: dark sections no
+     longer get more rhythm than light ones. That pairing was Omanga's own, not
+     the benchmark's, and keeping it would have made the page denser than the
+     reference in exactly the places the reference is most generous.
+
+     Each curve was solved from computed values sampled at 360 / 768 / 1024 /
+     1920 in a same-origin iframe. All four fit a linear ramp from 360px; `main`
+     reaches its maximum at 1920, the other three at 1440.
+
+       role        @360     @1920
+       small       49.14    80
+       main        66       144
+       large       90.56    160
+       page-top    116      224
+     ---------------------------------------------------------------------- */
+
+  /* The normal section. Every band on the homepage uses this. */
+  --spacing-section-main: clamp(4.125rem, 3rem + 5vw, 9rem);
+
+  /* A band that sits tighter than its neighbours — a strip rather than a
+     section. The partner logos are the only case on this page. */
+  --spacing-section-small: clamp(3.0713rem, 2.4286rem + 2.857vw, 5rem);
+
+  /* A band that needs more air than the rest. Reserved for the closing CTA,
+     which is the page's one full-bleed emphasis surface. */
+  --spacing-section-large: clamp(5.6602rem, 4.2136rem + 6.4286vw, 10rem);
+
+  /* Retained for the first band below a transparent header. Unreferenced today
+     — the Hero sets its own minimum height — but it is the benchmark's fourth
+     step and omitting it would leave the scale looking arbitrary. */
+  --spacing-section-page-top: clamp(7.25rem, 5rem + 10vw, 14rem);
 
   /* Measures — maximum line length for readable copy. */
   --spacing-measure-body: 47.25rem; /* 756 */
@@ -329,6 +376,16 @@
   --aspect-landscape: 4 / 3;
   --aspect-wide: 16 / 9;
 
+  /* [MEASURED] The benchmark's product-card art box is 3:2 — its own
+     `u-ratio-3-2`, rendering 408 x 272 inside a 456 card. Omanga's card art was
+     `aspect-square`, which is the one card dimension that did not come from the
+     reference: it was a normalisation of two disagreeing Figma readings
+     (491 x 478 and 491 x 482) taken before the reference was measured.
+
+     A square box is ~33% taller than 3:2 at the same width, which is most of why
+     the cards read as tall and the copy beneath them as cramped. */
+  --aspect-card: 3 / 2;
+
   /* Content column.
      [DEVIATES FROM FIGMA] design-system.md § Grid system says "Canvas 1440.
      Content column 1240. Page gutter 100", taken from the Omanga frame. This is
@@ -342,6 +399,47 @@
   --container-content: 95rem; /* 1520 */
   --container-track: 30.375rem; /* 486 — timeline / deep-dive track */
   --container-media-square: 42rem; /* 672 — deep-dive media plate */
+
+  /* Section heading measure.
+     [MEASURED from the structural benchmark] Every one of its section headings
+     carries `u-max-width-30ch`, which at its 52.8px h2 resolves to 881px. Omanga's
+     h2 tops out at 48, so the same 30 characters land at 800.
+
+     Expressed in px rather than `ch` because the cap is applied by the parent, and
+     the parent is at the root font size — a `ch` value there would resolve against
+     16px, not against the heading. The cap only does anything at the wide end,
+     where the h2 is at its 48 maximum, so a fixed value and a `ch` value are the
+     same measurement in the only place either is reachable.
+
+     Without this, a long section heading runs the full 1520 content column: the
+     deep-dive's heading sets 62 characters on one line, which is roughly twice the
+     line length the type scale is drawn for. */
+  --container-heading: 50rem; /* 800 — 30ch at the h2's 48 maximum */
+
+  /* Timeline block.
+     [MEASURED from the structural benchmark] Its timeline list is 1100 wide and
+     centred inside a 1424 container, and 1100 is not a chosen number — it is the
+     geometry adding up:
+
+       486 track + 48 gap + 32 rail + 48 gap + 486 track = 1100
+
+     Centring a 1100 block is what makes both sides' copy stop 48 short of the rail
+     at every width above 1100. Omanga previously ran a two-column grid across the
+     whole 1520 column, which put each side's copy at ~700 — half again the 486
+     track the token below already names — and left the two headings floating a
+     long way apart with the copy stretched thin between them. */
+  --container-timeline: 68.75rem; /* 1100 = 486 + 48 + 32 + 48 + 486 */
+
+  /* Hero action group, narrow screens only.
+     design-system.md § Breakpoints says "buttons full-width, stacked at 12 gap",
+     and full-width is what the hero shipped. At 360 that makes the primary 328
+     wide for a 21-character label — the control reads as a banner rather than a
+     button, and it changes width on every device.
+
+     Capped and centred instead, so the pair is one fixed size everywhere below
+     tablet and both buttons stay equal to each other. 288 is on the 4px grid and
+     leaves a 20 margin inside the 16 gutter at 360. */
+  --container-hero-actions: 18rem; /* 288 */
 
   /* Hero headline measure. The frame's `.frame(width: 1134)`.
      1134 is off the 4px grid, so it normalises to 1136 — which is 71rem exactly.
@@ -381,6 +479,31 @@
       minmax(0, 1fr)
     );
 
+  /* Timeline rail gutter. The benchmark's `about-timeline_circle-wrapper` is 2rem
+     wide and the rail and the marker are both centred inside it, so one value
+     positions the rail, the marker and the two column templates below. */
+  --spacing-rail: 2rem; /* 32 */
+
+  /* The timeline's two column templates.
+     [MEASURED] Desktop is the benchmark's `minmax(0,1fr) max-content minmax(0,1fr)`
+     with the rail column pinned to its real 32 rather than left to its content.
+     Narrow is the benchmark's own collapse: the rail moves to the leading edge and
+     the copy takes the rest of the row, both sides reading left to right.
+
+     Declared as tokens because a bare template in markup is exactly the arbitrary
+     value the system's rules exist to keep out — and because the desktop template
+     and --container-timeline have to agree or the copy stops hugging the rail. */
+  --grid-template-columns-timeline: minmax(0, 1fr) var(--spacing-rail)
+    minmax(0, 1fr);
+  --grid-template-columns-timeline-narrow: var(--spacing-rail) minmax(0, 1fr);
+
+  /* The travel of the timeline's scroll-progress fill.
+     [MEASURED from the structural benchmark] Its progress bar is 50vh tall and is
+     pulled up by exactly its own height, which is what makes the fill land on the
+     vertical centre of the viewport. See `TimelineConnector` for how the two
+     values combine; they are a matched pair and neither is meaningful alone. */
+  --spacing-rail-progress: 50vh;
+
   /* ===========================================================================
      RADIUS
      Six tokens. ⚠ Figma contains 8, 9, 10, 12, 15, 16, 40, 50, 100, 1822,
@@ -402,6 +525,17 @@
      ⚠ Zero-value shadows on the timeline dots are Figma artifacts — omitted.
      ========================================================================= */
   --shadow-elevated: 0 12px 24px rgb(0 0 0 / 0.1);
+
+  /* Not an elevation. A ring of the page surface around the timeline marker, so
+     the rail and the progress fill running behind it are broken rather than
+     drawn straight through the dot.
+
+     [MEASURED] The benchmark's marker carries `0 0 0 8px` of its own background
+     for the same reason. It is a shadow only in the sense that `box-shadow` is
+     the property that paints an outer ring without affecting layout — a border
+     would grow the 16 dot, and an outline would not follow the radius on every
+     engine. */
+  --shadow-rail-break: 0 0 0 8px var(--color-surface-page);
 
   /* ===========================================================================
      Z-INDEX
@@ -425,10 +559,25 @@
      ========================================================================= */
   --ease-standard: cubic-bezier(0, 0, 0.2, 1); /* ease-out */
 
+  /* [MEASURED] The benchmark's two authored easings, read out of its Webflow
+     interaction data rather than inferred from the rendered result.
+
+     `--ease-entrance` is its `outSine`. Against --ease-standard it leaves its
+     start position more gently and settles later, which is the whole difference
+     between a reveal that snaps and one that arrives. --ease-standard stays as
+     it is: it is the hover/state curve, and the benchmark uses plain `ease` at
+     200ms there, which --ease-standard already improves on.
+
+     `--ease-dropdown` is its `outCirc` — a much steeper deceleration, correct
+     for a panel that has to cover distance and stop dead. */
+  --ease-entrance: cubic-bezier(0.39, 0.575, 0.565, 1); /* outSine */
+  --ease-dropdown: cubic-bezier(0.075, 0.82, 0.165, 1); /* outCirc */
+
   --duration-standard: 200ms; /* hover, focus, fill and border changes */
   --duration-underline: 250ms; /* active tab underline slide */
-  --duration-emphasis: 300ms; /* tab panel change, accordion expand */
-  --duration-entrance: 400ms; /* one-shot entrance on intersection */
+  --duration-emphasis: 300ms; /* tab panel change, accordion expand, menu */
+  /* [MEASURED] 400ms -> 500ms. The benchmark's reveal duration. */
+  --duration-entrance: 500ms; /* one-shot entrance on intersection */
   --duration-counter: 1200ms; /* stat count-up, once on first view */
 
   /* Partner-strip drift, for one full pass of the logo set.
@@ -441,8 +590,19 @@
      to its start every 10s. */
   --duration-marquee: 20s;
 
-  --motion-entrance-offset: 1rem; /* 16px upward translate */
+  /* [MEASURED] 1rem -> 2.5rem. The benchmark reveals from `translateY(40px)`.
+     16px is close enough to the final position that the motion reads as a
+     flicker; 40px is far enough to read as an arrival. This is the single
+     largest contributor to the difference in perceived polish. */
+  --motion-entrance-offset: 2.5rem; /* 40px upward translate */
   --motion-stagger-step: 80ms; /* between siblings */
+
+  /* [MEASURED] The benchmark holds each reveal 200ms after it is triggered.
+     The delay is what stops a band of siblings all firing the instant the
+     section's top edge crosses the threshold, and it is why its reveals read as
+     deliberate rather than reactive. Applied on top of the stagger, not instead
+     of it. */
+  --motion-entrance-delay: 200ms;
 
   /* ===========================================================================
      FOCUS

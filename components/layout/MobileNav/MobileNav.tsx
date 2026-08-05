@@ -179,16 +179,28 @@ export function MobileNav({
           */
           "border-t border-border-field bg-surface-page px-5 py-6",
           "desktop:hidden",
-          "transition-emphasis",
           /*
-            Transform and opacity only, per the motion rules. Under
-            `prefers-reduced-motion` the global policy collapses the duration, so
-            the panel appears and disappears instantly with its final state
-            intact — nothing is gated on the animation running.
+            [MEASURED from the structural benchmark] Its menu panels open over
+            300ms on `outCirc`, wiping downward as they fade in.
+
+            `transition-menu` carries both, replacing `transition-emphasis`. Same
+            duration — 300ms was already the token — but the curve is the
+            benchmark's, and a wipe is added to the fade. `outCirc` decelerates far
+            harder than `--ease-standard`, which is what makes a panel of this size
+            arrive and stop rather than drift into place.
+
+            The benchmark animates `height` to produce the wipe. `clip-path` gives
+            the same result on the compositor without touching layout, and without
+            needing the panel's height known in advance. See the utility.
+
+            Under `prefers-reduced-motion` the global policy collapses the
+            duration, so the panel appears and disappears instantly with its final
+            state intact — nothing is gated on the animation running.
           */
+          "transition-menu",
           isOpen
-            ? "translate-y-0 opacity-100"
-            : "-translate-y-2 opacity-0",
+            ? "menu-expanded translate-y-0 opacity-100"
+            : "menu-collapsed -translate-y-2 opacity-0",
         )}
       >
         {/*

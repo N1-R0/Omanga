@@ -103,12 +103,23 @@ export function HeroContent({
         </Text>
 
         {/*
-          Full width so the actions can go full-width on mobile. The parent Stack
-          centres its children, which would otherwise shrink the button row to its
-          content and defeat "buttons full-width, stacked" at the narrow
-          breakpoint. `HeroActions` re-centres the row itself from tablet up.
+          The actions' own width, which the parent Stack cannot supply: `align`
+          centres its children but shrinks them to their content, so the stacked
+          buttons need a width from somewhere before `align="stretch"` inside
+          `HeroActions` has anything to stretch to.
+
+          Capped at `--container-hero-actions` (288) below tablet rather than left at
+          the full column. design-system.md § Breakpoints says "buttons full-width,
+          stacked at 12 gap", and full-width is what shipped — but at 360 that makes
+          the primary 328 wide for a 21-character label, so the control reads as a
+          banner and its width changes on every device. A fixed cap keeps the pair
+          one size everywhere below tablet and keeps the two buttons equal to each
+          other, which stretching to a fluid column never did.
+
+          `mx-auto` centres the capped group; from tablet up the cap is released and
+          `HeroActions` re-centres the row as a row.
         */}
-        <div className="w-full">
+        <div className="mx-auto w-full max-w-hero-actions tablet:max-w-none">
           <HeroActions actions={actions} />
         </div>
 

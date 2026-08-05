@@ -5,7 +5,15 @@ import type { ReactNode } from "react";
 
 import { MOTION } from "@/lib/motion";
 
-const VISIBILITY_THRESHOLD = 0.15;
+/**
+ * [MEASURED] The benchmark starts its reveals as the element's top edge clears
+ * the bottom of the viewport, not once 15% of it is already showing. On a tall
+ * block — a card, a comparison column — 15% can be several hundred pixels, which
+ * means the reveal begins well after the element is on screen and the user
+ * watches it happen. A margin-based trigger fires just before the element is
+ * visible, so the motion is finishing as it arrives.
+ */
+const VIEWPORT_MARGIN = "0px 0px -10% 0px";
 
 export type RevealProps = {
   children: ReactNode;
@@ -25,11 +33,11 @@ export function Reveal({ children, index = 0 }: RevealProps) {
     <motion.div
       initial={{ opacity: 0, y: MOTION.entranceOffset }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: VISIBILITY_THRESHOLD }}
+      viewport={{ once: true, margin: VIEWPORT_MARGIN }}
       transition={{
         duration: MOTION.durationEntrance,
-        ease: MOTION.easeStandard,
-        delay: index * MOTION.staggerStep,
+        ease: MOTION.easeEntrance,
+        delay: MOTION.entranceDelay + index * MOTION.staggerStep,
       }}
     >
       {children}

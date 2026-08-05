@@ -70,8 +70,14 @@ export type CTAProps = {
 };
 
 export function CTA({ content, headingId }: CTAProps) {
+  /*
+    `rhythm="loose"` — the page's one full-bleed emphasis band. Rhythm is no
+    longer inferred from the brand surface (see `Section`), so the band that
+    needs the most air now asks for it. The benchmark reserves its
+    `section-space--large` step for exactly this case.
+  */
   return (
-    <Section labelledBy={headingId} tone="brand">
+    <Section labelledBy={headingId} tone="brand" rhythm="loose">
       <div className="relative">
         <CTAGraphics graphic={content.graphic} />
 

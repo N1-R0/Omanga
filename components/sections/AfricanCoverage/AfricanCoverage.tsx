@@ -1,4 +1,5 @@
 import { Section } from "@/components/layout/Section";
+import { Reveal } from "@/components/ui/Reveal";
 import type { AfricanCoverageContent } from "@/content/coverage.content";
 
 import { CoverageContent } from "./CoverageContent";
@@ -103,18 +104,31 @@ export function AfricanCoverage({ content, headingId }: AfricanCoverageProps) {
         bury it.
       */}
       <div className="grid gap-10 wide:gap-0">
+        {/*
+          MOTION. `Reveal` sits *inside* each cell, not around it. At wide both
+          cells are placed into the same grid slot to produce the overlap, so a
+          wrapper outside them would become the grid item and the two would stop
+          sharing a cell — the arch would drop below the text.
+
+          The flags follow the text by one stagger step, matching the DOM order,
+          which is also the order the section reads in.
+        */}
         <div className="wide:col-start-1 wide:row-start-1 wide:pt-34">
-          <CoverageContent
-            eyebrow={content.eyebrow}
-            heading={content.heading}
-            headingId={headingId}
-            intro={content.intro}
-            action={content.action}
-          />
+          <Reveal index={0}>
+            <CoverageContent
+              eyebrow={content.eyebrow}
+              heading={content.heading}
+              headingId={headingId}
+              intro={content.intro}
+              action={content.action}
+            />
+          </Reveal>
         </div>
 
         <div className="wide:col-start-1 wide:row-start-1">
-          <FlagCluster flags={content.flags} label={content.flagsLabel} />
+          <Reveal index={1}>
+            <FlagCluster flags={content.flags} label={content.flagsLabel} />
+          </Reveal>
         </div>
       </div>
     </Section>

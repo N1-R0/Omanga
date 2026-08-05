@@ -34,12 +34,17 @@ import type { ImageAsset } from "@/types/content.types";
  * shared component for the card-art case.
  *
  * ---------------------------------------------------------------------------
- * The box is square and locked before load, so nothing reflows. Figma draws it
- * at 491 × 478 on the insurance card and 491 × 482 on the payments card — two
- * readings of the same box, three per cent apart, on a card whose siblings must
- * be equal height. One square ratio is the systematic answer to that, and it is
+ * The box has a fixed ratio and is locked before load, so nothing reflows. Figma
+ * draws it at 491 × 478 on the insurance card and 491 × 482 on the payments card
+ * — two readings of the same box, three per cent apart, on a card whose siblings
+ * must be equal height. One ratio is the systematic answer to that, and it is
  * why there is no ratio prop: a caller that could choose could make the two
  * cards' art disagree.
+ *
+ * [MEASURED] That ratio is now 3:2 (`--aspect-card`), not square. Figma's two
+ * near-square readings were normalised before the structural benchmark was
+ * measured; the benchmark's card art is unambiguously 3:2, rendering 408 × 272
+ * inside a 456 card. The square box is most of why the cards read as tall.
  */
 
 /**
@@ -76,14 +81,30 @@ import type { ImageAsset } from "@/types/content.types";
  * pass-through behaviour staying the same across versions — the same reasoning
  * `Logo` already applies to the brand mark.
  */
+/**
+ * [MEASURED — insets rescaled for the 3:2 box]
+ *
+ * The box was `aspect-square`; it is now `aspect-card` (3:2), which is the
+ * benchmark's own card-art ratio. A 3:2 box is a third shorter than a square one
+ * at the same width, so the vertical insets carried over from the square box no
+ * longer leave room for the artwork:
+ *
+ *   illustration  48 top + 48 bottom of a 406-wide square (406 tall) -> 75% left
+ *                 the same 96 total of a 271-tall 3:2 box            -> 65% left
+ *
+ * The illustration therefore drops to the 32 step vertically and keeps 48
+ * horizontally, so the artwork keeps roughly the proportion of the box it had
+ * before. The device mockup's top inset scales with the box for the same reason —
+ * 80 of a 271-tall box would have pushed the phone almost entirely out of frame.
+ */
 const PRESENTATION = {
   illustration: {
-    box: "p-8 tablet:p-12",
+    box: "p-6 tablet:px-12 tablet:py-8",
     image: "size-full object-contain",
     isUnoptimized: true,
   },
   device: {
-    box: "px-6 pt-12 tablet:px-10 tablet:pt-20",
+    box: "px-6 pt-8 tablet:px-10 tablet:pt-12",
     image: "h-auto w-full",
     isUnoptimized: false,
   },
@@ -111,7 +132,7 @@ export function SolutionIllustration({
   const { box, image: imageClass, isUnoptimized } = PRESENTATION[presentation];
 
   return (
-    <div className={cx("aspect-square w-full overflow-hidden", box)}>
+    <div className={cx("aspect-card w-full overflow-hidden", box)}>
       <Image
         src={image.src}
         alt={image.alt}

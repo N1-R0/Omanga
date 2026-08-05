@@ -16,7 +16,11 @@
    ========================================================================== */
 
 @theme {
-  --animate-entrance: entrance var(--duration-entrance) var(--ease-standard) both;
+  /* `--ease-entrance`, not `--ease-standard`: the benchmark's reveal curve is
+     `outSine`, which is a gentler departure and a later settle than the
+     hover/state curve. See the token for the measurement. */
+  --animate-entrance: entrance var(--duration-entrance) var(--ease-entrance)
+    both;
   --animate-marquee: marquee var(--duration-marquee) linear infinite;
 }
 
@@ -43,7 +47,11 @@
 @utility animate-entrance {
   animation: var(--animate-entrance);
   animation-play-state: paused;
-  animation-delay: calc(var(--motion-index, 0) * var(--motion-stagger-step));
+  /* The benchmark's 200ms hold, plus this element's place in the stagger. */
+  animation-delay: calc(
+    var(--motion-entrance-delay) + var(--motion-index, 0) *
+      var(--motion-stagger-step)
+  );
 
   &[data-visible="true"] {
     animation-play-state: running;
@@ -149,6 +157,38 @@
   transition-property: transform;
   transition-duration: var(--duration-underline);
   transition-timing-function: var(--ease-standard);
+}
+
+/* -----------------------------------------------------------------------------
+   Menu / dropdown reveal
+   [MEASURED from the structural benchmark] Its menu panels open over 300ms on
+   `outCirc`, wiping downward while fading in.
+
+   [DEVIATES IN TECHNIQUE, NOT IN EFFECT] The benchmark animates `height`
+   (1px -> 185px, its Webflow `STYLE_SIZE` action). That is a layout-triggering
+   property, which rule 1 of the motion system forbids outright and which the
+   polish brief's performance section also rules out. `clip-path` produces the
+   same downward wipe on the compositor, costs no layout, and — unlike a height
+   animation — does not need the panel's height to be known in advance.
+
+   Paired with `opacity` and a short `translateY` so the panel arrives rather
+   than merely uncovering. `transform` is listed for the translate; no size or
+   position property appears here.
+   -------------------------------------------------------------------------- */
+@utility transition-menu {
+  transition-property: clip-path, opacity, transform;
+  transition-duration: var(--duration-emphasis);
+  transition-timing-function: var(--ease-dropdown);
+}
+
+/* The closed and open ends of the wipe, named so neither is written as an
+   arbitrary `clip-path-[...]` at a call site. */
+@utility menu-collapsed {
+  clip-path: inset(0 0 100% 0);
+}
+
+@utility menu-expanded {
+  clip-path: inset(0 0 0 0);
 }
 
 /* -----------------------------------------------------------------------------

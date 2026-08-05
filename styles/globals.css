@@ -54,7 +54,16 @@
     /* Guarantee the 320px reflow requirement (WCAG 1.4.10) can never be broken
        by a single wide child. */
     min-inline-size: var(--viewport-min);
-    overflow-x: hidden;
+    /* `clip`, not `hidden`. Both suppress horizontal overflow and both leave the
+       timeline's scroll-progress fill working in current Chrome — measured, not
+       assumed. The difference is what they mean: `hidden` makes the body a scroll
+       container, which puts a second scrollport between a `position: sticky`
+       descendant and the page, and engines have not always agreed on which one
+       wins. `clip` suppresses the overflow without creating a scrollport at all,
+       so there is nothing to disagree about.
+
+       Only a guard either way — nothing on the page overflows horizontally. */
+    overflow-x: clip;
   }
 
   /* Media defaults — every box declares its own ratio, but these stop an

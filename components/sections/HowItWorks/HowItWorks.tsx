@@ -24,9 +24,20 @@ export function HowItWorks({ content, headingId }: HowItWorksProps) {
           <Stack gap="lg" align="center">
             <Badge tone={SECTION_TONE}>{content.eyebrow}</Badge>
 
-            <Heading id={headingId} level="h2" role="section">
-              {content.heading}
-            </Heading>
+            {/*
+              [MEASURED] Capped at `--container-heading` (800), which is the
+              benchmark's `u-max-width-30ch` on every one of its section headings
+              solved at Omanga's 48 h2. Uncapped, a long heading sets one line
+              across the whole 1520 column — roughly twice the measure the type
+              scale is drawn for. The cap is a wrapper because measure is a layout
+              decision the parent owns and `Heading` takes no `className`; the
+              Stack's `align="center"` is what centres it.
+            */}
+            <div className="max-w-heading">
+              <Heading id={headingId} level="h2" role="section">
+                {content.heading}
+              </Heading>
+            </div>
 
             <Text role="body" measure="narrow" isSecondary>
               {content.intro}

@@ -93,9 +93,17 @@ export function CoverageContent({
               {eyebrow}
             </p>
 
-            <Heading id={headingId} level="h2" role="section">
-              {heading}
-            </Heading>
+            {/*
+              [MEASURED] Capped at `--container-heading` (800) — the benchmark's
+              `u-max-width-30ch` solved at Omanga's 48 h2, applied to every centred
+              section heading on the page so none of them can run the full 1520
+              column on one line.
+            */}
+            <div className="max-w-heading">
+              <Heading id={headingId} level="h2" role="section">
+                {heading}
+              </Heading>
+            </div>
           </Stack>
 
           <Text role="body" measure="narrow" isSecondary>

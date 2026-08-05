@@ -85,9 +85,18 @@ export function WhyOmanga({ content, headingId }: WhyOmangaProps) {
         <div className="text-center">
           <Stack gap="xl" align="center">
             <Reveal index={0}>
-              <Heading id={headingId} level="h2" role="section">
-                {content.heading}
-              </Heading>
+              {/*
+                [MEASURED] Capped at `--container-heading` (800) — the benchmark's
+                `u-max-width-30ch` solved at Omanga's 48 h2. Short enough today
+                that the cap is inert, and applied anyway so the four centred
+                section headings share one measure and a copy edit cannot make one
+                of them the exception.
+              */}
+              <div className="max-w-heading">
+                <Heading id={headingId} level="h2" role="section">
+                  {content.heading}
+                </Heading>
+              </div>
             </Reveal>
 
             <Reveal index={1}>

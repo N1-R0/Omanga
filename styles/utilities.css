@@ -114,6 +114,30 @@
 }
 
 /* -----------------------------------------------------------------------------
+   Rail clip
+   The timeline's scroll-progress fill is a sticky bar pulled up by its own
+   height, so in its resting position it overhangs the top of the rail by 50vh.
+   That overhang has to be hidden, and the property used to hide it is load
+   bearing:
+
+     overflow: hidden   makes the rail a scroll container, and a sticky element
+                        sticks to its nearest scrollport — so the bar would stop
+                        tracking the viewport and the fill would never move.
+     clip-path          clips the same region, creates no scroll container, and
+                        leaves the sticky offset computed against the page.
+
+   The benchmark solves it a third way, with an opaque 50vh block absolutely
+   positioned above the rail. That block is 32 wide and unclipped, so it paints
+   over whatever sits within half a viewport above the timeline — which is why
+   its heading block carries a z-index at all. Clipping removes the overhang
+   instead of covering it, so nothing above the section has to know the rail
+   exists.
+   -------------------------------------------------------------------------- */
+@utility clip-rail {
+  clip-path: inset(0);
+}
+
+/* -----------------------------------------------------------------------------
    Visually hidden
    For accessible names that must not render — skip-link targets, live-region
    status text, icon-only control labels. Content stays in the accessibility
@@ -164,29 +188,32 @@
 
 /* -----------------------------------------------------------------------------
    Section rhythm
-   Two desktop values only — 130 on dark, 100 on light — with the mobile and
-   tablet steps from the breakpoint table. Owned by the Section primitive.
+   [MEASURED from the structural benchmark] One value for every surface, applied
+   as a fluid clamp rather than three breakpoint steps.
+
+   The previous pair — 100 on light, 130 on dark, stepped at tablet and desktop —
+   is gone. Two reasons, both from the measurement:
+
+     1. The benchmark does not vary rhythm by surface at all. Its light and dark
+        bands take the same spacer. Omanga's light/dark split was its own
+        invention, and it was what made the light sections read as tighter than
+        the reference while the dark ones read as looser.
+     2. Three discrete steps meant three widths at which the rhythm was
+        momentarily wrong. The benchmark ramps continuously from 360 to 1920, so
+        density tracks the viewport instead of jumping at 768 and 1024.
+
+   Owned by the Section primitive. No component sets its own vertical rhythm.
    -------------------------------------------------------------------------- */
-@utility section-rhythm-light {
-  padding-block: var(--spacing-section-mobile);
-
-  @media (width >= theme(--breakpoint-tablet)) {
-    padding-block: var(--spacing-section-tablet);
-  }
-
-  @media (width >= theme(--breakpoint-desktop)) {
-    padding-block: var(--spacing-section-light);
-  }
+@utility section-rhythm {
+  padding-block: var(--spacing-section-main);
 }
 
-@utility section-rhythm-dark {
-  padding-block: var(--spacing-section-mobile);
+/* A strip rather than a section — the partner logos. */
+@utility section-rhythm-tight {
+  padding-block: var(--spacing-section-small);
+}
 
-  @media (width >= theme(--breakpoint-tablet)) {
-    padding-block: var(--spacing-section-tablet);
-  }
-
-  @media (width >= theme(--breakpoint-desktop)) {
-    padding-block: var(--spacing-section-dark);
-  }
+/* The page's one full-bleed emphasis band — the closing CTA. */
+@utility section-rhythm-loose {
+  padding-block: var(--spacing-section-large);
 }

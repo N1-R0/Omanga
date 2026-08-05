@@ -1,5 +1,6 @@
 import { Section } from "@/components/layout/Section";
 import { Stack } from "@/components/layout/Stack";
+import { Reveal } from "@/components/ui/Reveal";
 import type { TrustPartnersContent } from "@/content/trust.content";
 
 import { PartnerLogos } from "./PartnerLogos";
@@ -63,15 +64,29 @@ export type TrustPartnersProps = {
 };
 
 export function TrustPartners({ content, headingId }: TrustPartnersProps) {
+  /*
+    `rhythm="tight"` — this is a strip, not a section. The benchmark gives its
+    equivalent logo band its `section-space--small` step rather than the full
+    one, which is what keeps a single row of logos from occupying as much
+    vertical space as a section with a heading, copy and cards in it.
+  */
   return (
-    <Section labelledBy={headingId} tone="light">
-      <Stack gap="2xl">
-        <h2 id={headingId} className="font-ui text-caption text-secondary">
-          {content.label}
-        </h2>
+    <Section labelledBy={headingId} tone="light" rhythm="tight">
+      {/*
+        MOTION. One reveal for the whole strip rather than one per logo. The
+        marquee already moves the logos on narrow viewports, and staggering ten
+        entrances underneath a continuous drift reads as noise — which is exactly
+        the "never distracting" line the brief draws.
+      */}
+      <Reveal>
+        <Stack gap="2xl">
+          <h2 id={headingId} className="font-ui text-caption text-secondary">
+            {content.label}
+          </h2>
 
-        <PartnerLogos partners={content.partners} />
-      </Stack>
+          <PartnerLogos partners={content.partners} />
+        </Stack>
+      </Reveal>
     </Section>
   );
 }

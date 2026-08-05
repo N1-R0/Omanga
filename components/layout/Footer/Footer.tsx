@@ -68,7 +68,7 @@ export function Footer({
   homeLabel,
 }: FooterProps) {
   return (
-    <footer className="section-rhythm-dark bg-ink text-on-dark">
+    <footer className="section-rhythm bg-ink text-on-dark">
       <Container>
         {/*
           Mobile is one column, tablet splits the four link columns into two, and

@@ -29,20 +29,27 @@ const TONE_SURFACE: Readonly<Record<Tone, string>> = {
 } as const;
 
 /**
- * Vertical rhythm per tone.
+ * Vertical rhythm.
  *
- * "Vertical section padding is 130 on dark sections, 92–100 on light. Do not
- * vary per section beyond this pair."
+ * [MEASURED from the structural benchmark] Rhythm is no longer a function of
+ * tone. The benchmark applies the same vertical space to its light and dark
+ * bands alike and reserves its two other steps for bands that are structurally
+ * different — a strip, or the closing emphasis band — not for bands that are
+ * merely a different colour.
  *
- * [DECISION] The brand CTA band is neither of the two cases the rule names.
- * It takes the dark rhythm, because it is a full-bleed emphasis band and
- * reading it as a light section would make it the shortest block on the page.
- * Pending design confirmation.
+ * So the old `Record<Tone, string>` is gone: keying rhythm by surface is what
+ * produced the mismatch this phase is correcting. A section that genuinely needs
+ * a different step now says so with `rhythm`, and the default covers every band
+ * on the homepage but two.
  */
-const TONE_RHYTHM: Readonly<Record<Tone, string>> = {
-  light: "section-rhythm-light",
-  dark: "section-rhythm-dark",
-  brand: "section-rhythm-dark",
+type Rhythm = "default" | "tight" | "loose";
+
+const RHYTHM_CLASS: Readonly<Record<Rhythm, string>> = {
+  default: "section-rhythm",
+  /** A strip rather than a section — the partner logos. */
+  tight: "section-rhythm-tight",
+  /** The page's one full-bleed emphasis band — the closing CTA. */
+  loose: "section-rhythm-loose",
 } as const;
 
 export type SectionProps = {
@@ -57,14 +64,24 @@ export type SectionProps = {
   labelledBy: string;
   /** The surface this section paints. Passed explicitly, never inferred. */
   tone: Tone;
+  /**
+   * Vertical rhythm. Defaults to the one value every normal band takes, so a
+   * section only names this when it is structurally not a normal band.
+   */
+  rhythm?: Rhythm;
   children: ReactNode;
 };
 
-export function Section({ labelledBy, tone, children }: SectionProps) {
+export function Section({
+  labelledBy,
+  tone,
+  rhythm = "default",
+  children,
+}: SectionProps) {
   return (
     <section
       aria-labelledby={labelledBy}
-      className={cx(TONE_SURFACE[tone], TONE_RHYTHM[tone])}
+      className={cx(TONE_SURFACE[tone], RHYTHM_CLASS[rhythm])}
     >
       <Container>{children}</Container>
     </section>

@@ -109,9 +109,16 @@ export function Card({
     action !== undefined;
 
   return (
-    // 24 between regions, which is the heading-to-body step. Rows *within* the
-    // body sit at 16 and are the body's own Stack to space, not the card's.
-    <div className={cx("flex h-full flex-col gap-6", VARIANT_CLASS[variant])}>
+    /*
+      [MEASURED] 32 between the art and the copy block, not 24.
+
+      The benchmark's card puts `margin-bottom: 32` under its art box and 24
+      between the rows inside the copy block. One `gap-6` for both — the previous
+      behaviour — spaced the art exactly as tightly as two lines of text, which is
+      what made the art read as part of the copy rather than as the card's
+      subject. The copy block below keeps 24 for its own rows.
+    */
+    <div className={cx("flex h-full flex-col gap-8", VARIANT_CLASS[variant])}>
       {media}
 
       {/*
@@ -134,7 +141,15 @@ export function Card({
         stretched grid cell.
       */}
       {hasCopy && (
-        <div className={cx("flex flex-col gap-6", hasMedia && "mt-auto")}>
+        /*
+          [MEASURED] 32 above the action, 24 between the text rows.
+
+          The benchmark gives its action group `margin-top: 32` while the rows
+          above it sit at 24. That is two different relationships, so it is two
+          groups here rather than one gap value doing both jobs — which is also
+          what keeps the action from reading as one more line of copy.
+        */
+        <div className={cx("flex flex-col gap-8", hasMedia && "mt-auto")}>
           {/*
             The eyebrow and the action are wrapped; the heading and body are not.
 
@@ -150,9 +165,12 @@ export function Card({
             two: `heading` and `body` need to fill the card so their text wraps
             at the card's edge rather than at its longest word.
           */}
-          {eyebrow !== undefined && <div>{eyebrow}</div>}
-          {heading}
-          {body}
+          <div className="flex flex-col gap-6">
+            {eyebrow !== undefined && <div>{eyebrow}</div>}
+            {heading}
+            {body}
+          </div>
+
           {action !== undefined && <div>{action}</div>}
         </div>
       )}

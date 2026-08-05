@@ -31,10 +31,14 @@ export function HeroActions({ actions }: HeroActionsProps) {
 
   return (
     /*
-      Mobile: a full-width stack. design-system.md § Breakpoints is specific —
-      "Buttons full-width, stacked at 12 gap" — and `align="stretch"` is how the
-      buttons fill the column without either of them knowing it should, since
+      Mobile: a stacked pair at 12 gap, per design-system.md § Breakpoints, with
+      `align="stretch"` filling the width without either button knowing it should —
       `Button` deliberately has no `fullWidth` prop.
+
+      "Full-width" is now the width of the capped group `HeroContent` provides
+      rather than the width of the whole column. Both buttons still come out equal,
+      which is the part of the rule that matters; what changed is that the size no
+      longer varies with the viewport or the label.
 
       Tablet and up: a centred row. `justify="center"` matches the Figma frame,
       whose whole content stack is centre-aligned.

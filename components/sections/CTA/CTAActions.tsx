@@ -57,12 +57,10 @@ import type { CallToAction } from "@/types/content.types";
  */
 
 export type CTAActionsProps = {
-  actions: readonly [CallToAction, CallToAction];
+  action: CallToAction;
 };
 
-export function CTAActions({ actions }: CTAActionsProps) {
-  const [primary, secondary] = actions;
-
+export function CTAActions({ action }: CTAActionsProps) {
   return (
     /*
       Mobile: a full-width stack. § Breakpoints is specific — "Buttons full-width,
@@ -76,22 +74,12 @@ export function CTAActions({ actions }: CTAActionsProps) {
     <Stack direction="column-to-row" gap="sm" align="stretch" justify="start">
       <Button
         as="link"
-        variant={primary.emphasis}
+        variant={action.emphasis}
         tone="brand"
-        href={primary.href}
-        isExternal={primary.isExternal}
+        href={action.href}
+        isExternal={action.isExternal}
       >
-        {primary.label}
-      </Button>
-
-      <Button
-        as="link"
-        variant={secondary.emphasis}
-        tone="brand"
-        href={secondary.href}
-        isExternal={secondary.isExternal}
-      >
-        {secondary.label}
+        {action.label}
       </Button>
     </Stack>
   );

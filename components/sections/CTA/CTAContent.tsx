@@ -1,6 +1,7 @@
 import { Stack } from "@/components/layout/Stack";
 import { Heading } from "@/components/ui/Heading";
 import { Reveal } from "@/components/ui/Reveal";
+import { Text } from "@/components/ui/Text";
 import type { CallToAction } from "@/types/content.types";
 
 import { CTAActions } from "./CTAActions";
@@ -52,21 +53,31 @@ export type CTAContentProps = {
   heading: string;
   /** The id the section's `aria-labelledby` points at. */
   headingId: string;
-  actions: readonly [CallToAction, CallToAction];
+  intro: string;
+  action: CallToAction;
 };
 
-export function CTAContent({ heading, headingId, actions }: CTAContentProps) {
+export function CTAContent({
+  heading,
+  headingId,
+  intro,
+  action,
+}: CTAContentProps) {
   return (
     <div className="relative measure-feature">
       <Stack gap="xl">
         <Reveal index={0}>
-          <Heading id={headingId} level="h2" role="section">
-            {heading}
-          </Heading>
+          <Stack gap="lg">
+            <Heading id={headingId} level="h2" role="section">
+              {heading}
+            </Heading>
+
+            <Text role="body">{intro}</Text>
+          </Stack>
         </Reveal>
 
         <Reveal index={1}>
-          <CTAActions actions={actions} />
+          <CTAActions action={action} />
         </Reveal>
       </Stack>
     </div>

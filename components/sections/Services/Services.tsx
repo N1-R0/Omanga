@@ -65,8 +65,6 @@ export function Services({ content, headingId }: ServicesProps) {
             <Heading id={headingId} level="h2" role="section">
               {content.heading}
             </Heading>
-
-            <Text role="body">{content.intro}</Text>
           </Stack>
         }
         services={services}

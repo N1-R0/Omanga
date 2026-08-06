@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { JsonLd } from "@/components/seo/JsonLd";
 import { AfricanCoverage } from "@/components/sections/AfricanCoverage";
 import { CTA } from "@/components/sections/CTA";
 import { Hero } from "@/components/sections/Hero";
@@ -36,45 +37,48 @@ import {
   WHY_OMANGA_HEADING_ID,
   whyOmangaContent,
 } from "@/content/why-omanga.content";
+import { SITE_LOCALE, SITE_NAME } from "@/config/site";
+import { buildPageGraph } from "@/lib/schema";
+import type { PageMetaContent } from "@/types/content.types";
 
 /**
- * Foundation smoke check — a development surface, not a page of the site.
- *
- * It exists for two reasons:
- *
- *   1. It gives the `(redesign)` root layout a route, so the layout is
- *      actually exercised by the build instead of sitting inert.
- *   2. It renders the token layer, both font families and every primitive
- *      that has one, so a design review can check colour, type scale, spacing
- *      and focus behaviour in a browser before any real section is built.
- *
- * Phase 3 renders the real Hero section at the top of this route so it can be
- * reviewed in a browser without creating `app/(redesign)/page.tsx` — mounting the
- * homepage is a routing decision belonging to the cutover phase, not to a section
- * build. Everything below the Hero remains the primitive smoke check.
- *
- * At cutover the homepage moves to `app/(redesign)/page.tsx`, that page replaces
- * `app/(legacy)/page.tsx`, and this route is deleted.
- *
- * Deliberately carries no marketing copy. Every string below names the thing
- * it is demonstrating — nothing here is drafted, and nothing is a placeholder
- * for approved copy.
+ * Homepage metadata. Values from the redesign spec § 5.2, with the two
+ * corrections project-context.md § Non-negotiable copy facts requires: the
+ * country count is 43, not the spec's 52, and the spec's "Travel Money Card"
+ * becomes "Travel Money Wallet" because Omanga issues no card.
  */
-
-export const metadata: Metadata = {
-  title: "Foundation preview",
-  // Thin, internal, and temporary. It must never be indexed or followed.
-  robots: { index: false, follow: false },
+const homeMeta: PageMetaContent = {
+  title: "Travel Money Wallet & Holiday Insurance for Africa | Omanga",
+  description:
+    "Fund a multi-currency Omanga wallet in USD, GBP or CAD, spend across 43 African countries, and add short-term holiday health insurance in one account.",
+  path: "/",
 };
 
-export default function FoundationPreviewPage() {
+export const metadata: Metadata = {
+  title: { absolute: homeMeta.title },
+  description: homeMeta.description,
+  alternates: { canonical: homeMeta.path },
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: "website",
+    url: homeMeta.path,
+    siteName: SITE_NAME,
+    locale: SITE_LOCALE,
+    title: homeMeta.title,
+    description: homeMeta.description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: homeMeta.title,
+    description: homeMeta.description,
+  },
+};
+
+export default function HomePage() {
   return (
     <>
-      {/*
-        The real Hero. It owns the page's single `h1`, which is why the smoke
-        check below now opens at `h2` — two `h1`s would break the outline and the
-        "exactly one H1" rule the SEO plan sets out.
-      */}
+      <JsonLd graph={buildPageGraph(homeMeta)} />
+
       <Hero content={heroContent} headingId={HERO_HEADING_ID} />
 
       {/*

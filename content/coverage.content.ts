@@ -1,4 +1,3 @@
-import { PRIMARY_CTA } from "@/content/site.content";
 import type {
   CallToAction,
   Eyebrow,
@@ -104,8 +103,10 @@ const COVERAGE_FLAGS: readonly ImageAsset[] = [
  * stub is a routing task, tracked there.
  */
 const COVERAGE_ACTION: CallToAction = {
-  ...PRIMARY_CTA,
+  label: "See all countries",
+  href: "/coverage",
   emphasis: "text",
+  isRoutePending: true,
 } as const;
 
 export type AfricanCoverageContent = {

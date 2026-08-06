@@ -89,6 +89,33 @@
   }
 }
 
+/* -----------------------------------------------------------------------------
+   Hero Ken Burns
+   A slow scale push on the hero photograph. Transform only, so it stays on the
+   compositor and never triggers layout. `forwards` holds the final scale rather
+   than snapping back, which would read as a loop.
+   -------------------------------------------------------------------------- */
+@keyframes hero-pan {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(var(--motion-hero-pan-scale));
+  }
+}
+
+@utility animate-hero-pan {
+  animation: hero-pan var(--duration-hero-pan) ease-out forwards;
+  will-change: transform;
+
+  /* Held at the authored start rather than allowed to snap to the final scale,
+     which is what the global 0.01ms override would otherwise do. */
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    transform: scale(1);
+  }
+}
+
 @utility marquee-track {
   display: flex;
   inline-size: max-content;

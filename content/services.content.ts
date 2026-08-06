@@ -54,7 +54,6 @@ export type ServiceContentItem = {
 export type ServicesContent = {
   readonly eyebrow: Eyebrow;
   readonly heading: string;
-  readonly intro: string;
   readonly services: readonly [
     ServiceContentItem,
     ServiceContentItem,
@@ -65,8 +64,7 @@ export type ServicesContent = {
 
 export const servicesContent: ServicesContent = {
   eyebrow: "What you can do with Omanga",
-  heading: "Spend, send and stay covered across Africa",
-  intro:
+  heading:
     "From funding your wallet before you fly to reaching a clinic mid-trip, here's what your Omanga account actually does.",
   services: [
     {

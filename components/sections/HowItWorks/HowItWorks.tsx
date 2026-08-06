@@ -19,9 +19,9 @@ export type HowItWorksProps = {
 export function HowItWorks({ content, headingId }: HowItWorksProps) {
   return (
     <Section labelledBy={headingId} tone={SECTION_TONE}>
-      <Stack gap="4xl">
+      <Stack gap="5xl">
         <div className="text-center">
-          <Stack gap="lg" align="center">
+          <Stack gap="xl" align="center">
             <Badge tone={SECTION_TONE}>{content.eyebrow}</Badge>
 
             {/*

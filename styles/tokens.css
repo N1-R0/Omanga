@@ -69,15 +69,15 @@
      The result is identical at every breakpoint: the sun stays inside the
      content band at every crop, so it always sets the worst case.
 
-     55% is the floor; 60% ships for headroom, because the sub-headline (18) and
-     helper text (14) are not "large text" and so need the full 4.5:1 — and
-     because the asset is expected to change (see hero.content.ts). Flat, not the
-     gradient the redesign spec suggests: the approved headline is 32 characters
-     longer than the one Figma draws, so it reflows, and a gradient's contrast
-     depends on exactly where the text lands. Flat is provable at any reflow.
+     55% is the floor and is what ships: the sub-headline (18) and helper text
+     (14) are not "large text" and so need the full 4.5:1. Anything lighter
+     fails them. Flat, not the gradient the redesign spec suggests: the approved
+     headline is 32 characters longer than the one Figma draws, so it reflows,
+     and a gradient's contrast depends on exactly where the text lands. Flat is
+     provable at any reflow.
 
      RE-MEASURE THIS TOKEN IF THE PHOTOGRAPH CHANGES. */
-  --color-scrim: rgb(0 0 0 / 0.6);
+  --color-scrim: rgb(0 0 0 / 0.55);
   --color-overlay-strong: rgb(255 255 255 / 0.2); /* secondary-on-dark fill */
   --color-overlay-soft: rgb(255 255 255 / 0.1); /* secondary-on-brand fill */
 
@@ -589,6 +589,12 @@
      competing with the copy beside it. The set is 576px, so a full cycle returns
      to its start every 10s. */
   --duration-marquee: 20s;
+
+  /* Hero Ken Burns. Long enough that the movement reads as drift rather than
+     as an animation, matching the slow push the structural benchmark applies
+     to its hero photography. */
+  --duration-hero-pan: 24s;
+  --motion-hero-pan-scale: 1.08;
 
   /* [MEASURED] 1rem -> 2.5rem. The benchmark reveals from `translateY(40px)`.
      16px is close enough to the final position that the motion reads as a

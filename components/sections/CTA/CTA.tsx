@@ -84,7 +84,8 @@ export function CTA({ content, headingId }: CTAProps) {
         <CTAContent
           heading={content.heading}
           headingId={headingId}
-          actions={content.actions}
+          intro={content.intro}
+          action={content.action}
         />
       </div>
     </Section>

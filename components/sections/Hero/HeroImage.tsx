@@ -71,7 +71,7 @@ export function HeroImage({ image }: HeroImageProps) {
           the LCP element, so it is preloaded and must not wait on lazy loading.
         */
         priority
-        className="object-cover"
+        className="animate-hero-pan object-cover"
       />
       {/*
         `bg-ink` on the wrapper is the reserved surface underneath. If the image

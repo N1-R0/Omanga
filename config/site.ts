@@ -38,6 +38,15 @@ export const SITE_URL =
 export const SITE_LOCALE = "en" as const;
 
 /**
+ * Brand colours as literals, for the two consumers that cannot read a CSS
+ * token: the `viewport` theme-colour meta tag and the Open Graph
+ * `ImageResponse`. Both run outside the stylesheet. Values mirror
+ * `--color-brand` and `--color-ink`.
+ */
+export const BRAND_COLOR = "#ae2448" as const;
+export const INK_COLOR = "#161717" as const;
+
+/**
  * Compose an absolute URL from a site-relative path.
  * Kept here rather than in `lib/` because it is configuration-derived, and
  * nothing else should ever concatenate the origin by hand.

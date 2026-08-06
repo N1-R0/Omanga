@@ -136,7 +136,8 @@ export type HeroSectionContent = {
 
 export const heroContent: HeroSectionContent = {
   eyebrow: "Payments & insurance for African travel",
-  heading: "Your seamless gateway to African travel",
+  heading:
+    "Travel Africa with a customized payment solution and one insurance plan",
   intro:
     "Fund your Omanga wallet in USD, GBP or CAD, spend across 43 African countries, and add short-term health cover before you fly.",
   actions: [PRIMARY_ACTION, SECONDARY_ACTION],

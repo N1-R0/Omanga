@@ -19,7 +19,7 @@ export type ProductDeepDiveProps = {
 export function ProductDeepDive({ content, headingId }: ProductDeepDiveProps) {
   return (
     <Section labelledBy={headingId} tone={SECTION_TONE}>
-      <Stack gap="4xl">
+      <Stack gap="5xl">
         {/*
           MOTION. The heading block enters, then the tab panel 80ms behind it.
           The tabs' own panel-change animation is unaffected — this is the
@@ -27,7 +27,7 @@ export function ProductDeepDive({ content, headingId }: ProductDeepDiveProps) {
         */}
         <Reveal index={0}>
           <div className="text-center">
-            <Stack gap="lg" align="center">
+            <Stack gap="xl" align="center">
               {/*
                 [MEASURED] Capped at `--container-heading` (800) — the benchmark's
                 `u-max-width-30ch` solved at Omanga's 48 h2. This heading is the

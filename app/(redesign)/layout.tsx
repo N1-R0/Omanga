@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { fontVariables } from "@/config/fonts";
-import { SITE_NAME, SITE_URL } from "@/config/site";
+import { BRAND_COLOR, SITE_NAME, SITE_URL } from "@/config/site";
 import { footerContent, formatCopyright } from "@/content/footer.content";
 import { navigationContent } from "@/content/navigation.content";
 import { MAIN_CONTENT_ID, SKIP_LINK_LABEL } from "@/content/site.content";
@@ -38,11 +38,16 @@ export const metadata: Metadata = {
   // Required for the Metadata API to resolve canonical and Open Graph URLs
   // from relative paths. Set once here rather than per page.
   metadataBase: new URL(SITE_URL),
-  title: SITE_NAME,
+  title: { default: SITE_NAME, template: `%s | ${SITE_NAME}` },
   icons: {
     icon: "/logo-omanga.svg",
     apple: "/logo-omanga.svg",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: BRAND_COLOR,
+  colorScheme: "light",
 };
 
 export default function RedesignRootLayout({

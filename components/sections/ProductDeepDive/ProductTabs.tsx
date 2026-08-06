@@ -4,6 +4,8 @@ import { useReducedMotion } from "motion/react";
 import { useId, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 
+import { Stack } from "@/components/layout/Stack";
+
 import type { DeepDiveContent } from "@/content/deep-dive.content";
 
 import { ProductContent } from "./ProductContent";
@@ -47,7 +49,7 @@ export function ProductTabs({ products, labelledBy }: ProductTabsProps) {
   };
 
   return (
-    <>
+    <Stack gap="2xl">
       <div className="flex justify-center">
         <div role="tablist" aria-labelledby={labelledBy} className={TAB_LIST_CLASS}>
           {products.map((product, index) => (
@@ -83,6 +85,6 @@ export function ProductTabs({ products, labelledBy }: ProductTabsProps) {
           <ProductContent product={product} isReducedMotion={isReducedMotion} />
         </div>
       ))}
-    </>
+    </Stack>
   );
 }

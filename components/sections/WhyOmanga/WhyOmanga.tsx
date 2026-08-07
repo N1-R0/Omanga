@@ -83,7 +83,7 @@ export function WhyOmanga({ content, headingId }: WhyOmangaProps) {
     <Section labelledBy={headingId} tone="dark">
       <Stack gap="4xl">
         <div className="text-center">
-          <Stack gap="xl" align="center">
+          <Stack gap="lg" align="center">
             <Reveal index={0}>
               {/*
                 [MEASURED] Capped at `--container-heading` (800) — the benchmark's

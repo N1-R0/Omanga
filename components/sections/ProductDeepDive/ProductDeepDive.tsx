@@ -27,7 +27,7 @@ export function ProductDeepDive({ content, headingId }: ProductDeepDiveProps) {
         */}
         <Reveal index={0}>
           <div className="text-center">
-            <Stack gap="xl" align="center">
+            <Stack gap="lg" align="center">
               {/*
                 [MEASURED] Capped at `--container-heading` (800) — the benchmark's
                 `u-max-width-30ch` solved at Omanga's 48 h2. This heading is the

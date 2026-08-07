@@ -80,7 +80,7 @@ export function TrustPartners({ content, headingId }: TrustPartnersProps) {
       */}
       <Reveal>
         <Stack gap="2xl">
-          <h2 id={headingId} className="font-sans text-small text-secondary">
+          <h2 id={headingId} className="text-center font-sans text-small text-secondary">
             {content.label}
           </h2>
 

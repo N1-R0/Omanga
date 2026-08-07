@@ -80,7 +80,7 @@ All sizes are fluid between a 320px and a 1440px viewport.
 | --- | --- | --- | --- | --- |
 | `display` | 64 → 112 | 1.1 | −0.03em | 500 |
 | `h1` | 40 → 64 | 1.2 | −0.03em | 500 |
-| `h2` | 32 → 48 | 1.1 | −0.03em | 500 |
+| `h2` | 32 → 42 | 1.1 | −0.03em | 500 |
 | `h3` | 30 → 40 | 1.3 | −0.03em | 500 |
 | `h4` | 24 → 28 | 1.3 | −0.03em | 500 |
 | `h5` | 22 → 26 | 1.3 | 0 | 500 |
@@ -125,8 +125,8 @@ Eight steps, every one of them fluid between 320px and 1440px.
 | --- | --- | --- |
 | `--space-1` | 6 → 8 | Icon to label; inside a pill |
 | `--space-2` | 10 → 12 | Adjacent controls; nav button group |
-| `--space-3` | 14 → 16 | Rows in a list; grid gutter |
-| `--space-4` | 20 → 24 | Card padding; heading to body; text margins |
+| `--space-3` | 14 → 16 | Rows in a list; grid gutter; **heading to its body copy** |
+| `--space-4` | 20 → 24 | Card padding; section heading to intro; text margins |
 | `--space-5` | 28 → 32 | Card art to copy; block to block inside a card |
 | `--space-6` | 32 → 40 | Card grid gap; heading block to content block |
 | `--space-7` | 36 → 48 | Major intra-section gap |

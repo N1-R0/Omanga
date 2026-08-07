@@ -22,7 +22,7 @@ export function ServiceContent({
 }: ServiceContentProps) {
   return (
     <Stack gap="xl">
-      <Stack gap="lg">
+      <Stack gap="md">
         <Heading id={headingId} level={headingLevel} role="feature">
           {content.heading}
         </Heading>

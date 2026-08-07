@@ -21,7 +21,7 @@ export function HowItWorks({ content, headingId }: HowItWorksProps) {
     <Section labelledBy={headingId} tone={SECTION_TONE}>
       <Stack gap="4xl">
         <div className="text-center">
-          <Stack gap="xl" align="center">
+          <Stack gap="lg" align="center">
             <Badge tone={SECTION_TONE}>{content.eyebrow}</Badge>
 
             {/*

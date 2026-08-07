@@ -87,7 +87,7 @@ export function CoverageContent({
   return (
     <div className="text-center">
       <Stack gap="2xl" align="center">
-        <Stack gap="lg" align="center">
+        <Stack gap="md" align="center">
           <Stack gap="sm" align="center">
             <p className="font-sans text-small uppercase text-brand">
               {eyebrow}

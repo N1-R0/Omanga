@@ -165,7 +165,7 @@ export function Card({
             two: `heading` and `body` need to fill the card so their text wraps
             at the card's edge rather than at its longest word.
           */}
-          <div className="flex flex-col gap-fluid-4">
+          <div className="flex flex-col gap-fluid-3">
             {eyebrow !== undefined && <div>{eyebrow}</div>}
             {heading}
             {body}

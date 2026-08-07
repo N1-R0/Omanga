@@ -146,10 +146,23 @@
   /* The seam spacing. Matches the gap, so the join is invisible. */
   padding-inline-end: var(--space-6);
 
+  /* [FIXED] `justify-content: center`, not `space-between`.
+     `space-between` distributes the free space *between* the items, which is
+     right for the ten-logo band on the reference and wrong for three: at 1424
+     it put ~290px between each pair and the row read as three unrelated marks
+     rather than as one set of partners.
+
+     Centred, so the free space collects evenly on both sides and the group sits
+     on the band's optical centre. The gap does the grouping.
+
+     `flex-shrink: 1` with the items' own `max-w` is what makes this degrade
+     correctly: at 768 there is not room for three logos at their cap, so they
+     shrink to share the row evenly instead of wrapping or overflowing. */
   @media (width >= theme(--breakpoint-tablet)) {
     inline-size: 100%;
     flex-shrink: 1;
-    justify-content: space-between;
+    justify-content: center;
+    gap: var(--space-8);
     padding-inline-end: 0;
   }
 

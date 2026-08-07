@@ -129,8 +129,13 @@
   --text-h1--letter-spacing: -0.03em;
   --text-h1--font-weight: var(--font-weight-medium);
 
-  /* H2 — 32 → 48. The section-level heading. */
-  --text-h2: clamp(2rem, 1.7rem + 1.6vw, 3rem);
+  /* H2 — 32 → 42. The section-level heading.
+     [DEVIATES from the reference's 32 → 48.] Its section headings are short —
+     "Why Clarity?", "Let's talk" — and sit on one or two lines. Omanga's run to
+     three and five lines in a column, where 48 stopped reading as a heading and
+     started reading as a wall. Taken down one notch; the hierarchy against the
+     hero's 64 and the body's 18 is unchanged. */
+  --text-h2: clamp(2rem, 1.8214rem + 0.8929vw, 2.625rem);
   --text-h2--line-height: 1.1;
   --text-h2--letter-spacing: -0.03em;
   --text-h2--font-weight: var(--font-weight-medium);

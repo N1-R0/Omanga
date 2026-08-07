@@ -82,7 +82,7 @@ export function SectionHeader({
 }: SectionHeaderProps) {
   return (
     <div>
-      <Stack gap="lg">
+      <Stack gap="md">
         {/*
           `align="start"` would be wrong on the Stack even though the block is
           left-aligned: it shrinks every child to its content width, so the

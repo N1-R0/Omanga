@@ -63,7 +63,7 @@ export function CTAContent({
     <div className="relative text-center">
       <Stack gap="3xl" align="center">
         <Reveal index={0}>
-          <Stack gap="lg" align="center">
+          <Stack gap="md" align="center">
             {/*
               `measure="heading"` (30ch) rather than the default: at the display
               size that is ~2000px, well past the content column, so the heading

@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/Button";
 import type { LinkTarget } from "@/types/content.types";
 import type { Tone } from "@/types/ui.types";
 
-// [RAISED] design-system.md caps a section at one primary. All three ship filled because
+// [RAISED] design.md caps a section at one primary. All three ship filled because
 // the rule's rationale is per-viewport and these never share one. Confirm with design.
 export type ServiceCTAProps = {
   action: LinkTarget;

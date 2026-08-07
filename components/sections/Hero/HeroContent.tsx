@@ -1,5 +1,4 @@
 import { Stack } from "@/components/layout/Stack";
-import { Badge } from "@/components/ui/Badge";
 import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
 import type { CallToAction } from "@/types/content.types";
@@ -7,130 +6,86 @@ import type { CallToAction } from "@/types/content.types";
 import { HeroActions } from "./HeroActions";
 
 /**
- * The hero's copy stack: badge, headline, sub-headline, actions, helper text.
- *
- * The order is the approved copy document's order, and it is fixed. Figma draws
- * no helper text — it predates copy approval — so the helper line sits beneath
- * the actions, which is the only position consistent with the document's sequence
- * and with what the line is for: reducing the risk of clicking the button
- * directly above it.
- *
- * Spacing is one value throughout. The Figma frame is a single vertical stack
- * with `spacing: 24`, and 24 is already the system's "heading to body" step, so
- * `gap="lg"` reproduces the frame exactly without introducing a hero-specific
- * number.
+ * The hero's copy: one headline, the actions, and the risk-reducing line.
  *
  * ---------------------------------------------------------------------------
- * [DECISION] No `HeroBadge` component.
+ * REDESIGNED against the reference. Three things changed and each is deliberate.
  *
- * The suggested structure included one, but `Badge` is already the eyebrow pill
- * and rule 7 exists to keep its geometry identical everywhere. A `HeroBadge`
- * would do nothing but pass `tone="dark"` through — a wrapper that restyles
- * rather than adding layout or behaviour, which is the one thing composition
- * rules say wrappers must not do. `Badge` is used directly.
+ * 1. THE SUB-HEADLINE IS GONE.
+ *    The reference's hero band contains its `h1` and nothing else. A headline
+ *    with a paragraph under it is a section, not a hero — the eye has to read
+ *    twice before it knows what the product is, and the headline stops being the
+ *    thing that carries the page.
  *
- * ---------------------------------------------------------------------------
- * [DECISION] No secondary-opacity text anywhere in the hero.
+ *    The removed sentence is not lost: it is the page's meta description
+ *    verbatim, and the Solutions Overview directly beneath opens with two
+ *    paragraphs covering the same ground. Nothing that was indexed is gone.
  *
- * The system expresses secondary copy as 80% opacity, and every other surface can
- * afford it. Over the scrim it cannot: 80% white composites toward the photograph
- * beneath, which spends the contrast headroom the 60% scrim was measured to
- * provide. All hero text is full-opacity white, and the hierarchy comes from the
- * type scale instead — which is where it should come from anyway.
+ * 2. THE EYEBROW BADGE IS GONE.
+ *    Same reason. A pill above the headline is a third thing to read before the
+ *    headline, and the reference has none.
+ *
+ * 3. EVERYTHING IS LEFT-ALIGNED.
+ *    Centred display type at three-plus lines is genuinely harder to read —
+ *    every line starts in a different place, so the eye has to search for the
+ *    start of the next one. The reference left-aligns its headline flush to the
+ *    page gutter, which also puts the headline, the CTA and every section
+ *    heading below it on one shared vertical edge. That single continuous edge
+ *    down the left of the page is most of what reads as "designed".
+ *
+ * What remains is a three-step hierarchy — statement, action, reassurance —
+ * with nothing competing with the statement.
  */
 
 export type HeroContentProps = {
   headingId: string;
-  eyebrow: string;
   heading: string;
-  intro: string;
   actions: readonly [CallToAction, CallToAction];
   helperText: string;
 };
 
 export function HeroContent({
   headingId,
-  eyebrow,
   heading,
-  intro,
   actions,
   helperText,
 }: HeroContentProps) {
   return (
     /*
-      `text-center` is declared once and inherits to every descendant. The
-      primitives have no alignment prop, correctly — alignment is a layout
-      decision belonging to the parent, and `Heading` and `Text` fill the space
-      they are given.
+      `align="start"` rather than `stretch`: the children size to their content
+      and sit against the leading edge, which is what left-aligns the action row
+      without `HeroActions` knowing where it is.
 
-      `align="center"` on the Stack is the other half of it: that centres the
-      children themselves, which is what centres the measure-capped sub-headline
-      and the badge without either of them carrying a margin.
+      `gap="xl"` (28 → 32) between the three blocks. The reference runs its hero
+      at one spacing value throughout, and this is the step that reads as
+      "related but distinct" at display scale — 24 would let the CTA crowd the
+      headline's descenders, 40 would break the group apart.
     */
-    <div className="text-center">
-      <Stack gap="lg" align="center">
-        <Badge tone="dark">{eyebrow}</Badge>
+    <Stack gap="xl" align="start">
+      {/*
+        The page's single `h1`, at the h1 role — 40 → 64, weight 500,
+        −0.03em tracking, sentence case.
 
-        {/*
-          The page's single `h1`, at display scale — Helvetica Light 64 with +2
-          tracking, all of which travels with the `--text-display` token rather
-          than being set here.
+        `measure="hero"` caps it at 20 characters, applied on the heading itself
+        so the `ch` unit resolves against the clamped display size rather than
+        against the root. That cap is the most important single value in the
+        hero: uncapped, this headline sets one 71-character line at wide widths
+        and reads as a sentence someone typed rather than as a statement someone
+        chose. At 20ch it breaks to three lines with a strong ragged right edge,
+        which is the shape the reference draws.
+      */}
+      <Heading id={headingId} level="h1" role="hero" measure="hero">
+        {heading}
+      </Heading>
 
-          Capped at 1136, from the frame's `.frame(width: 1134)`, normalised onto
-          the 4px grid. The cap is a wrapper rather than a prop on `Heading`
-          because measure is a layout decision the parent owns — and `Heading`
-          deliberately takes no `className`. The parent Stack's `align="center"`
-          is what centres the capped block.
+      <HeroActions actions={actions} />
 
-          Sentence case, not the uppercase the frame renders: the supplied string
-          is sentence case, and `typography.css` pins `text-transform: none` on
-          headings so the uppercase cannot return by accident.
-        */}
-        <div className="max-w-hero-heading">
-          <Heading id={headingId} level="h1" role="display">
-            {heading}
-          </Heading>
-        </div>
-
-        {/*
-          Capped at the narrow measure (648) rather than the body measure (756).
-          Centred text is harder to track from the end of one line to the start of
-          the next, so the approved sub-headline — considerably longer than the
-          fragment Figma shows — gets the tighter of the two caps.
-        */}
-        <Text role="body" measure="narrow">
-          {intro}
-        </Text>
-
-        {/*
-          The actions' own width, which the parent Stack cannot supply: `align`
-          centres its children but shrinks them to their content, so the stacked
-          buttons need a width from somewhere before `align="stretch"` inside
-          `HeroActions` has anything to stretch to.
-
-          Capped at `--container-hero-actions` (288) below tablet rather than left at
-          the full column. design-system.md § Breakpoints says "buttons full-width,
-          stacked at 12 gap", and full-width is what shipped — but at 360 that makes
-          the primary 328 wide for a 21-character label, so the control reads as a
-          banner and its width changes on every device. A fixed cap keeps the pair
-          one size everywhere below tablet and keeps the two buttons equal to each
-          other, which stretching to a fluid column never did.
-
-          `mx-auto` centres the capped group; from tablet up the cap is released and
-          `HeroActions` re-centres the row as a row.
-        */}
-        <div className="mx-auto w-full max-w-hero-actions tablet:max-w-none">
-          <HeroActions actions={actions} />
-        </div>
-
-        {/*
-          The `small` role — 14, in the heading family. Not the caption role, which is
-          Inter and which
-          design-system.md reserves for legal and metadata. This is supporting
-          body copy.
-        */}
-        <Text role="small">{helperText}</Text>
-      </Stack>
-    </div>
+      {/*
+        The risk-reducing line, beneath the actions rather than above them —
+        it exists to lower the cost of pressing the button directly above it, so
+        it has to be read after the button, not before.
+      */}
+      <Text role="small">{helperText}</Text>
+    </Stack>
   );
 }

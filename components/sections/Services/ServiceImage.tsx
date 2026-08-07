@@ -15,7 +15,7 @@ export function ServiceImage({ image, sizes }: ServiceImageProps) {
       ratio="square"
       fit="cover"
       sizes={sizes}
-      radius="panel"
+      radius="md"
     />
   );
 }

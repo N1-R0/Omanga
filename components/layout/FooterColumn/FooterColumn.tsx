@@ -5,7 +5,7 @@ import type { FooterLinkColumn } from "@/types/content.types";
 /**
  * One titled column of footer links.
  *
- * design-system.md rule 13 lists what the Figma footer must *not* ship:
+ * design.md rule 13 lists what the Figma footer must *not* ship:
  * "absolute-positioned link columns, mixed 11/12/13/14 link sizes ... Rebuild it
  * on the grid with one link style." This component is that one link style. Four
  * instances of it is what makes a fifth column impossible to get wrong.
@@ -33,8 +33,8 @@ export type FooterColumnProps = {
 
 export function FooterColumn({ column }: FooterColumnProps) {
   return (
-    <div className="flex flex-col gap-4">
-      <h2 className="font-ui text-footer-heading text-on-dark">
+    <div className="flex flex-col gap-fluid-3">
+      <h2 className="font-sans text-small font-medium text-on-dark">
         {column.heading}
       </h2>
 
@@ -43,7 +43,7 @@ export function FooterColumn({ column }: FooterColumnProps) {
         marker, and Safari drops list semantics when it does — so without this the
         column announces as four loose links instead of a list of four.
       */}
-      <ul role="list" className="flex flex-col gap-1 desktop:gap-3">
+      <ul role="list" className="flex flex-col gap-fluid-1 desktop:gap-fluid-2">
         {column.links.map((link) => (
           <li key={link.href}>
             <FooterLink link={link} />
@@ -60,7 +60,7 @@ export function FooterColumn({ column }: FooterColumnProps) {
  * Not exported. It exists only inside this column and has no second caller, so
  * hoisting it would be generalising for a use case that does not exist.
  *
- * Secondary weight is opacity, never a second grey — design-system.md is
+ * Secondary weight is opacity, never a second grey — design.md is
  * explicit, and it is also what keeps one rule working on both the dark footer
  * and anywhere else. 80% white on `#161717` measures about 14:1, so it clears AA
  * comfortably; hover restores full white rather than introducing a colour.
@@ -69,7 +69,7 @@ export function FooterColumn({ column }: FooterColumnProps) {
  * [CONFLICT] Target size, unresolved.
  *
  * project-context.md sets a blanket "touch targets ≥ 44×44 CSS px with adequate
- * spacing". design-system.md gives the footer link 14/24 type, and § Spacing
+ * spacing". design.md gives the footer link 14/24 type, and § Spacing
  * philosophy gives the column a 12 gap — a 24px line box on a 36px pitch. The
  * two cannot both be satisfied: `hit-area` here would force 44px rows and
  * destroy the specified footer rhythm.
@@ -85,7 +85,7 @@ export function FooterColumn({ column }: FooterColumnProps) {
  */
 function FooterLink({ link }: { link: FooterLinkColumn["links"][number] }) {
   const className =
-    "inline-flex min-h-11 items-center font-ui text-footer text-on-dark text-secondary hover:opacity-100 focus-ring transition-standard desktop:min-h-0";
+    "inline-flex min-h-11 items-center font-sans text-small text-on-dark text-secondary hover:opacity-100 focus-ring transition-standard desktop:min-h-6";
 
   /**
    * An approved label whose route does not exist yet. Rendered as an attribute

@@ -1,7 +1,7 @@
 /* =============================================================================
    Omanga — Motion
    -----------------------------------------------------------------------------
-   design-system.md § Motion principles.
+   design.md § 11.
 
    Three hard rules encoded here:
      1. Transform and opacity only. Never height, width, top or left.
@@ -66,7 +66,7 @@
    [DEVIATES FROM component-rules.md § Animation guidelines] "Motion is entrance,
    state change, and feedback. Never decoration that runs continuously." This is
    continuous decoration, added on request. It ships under the conditions
-   design-system.md already sets for the page's other looping case, Lottie —
+   design.md already sets for the page's other looping case, Lottie —
    transform only, and it never gates content:
 
      - `translateX` only, so it composites and never touches layout.
@@ -142,9 +142,9 @@
   display: flex;
   flex-shrink: 0;
   align-items: center;
-  gap: calc(var(--spacing) * 8);
+  gap: var(--space-6);
   /* The seam spacing. Matches the gap, so the join is invisible. */
-  padding-inline-end: calc(var(--spacing) * 8);
+  padding-inline-end: var(--space-6);
 
   @media (width >= theme(--breakpoint-tablet)) {
     inline-size: 100%;

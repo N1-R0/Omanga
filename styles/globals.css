@@ -20,6 +20,21 @@
 @import "tailwindcss" source(none);
 @source "../components";
 @source "../app/(redesign)";
+/* `lib/` holds `gap.ts`, whose GAP_CLASS map is the only class list that lives
+   outside a component file — `Stack`, `Grid` and `Section` share it, so it
+   cannot sit beside any one of them.
+
+   [FIXED] It was missing from this list, which meant Tailwind never saw a
+   single one of those class names and generated none of them. Every `gap` prop
+   on every `Stack` and `Grid` on the site was resolving to no rule at all, so
+   every one of those elements had `gap: normal`. That is the single root cause
+   of most of the "inconsistent spacing" on the page: the spacing between
+   siblings was not inconsistent, it was absent, and what looked like spacing
+   was line-height and margin collapse.
+
+   `source(none)` above disables automatic detection, so any directory holding
+   class names has to be listed here explicitly. */
+@source "../lib";
 
 @import "./tokens.css";
 @import "./typography.css";
@@ -39,7 +54,7 @@
     box-sizing: border-box;
   }
 
-  /* design-system.md: "The 37 padding exists only to compensate for a 5px
+  /* design.md: "The 37 padding exists only to compensate for a 5px
      border; use 32 with box-sizing: border-box." The reset above is what makes
      that normalisation safe. */
 
@@ -113,7 +128,7 @@
   /* Give an anchored heading room to clear the sticky header when focus or a
      hash jump lands on it. */
   :target {
-    scroll-margin-block-start: var(--spacing-section-mobile);
+    scroll-margin-block-start: calc(var(--spacing-header) + var(--space-6));
   }
 
   /* ---------------------------------------------------------------------------

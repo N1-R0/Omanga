@@ -19,7 +19,7 @@ export type HowItWorksProps = {
 export function HowItWorks({ content, headingId }: HowItWorksProps) {
   return (
     <Section labelledBy={headingId} tone={SECTION_TONE}>
-      <Stack gap="5xl">
+      <Stack gap="4xl">
         <div className="text-center">
           <Stack gap="xl" align="center">
             <Badge tone={SECTION_TONE}>{content.eyebrow}</Badge>
@@ -33,11 +33,9 @@ export function HowItWorks({ content, headingId }: HowItWorksProps) {
               decision the parent owns and `Heading` takes no `className`; the
               Stack's `align="center"` is what centres it.
             */}
-            <div className="max-w-heading">
               <Heading id={headingId} level="h2" role="section">
                 {content.heading}
               </Heading>
-            </div>
 
             <Text role="body" measure="narrow" isSecondary>
               {content.intro}

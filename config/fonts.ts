@@ -1,59 +1,35 @@
-import { Inter } from "next/font/google";
+import { Kantumruy_Pro } from "next/font/google";
 
 /**
- * Font definitions for the redesign.
+ * The site's one typeface.
  *
- * One family is loaded here now, not two:
- *   - Inter     — UI chrome: nav, buttons, labels, footer
- *   - Helvetica — headings, body, section text; a system stack, not a download
+ * Kantumruy Pro — headings, body, navigation, buttons, form fields and footer.
+ * There is no second family and no separate UI face. design.md § 2.
  *
- * Well inside the four-weight ceiling coding-guidelines.md sets, now that only
- * Inter is fetched.
+ * This replaces the previous Helvetica system stack + Inter pairing. That split
+ * came from a two-family rationale (an editorial face against a UI face) that
+ * the reference does not have, and the Helvetica half never rendered as intended
+ * anyway: it is licensed by Monotype, is not on Google Fonts, and substitutes to
+ * Arial on Windows and Roboto on Android — which is most of the audience.
  *
- * `next/font/google` downloads and self-hosts Inter at build time, so the browser
- * makes no request to Google at runtime. Helvetica needs no request at all — it is
- * either already on the device or substituted by one that is.
+ * `next/font/google` downloads and self-hosts at build time, so the browser
+ * makes no request to Google at runtime.
  *
- * These are declared here rather than in the layout so the same instance is
- * reused everywhere. Calling a font loader twice creates two hosted copies.
- * The root layout imports `fontVariables` and applies it to <html>; nothing
- * else needs to know these exist.
+ * A variable font on the weight axis, so one file covers 400, 500 and 600 —
+ * fewer bytes and one fewer request than the two static Inter cuts it replaces.
+ * `weight` is left at its `variable` default deliberately; naming weights here
+ * would fetch static instances instead.
+ *
+ * `adjustFontFallback` computes an Arial override that matches Kantumruy Pro's
+ * metrics, which is what keeps layout shift near zero while the font swaps.
+ * Arial is also the explicit fallback in `--font-sans` for the same reason: it
+ * is metrically closer than the system sans on any platform.
  */
-
-/**
- * Poppins has been removed.
- *
- * The project family is now Helvetica, which cannot be loaded this way: it is
- * licensed by Monotype, is not on Google Fonts, and so is declared as a
- * system-font stack directly in `styles/tokens.css` instead. See the
- * `--font-heading` token for what that means per platform.
- *
- * Net effect on the budget: one fewer font family to download — two files, since
- * Poppins is not variable and 400 and 600 were separate requests.
- */
-
-/**
- * Inter is a variable font, so `weight` is left at its `variable` default and
- * a single file covers the whole weight axis.
- *
- * That is fewer bytes than the two static cuts it replaces, not more: two
- * static Inter subsets are roughly 2 × 25KB, while the latin variable subset is
- * one ~35KB file and one fewer request. `next/font` does not currently accept a
- * clamped range string for a Google variable font, so restricting the axis is
- * not available anyway.
- *
- * Only two weights are ever rendered:
- *   400 — nav links, footer links, captions.
- *   600 — buttons, UI labels, footer headings, wordmark.
- *
- * Nothing enforces that beyond the type tokens, which is worth a CI check when
- * the header and footer land.
- */
-const inter = Inter({
+const kantumruyPro = Kantumruy_Pro({
   subsets: ["latin"],
   style: ["normal"],
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-kantumruy",
   preload: true,
   adjustFontFallback: true,
 });
@@ -61,8 +37,7 @@ const inter = Inter({
 /**
  * The font variable class for the <html> element.
  *
- * Feeds `--font-ui` in `styles/tokens.css`. `--font-heading` needs nothing here —
- * it names system faces directly. Components reference `font-heading` / `font-ui`
- * and never touch either variable.
+ * Feeds `--font-sans` in `styles/tokens.css`. Components reference `font-sans`
+ * and never touch the variable directly.
  */
-export const fontVariables = inter.variable;
+export const fontVariables = kantumruyPro.variable;

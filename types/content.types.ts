@@ -47,7 +47,7 @@ export type LinkTarget = {
  * A call to action.
  *
  * Separate from `LinkTarget` because a CTA carries hierarchy: exactly one
- * `primary` per section is permitted (design-system.md § Component
+ * `primary` per section is permitted (design.md § Component
  * consistency rules, rule 3).
  */
 export type CallToAction = LinkTarget & {

@@ -1,4 +1,4 @@
-import { CONTACT_EMAIL } from "@/config/site";
+import { CONTACT_EMAIL, WALLET_URL } from "@/config/site";
 import type { CallToAction, LinkTarget } from "@/types/content.types";
 
 /**
@@ -17,15 +17,22 @@ import type { CallToAction, LinkTarget } from "@/types/content.types";
  */
 
 /**
- * The single primary call to action for the site.
+ * The single primary call to action for the site — the header button and the
+ * closing conversion band.
  *
- * Approved label, exactly as written. Sections import this rather than
- * retyping it, so the label cannot drift between the hero, the CTA band and
- * the header.
+ * Approved label, exactly as written. Sections import this rather than retyping
+ * it, so the label cannot drift between the hero, the CTA band and the header.
+ *
+ * [FIXED] `href` was `/get-started`, which is not a route in this application
+ * and has been returning a 404 from both the header and the closing band — the
+ * two highest-intent controls on the site. It now points at the wallet sign-up,
+ * which is what "Get Started" means here and is the same destination the hero's
+ * primary already uses.
  */
 export const PRIMARY_CTA: CallToAction = {
   label: "Get Started",
-  href: "/get-started",
+  href: WALLET_URL,
+  isExternal: true,
   emphasis: "primary",
 } as const;
 

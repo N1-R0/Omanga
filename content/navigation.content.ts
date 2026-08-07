@@ -31,7 +31,7 @@ import type { CallToAction, LinkTarget } from "@/types/content.types";
  * § 1 also specifies a CURRENCY INDICATOR ("USD") and an ACCOUNT LINK
  * ("Log in"). Neither appears in the Figma frame, neither has a defined
  * destination, and the currency indicator has no defined behaviour
- * (display-only, or a switcher that changes pricing?). design-system.md
+ * (display-only, or a switcher that changes pricing?). design.md
  * describes its *geometry* but no interaction.
  *
  * Both are therefore omitted rather than invented. They are the phase's two

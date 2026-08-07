@@ -40,7 +40,7 @@ import { Text } from "@/components/ui/Text";
  *
  * The reference caps its paragraphs at `40ch`, which is a font-relative value
  * this system has no equivalent for. `measure-feature` (486) is the nearest
- * token and is what `design-system.md` reserves for exactly this case — "feature
+ * token and is what `design.md` reserves for exactly this case — "feature
  * copy caps at 486px". At desktop the 4-column track is narrower than 486 and
  * binds first; the cap earns its place at tablet and below, where the block goes
  * full width and would otherwise run to a 700-plus line.
@@ -81,7 +81,7 @@ export function SectionHeader({
   intro,
 }: SectionHeaderProps) {
   return (
-    <div className="measure-feature">
+    <div>
       <Stack gap="lg">
         {/*
           `align="start"` would be wrong on the Stack even though the block is

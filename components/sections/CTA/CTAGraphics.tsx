@@ -3,73 +3,58 @@ import Image from "next/image";
 import type { ImageAsset } from "@/types/content.types";
 
 /**
- * The band's decorative line art.
+ * The closing band's decorative artwork.
  *
  * ---------------------------------------------------------------------------
- * [DECISION] Absolutely positioned, which is sanctioned here and nowhere else in
- * this section.
+ * [REDESIGNED] From a right-hand element to a backdrop.
  *
- * `component-rules.md` § Layout rules: "Absolute positioning is reserved for
- * scrims, decorative art, and true overlays, always within a positioned
- * ancestor." This is decorative art, and `CTA` supplies the positioned ancestor.
+ * It used to sit absolutely positioned against the right edge at up to 708px
+ * wide, beside a 400px copy column. That arrangement made it a second focal
+ * point in a band that should have exactly one, and it was the reason the copy
+ * was squeezed into a column narrower than the band could afford.
  *
- * Taking it out of flow is also what stops it driving the band's height. The
- * artwork is 346 tall against a content block of roughly 180, so in normal flow it
- * would set the section's height and the band would grow by 160 for a background.
- * Out of flow, the rhythm stays the section's.
+ * It now spans the band behind the copy at low opacity. Same asset, same
+ * decorative role, but it reads as texture on the brand surface rather than as
+ * something to look at — which is what lets the heading be the only thing in
+ * the band with any weight.
  *
- * ---------------------------------------------------------------------------
- * WIDTH. Anchored right and centred on the band's midline, and scaled per
- * breakpoint so it never runs under the copy. The copy is capped at 486 by
- * `CTAContent`, so the artwork has to finish to the right of that at every width:
+ * Consequences worth stating rather than rediscovering in review:
  *
- *   breakpoint  content column   artwork      clearance
- *   tablet 768        710        256  454-710      -32
- *   desktop 1024      952        384  568-952      +82
- *   wide 1440        1344        708  636-1344    +150
- *
- * 708 is the asset's intrinsic width and 177 × 4 on the spacing scale, so the wide
- * step renders it 1:1 with no resampling. The 32 of overlap at tablet falls where
- * the second line of the heading ends and involves 0.8px strokes behind white
- * 48px type — it does not measurably change the text's contrast against the brand
- * surface.
- *
- * No vertical scaling. The shapes are drawn to run past the 708 × 346 viewBox so
- * they read as cropped by the band, and stretching the box would either reveal the
- * overrun or crop the shapes twice.
+ *   - `-z-10` puts it behind the copy. The parent in `CTA` carries `isolate`, so
+ *     that negative index stays inside this band and cannot escape to sit behind
+ *     the page background.
+ *   - It is hidden below tablet. On a phone the band is close to square and the
+ *     artwork's 2:1 box would either crop to nothing or force the band taller
+ *     for no gain.
+ *   - `opacity-20` against `--color-brand` keeps every contrast pair in the band
+ *     measured against the flat brand fill, so the heading's and the button's
+ *     contrast ratios are unchanged by its presence.
  *
  * ---------------------------------------------------------------------------
- * [DISCREPANCY] Flush to the content column, not to the band's edge.
+ * [FIXED] It was spilling out of the band and into the footer.
  *
- * The frame puts the artwork about 25 from the band's right edge, which is inside
- * the page gutter. Reaching that would need a negative offset on a child, and §
- * Layout rules is explicit: "No negative margins, no magic offsets." `right-0`
- * puts it on the content column's right edge instead — 48 from the band edge at
- * 1440, so about 23 further in than drawn. **Confirm whether the artwork should
- * bleed past the gutter.** If it should, that is a `Container` capability rather
- * than something this section should improvise.
+ * `h-auto w-full` sized the artwork to the container's width and let its height
+ * fall where it liked — 1424 wide gives a 696-tall box, and any width or copy
+ * length that leaves the band shorter than that put the difference outside the
+ * band. Nothing clipped it, so the outlines carried on over the footer's ink
+ * surface, where they read as a rendering fault rather than as texture.
  *
- * ---------------------------------------------------------------------------
- * Hidden below the tablet breakpoint, by decision. The frame supplies only a
- * desktop composition, and on a narrow band the artwork would sit directly behind
- * the heading and both buttons. It carries no information, so hiding it costs
- * nothing semantically and guarantees the readability and tap-target requirements.
- * `hidden` removes it from paint and from the accessibility tree, and the image
- * never loads on a phone. **Confirm the narrow-screen treatment with design.**
+ * Two changes, and both are needed:
  *
- * `aria-hidden` on the wrapper as well as an empty `alt`: the empty alt already
- * removes the image, and the wrapper carries nothing else, but stating both means
- * a future addition inside this box cannot leak into the accessibility tree by
- * accident. `pointer-events-none` guarantees the artwork can never take a tap
- * intended for a button, whatever it ends up overlapping.
+ *   `object-contain` inside a box that fills the band, so the artwork is bounded
+ *   by the band's height as well as its width and can never be taller than the
+ *   thing it sits behind.
  *
- * `unoptimized`, following `FlagItem`, `SolutionIllustration` and `Logo` — there is
- * nothing for the optimizer to do to an SVG, and saying so is cheaper than
- * depending on the framework's pass-through behaviour holding across versions.
+ *   `overflow-hidden` as the backstop. Containment already prevents the spill;
+ *   this makes it impossible for a future change to reintroduce it.
  */
 
-/** Mirrors the width classes below, so the browser fetches at the rendered size. */
-const SIZES = "(min-width: 90rem) 708px, (min-width: 64rem) 384px, 256px";
+/**
+ * The rendered box is the band's width from tablet up, so `sizes` states the
+ * viewport rather than a fixed pixel width. The band is inside the page gutter,
+ * hence the 90vw rather than 100vw.
+ */
+const SIZES = "(min-width: 48rem) 90vw, 0px";
 
 export type CTAGraphicsProps = {
   graphic: ImageAsset;
@@ -79,7 +64,7 @@ export function CTAGraphics({ graphic }: CTAGraphicsProps) {
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute top-1/2 right-0 hidden -translate-y-1/2 tablet:block tablet:w-64 desktop:w-96 wide:w-177"
+      className="pointer-events-none absolute inset-0 -z-10 hidden items-center justify-center overflow-hidden opacity-20 tablet:flex"
     >
       <Image
         src={graphic.src}
@@ -89,7 +74,7 @@ export function CTAGraphics({ graphic }: CTAGraphicsProps) {
         sizes={SIZES}
         unoptimized
         loading="lazy"
-        className="h-auto w-full"
+        className="h-full w-full object-contain"
       />
     </div>
   );

@@ -17,7 +17,7 @@ import type { ComparisonSentiment } from "@/content/why-omanga.content";
  *
  * [DECISION] `items-start`, not `items-center`.
  *
- * `design-system.md` § Icon usage asks icons to "align to the label's optical
+ * `design.md` § Icon usage asks icons to "align to the label's optical
  * center". That is right for a single line and wrong the moment a statement wraps,
  * which several of these do below the tablet breakpoint — centring would float
  * the mark into the gap between two lines. Aligned to the start it sits on the
@@ -39,7 +39,7 @@ export function ComparisonItem({ children, sentiment }: ComparisonItemProps) {
   const Mark = MARK[sentiment];
 
   return (
-    <li className="flex items-start gap-3">
+    <li className="flex items-start gap-fluid-2">
       <Mark size="md" />
       <Text role="body">{children}</Text>
     </li>

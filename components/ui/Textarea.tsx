@@ -14,7 +14,7 @@ import { cx } from "@/lib/cx";
  */
 
 const CONTROL_CLASS =
-  "w-full resize-y rounded-chip border bg-surface-light px-4 py-3 font-heading text-body text-ink focus-ring transition-standard placeholder:text-secondary disabled:bg-inactive-surface disabled:text-disabled-ink";
+  "w-full resize-y rounded-sm border bg-surface-light px-fluid-3 py-fluid-2 font-sans text-main text-ink focus-ring transition-standard placeholder:text-secondary disabled:bg-inactive-surface disabled:text-disabled-ink";
 
 export type TextareaProps = {
   id: string;

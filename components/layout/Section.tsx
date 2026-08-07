@@ -14,18 +14,24 @@ import type { Tone } from "@/types/ui.types";
  * The surface is an explicit choice, not a theme mode — there is no dark-mode
  * toggle here. Consecutive sections alternate light and dark by composition,
  * which is the page's decision, not this component's.
+ *
+ * The section also sets the focus-ring colour for everything inside it. That is
+ * the same principle as its text colour: a foreground that has to stay legible
+ * against this surface is the surface's decision, not the control's. It is what
+ * fixes a brand ring being invisible on the brand band — see the
+ * `focus-ring-on-*` utilities for the measurements.
  */
 
 /**
  * Surface classes per tone.
  *
- * design-system.md § Color roles: sections alternate #FFFFFF and #161717, and
+ * design.md § 8: sections alternate #FFFFFF and #161717, and
  * the CTA band is the only brand-filled section.
  */
 const TONE_SURFACE: Readonly<Record<Tone, string>> = {
-  light: "bg-surface-page text-ink",
-  dark: "bg-ink text-on-dark",
-  brand: "bg-brand text-on-dark",
+  light: "bg-surface-page text-ink focus-ring-on-light",
+  dark: "bg-ink text-on-dark focus-ring-on-dark",
+  brand: "bg-brand text-on-dark focus-ring-on-dark",
 } as const;
 
 /**

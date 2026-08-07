@@ -63,7 +63,7 @@ import { FlagCluster } from "./FlagCluster";
  * 432 either side of a 1392-wide flag row needs a 2256 frame; the section is 1440,
  * and the screenshot shows the row inset about 24 per side, which is exactly
  * (1440 − 1392) / 2. Read as the text block's padding instead it gives a 576
- * measure, below the 648–756 band `design-system.md` sets for body copy and
+ * measure, below the 648–756 band `design.md` sets for body copy and
  * narrower than the frame's paragraph renders. It is the one value in the spec
  * that contradicts both the geometry and the screenshot, so it is not used: the
  * row centres in the content column and the paragraph takes the `narrow` measure.
@@ -74,7 +74,7 @@ import { FlagCluster } from "./FlagCluster";
  * paints this one white and surface alternation is a page-composition decision,
  * so it belongs to whoever assembles the eleven sections rather than to this one.
  *
- * The flags carry no entrance animation. `design-system.md` § Motion principles
+ * The flags carry no entrance animation. `design.md` § Motion principles
  * would stagger them at 80ms, and fourteen chips is exactly the case the stagger
  * exists for — but motion is not in this section's brief, and adding it would be
  * scope the design has not signed off. **Raise with design.**
@@ -103,7 +103,7 @@ export function AfricanCoverage({ content, headingId }: AfricanCoverageProps) {
         fourteen country names announced ahead of the sentence they support would
         bury it.
       */}
-      <div className="grid gap-10 wide:gap-0">
+      <div className="grid gap-fluid-6 wide:gap-0">
         {/*
           MOTION. `Reveal` sits *inside* each cell, not around it. At wide both
           cells are placed into the same grid slot to produce the overlap, so a

@@ -10,14 +10,14 @@ import type { CallToAction } from "@/types/content.types";
  * navigation, chosen by prop, never by styling".
  *
  * `tone="brand"` on both, which is what selects the treatments
- * `design-system.md` defines for this surface: a white fill with a brand label for
+ * `design.md` defines for this surface: a white fill with a brand label for
  * the primary, and "Secondary on brand | White @ 10% | 0.5px white | White |
  * Inside the CTA band only" for the secondary. The tone is passed explicitly, so
  * neither button infers the surface from a parent class.
  *
  * ---------------------------------------------------------------------------
  * [NORMALISED] The frame draws two outlined siblings at 12 radius in Inter Medium
- * 16, and `design-system.md` § Button variants names all three as defects to fix:
+ * 16, and `design.md` § Button variants names all three as defects to fix:
  *
  *   "**⚠** CTA-band buttons use 12 radius and Inter Medium 16 in Figma. Normalize
  *   to pill + Inter SemiBold 14 like every other button, and give the band one
@@ -36,24 +36,19 @@ import type { CallToAction } from "@/types/content.types";
  * specific to the hero.
  *
  * ---------------------------------------------------------------------------
- * [BLOCKER] The shared focus ring is invisible on this surface.
+ * [RESOLVED] The focus ring used to be invisible on this surface.
  *
- * `--focus-ring-color` is `--color-brand`, and `design-system.md` requires it
- * everywhere: "Focus rings are identical across buttons, links, tabs and inputs"
- * and "Focus: 2px brand outline, 2px offset, on every variant". On the brand band
- * that is brand-on-brand — **measured 1.00:1** — so both of these buttons take
- * focus with no visible indicator at all. That fails WCAG 2.4.7 and 1.4.11 on the
- * page's most important conversion control.
+ * `--focus-ring-color` was `--color-brand` on every surface, which on the brand
+ * band is brand-on-brand — measured 1.00:1 — so this button, the page's most
+ * important conversion control, took focus with no visible indicator at all.
+ * WCAG 2.4.7 and 1.4.11, both failed.
  *
- * Not fixed here, deliberately. `focus-ring` is one global utility applied by every
- * interactive primitive; overriding it for this section would break the identical-
- * ring rule, and changing the token would repaint focus across the whole site.
- * Both are design-system decisions rather than section ones.
- *
- * The minimal fix is a surface-aware ring — the ring resolving to `--color-on-dark`
- * on the brand and dark surfaces and staying brand on light — which is one
- * addition to the token layer and one line in the `focus-ring` utility.
- * **Needs a design-system decision before this section can claim AA.**
+ * Fixed in the design system rather than here: `Section` now sets the ring colour
+ * from its `tone`, exactly as it already sets text colour, and this band inherits
+ * white at 6.70:1. The ring is still one ring — same width, same offset, same
+ * geometry everywhere — and no component overrides it. See the
+ * `focus-ring-on-*` utilities in `styles/utilities.css` for the measurements on
+ * all three surfaces.
  */
 
 export type CTAActionsProps = {
@@ -63,15 +58,15 @@ export type CTAActionsProps = {
 export function CTAActions({ action }: CTAActionsProps) {
   return (
     /*
-      Mobile: a full-width stack. § Breakpoints is specific — "Buttons full-width,
-      stacked at 12 gap" — and `align="stretch"` is how they fill the column
-      without either knowing it should, since `Button` deliberately has no
-      `fullWidth` prop.
+      Centred at every width, under the centred copy above it.
 
-      Tablet and up: a left-aligned row, matching the frame's left-aligned block.
-      12 is the "adjacent buttons" step.
+      [CHANGED] It no longer stretches to full width below tablet. A pill that
+      spans the viewport reads as a banner rather than as a button, and it is the
+      one control in the band — it should look like a decision, not like a bar.
+      `align="center"` sizes it to its own label instead; `isWrapping` means it
+      still drops rather than overflowing if the label ever grows.
     */
-    <Stack direction="column-to-row" gap="sm" align="stretch" justify="start">
+    <Stack direction="row" gap="lg" align="center" justify="center" isWrapping>
       <Button
         as="link"
         variant={action.emphasis}

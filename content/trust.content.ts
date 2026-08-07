@@ -48,7 +48,7 @@ import type { ImageAsset } from "@/types/content.types";
  *
  *   1. The files are raster. `coding-guidelines.md` § Image optimization: "SVG
  *      for logos, icons and flat illustration". SVG versions are outstanding.
- *   2. They are full colour. `design-system.md` § Image treatment specifies
+ *   2. They are full colour. `design.md` § Image treatment specifies
  *      partner logos as "monochrome, optically balanced to equal visual weight",
  *      and the frame draws them monochrome. Desaturating a partner's trademark
  *      is a brand decision, so the supplied assets ship as supplied.

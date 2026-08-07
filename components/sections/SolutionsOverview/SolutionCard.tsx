@@ -13,7 +13,7 @@ import { SolutionIllustration } from "./SolutionIllustration";
  *
  * There is one of these, not an `InsuranceCard` and a `PaymentCard`. The two
  * cards have identical internal structure — art, heading, body, one link — and
- * `design-system.md` § Card variants requires that of them: "Product cards are
+ * `design.md` § Card variants requires that of them: "Product cards are
  * equal-width and equal-height siblings; they differ by surface only, never by
  * internal structure or padding." `component-rules.md` then closes the question:
  * "Repeated structures are one component with variants, never duplicated per
@@ -64,7 +64,7 @@ type Emphasis = "primary" | "secondary";
  * ---------------------------------------------------------------------------
  * [MEASURED] The brand card's button takes `tone="brand"`, not `tone="dark"`.
  *
- * `design-system.md` § Card variants specifies a "secondary-on-dark button"
+ * `design.md` § Card variants specifies a "secondary-on-dark button"
  * inside the primary product card, and § Button variants restricts
  * secondary-on-brand to "the CTA band only". Measured against the brand fill,
  * the first of those fails and the second passes:
@@ -139,7 +139,7 @@ export function SolutionCard({
           (28 / 36.4 / 0) exactly.
 
           The frame draws it SemiBold and it ships Regular, because the token
-          carries the weight and `design-system.md` § Typography hierarchy lists
+          carries the weight and `design.md` § Typography hierarchy lists
           this role as "Poppins Regular". Rule 6 settles it: "a raw value in a
           component is a bug, including one that matches Figma."
         */

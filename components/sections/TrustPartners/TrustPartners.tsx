@@ -18,7 +18,7 @@ import { PartnerLogos } from "./PartnerLogos";
  *   label at y 102, band ends 97 below the row  -> the light section rhythm, 100
  *   label to the tallest logo, 52               -> 40, the "heading block to
  *                                                  content block" step
- *   label 20 line box                           -> `--text-caption`, 12/20
+ *   label 20 line box                           -> `--text-small`, 12/20
  *
  * ---------------------------------------------------------------------------
  * [DECISION] A plain `h2`, not the `Heading` primitive.
@@ -33,7 +33,7 @@ import { PartnerLogos } from "./PartnerLogos";
  *
  * [DISCREPANCY] The frame's label measures about 16px with roughly 0.08em
  * tracking — 245px wide for 26 characters in a 20px line box. The system has no
- * 16px chrome role. `--text-caption` is the nearest: it is the only role carrying
+ * 16px chrome role. `--text-small` is the nearest: it is the only role carrying
  * tracking (+1), and its 12/20 line box matches the frame's exactly, but it is
  * a quarter smaller than drawn. **Confirm the label's size with design** — the
  * alternative is a new role, which is a design-system change, not a section one.
@@ -80,7 +80,7 @@ export function TrustPartners({ content, headingId }: TrustPartnersProps) {
       */}
       <Reveal>
         <Stack gap="2xl">
-          <h2 id={headingId} className="font-ui text-caption text-secondary">
+          <h2 id={headingId} className="font-sans text-small text-secondary">
             {content.label}
           </h2>
 

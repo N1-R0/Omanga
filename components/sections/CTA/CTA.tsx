@@ -16,11 +16,11 @@ import { CTAGraphics } from "./CTAGraphics";
  * The brief names node 1265:13151 as the source of truth. The Figma Dev Mode MCP
  * server is still unreachable in this environment — every tool returns the same
  * setup instruction — and the Figma connector is unauthorised. Built instead from
- * the supplied vector, the section screenshot and `design-system.md`.
+ * the supplied vector, the section screenshot and `design.md`.
  * **Re-verify against the frame once the MCP server is available.**
  *
  * ---------------------------------------------------------------------------
- * SURFACE. `tone="brand"`, which `design-system.md` reserves for exactly this
+ * SURFACE. `tone="brand"`, which `design.md` reserves for exactly this
  * element: "the CTA band is the only brand-filled section". It is also the only
  * place the `secondary-on-brand` button treatment is permitted, and the reason
  * that variant exists at all.
@@ -78,7 +78,7 @@ export function CTA({ content, headingId }: CTAProps) {
   */
   return (
     <Section labelledBy={headingId} tone="brand" rhythm="loose">
-      <div className="relative">
+      <div className="relative isolate">
         <CTAGraphics graphic={content.graphic} />
 
         <CTAContent

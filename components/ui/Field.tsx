@@ -61,14 +61,14 @@ export function Field({
   const { descriptionId, errorId } = fieldIds(id);
 
   return (
-    <div className="flex flex-col gap-2">
-      <label htmlFor={id} className="font-heading text-body-sm">
+    <div className="flex flex-col gap-fluid-1">
+      <label htmlFor={id} className="font-sans text-small">
         {label}{" "}
         <span className="text-secondary">({requirementNote})</span>
       </label>
 
       {description !== undefined && (
-        <p id={descriptionId} className="font-heading text-body-sm text-secondary">
+        <p id={descriptionId} className="font-sans text-small text-secondary">
           {description}
         </p>
       )}
@@ -86,7 +86,7 @@ export function Field({
         message text itself carries the meaning, so nothing is lost.
       */}
       {error !== undefined && (
-        <p id={errorId} role="alert" className="font-heading text-body-sm text-ink">
+        <p id={errorId} role="alert" className="font-sans text-small text-ink">
           {error}
         </p>
       )}

@@ -16,7 +16,7 @@ const DESKTOP_QUERY = "(min-width: 64rem)";
 const SWITCH_BAND_ROOT_MARGIN = "-40% 0px -40% 0px";
 
 const GRID_CLASS =
-  "grid grid-cols-1 gap-10 desktop:grid-cols-12 desktop:gap-x-12 desktop:gap-y-0";
+  "grid grid-cols-1 gap-fluid-6 desktop:grid-cols-12 desktop:gap-x-fluid-7 desktop:gap-y-0";
 
 // [DEVIATES FROM component-rules.md § Layout] Sticky outside the header. The heading and
 // the copy are one 100vh box so the distance between them cannot change on entry or exit.
@@ -26,7 +26,7 @@ const PINNED_COLUMN_CLASS =
 const TEXT_STACK_CLASS = "contents desktop:relative desktop:block";
 
 const TEXT_CLASS =
-  "pb-6 desktop:absolute desktop:inset-x-0 desktop:bottom-0 desktop:row-auto desktop:pb-0";
+  "pb-fluid-4 desktop:absolute desktop:inset-x-0 desktop:bottom-0 desktop:row-auto desktop:pb-0";
 
 const IMAGE_COLUMN_CLASS =
   "contents desktop:col-start-7 desktop:col-span-6 desktop:flex desktop:flex-col desktop:gap-0";

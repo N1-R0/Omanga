@@ -27,7 +27,7 @@ import type { ImageAsset } from "@/types/content.types";
  * ---------------------------------------------------------------------------
  * No hover state. The frame specifies none, and these logos are not links —
  * partner destinations are not approved. The legacy strip's greyscale-to-colour
- * hover is deliberately not carried over: `design-system.md` § Motion principles
+ * hover is deliberately not carried over: `design.md` § Motion principles
  * has no such pattern, and hover motion on a non-interactive element advertises
  * an interaction that does not exist.
  *

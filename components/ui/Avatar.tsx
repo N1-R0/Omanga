@@ -6,7 +6,7 @@ import type { ImageAsset } from "@/types/content.types";
 /**
  * A circular portrait.
  *
- * design-system.md § Image treatment gives avatars one rule — "Circular" — and
+ * design.md § 9 gives avatars one rule — "Circular" — and
  * no size. The two steps below are engineering decisions on the 4px grid,
  * pending design confirmation:
  *   sm 40 — inline beside a name in a list row
@@ -50,7 +50,7 @@ export function Avatar({ image, size }: AvatarProps) {
       height={px}
       sizes={`${px}px`}
       loading="lazy"
-      className={cx(className, "shrink-0 rounded-full object-cover")}
+      className={cx(className, "shrink-0 rounded-pill object-cover")}
     />
   );
 }

@@ -4,7 +4,7 @@ import Link from "next/link";
 /**
  * The brand lockup: the mark beside the wordmark, linking home.
  *
- * design-system.md § Spacing philosophy names an "8 — icon-to-label, wordmark
+ * design.md § 3 names an "8 — icon-to-label, wordmark
  * gap" step, and § Typography hierarchy gives the wordmark its own role (Inter
  * SemiBold 24). Two entries for one element is what tells us the lockup is a
  * mark plus a text wordmark rather than a single image, and the Figma header and
@@ -67,7 +67,7 @@ export function Logo({ wordmark, label }: LogoProps) {
     <Link
       href="/"
       aria-label={label}
-      className="inline-flex items-center gap-2 focus-ring transition-standard hover:text-brand"
+      className="inline-flex items-center gap-fluid-1 focus-ring transition-standard hover:text-brand"
     >
       {/*
         TODO — no white mark asset exists.
@@ -101,7 +101,7 @@ export function Logo({ wordmark, label }: LogoProps) {
         */
         className="size-8"
       />
-      <span className="font-ui text-wordmark">{wordmark}</span>
+      <span className="font-sans text-h5">{wordmark}</span>
     </Link>
   );
 }

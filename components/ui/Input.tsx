@@ -5,7 +5,7 @@ import { cx } from "@/lib/cx";
 /**
  * A single-line text field.
  *
- * design-system.md § Input variants: light surface fill, 1px border, 12
+ * design.md § Input variants: light surface fill, 1px border, 12
  * radius, 16 × 12 padding, 18 in the heading family, 48 minimum height. The frame contains
  * no drawn form fields, so the geometry comes from the system's existing
  * chrome and the border colour is a documented gap — see
@@ -25,7 +25,7 @@ import { cx } from "@/lib/cx";
 type InputType = "text" | "email" | "tel" | "url";
 
 const CONTROL_CLASS =
-  "min-h-12 w-full rounded-chip border bg-surface-light px-4 py-3 font-heading text-body text-ink focus-ring transition-standard placeholder:text-secondary disabled:bg-inactive-surface disabled:text-disabled-ink";
+  "min-h-12 w-full rounded-sm border bg-surface-light px-fluid-3 py-fluid-2 font-sans text-main text-ink focus-ring transition-standard placeholder:text-secondary disabled:bg-inactive-surface disabled:text-disabled-ink";
 
 export type InputProps = {
   /** Must be unique on the page. Ties the label, control and messages together. */

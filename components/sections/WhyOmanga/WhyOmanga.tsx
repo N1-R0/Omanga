@@ -20,7 +20,7 @@ import { ComparisonGrid } from "./ComparisonGrid";
  * The brief ranks the frame first. The Figma Dev Mode MCP server is still
  * unreachable in this environment — all four tools return the same setup
  * instruction — and the Figma connector is unauthorised, so the section is built
- * from the screenshot, the Clarity reference and `design-system.md`.
+ * from the screenshot, the Clarity reference and `design.md`.
  * **Re-verify against the frame once the MCP server is available.**
  *
  * The screenshot was measured before any code was written. Taking the frame as
@@ -92,11 +92,9 @@ export function WhyOmanga({ content, headingId }: WhyOmangaProps) {
                 section headings share one measure and a copy edit cannot make one
                 of them the exception.
               */}
-              <div className="max-w-heading">
                 <Heading id={headingId} level="h2" role="section">
                   {content.heading}
                 </Heading>
-              </div>
             </Reveal>
 
             <Reveal index={1}>

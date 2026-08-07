@@ -26,7 +26,7 @@ import type { Gap } from "@/types/ui.types";
 type Columns = 2 | 3 | 4 | 12;
 
 /**
- * Breakpoint behaviour per column count, from design-system.md § Breakpoints:
+ * Breakpoint behaviour per column count, from design.md § 10:
  * two-up cards persist at tablet; denser grids wait for desktop so cards do not
  * get squeezed below a readable width at 768.
  */

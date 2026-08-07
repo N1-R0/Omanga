@@ -16,7 +16,7 @@ import { ComparisonCard } from "./ComparisonCard";
  *   horizontal, tablet up   the seam between the two panels, 12
  *   vertical, mobile        the break between two labelled units, 48
  *
- * `design-system.md` § Grid system specifies "Comparison: two equal columns, 10
+ * `design.md` § Grid system specifies "Comparison: two equal columns, 10
  * gap", and 10 is not a step — 12 is the nearest, and normalising upward keeps the
  * seam looking deliberate rather than like a rounding error. But at mobile the
  * columns stack, and 12 between them would put each title closer to the panel
@@ -62,7 +62,7 @@ export type ComparisonGridProps = {
 
 export function ComparisonGrid({ groups, revealFrom }: ComparisonGridProps) {
   return (
-    <div className="grid grid-cols-1 items-stretch gap-y-12 tablet:grid-cols-2 tablet:gap-x-3 tablet:gap-y-0">
+    <div className="grid grid-cols-1 items-stretch gap-y-fluid-7 tablet:grid-cols-2 tablet:gap-x-fluid-6 tablet:gap-y-0">
       {groups.map((group, index) => (
         <Reveal key={group.id} index={revealFrom + index}>
           <ComparisonCard group={group} />

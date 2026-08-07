@@ -1,7 +1,7 @@
 /**
  * A step's marker on the rail.
  *
- * design-system.md draws a 15px marker; 15 is off the 4px grid, so it normalises
+ * design.md draws a 15px marker; 15 is off the 4px grid, so it normalises
  * to 16 — which is also the benchmark's `0.9375rem` normalised the same way.
  *
  * ---------------------------------------------------------------------------
@@ -29,8 +29,22 @@
  *          straight through it, which is what makes a marker read as a station on
  *          the line instead of a bead threaded onto it.
  */
+/**
+ * [FIXED] `relative z-raised`.
+ *
+ * The marker is a static element in the grid flow; the rail is an absolutely
+ * positioned sibling in `TimelineConnector`. A positioned element paints above a
+ * non-positioned one regardless of DOM order, so the rail was being drawn
+ * straight through the dot — and `--shadow-rail-break`, whose entire job is to
+ * punch a ring of page surface through the rail at the marker, was painting
+ * underneath the thing it was meant to hide. The dot rendered as a dark circle
+ * with a light slit through its middle.
+ *
+ * Giving the marker its own stacking position puts it back above the rail, which
+ * is what makes the ring do its job.
+ */
 const MARKER_CLASS =
-  "pointer-events-none mt-5 size-4 shrink-0 rounded-dot bg-ink shadow-rail-break";
+  "pointer-events-none relative z-raised mt-5 size-4 shrink-0 rounded-pill bg-ink shadow-rail-break";
 
 export function TimelineMarker() {
   return <span aria-hidden className={MARKER_CLASS} />;

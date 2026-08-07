@@ -6,14 +6,14 @@ import type { Tone } from "@/types/ui.types";
 /**
  * The eyebrow pill.
  *
- * design-system.md § Component consistency rules, rule 7: "Eyebrow pills share
+ * design.md § 9, rule 7: "Eyebrow pills share
  * one geometry everywhere: pill radius, subtle fill, light border, 17 × 9
  * padding." One component is how that stays true.
  *
- * [CONFLICT, resolved toward the frame] design-system.md puts the eyebrow in the
+ * [CONFLICT, resolved toward the frame] design.md puts the eyebrow in the
  * editorial scale — "Eyebrow / tab label | Poppins Regular | 20 | 30" — and gives
  * its padding as "17 × 9". The frame shows neither: the pill's label is small and
- * bold, which is UI chrome, not 20px editorial regular. Shipped as `--text-ui`
+ * bold, which is UI chrome, not 20px editorial regular. Shipped as `--text-button`
  * (Inter SemiBold 14/17), the closest existing role and a visual match for the
  * frame.
  *
@@ -54,7 +54,7 @@ import type { Tone } from "@/types/ui.types";
  * opacities — 0.98 against 1.0, multiplied by 0.1 — so the existing white token
  * is used rather than adding a near-identical one.
  *
- * [DECISION] design-system.md gives the eyebrow pill one appearance
+ * [DECISION] design.md gives the eyebrow pill one appearance
  * (#FAFAFA fill, #E5F2F2 border), which is a light-surface treatment. Eyebrow
  * pills also appear inside the brand product card and on dark sections, where
  * that fill would be an opaque light block. The dark and brand tones use the
@@ -62,7 +62,7 @@ import type { Tone } from "@/types/ui.types";
  * Pending design confirmation.
  */
 const TONE_CLASS: Readonly<Record<Tone, string>> = {
-  light: "bg-surface-subtle border-border-light text-ink",
+  light: "bg-surface-light border-border-hairline text-ink",
   dark: "bg-overlay-soft border-border-subtle text-on-dark",
   brand: "bg-overlay-soft border-border-subtle text-on-dark",
 } as const;
@@ -76,7 +76,7 @@ export function Badge({ children, tone }: BadgeProps) {
   return (
     <span
       className={cx(
-        "inline-flex items-center rounded-pill border px-4 py-px font-ui text-ui",
+        "inline-flex items-center rounded-pill border px-fluid-3 py-fluid-1 font-sans text-button",
         TONE_CLASS[tone],
       )}
     >

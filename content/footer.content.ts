@@ -10,7 +10,7 @@ import type { FooterLinkColumn, LinkTarget } from "@/types/content.types";
  * ---------------------------------------------------------------------------
  * WHAT THE FIGMA FOOTER SHOWS THAT WE ARE NOT SHIPPING
  *
- * design-system.md rule 13 lists the footer's template artifacts and forbids
+ * design.md rule 13 lists the footer's template artifacts and forbids
  * them. Two are visible in node 1265:13178 and are dropped here:
  *
  *   - "© Copyright Butler 2023" — a third-party line from the template. The

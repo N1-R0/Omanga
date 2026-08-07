@@ -12,47 +12,31 @@ import { HeroImage } from "./HeroImage";
  * fully rendered and fully readable in the server HTML, which matters for the
  * section that holds the page's only `h1`.
  *
- * Geometry from the Figma frame (node 1265:12538), which exports as a centred
- * vertical stack at 1440x611 with 46 vertical padding, 24 spacing, and a
- * black-overlay background image:
+ * Geometry, measured from the reference at 1512px:
  *
- *   spacing 24        -> `gap="lg"`, already the system's heading-to-body step
- *   padding 46        -> 48 (`py-12`), per the instruction to normalise Figma's
- *                        stray 46 onto the nearest 4px step
- *   minHeight 611     -> `--spacing-hero-min` at 612, normalised the same way
- *   maxHeight 611     -> deliberately not implemented, see below
- *   black @ 20%       -> 60%, measured; see the `--color-scrim` token
+ *   band height       612, as a minimum only
+ *   headline          left-aligned, flush to the page gutter, 20ch measure
+ *   contents          the h1 and nothing above it
+ *   scrim             55%, measured against this photograph — see --color-scrim
  *
  * ---------------------------------------------------------------------------
- * [DECISION] Figma's fixed height ships as a minimum only.
+ * [DECISION] The band's height is a minimum, never a maximum.
  *
- * The frame pins `minHeight` and `maxHeight` to the same 611. Honouring the
- * maximum would clip the copy the moment it needs more room — and it will, in
- * three ordinary situations: the approved headline is 32 characters longer than
- * the one drawn in the frame, text at 200% zoom is twice as tall (WCAG 1.4.4),
- * and the 320px reflow case stacks everything (WCAG 1.4.10). A clipped headline
- * is a conformance failure, so the band grows instead.
+ * Pinning it would clip the copy the moment it needs more room, and it will in
+ * three ordinary situations: this headline is 19 characters longer than the
+ * reference's, text at 200% zoom is twice as tall (WCAG 1.4.4), and the 320px
+ * reflow case stacks everything (WCAG 1.4.10). A clipped headline is a
+ * conformance failure, so the band grows instead.
  *
  * ---------------------------------------------------------------------------
  * [DECISION] The `Section` primitive is not used.
  *
- * `Section` owns three things the hero needs to own differently: it paints a flat
- * tone where the hero needs a photograph, and it applies the 100/130 light-or-dark
- * section rhythm where the hero's vertical padding is 48. Forcing the hero through
- * it would mean adding a photographic tone and a third rhythm to a primitive that
- * every other section uses correctly. The hero renders its own `section` element
- * and still meets the same contract: one surface, one rhythm, one container, one
- * accessible name.
- *
- * ---------------------------------------------------------------------------
- * [ASSUMPTION] Narrow and mid breakpoints.
- *
- * Figma provides the 1440 frame only, and the docs state that "narrow layouts are
- * engineering decisions to be confirmed against design". The minimum height
- * therefore applies from `desktop` up, and below that the band is sized by its
- * content plus the same 48 padding — which lands at roughly 590px on a 360px
- * screen, so the photograph still reads as a photograph. No new value was
- * invented for it. **Confirm against design.**
+ * `Section` paints a flat tone where the hero needs a photograph, and applies
+ * the section rhythm where the hero's vertical space is its own. Forcing the
+ * hero through it would mean adding a photographic tone and a fourth rhythm to a
+ * primitive every other section uses correctly. The hero renders its own
+ * `section` and still meets the same contract: one surface, one rhythm, one
+ * container, one accessible name.
  */
 
 export type HeroProps = {
@@ -75,11 +59,18 @@ export function Hero({ content, headingId }: HeroProps) {
         and `isolate` gives the band its own stacking context so the image's
         negative z-index stays behind the copy without escaping to sit behind the
         page itself.
-
-        `flex items-center` is Figma's `alignment: .center` — it centres the copy
-        within the band whenever the band is taller than its content.
       */
-      className="scrim relative isolate flex items-center overflow-hidden py-12 text-on-dark desktop:min-h-hero-min"
+      /*
+        `py-fluid-8` (40 → 64) rather than a fixed 48. Below desktop the minimum
+        height does not apply, so this padding is the only thing holding the band
+        open — a fixed value is either too tight at 1920 or too loose at 320.
+
+        `items-end` rather than `items-center`: the reference sits its headline
+        low in the band, with roughly a third of the photograph clear above it.
+        Centring a three-line headline plus an action row fills the band and
+        leaves the image with nothing to say.
+      */
+      className="scrim focus-ring-on-dark relative isolate flex items-end overflow-hidden py-fluid-8 text-on-dark tablet:min-h-hero-min"
     >
       <HeroImage image={content.image} />
 
@@ -103,9 +94,7 @@ export function Hero({ content, headingId }: HeroProps) {
         <Container>
           <HeroContent
             headingId={headingId}
-            eyebrow={content.eyebrow}
             heading={content.heading}
-            intro={content.intro}
             actions={content.actions}
             helperText={content.helperText}
           />

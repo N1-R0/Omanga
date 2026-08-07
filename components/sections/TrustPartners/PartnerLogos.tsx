@@ -23,7 +23,7 @@ import { PartnerLogo } from "./PartnerLogo";
  * Three 242-wide boxes at x 40 / 523 / 1006 inside a 1289 container with 40
  * padding, all vertically centred on the row's midline. Equal boxes with equal
  * space between them, flush to both edges of the content column — which is
- * `justify-between` with a 240 cap, and matches `design-system.md` § Grid system:
+ * `justify-between` with a 240 cap, and matches `design.md` § Grid system:
  * "Logo strip: single row, equal optical spacing, full content width."
  *
  * `items-center` rather than a shared baseline. § Image treatment asks for logos

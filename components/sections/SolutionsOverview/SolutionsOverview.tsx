@@ -53,7 +53,7 @@ import { SolutionCard } from "./SolutionCard";
  *
  * ---------------------------------------------------------------------------
  * This section is CTA-free at section level, and stays that way. Each card
- * carries its own link and `design-system.md` rule 3 allows one primary button
+ * carries its own link and `design.md` rule 3 allows one primary button
  * per section — this one has none, because both offerings are peers and
  * promoting either would be a content decision nobody has made.
  */
@@ -117,7 +117,7 @@ export function SolutionsOverview({
         `Grid` never reorders, so the DOM order — heading, then cards — is the
         reading order at every width.
       */}
-      <Grid columns={12} gap="3xl">
+      <Grid columns={12} gap="2xl">
         {/*
           Columns 1–4. The span is declared by the section, not by the child:
           "Sections declare column spans; children never position themselves."

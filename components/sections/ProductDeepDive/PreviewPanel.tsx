@@ -2,9 +2,13 @@ import Image from "next/image";
 
 import type { ImageAsset } from "@/types/content.types";
 
-// Square brand plate, 16 radius, per design-system.md § Card variants and § Image treatment.
+// Brand plate, 16 radius.
+// [FIXED] `aspect-square` was a Tailwind default rather than a system ratio, and
+// at 640 square it was the largest element in the band — while still holding no
+// artwork (see the [BLOCKER] in deep-dive.content.ts). `aspect-card` is the
+// system's 3:2 content-plate ratio and is what every other media box uses.
 const PANEL_CLASS =
-  "relative aspect-square w-full overflow-hidden rounded-panel bg-brand";
+  "relative aspect-card w-full overflow-hidden rounded-md bg-brand";
 
 export type PreviewPanelProps = {
   /** Absent until the artwork is supplied; the plate then ships without art. */

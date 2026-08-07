@@ -14,7 +14,7 @@ import { cx } from "@/lib/cx";
  * which is what keeps `NavigationItem` free of any margin, per "spacing between
  * siblings comes from the parent's gap".
  *
- * The gap is not a prop. design-system.md § Spacing philosophy gives the nav one
+ * The gap is not a prop. design.md § 3 gives the nav one
  * value ("24 — card padding, heading-to-body, nav link gap"), and it is the same
  * value on both axes, so there is nothing for a caller to decide.
  */
@@ -40,7 +40,7 @@ export type NavigationGroupProps = {
 
 export function NavigationGroup({ children, orientation }: NavigationGroupProps) {
   return (
-    <ul role="list" className={cx("flex gap-6", ORIENTATION_CLASS[orientation])}>
+    <ul role="list" className={cx("flex gap-fluid-4", ORIENTATION_CLASS[orientation])}>
       {children}
     </ul>
   );

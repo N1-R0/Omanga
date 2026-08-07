@@ -36,7 +36,7 @@ export function SkipLink({ label, targetId }: SkipLinkProps) {
         fixed top-0 left-4 z-skip-link inline-flex items-center
         -translate-y-full focus-visible:translate-y-4
         rounded-pill bg-brand px-5 py-3
-        font-ui text-ui text-on-dark
+        font-sans text-button text-on-dark
         hit-area focus-ring transition-emphasis
       "
     >

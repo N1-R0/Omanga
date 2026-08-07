@@ -12,7 +12,7 @@ import type { Tone } from "@/types/ui.types";
  * knowledge of routing, and means the desktop bar and the mobile panel render
  * the identical element from the identical props.
  *
- * design-system.md gives the nav link Inter Regular 14/17 and reserves brand
+ * design.md gives the nav link Inter Regular 14/17 and reserves brand
  * for "primary buttons, active tab pill, active underline, emphasis border, CTA
  * band". The active state therefore uses brand for both the label and a 3px
  * rule; hover uses brand for the label only. That keeps active distinguishable
@@ -30,7 +30,7 @@ import type { Tone } from "@/types/ui.types";
  * header.
  */
 const BASE_CLASS =
-  "inline-flex items-center justify-center border-active border-transparent font-ui text-nav hit-area focus-ring transition-standard";
+  "inline-flex items-center justify-center border-active border-transparent font-sans text-main hit-area focus-ring transition-standard";
 
 /**
  * State × tone.

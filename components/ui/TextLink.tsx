@@ -45,7 +45,7 @@ export function TextLink({
   isExternal = false,
 }: TextLinkProps) {
   const className = cx(
-    "font-heading text-body focus-ring transition-standard",
+    "font-sans text-main focus-ring transition-standard",
     TONE_CLASS[tone],
   );
 

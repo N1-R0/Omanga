@@ -1,10 +1,12 @@
 /* =============================================================================
    Omanga — Global typography
    -----------------------------------------------------------------------------
+   design.md § 2
+
    Only what must be global lives here: the document's default type, heading
-   normalisation, and measure utilities. Per-role type is applied by the
-   `Heading` and `Text` primitives using the `--text-*` tokens, never by
-   element selectors — so a bare <h2> outside a Section cannot silently inherit
+   normalisation, and the measure utilities. Per-role type is applied by the
+   `Heading` and `Text` primitives using the `--text-*` tokens, never by element
+   selectors — so a bare <h2> outside a Section cannot silently inherit
    section-heading styling.
    ========================================================================== */
 
@@ -18,8 +20,8 @@
   }
 
   body {
-    font-family: var(--font-heading);
-    font-size: var(--text-body);
+    font-family: var(--font-sans);
+    font-size: var(--text-main);
     line-height: 1.5;
     font-weight: var(--font-weight-regular);
     color: var(--color-ink);
@@ -31,7 +33,7 @@
 
   /* Headings carry no intrinsic size. Heading level is a semantic decision
      (document outline); visual size is a token applied by the primitive.
-     This is what lets a section use <h3> at H2 scale, or vice versa, without
+     This is what lets a section use <h3> at h2 scale, or vice versa, without
      skipping levels — a WCAG 1.3.1 requirement. */
   h1,
   h2,
@@ -44,20 +46,9 @@
     line-height: inherit;
     letter-spacing: inherit;
     text-wrap: balance;
-  }
-
-  /* Sentence case by default.
-     design-system.md said "no uppercase headings" and this guarded it. The hero
-     display role now deliberately overrides it with the `uppercase` utility, which
-     wins because utilities layer after base. The guard stays: it still protects
-     every other heading level, and it means uppercase has to be asked for
-     explicitly rather than arriving by inheritance. */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+    /* Sentence case everywhere. The reference sets no uppercase heading
+       anywhere, and neither does this system — the previous display role's
+       `uppercase` is gone. */
     text-transform: none;
   }
 
@@ -75,8 +66,8 @@
     overflow-wrap: break-word;
   }
 
-  /* Tabular figures for anything numeric so counters and prices do not
-     jitter as digits change. */
+  /* Tabular figures for anything numeric so counters and prices do not jitter
+     as digits change. */
   :where(data, time, output) {
     font-variant-numeric: tabular-nums;
   }
@@ -92,15 +83,13 @@
     color: inherit;
   }
 
-  /* The system has no underline-decoration rule for links; underline
-     behaviour is owned by the TextLink primitive. Reset the UA default so a
-     bare anchor inside prose does not diverge from the primitive. */
+  /* Underline behaviour is owned by the TextLink primitive. Reset the UA
+     default so a bare anchor inside prose does not diverge from it. */
   a {
     color: inherit;
     text-decoration: none;
   }
 
-  /* When an underline IS applied, keep it clear of descenders. */
   a:where([data-underline]) {
     text-decoration: underline;
     text-underline-offset: 0.2em;
@@ -109,40 +98,67 @@
 
   strong,
   b {
-    font-weight: var(--font-weight-semibold);
+    font-weight: var(--font-weight-bold);
   }
 
   small {
-    font-size: var(--text-body-sm);
+    font-size: var(--text-small);
   }
 }
 
 /* -----------------------------------------------------------------------------
-   Measure utilities
-   design-system.md: "Body copy caps at 648–756px measure on wide screens;
-   feature copy caps at 486px." Expressed as utilities rather than component
-   styles because measure is a layout decision the parent owns.
+   Measure
+   design.md § 2 — maximum line length, in `ch` rather than pixels.
+
+   The cap has to track the font size it is applied at. A pixel value silently
+   stops being 20 characters the moment the clamp moves, which is exactly what
+   happened to the previous system's 1136px hero cap: correct at 64px, but 78
+   characters wide once the heading clamps down to 40.
+
+   CRITICAL: `ch` resolves against the font-size of the element it is declared
+   on, so every one of these must be applied to the *typed* element — the
+   heading or the paragraph itself — never to a wrapper sitting at the root
+   size. `Heading` and `Text` both apply them alongside their role class, which
+   is what makes that guaranteed rather than conventional.
+
+   In Kantumruy Pro one `ch` is ~0.612em, so 20ch at the h1's 64px maximum is
+   783px — the reference's measured hero cap, to the pixel.
    -------------------------------------------------------------------------- */
+
+/* The hero headline. The single most important measure in the system: a
+   headline that runs the full content column reads as a paragraph, not as a
+   statement. */
+@utility measure-hero {
+  max-inline-size: 20ch;
+}
+
+/* Section headings. */
+@utility measure-heading {
+  max-inline-size: 30ch;
+}
+
+/* Standalone body copy. */
 @utility measure-body {
-  max-width: var(--spacing-measure-body);
+  max-inline-size: 70ch;
 }
 
+/* Body copy in a narrower context — beneath a centred heading, or in a hero. */
 @utility measure-narrow {
-  max-width: var(--spacing-measure-narrow);
+  max-inline-size: 60ch;
 }
 
+/* Copy inside a column or a card. */
 @utility measure-feature {
-  max-width: var(--spacing-measure-feature);
+  max-inline-size: 45ch;
 }
 
 /* -----------------------------------------------------------------------------
    Secondary body text
-   design-system.md: "Secondary body text carries 80% opacity, never a separate
-   grey." A single utility keeps that rule enforceable — if a component reaches
-   for a grey instead, it is visible in review.
+   Expressed as opacity, never as a separate grey — which is what keeps it
+   legible on both the light and the dark surface without a second token.
 
-   Note: 80% of --color-ink on white is ~4.9:1, and 80% white on --color-ink is
-   ~14:1. Both clear AA. Do not lower the value.
+   80% of --color-ink on white is ~4.9:1, and 80% white on --color-ink is ~14:1.
+   Both clear AA. Do not lower the value.
    -------------------------------------------------------------------------- */
 @utility text-secondary {
   opacity: 0.8;

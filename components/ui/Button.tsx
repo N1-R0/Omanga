@@ -20,7 +20,7 @@ import type { Tone } from "@/types/ui.types";
  * position a button, it positions the button's container.
  */
 
-/** design-system.md § Button variants. Closed set of three. */
+/** design.md § 9. Closed set of three. */
 type ButtonVariant = "primary" | "secondary" | "text";
 
 type ButtonPresentation = {
@@ -70,58 +70,64 @@ export type ButtonProps =
     });
 
 /**
- * Shared geometry: pill radius, Inter SemiBold 14/17, 20 × 12 padding, 8 gap to
- * the trailing icon, and a 44px minimum hit area enforced here rather than by
- * callers.
+ * Shared geometry. design.md § 9.
+ *
+ * [MEASURED] 16 × 24 padding and a body-size label at weight 400, replacing the
+ * previous 12 × 20 at 14/600. The reference sets its buttons at body size in
+ * regular weight, and the difference is not cosmetic: a 14px semibold pill reads
+ * as a form control, an 18px regular pill reads as an invitation. This is the
+ * single largest contributor to the buttons feeling small against the reference.
+ *
+ * `text-button` is `--text-main` at line-height 1, so the pill's height is set by
+ * its padding alone rather than by the label's leading — which is what keeps the
+ * two variants exactly the same height despite one carrying a border.
+ *
+ * Padding is fluid: `--space-3` (14 → 16) block, `--space-4` (20 → 24) inline, so
+ * the control shrinks with the viewport instead of eating a third of a 320px
+ * screen. `hit-area` holds the 44px WCAG floor underneath.
  */
 const BASE_CLASS =
-  "inline-flex items-center justify-center gap-2 font-ui text-ui hit-area focus-ring transition-standard";
+  "inline-flex items-center justify-center gap-fluid-1 font-sans text-button hit-area focus-ring transition-standard";
 
-const SHAPE_CLASS = "rounded-pill px-5 py-3";
+const SHAPE_CLASS = "rounded-pill py-fluid-3 px-fluid-4";
 
 /**
  * Variant × tone.
  *
- * Hover behaviour follows the state rule: filled variants darken 8%, bordered
- * variants fill at 10% of their border colour. Both are precomputed tokens, so
- * no opacity modifier appears in a class string.
+ * [MEASURED] Hover is an INVERSION, not a tint.
  *
- * [DECISION] `primary` on `brand` is not specified. A brand fill on the brand
- * band would be invisible, and design-system.md's ⚠ note requires the band to
- * carry "one filled primary instead of two outlined siblings". Resolved as a
- * white fill with a brand label (measured 7.4:1). Pending design confirmation.
+ * The reference sends both its filled and its bordered button to the same place
+ * on hover — an ink fill with a light label — so a button group reads as one
+ * control set rather than as two controls that happen to sit together. The
+ * previous behaviour (filled variants darken 8%, bordered variants fill at 10%
+ * of their border colour) produced two unrelated hover states and neither was
+ * strong enough to register as feedback.
  *
- * [MEASURED] `secondary` on `dark` drops its resting fill. See the inline note —
- * the specified white @20% fails AA over photography, which is the only place the
- * dark tone is used. Do not restore the fill without re-measuring.
+ * The brand tone is the exception, and necessarily: the band is already brand,
+ * so the resting state is a white fill and hover goes to ink. Same inversion,
+ * opposite starting point.
  *
- * [NORMALISED] `secondary` on `brand` is drawn with a 0.5px border in Figma.
- * Sub-pixel borders render inconsistently across devices and disappear
- * entirely at some zoom levels, so it ships at 1px like every other border.
+ * [MEASURED] `secondary` on `dark` carries no resting fill. The dark tone's only
+ * use is beside a primary over photography, and a white @20% fill lightens the
+ * 55%-scrimmed sky enough to put the white label at 3.83:1 — an AA failure at
+ * every breakpoint. Transparent, the same label sits on the scrim directly at
+ * 6.01:1 and the 1px white border marks the control at 5.74:1. Do not restore
+ * the fill without re-measuring.
  */
 const VARIANT_CLASS: Readonly<Record<ButtonVariant, Record<Tone, string>>> = {
   primary: {
-    light: "bg-brand text-on-dark hover:bg-brand-hover",
-    dark: "bg-brand text-on-dark hover:bg-brand-hover",
-    brand: "bg-surface-page text-brand hover:bg-surface-light",
+    light: "bg-brand text-on-dark hover:bg-ink",
+    dark: "bg-brand text-on-dark hover:bg-ink",
+    brand: "bg-surface-page text-brand hover:bg-ink hover:text-on-dark",
   },
   secondary: {
-    light: "border border-ink text-ink hover:bg-ink-hover",
-    // [MEASURED] No resting fill on the dark tone. design-system.md specifies
-    // "White @ 20%" here, but the dark tone's real use is "beside a primary over
-    // photography" — and measured against the actual hero photograph, a white
-    // @20% fill lightens the 60%-scrimmed sky to ~rgb(133 133 133), putting the
-    // white label at 3.83:1 and failing AA at every breakpoint. Transparent, the
-    // same label sits on the scrim directly at 6.01:1, and the 1px white border
-    // still marks the control at 5.74:1 against its background.
-    //
-    // The hover fill is retained: hover is transient, is never the only way to
-    // identify the control, and the label is legible in both states.
-    dark: "border border-on-dark text-on-dark hover:bg-overlay-strong-hover",
-    brand: "border border-on-dark bg-overlay-soft text-on-dark hover:bg-overlay-soft-hover",
+    light: "border border-ink text-ink hover:bg-ink hover:text-on-dark",
+    dark: "border border-on-dark text-on-dark hover:border-ink hover:bg-ink",
+    brand:
+      "border border-on-dark text-on-dark hover:border-ink hover:bg-ink",
   },
   text: {
-    light: "text-brand hover:text-brand-hover",
+    light: "text-brand hover:text-ink",
     dark: "text-on-dark hover:text-secondary",
     brand: "text-on-dark hover:text-secondary",
   },

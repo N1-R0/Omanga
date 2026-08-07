@@ -16,7 +16,7 @@ import { ComparisonItem } from "./ComparisonItem";
  *
  * A `ul` is why this is not a `Stack`: `Stack` renders a `div` and takes no
  * element prop. It keeps `Stack`'s contract regardless — the 16 gap is the
- * parent's, so no row carries a margin. 16 is the step `design-system.md` § Card
+ * parent's, so no row carries a margin. 16 is the step `design.md` § Card
  * variants names for this exact case: "Comparison card ... Icon + body rows at 16
  * gap".
  */
@@ -34,7 +34,7 @@ export function ComparisonList({
   labelledBy,
 }: ComparisonListProps) {
   return (
-    <ul role="list" aria-labelledby={labelledBy} className="flex flex-col gap-4">
+    <ul role="list" aria-labelledby={labelledBy} className="flex flex-col gap-fluid-3">
       {items.map((item) => (
         <ComparisonItem key={item} sentiment={sentiment}>
           {item}

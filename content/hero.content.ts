@@ -1,70 +1,53 @@
+import { WALLET_URL } from "@/config/site";
 import type { CallToAction, ImageAsset } from "@/types/content.types";
 
 /**
  * Hero content.
  *
  * Every user-facing string is verbatim from the CEO-approved copy document,
- * § 2 · Hero Section, with NJ's tracked changes accepted. Nothing is drafted,
- * paraphrased, or carried over from the redesign spec — project-context.md is
- * explicit that the spec's Step 6 copy is superseded.
+ * § 2 · Hero Section, with NJ's tracked changes accepted.
  *
  * The tracked changes matter here more than anywhere else on the page. The
  * headline before NJ's edit read "Travel Africa with one card and one insurance
  * plan"; accepting the change replaces "one card" with "a customized payment
  * solution". That is the single most important edit in the document — the whole
- * no-physical-card rule descends from it — and rejecting the change would
- * reintroduce the claim in the page's `h1`.
+ * no-physical-card rule descends from it — and rejecting it would reintroduce
+ * the claim in the page's `h1`.
  *
  * ---------------------------------------------------------------------------
- * FIGMA DISAGREES WITH THE APPROVED COPY IN FOUR PLACES
+ * [REDESIGNED] The hero band is now the headline, the actions and the helper
+ * line. Two fields are gone from this module:
  *
- * The hero frame (node 1265:12538) was drawn before copy approval and shows:
+ *   eyebrow  "Payments & insurance for African travel"
+ *   intro    "Fund your Omanga wallet in USD, GBP or CAD, spend across 43
+ *             African countries, and add short-term health cover before you fly."
  *
- *   Figma headline   "YOUR SEAMLESS GATEWAY TO AFRICAN TRAVEL"
- *   Approved         "Travel Africa with a customized payment solution and one
- *                     insurance plan"
+ * The reference's hero band contains its `h1` and nothing else, and a headline
+ * with a pill above it and a paragraph below it is a section rather than a hero.
+ * See `HeroContent` for the full reasoning.
  *
- *   Figma sub-head   "Payments And Insurance In One Place"
- *   Approved         the full sentence below — Figma is showing a Title-Cased
- *                    fragment of it
- *
- *   Figma secondary  "Compare Insurance Plans"
- *   Approved         "Insurance Plans"
- *
- *   Figma helper     absent
- *   Approved         "No monthly fee. Set up in minutes." — it ships
- *
- * Copy outranks Figma, so the approved strings win in all four. Two consequences
- * worth stating plainly rather than discovering in review:
- *
- *   1. The approved headline is 71 characters against Figma's 39, so it wraps to
- *      roughly three lines at the display size instead of two. The hero is
- *      taller and denser than the frame looks.
- *   2. Figma sets the headline in uppercase with positive tracking.
- *      design-system.md drops both ("sentence case everywhere, no uppercase
- *      headings"), and the redesign spec independently agrees: "Sentence case,
- *      not Title Case". So the headline renders in sentence case.
- *
- * Also corrected against the spec: the spec's hero copy says "52 African
- * countries". The approved figure is 43, and project-context.md lists the 52 as
- * obsolete and to be rejected everywhere.
+ * Neither string is lost. `intro` is the page's meta description verbatim
+ * (`app/(redesign)/page.tsx`), and the Solutions Overview immediately beneath
+ * the hero opens with two paragraphs covering the same ground — so nothing that
+ * was indexed has been removed from the document.
  */
 
 /**
  * Destinations.
  *
- * Not invented and not taken from the labels — the redesign spec has authority
- * over the internal-linking plan, and § 5.5 states it directly:
- * "Hero → `/payments` (primary), `/insurance` (secondary)". Both routes exist
- * in the application today, so neither is pending.
+ * [CHANGED] The primary no longer points at the marketing `/payments` page. The
+ * wallet is issued off-site, so "Open Your Free Wallet" goes straight to the
+ * sign-up at `WALLET_URL` and carries `isExternal`, which adds `target` and
+ * `rel` at render time.
  *
- * The spec's § 5.6 also sets the hierarchy this implements: one filled primary,
- * the secondary de-weighted to an outline. That is why the two buttons are not
- * siblings of equal weight the way the current site's are.
+ * The URL itself lives in `config/site.ts`; it is not typed here, because it is
+ * also the header's and the closing band's destination and three copies of a URL
+ * is three places for it to be wrong.
  */
 const PRIMARY_ACTION: CallToAction = {
   label: "Open Your Free Wallet",
-  href: "/payments",
+  href: WALLET_URL,
+  isExternal: true,
   emphasis: "primary",
 } as const;
 
@@ -80,29 +63,22 @@ const SECONDARY_ACTION: CallToAction = {
  * `alt` is deliberately empty. The image is a full-bleed background sitting
  * behind the headline under a scrim; it carries no information the adjacent text
  * does not already give, so an empty alt is the correct statement rather than an
- * omission. component-rules.md requires the decision to be explicit, which is
- * what this is.
+ * omission.
  *
  * ---------------------------------------------------------------------------
  * [DISCREPANCY] The asset is probably wrong, and this is not the place to fix it.
  *
- * The redesign spec's design note for this section says "Keep the Lagos
- * skyline", and design-system.md describes the brand as carrying "real African
- * photography". The asset in `public/` — and the one drawn in the Figma frame —
- * is an aeroplane window over what appears to be a European or North American
- * suburb. It is neither a Lagos skyline nor African photography.
- *
- * Shipped as-is because it is what both the repository and the Figma frame
- * contain, and substituting an image is a design decision. Raised for design.
+ * The brand carries "real African photography"; the asset in `public/` is an
+ * aeroplane window over what appears to be a European or North American suburb.
+ * Shipped as-is because it is what the repository contains, and substituting an
+ * image is a design decision. Raised for design.
  *
  * If the photograph is replaced, `--color-scrim` must be re-measured — the
- * current 60% was derived from this specific image's brightest pixels.
+ * current 55% was derived from this specific image's brightest pixels.
  *
- * [NOTE] The file is named `.png` but is actually a 4096x2305 JPEG, and at
- * 5.4MB it is far larger than needed. `next/image` re-encodes and resizes it, so
- * it does not reach the browser at that weight, but the source should be
- * re-exported: coding-guidelines.md asks for assets served "at the largest
- * rendered size, not the source size".
+ * [NOTE] The file is named `.png` but is a 4096x2305 JPEG, and at 5.4MB it is
+ * far larger than needed. `next/image` re-encodes and resizes it, so it does not
+ * reach the browser at that weight, but the source should be re-exported.
  */
 const IMAGE: ImageAsset = {
   src: "/hero.png",
@@ -112,21 +88,14 @@ const IMAGE: ImageAsset = {
 } as const;
 
 export type HeroSectionContent = {
-  readonly eyebrow: string;
   readonly heading: string;
-  readonly intro: string;
   /**
    * Exactly two actions, in hierarchy order: primary first.
    *
    * A fixed-length tuple rather than an array, because the hero's CTA hierarchy
-   * is the point — § 5.6 exists to establish one primary and one de-weighted
-   * secondary. An array would permit three buttons, or one, or none, and rule 3
-   * ("one primary button per section maximum") would then be enforceable only by
-   * review.
-   *
-   * This is also why the hero does not use `SectionContent<T>`: that shape
-   * carries a single optional `action`, and the hero needs two required ones.
-   * Bending the shared type to fit would weaken it for every other section.
+   * is the point — one primary and one de-weighted secondary. An array would
+   * permit three buttons, or one, or none, and "one primary button per section"
+   * would then be enforceable only by review.
    */
   readonly actions: readonly [CallToAction, CallToAction];
   /** Risk-reducing line beneath the actions. */
@@ -135,11 +104,8 @@ export type HeroSectionContent = {
 };
 
 export const heroContent: HeroSectionContent = {
-  eyebrow: "Payments & insurance for African travel",
   heading:
     "Travel Africa with a customized payment solution and one insurance plan",
-  intro:
-    "Fund your Omanga wallet in USD, GBP or CAD, spend across 43 African countries, and add short-term health cover before you fly.",
   actions: [PRIMARY_ACTION, SECONDARY_ACTION],
   helperText: "No monthly fee. Set up in minutes.",
   image: IMAGE,

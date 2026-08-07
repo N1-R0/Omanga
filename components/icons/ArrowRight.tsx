@@ -4,7 +4,7 @@ import type { IconSize } from "@/types/ui.types";
 /**
  * Forward-navigation arrow.
  *
- * design-system.md § Icon usage: "Arrows point right for forward navigation.
+ * design.md § 9: "Arrows point right for forward navigation.
  * No other directional glyphs on this page." This is the only arrow in the set,
  * by design — a left, up or down arrow appearing later is a design question.
  *

@@ -1,15 +1,105 @@
 /* =============================================================================
    Omanga — Custom utilities
    -----------------------------------------------------------------------------
-   Utilities exist here for exactly one reason: a token namespace that Tailwind
-   v4 does not generate utilities for (z-index, durations, focus ring), or a
-   rule the system states that must be applied identically everywhere and
-   therefore must not be re-expressed per component (the focus ring, the
-   scrim, the minimum hit area).
+   Utilities exist here for exactly one reason: a token namespace Tailwind v4
+   does not generate utilities for (z-index, the fluid spacing scale, the focus
+   ring), or a rule design.md states that must be applied identically everywhere
+   and therefore must not be re-expressed per component.
 
-   Nothing decorative belongs in this file. If a style is used by one
-   component, it belongs in that component.
+   Nothing decorative belongs in this file. If a style is used by one component,
+   it belongs in that component.
    ========================================================================== */
+
+/* -----------------------------------------------------------------------------
+   Fluid spacing scale
+   design.md § 3 — eight steps, every one a clamp between 320 and 1440.
+
+   Tailwind's numeric `gap-*` / `p-*` utilities resolve from `--spacing` and are
+   therefore fixed. A fixed 64px gap is 20% of a 320px screen and 3% of a 1920px
+   one; these are what make spacing track the viewport instead.
+
+   Generated for the three properties section markup actually needs. Padding and
+   margin steps are deliberately not generated for every side — section padding
+   is owned by `Section`, page padding by `Container`, and children carry no
+   margins.
+   -------------------------------------------------------------------------- */
+@utility gap-fluid-* {
+  gap: --value(--space- *);
+}
+
+@utility gap-x-fluid-* {
+  column-gap: --value(--space- *);
+}
+
+@utility gap-y-fluid-* {
+  row-gap: --value(--space- *);
+}
+
+@utility p-fluid-* {
+  padding: --value(--space- *);
+}
+
+@utility px-fluid-* {
+  padding-inline: --value(--space- *);
+}
+
+@utility py-fluid-* {
+  padding-block: --value(--space- *);
+}
+
+/* Single-edge padding. Only the block edges exist, and deliberately: a card that
+   needs a different left inset from its right one is a design question, but the
+   asymmetric top/bottom on a card — 24 above the copy, 32 below it — is a real
+   measurement from the reference.
+
+   [FIXED] These were missing while `pt-fluid-*` / `pb-fluid-*` were already in
+   use across the cards and the feature list. Tailwind emits nothing for a
+   utility it has no definition for and reports no error, so those elements were
+   silently rendering with zero vertical padding — the product cards' actions sat
+   flush against the card's bottom edge, and the feature list's body copy sat
+   directly on its 3px brand rule. */
+@utility pt-fluid-* {
+  padding-block-start: --value(--space- *);
+}
+
+@utility pb-fluid-* {
+  padding-block-end: --value(--space- *);
+}
+
+/* -----------------------------------------------------------------------------
+   Page gutter
+   The horizontal rhythm of the whole page, in one place. Owned by the
+   `Container` primitive; no other component sets page padding.
+   -------------------------------------------------------------------------- */
+@utility page-gutter {
+  padding-inline: var(--spacing-gutter);
+}
+
+/* -----------------------------------------------------------------------------
+   Section rhythm
+   design.md § 4 — one value for every surface, applied as a fluid clamp rather
+   than as breakpoint steps.
+
+   Rhythm does not vary by tone. Light and dark bands take the same value; the
+   two other steps are reserved for bands that are structurally different — a
+   strip, or the closing conversion band — not for bands that are merely a
+   different colour.
+
+   Owned by the `Section` primitive. No component sets its own vertical rhythm.
+   -------------------------------------------------------------------------- */
+@utility section-rhythm {
+  padding-block: var(--section-main);
+}
+
+/* A strip rather than a section — the partner logos. */
+@utility section-rhythm-tight {
+  padding-block: var(--section-small);
+}
+
+/* The page's one full-bleed conversion band. */
+@utility section-rhythm-loose {
+  padding-block: var(--section-large);
+}
 
 /* -----------------------------------------------------------------------------
    Z-index
@@ -42,12 +132,11 @@
 
 /* -----------------------------------------------------------------------------
    Focus ring
-   design-system.md: "Focus rings are identical across buttons, links, tabs and
-   inputs." One utility, applied by every interactive primitive. A component
-   that needs a different ring is a bug, not a variant.
+   design.md § 12: one ring, identical across buttons, links, tabs and fields.
+   A component that needs a different ring is a bug, not a variant.
 
-   `:focus-visible` rather than `:focus` so pointer users do not get a ring on
-   click, while keyboard users always do.
+   `:focus-visible` rather than `:focus`, so pointer users do not get a ring on
+   click while keyboard users always do.
    -------------------------------------------------------------------------- */
 @utility focus-ring {
   &:focus-visible {
@@ -57,26 +146,57 @@
 }
 
 /* -----------------------------------------------------------------------------
+   Focus ring colour, per surface
+   design.md § 12.
+
+   [FIXED — WCAG 1.4.11 / 2.4.7] The ring was `--color-brand` on every surface,
+   and it is only legible on one of them. Measured against the three surfaces the
+   page actually paints:
+
+     brand on white          6.70:1   passes
+     brand on --color-ink    2.73:1   FAILS the 3:1 non-text floor
+     brand on brand          1.00:1   invisible — the ring is not there at all
+
+   The second and third cases cover the dark bands and the closing conversion
+   band, which means the page's single most important control — "Get Started" —
+   took focus with no visible indicator whatsoever.
+
+   The ring stays one ring: same width, same offset, same geometry everywhere.
+   Only its colour follows the surface, which is exactly how every other
+   foreground in this system behaves. `Section` sets it from its `tone`, so an
+   interactive element can never pick the wrong one — it inherits, and there is
+   no per-component override anywhere.
+
+     on light   brand   6.70:1
+     on dark    white  18.10:1
+     on brand   white   6.70:1
+   -------------------------------------------------------------------------- */
+@utility focus-ring-on-light {
+  --focus-ring-color: var(--color-brand);
+}
+
+@utility focus-ring-on-dark {
+  --focus-ring-color: var(--color-on-dark);
+}
+
+/* -----------------------------------------------------------------------------
    Emphasis border
-   card rules: "Emphasis is a border, never shadow, scale, or a different
-   padding." The emphasised comparison card is the only element that carries
-   it, at 5px. A utility rather than an arbitrary `border-[5px]`, so the one
-   non-1px border in the system is named and greppable.
+   design.md § 9: "Emphasis is a border." Not a shadow, not a scale, not a
+   different padding — the system has no elevation to reach for. Named here so
+   the one non-1px border in the system is greppable rather than written as an
+   arbitrary width at a call site.
    -------------------------------------------------------------------------- */
 @utility border-emphasis {
-  border-width: 5px;
+  border-width: 2px;
 }
 
 /* -----------------------------------------------------------------------------
    Active underline
-   design-system.md § Color roles lists "active underline" as one of the five
-   things brand is reserved for, and § Motion principles gives it a "3px brand
-   rule". 3 is the system's one deliberate off-4px-grid value — it is a rule
-   weight, not spacing — so it is named here rather than written as an
-   arbitrary border width at each call site.
+   A 3px brand rule beneath the active tab. 3 is the system's one deliberate
+   off-grid value — it is a rule weight, not spacing.
 
-   Applied in both the active and the inactive state, transparent when
-   inactive, so gaining the underline can never move the element.
+   Applied in both the active and the inactive state, transparent when inactive,
+   so gaining the underline can never move the element.
    -------------------------------------------------------------------------- */
 @utility border-active {
   border-block-end-width: 3px;
@@ -84,9 +204,8 @@
 
 /* -----------------------------------------------------------------------------
    Minimum hit area
-   WCAG 2.1 AA target size + design-system.md's 44px button rule. Enforced by
-   the primitive so callers cannot ship an undersized control. Uses min-* so a
-   control still grows with its content.
+   WCAG 2.1 AA target size. Enforced by the primitive so callers cannot ship an
+   undersized control. `min-*` so a control still grows with its content.
    -------------------------------------------------------------------------- */
 @utility hit-area {
   min-block-size: 2.75rem; /* 44 */
@@ -95,10 +214,10 @@
 
 /* -----------------------------------------------------------------------------
    Scrim
-   design-system.md: "Text never sits directly on an unscrimmed photograph."
-   Applied as an ::after on the image container so the caller cannot forget it
-   and cannot weaken it. Absolute positioning is permitted here — scrims are
-   one of the three sanctioned cases.
+   Text never sits directly on an unscrimmed photograph. Applied as an ::after on
+   the image container so the caller cannot forget it and cannot weaken it.
+   Absolute positioning is permitted here — scrims are one of the three
+   sanctioned cases.
    -------------------------------------------------------------------------- */
 @utility scrim {
   position: relative;
@@ -116,22 +235,14 @@
 /* -----------------------------------------------------------------------------
    Rail clip
    The timeline's scroll-progress fill is a sticky bar pulled up by its own
-   height, so in its resting position it overhangs the top of the rail by 50vh.
-   That overhang has to be hidden, and the property used to hide it is load
-   bearing:
+   height, so at rest it overhangs the top of the rail by 50vh. The property used
+   to hide that overhang is load bearing:
 
      overflow: hidden   makes the rail a scroll container, and a sticky element
                         sticks to its nearest scrollport — so the bar would stop
                         tracking the viewport and the fill would never move.
      clip-path          clips the same region, creates no scroll container, and
                         leaves the sticky offset computed against the page.
-
-   The benchmark solves it a third way, with an opaque 50vh block absolutely
-   positioned above the rail. That block is 32 wide and unclipped, so it paints
-   over whatever sits within half a viewport above the timeline — which is why
-   its heading block carries a z-index at all. Clipping removes the overhang
-   instead of covering it, so nothing above the section has to know the rail
-   exists.
    -------------------------------------------------------------------------- */
 @utility clip-rail {
   clip-path: inset(0);
@@ -156,64 +267,17 @@
 }
 
 /* -----------------------------------------------------------------------------
-   Page gutter
-   The horizontal rhythm of the whole page, in one place. Owned by the
-   Container primitive; no other component sets page padding.
-   -------------------------------------------------------------------------- */
-/* -----------------------------------------------------------------------------
    Header transition
-   The header changes two things at once — it slides on scroll (transform) and it
-   crosses from transparent to opaque (background, border and text colour). The
-   existing utilities cover one group or the other: `transition-emphasis` is
-   transform and opacity, `transition-standard` is colour. Applying both would put
-   two `transition-property` declarations on one element and the later one would
-   silently win.
+   The header slides on scroll (transform) and crosses from transparent to
+   opaque (background, border, colour) at the same time. The other transition
+   utilities cover one group or the other; applying both would put two
+   `transition-property` declarations on one element and the later would silently
+   win.
 
-   300ms matches the benchmark's `transition-duration: 0.3s` on the header exactly.
-   No layout property is animated here, so the motion rules still hold.
+   No layout property is animated, so the motion rules still hold.
    -------------------------------------------------------------------------- */
 @utility transition-header {
   transition-property: transform, background-color, border-color, color;
   transition-duration: var(--duration-emphasis);
   transition-timing-function: var(--ease-standard);
-}
-
-@utility page-gutter {
-  /* One fluid value rather than four breakpoint steps. See the
-     --spacing-gutter-fluid token for why this deviates from the Figma frame.
-     Four discrete steps meant four places for the horizontal rhythm to be wrong;
-     a clamp has one. */
-  padding-inline: var(--spacing-gutter-fluid);
-}
-
-/* -----------------------------------------------------------------------------
-   Section rhythm
-   [MEASURED from the structural benchmark] One value for every surface, applied
-   as a fluid clamp rather than three breakpoint steps.
-
-   The previous pair — 100 on light, 130 on dark, stepped at tablet and desktop —
-   is gone. Two reasons, both from the measurement:
-
-     1. The benchmark does not vary rhythm by surface at all. Its light and dark
-        bands take the same spacer. Omanga's light/dark split was its own
-        invention, and it was what made the light sections read as tighter than
-        the reference while the dark ones read as looser.
-     2. Three discrete steps meant three widths at which the rhythm was
-        momentarily wrong. The benchmark ramps continuously from 360 to 1920, so
-        density tracks the viewport instead of jumping at 768 and 1024.
-
-   Owned by the Section primitive. No component sets its own vertical rhythm.
-   -------------------------------------------------------------------------- */
-@utility section-rhythm {
-  padding-block: var(--spacing-section-main);
-}
-
-/* A strip rather than a section — the partner logos. */
-@utility section-rhythm-tight {
-  padding-block: var(--spacing-section-small);
-}
-
-/* The page's one full-bleed emphasis band — the closing CTA. */
-@utility section-rhythm-loose {
-  padding-block: var(--spacing-section-large);
 }

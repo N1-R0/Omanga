@@ -13,7 +13,7 @@ import type { ImageAsset } from "@/types/content.types";
  *   illustration  flat vector, fitted whole inside the box and centred
  *   device        a phone mockup, anchored to the top and clipped by the box
  *
- * `design-system.md` § Image treatment specifies both cases separately ("Product
+ * `design.md` § Image treatment specifies both cases separately ("Product
  * card art | Contained within card padding, no bleed to the card edge" and
  * "Device mockup | 393 × 450 visible, 50 radius, Shadow XL"), so the union has
  * exactly as many members as the design has treatments.
@@ -99,12 +99,12 @@ import type { ImageAsset } from "@/types/content.types";
  */
 const PRESENTATION = {
   illustration: {
-    box: "p-6 tablet:px-12 tablet:py-8",
+    box: "p-fluid-4 tablet:px-fluid-7 tablet:py-fluid-5",
     image: "size-full object-contain",
     isUnoptimized: true,
   },
   device: {
-    box: "px-6 pt-8 tablet:px-10 tablet:pt-12",
+    box: "px-fluid-4 pt-fluid-5 tablet:px-fluid-6 tablet:pt-fluid-7",
     image: "h-auto w-full",
     isUnoptimized: false,
   },

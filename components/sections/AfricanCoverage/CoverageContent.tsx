@@ -12,7 +12,7 @@ import type { CallToAction, Eyebrow } from "@/types/content.types";
  * ---------------------------------------------------------------------------
  * [NORMALISED] The spec sets one 44 gap between all three blocks.
  *
- * 44 is not a step in `design-system.md` § Spacing philosophy, and the section
+ * 44 is not a step in `design.md` § Spacing philosophy, and the section
  * would be the only place on the page where an eyebrow sits 44 from its heading.
  * The three gaps are taken from the relationships the spacing table names
  * instead:
@@ -41,10 +41,10 @@ import type { CallToAction, Eyebrow } from "@/types/content.types";
  *
  * This is the call `TrustPartners` and `FooterColumn` already make for Inter
  * chrome that no editorial role covers. The classes are the `caption` role's own
- * (`font-ui text-caption`, Inter 12/20 at +1 tracking) plus the two things the
+ * (`font-sans text-small`, Inter 12/20 at +1 tracking) plus the two things the
  * frame adds.
  *
- * [OVERRIDES design-system.md] "Sentence case everywhere. No uppercase headings."
+ * [OVERRIDES design.md] "Sentence case everywhere. No uppercase headings."
  * The eyebrow is a label rather than a heading, the frame sets it in caps, and the
  * base-layer guard in `typography.css` only covers h1–h6, so nothing is being
  * fought here. The transform is CSS and the content stays sentence case, which is
@@ -57,13 +57,13 @@ import type { CallToAction, Eyebrow } from "@/types/content.types";
  * design as the token-compliant reading.**
  *
  * The action is a text link with a 16px trailing arrow, which is exactly
- * `design-system.md`'s tertiary variant — so the frame's Inter SemiBold 20 is
+ * `design.md`'s tertiary variant — so the frame's Inter SemiBold 20 is
  * carried by `Button`'s own 14, and the arrow is the `ArrowRight` component
  * rather than a glyph inside the label string. `variant` comes from the content's
  * `emphasis`, so hierarchy is stated once.
  *
  * The measure is `narrow` (648). The spec's 432 horizontal padding would give 576
- * at a 1440 frame, which is below the 648–756 band `design-system.md` sets for
+ * at a 1440 frame, which is below the 648–756 band `design.md` sets for
  * body copy and narrower than the frame's own paragraph renders. See
  * `AfricanCoverage` for why that value is not used.
  */
@@ -89,7 +89,7 @@ export function CoverageContent({
       <Stack gap="2xl" align="center">
         <Stack gap="lg" align="center">
           <Stack gap="sm" align="center">
-            <p className="font-ui text-caption uppercase text-brand">
+            <p className="font-sans text-small uppercase text-brand">
               {eyebrow}
             </p>
 
@@ -99,11 +99,9 @@ export function CoverageContent({
               section heading on the page so none of them can run the full 1520
               column on one line.
             */}
-            <div className="max-w-heading">
               <Heading id={headingId} level="h2" role="section">
                 {heading}
               </Heading>
-            </div>
           </Stack>
 
           <Text role="body" measure="narrow" isSecondary>

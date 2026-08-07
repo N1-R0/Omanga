@@ -28,7 +28,7 @@ import { MobileNavToggle } from "./MobileNavToggle";
  * ---------------------------------------------------------------------------
  * [DECISION] There is no mobile frame in Figma.
  *
- * design-system.md gives one sentence about narrow layouts — "Header collapses
+ * design.md gives one sentence about narrow layouts — "Header collapses
  * to wordmark, hamburger and one persistent primary button below 1024" — and the
  * docs state outright that "narrow layouts are engineering decisions to be
  * confirmed against design". The panel's surface, its position, and its
@@ -177,7 +177,7 @@ export function MobileNav({
             open question 4.5, and the same gap behind the header's absent bottom
             border. One token named for the role would close both.
           */
-          "border-t border-border-field bg-surface-page px-5 py-6",
+          "border-t border-border-field bg-surface-page px-fluid-4 py-fluid-4",
           "desktop:hidden",
           /*
             [MEASURED from the structural benchmark] Its menu panels open over
@@ -211,7 +211,7 @@ export function MobileNav({
           It sits last so the nav links stay closest to the toggle that revealed
           them, and so the strongest action is the last thing read.
         */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-fluid-4">
           <Navigation
             items={items}
             landmarkLabel={landmarkLabel}

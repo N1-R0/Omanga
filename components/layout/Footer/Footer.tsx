@@ -12,7 +12,7 @@ import type { FooterLinkColumn, LinkTarget } from "@/types/content.types";
  * which matters more here than anywhere else on the page: the footer is where
  * most of the internal-linking budget lives.
  *
- * Layout from the Figma frame (node 1265:13178) and design-system.md § Grid
+ * Layout from the Figma frame (node 1265:13178) and design.md § Grid
  * system: "Footer: brand column 322, then four equal link columns, 40 gap, 93
  * page gutter."
  *
@@ -35,7 +35,7 @@ import type { FooterLinkColumn, LinkTarget } from "@/types/content.types";
  * ---------------------------------------------------------------------------
  * [NORMALISED] The 93 page gutter.
  *
- * design-system.md gives the footer a 93 gutter where every other band uses 100.
+ * design.md gives the footer a 93 gutter where every other band uses 100.
  * 93 is off the 4px grid and is not a distinguishable difference at any real
  * viewport width, so the footer uses the standard `Container` — which is also
  * what keeps the footer's link columns aligned with the content above them
@@ -68,7 +68,7 @@ export function Footer({
   homeLabel,
 }: FooterProps) {
   return (
-    <footer className="section-rhythm bg-ink text-on-dark">
+    <footer className="section-rhythm bg-ink text-on-dark focus-ring-on-dark">
       <Container>
         {/*
           Mobile is one column, tablet splits the four link columns into two, and
@@ -76,8 +76,8 @@ export function Footer({
           order in the DOM is brand first then Services → Company → Support →
           Legal at every width, because nothing is ever reordered.
         */}
-        <div className="grid grid-cols-2 gap-x-6 gap-y-12 tablet:gap-10 desktop:grid-cols-footer">
-          <div className="col-span-2 flex flex-col gap-6 desktop:col-span-1">
+        <div className="grid grid-cols-2 gap-x-fluid-4 gap-y-fluid-7 tablet:gap-fluid-6 desktop:grid-cols-footer">
+          <div className="col-span-2 flex flex-col gap-fluid-4 desktop:col-span-1">
             <Logo wordmark={wordmark} label={homeLabel} />
 
             <Text role="body" measure="feature" isSecondary>
@@ -99,7 +99,7 @@ export function Footer({
               size. Placed in the brand column rather than in a full-width bar
               because that is where the Figma frame puts it.
             */}
-            <Text role="caption" isSecondary>
+            <Text role="small" isSecondary>
               {copyright}
             </Text>
           </div>

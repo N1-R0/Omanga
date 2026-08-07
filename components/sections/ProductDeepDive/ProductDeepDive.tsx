@@ -19,7 +19,7 @@ export type ProductDeepDiveProps = {
 export function ProductDeepDive({ content, headingId }: ProductDeepDiveProps) {
   return (
     <Section labelledBy={headingId} tone={SECTION_TONE}>
-      <Stack gap="5xl">
+      <Stack gap="4xl">
         {/*
           MOTION. The heading block enters, then the tab panel 80ms behind it.
           The tabs' own panel-change animation is unaffected — this is the
@@ -36,11 +36,9 @@ export function ProductDeepDive({ content, headingId }: ProductDeepDiveProps) {
                 two lines, centred, which is what the reference does with headings
                 of this length.
               */}
-              <div className="max-w-heading">
                 <Heading id={headingId} level="h2" role="section">
                   {content.heading}
                 </Heading>
-              </div>
 
               <Text role="body" measure="narrow" isSecondary>
                 {content.intro}

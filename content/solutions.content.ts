@@ -54,7 +54,7 @@ import type { Eyebrow, ImageAsset, LinkTarget } from "@/types/content.types";
  *
  * Figma draws this as a Lottie composition (`__lottie_element_3`, node
  * 1265:12571) — a ring of travel glyphs orbiting the Omanga mark. It ships as
- * the frame's static SVG export instead: `design-system.md` § Motion principles
+ * the frame's static SVG export instead: `design.md` § Motion principles
  * permits Lottie, but `coding-guidelines.md` requires heavy animation to load on
  * intersection, pause off-screen and stay out of the initial bundle, and none of
  * that infrastructure exists yet. A static export is the honest version of the
@@ -128,7 +128,7 @@ const PAYMENTS_ACTION: LinkTarget = {
  *
  * `action` is a `LinkTarget` rather than a `CallToAction`, and that is the
  * point: a `CallToAction` carries an `emphasis`, and the emphasis of a product
- * card's button is fixed by the card it sits in — `design-system.md` § Card
+ * card's button is fixed by the card it sits in — `design.md` § Card
  * variants gives the brand card a secondary-on-dark button and the light card a
  * secondary-on-light one. Copy does not get to choose it, so copy does not
  * carry it.

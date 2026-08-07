@@ -21,11 +21,11 @@ import { ComparisonList } from "./ComparisonList";
  *   positive -> `Check`, `comparison-emphasis`  #2D2E2E, 5px brand border
  *
  * Both variants already exist on the `Card` primitive and are used as-is —
- * `design-system.md` § Card variants defines the pair, and `card rules` require
+ * `design.md` § Card variants defines the pair, and `card rules` require
  * that "emphasis is a border, never shadow, scale, or a different padding".
  * Nothing here restyles the card.
  *
- * The heading is `h3` at the `column` role, which is 24/32 — `design-system.md`
+ * The heading is `h3` at the `column` role, which is 24/32 — `design.md`
  * names that role "H4 (comparison column)" for precisely this element. The level
  * is `h3` because the section's own heading is the `h2`; the level and the size
  * are independent by design, so neither is chosen for the other's reason.
@@ -44,7 +44,7 @@ import { ComparisonList } from "./ComparisonList";
  *
  * [DISCREPANCY] The frame's emphasised panel reads darker than its sibling, as
  * though it were filled with the section colour rather than the card colour.
- * `design-system.md` specifies #2D2E2E for both and the `Card` primitive
+ * `design.md` specifies #2D2E2E for both and the `Card` primitive
  * implements that, so both are filled identically here. Changing it would mean
  * editing a primitive five other components rely on. **Confirm with design.**
  */
@@ -71,8 +71,8 @@ export function ComparisonCard({ group }: ComparisonCardProps) {
   const Mark = MARK[sentiment];
 
   return (
-    <div className="flex h-full flex-col gap-6 tablet:gap-10">
-      <div className="flex items-center gap-3">
+    <div className="flex h-full flex-col gap-fluid-4 tablet:gap-fluid-6">
+      <div className="flex items-center gap-fluid-2">
         <Mark size="lg" />
 
         <Heading id={titleId} level="h3" role="column">

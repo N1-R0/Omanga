@@ -33,17 +33,15 @@ const RATIO_CLASS = {
 type Ratio = keyof typeof RATIO_CLASS;
 
 /**
- * Radii a media box may take. Narrower than the full `Radius` union: `pill` and
- * `dot` are chrome shapes, and cropping a photograph to either is not something
- * the design does.
+ * Radii a media box may take. Narrower than the full `Radius` union: `pill` is a
+ * chrome shape, and cropping a photograph to it is not something the design does.
  */
-type MediaRadius = Extract<Radius, "card" | "chip" | "panel" | "device">;
+type MediaRadius = Extract<Radius, "xs" | "sm" | "md">;
 
 const RADIUS_CLASS: Readonly<Record<MediaRadius, string>> = {
-  card: "rounded-card",
-  chip: "rounded-chip",
-  panel: "rounded-panel",
-  device: "rounded-device",
+  xs: "rounded-xs",
+  sm: "rounded-sm",
+  md: "rounded-md",
 } as const;
 
 export type MediaProps = {

@@ -40,7 +40,7 @@ export type TimelineSide = "start" | "end";
  */
 
 const ITEM_CLASS =
-  "grid grid-cols-timeline-narrow items-start gap-4 desktop:grid-cols-timeline desktop:gap-12";
+  "grid grid-cols-timeline-narrow items-start gap-fluid-3 desktop:grid-cols-timeline desktop:gap-fluid-7";
 
 /**
  * The marker's cell. Always the rail column — column 1 narrow, column 2 wide.
@@ -98,7 +98,7 @@ export function TimelineItem({ step, side, index }: TimelineItemProps) {
           <Heading id={`${step.id}-heading`} level="h3" role="step">
             {step.heading}
           </Heading>
-          <div className="pt-4">
+          <div className="pt-fluid-3">
             <Text role="body" isSecondary>
               {step.body}
             </Text>

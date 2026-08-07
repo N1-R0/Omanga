@@ -6,7 +6,7 @@ import type { IconSize } from "@/types/ui.types";
 /**
  * The shared SVG wrapper. Every icon in the system renders through it.
  *
- * design-system.md § Icon usage: stroke-style SVG, single colour inheriting
+ * design.md § 9: stroke-style SVG, single colour inheriting
  * the current text colour, at 16, 24 or 32 and nothing between. Holding those
  * attributes here means an individual glyph file contains only path data, and
  * a glyph cannot ship at the wrong size or with a baked-in colour.

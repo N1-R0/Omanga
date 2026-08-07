@@ -16,16 +16,16 @@ import type { ImageAsset } from "@/types/content.types";
  *
  * ---------------------------------------------------------------------------
  * [NORMALISED] Three of the spec's four appearance values are not tokens, and
- * `design-system.md` says a raw value in a component is a bug "including one that
+ * `design.md` says a raw value in a component is a bug "including one that
  * matches Figma". Each is mapped onto the nearest role:
  *
- *   radius 24              -> `rounded-panel` (16). The radius tokens are
+ *   radius 24              -> `rounded-md` (16). The radius tokens are
  *                             8 / 12 / 16 / 50 / pill; 24 is not among them.
  *   two shadows, 0 4 3 and
- *   0 10 7.5 at 10%        -> `shadow-elevated`, the single `0 12 24` elevation.
+ *   0 10 7.5 at 10%        -> ``, the single `0 12 24` elevation.
  *                             "One elevation only."
  *   border #E6E6E6         -> `border-border-hairline`. #E6E6E6 is named in
- *                             design-system.md as a one-off duplicate to
+ *                             design.md as a one-off duplicate to
  *                             collapse.
  *
  * The chips therefore read slightly less rounded and slightly softer than the
@@ -63,7 +63,7 @@ export type FlagItemProps = {
 
 export function FlagItem({ flag }: FlagItemProps) {
   return (
-    <div className="flex size-16 shrink-0 items-center justify-center rounded-panel border border-border-hairline bg-surface-page shadow-elevated desktop:size-24">
+    <div className="flex size-16 shrink-0 items-center justify-center rounded-md border border-border-hairline bg-surface-page desktop:size-24">
       <Image
         src={flag.src}
         alt={flag.alt}

@@ -5,9 +5,9 @@ import type { DeepDiveProduct } from "@/content/deep-dive.content";
 import { FeatureList } from "./FeatureList";
 import { PreviewPanel } from "./PreviewPanel";
 
-// design-system.md § Grid system: "Deep dive: feature list and 672 square media, 50 gap."
+// design.md § 5: "Deep dive: feature list and 672 square media, 50 gap."
 const LAYOUT_CLASS =
-  "grid grid-cols-1 gap-12 desktop:grid-cols-12 desktop:gap-x-12";
+  "grid grid-cols-1 gap-fluid-7 desktop:grid-cols-12 desktop:gap-x-fluid-7";
 const LIST_CELL_CLASS = "desktop:col-span-5";
 const PANEL_CELL_CLASS = "desktop:col-start-7 desktop:col-span-6";
 

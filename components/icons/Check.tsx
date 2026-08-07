@@ -4,7 +4,7 @@ import type { IconSize } from "@/types/ui.types";
 /**
  * Affirmative mark, for the positive side of a comparison.
  *
- * Carries no colour of its own. `design-system.md` § Icon usage reserves
+ * Carries no colour of its own. `design.md` § Icon usage reserves
  * self-coloured icons for "the success and error comparison icons", but the
  * measured contrast rules that out on this page: `--color-success` reads at
  * 6.96:1 on the comparison card while `--color-brand` reads at 2.04:1, and the

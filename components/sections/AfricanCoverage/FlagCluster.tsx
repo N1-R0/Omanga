@@ -34,7 +34,7 @@ import type { ColumnElevation } from "./FlagColumn";
  * ---------------------------------------------------------------------------
  * [ASSUMPTION] Below the wide breakpoint the arch becomes a mosaic.
  *
- * `design-system.md` § Breakpoints: "Only a 1440 desktop frame exists in this
+ * `design.md` § Breakpoints: "Only a 1440 desktop frame exists in this
  * file... narrow layouts are engineering decisions to be confirmed against
  * design." No tablet or mobile composition was supplied for this section, and the
  * arch cannot be made to fit — 960px of chips alone exceeds the content column
@@ -96,7 +96,7 @@ export function FlagCluster({ flags, label }: FlagClusterProps) {
     <ul
       role="list"
       aria-label={label}
-      className="flex flex-wrap items-center justify-center gap-3 desktop:items-start desktop:gap-4 wide:flex-nowrap wide:justify-between"
+      className="flex flex-wrap items-center justify-center gap-fluid-2 desktop:items-start desktop:gap-fluid-3 wide:flex-nowrap wide:justify-between"
     >
       {columns.map((column) => (
         <FlagColumn

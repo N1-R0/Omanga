@@ -73,7 +73,7 @@ const BASE_CLASS = "h-full w-0.75 bg-surface-light";
  * The fill. Brand over the rail's own #F6F6F6, which is the benchmark's
  * accent-over-neutral relationship expressed in Omanga's palette.
  *
- * design-system.md § Color roles reserves brand for interaction and emphasis and
+ * design.md § 8 reserves brand for interaction and emphasis and
  * names "active underline" among the five things it is for. This is the same kind
  * of mark — a 3px brand rule that says where you are.
  */

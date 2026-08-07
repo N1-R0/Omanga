@@ -36,24 +36,40 @@ export type Tone = "light" | "dark" | "brand";
 export type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
 /**
- * The typographic roles a heading may take, named for the role in
- * design-system.md rather than for a size.
+ * The typographic roles a heading may take, named for the job the heading does
+ * rather than for a size. design.md § 2.
+ *
+ * `display` is an emphasis role, not a size the page reaches for casually — it
+ * belongs to the closing conversion band and nowhere else. The hero uses `hero`,
+ * which is the h1 scale.
  */
 export type HeadingRole =
+  /** 64 → 112. The closing conversion band only. */
   | "display"
+  /** 40 → 64. The page's single h1. */
+  | "hero"
+  /** 32 → 48. Every section-level heading. */
   | "section"
+  /** 30 → 40. Timeline step. */
   | "step"
+  /** 24 → 28. Deep-dive feature, card heading. */
   | "feature"
-  | "column";
+  /** 22 → 26. Comparison column. */
+  | "column"
+  /** 16 → 20. Eyebrow, tab label, footer column heading. */
+  | "label";
 
 /**
- * Body text roles. `lead` and `body` differ in scale; `caption` is the legal
- * and metadata role in Inter.
+ * Body text roles. design.md § 2.
+ *
+ * - `lead`  — 18 → 20. Section intros.
+ * - `body`  — 16 → 18. The document default.
+ * - `small` — 14 → 16. Helper lines, footer links, legal and metadata.
  */
-export type TextRole = "body" | "small" | "caption";
+export type TextRole = "lead" | "body" | "small";
 
 /**
- * Icon sizes. design-system.md § Icon usage: "Icon sizes are 16, 24 or 32.
+ * Icon sizes. design.md § 9: "Icon sizes are 16, 24 or 32.
  * Nothing between."
  *
  * - `sm` — 16, inside buttons and links, trailing arrows
@@ -63,37 +79,39 @@ export type TextRole = "body" | "small" | "caption";
 export type IconSize = "sm" | "md" | "lg";
 
 /**
- * The radius tokens, named by the role each one plays.
- * Kept as a union so a component cannot invent a seventh radius.
+ * The radius tokens. design.md § 6 — four values, named by size, because the
+ * reference applies them by size rather than by role.
+ *
+ * Kept as a union so a component cannot invent a fifth radius. The previous
+ * system's `chip` (12) and `device` (50) are gone: neither exists in the
+ * reference and both were one-off values dressed as tokens.
  */
-export type Radius = "pill" | "card" | "chip" | "panel" | "device" | "dot";
+export type Radius = "xs" | "sm" | "md" | "pill";
 
 /**
  * Spacing steps a layout primitive may put between siblings.
  *
- * Named for the relationship the gap expresses, taken from the "Use" column of
- * design-system.md § Spacing philosophy. This is what stops `gap-7` — a value
- * that resolves fine but means nothing — appearing in a section.
+ * Named for the relationship the gap expresses, from design.md § 3. This is what
+ * stops `gap-7` — a value that resolves fine but means nothing — appearing in a
+ * section. Every step is fluid between 320 and 1440.
  */
 export type Gap =
-  /** 8 — icon to label, wordmark */
+  /** 6 → 8 — icon to label */
   | "xs"
-  /** 12 — icon to text, adjacent buttons, eyebrow to heading */
+  /** 10 → 12 — adjacent controls */
   | "sm"
-  /** 16 — rows inside a card */
+  /** 14 → 16 — rows in a list */
   | "md"
-  /** 24 — card padding, heading to body, nav links */
+  /** 20 → 24 — card padding, heading to body */
   | "lg"
-  /** 32 — section heading to intro, card content blocks */
+  /** 28 → 32 — card art to copy */
   | "xl"
-  /** 40 — heading block to content block */
+  /** 32 → 40 — card grid gap */
   | "2xl"
-  /** 48 — timeline grid columns */
+  /** 36 → 48 — major intra-section gap */
   | "3xl"
-  /** 64 — intro to content in dark sections */
-  | "4xl"
-  /** 80 — major intra-section gap */
-  | "5xl";
+  /** 40 → 64 — heading block to content block */
+  | "4xl";
 
 /**
  * Horizontal and vertical alignment for layout primitives.
@@ -103,7 +121,9 @@ export type AlignInline = "start" | "center" | "end" | "stretch";
 export type AlignBlock = "start" | "center" | "end" | "between";
 
 /**
- * Maximum line length for readable copy.
- * design-system.md: body caps at 648–756, feature copy at 486.
+ * Maximum line length for readable copy, in characters. design.md § 2.
+ *
+ * `hero` (20ch) and `heading` (30ch) are heading measures and are applied by
+ * `Heading`; the other three are body measures applied by `Text`.
  */
-export type Measure = "body" | "narrow" | "feature" | "none";
+export type Measure = "hero" | "heading" | "body" | "narrow" | "feature" | "none";

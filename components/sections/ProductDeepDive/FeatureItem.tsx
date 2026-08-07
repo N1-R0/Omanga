@@ -14,7 +14,7 @@ const ROW_CLASS = "border-b border-divider";
 const ROW_ACTIVE_CLASS = "border-active border-brand";
 
 const LABEL_CLASS =
-  "block w-full py-4 text-left font-heading text-body focus-ring transition-standard";
+  "block w-full py-fluid-3 text-left font-sans text-main focus-ring transition-standard";
 const LABEL_ACTIVE_CLASS = "text-on-dark";
 const LABEL_INACTIVE_CLASS = "text-on-dark-muted hover:text-on-dark";
 
@@ -67,12 +67,12 @@ export function FeatureItem({
             ? { duration: 0 }
             : { duration: MOTION.durationEmphasis, ease: MOTION.easeStandard }
         }
-        className="pb-6"
+        className="pb-fluid-4"
       >
         <Heading id={`${regionId}-heading`} level="h3" role="feature">
           {feature.heading}
         </Heading>
-        <div className="pt-3">
+        <div className="pt-fluid-2">
           <Text role="body" measure="feature" isSecondary>
             {feature.body}
           </Text>

@@ -1,16 +1,15 @@
 /* =============================================================================
    Omanga — Design tokens
    -----------------------------------------------------------------------------
-   Single source of design values for the redesign. Nothing in `components/`
-   may declare a colour, size, radius, duration or breakpoint that is not
-   defined here.
+   Source of truth : design.md
+   Derived from    : claritybusinesstravel.com, audited live 2026-08-07 via
+                     computed styles and CSS custom properties.
 
-   Source of truth : design-system.md (extracted from Figma `Super-App`,
-                     frame `Homepage`, node 1265:12523)
-   Normalisation   : every value flagged ⚠ in design-system.md has already been
-                     collapsed onto a systematic token. The raw Figma value is
-                     recorded in a comment where the two differ, so the
-                     deviation is auditable rather than invisible.
+   Only Omanga's brand colour survives from the previous system. Type scale,
+   spacing, grid, radius, elevation and motion are all the reference's.
+
+   Nothing in `components/` may declare a colour, size, radius, duration or
+   breakpoint that is not defined here.
 
    Tailwind v4: this file is `@import`ed after `@import "tailwindcss"`, so each
    `@theme` entry both emits a CSS custom property and generates its utility.
@@ -19,600 +18,351 @@
 @theme {
   /* ===========================================================================
      COLOUR
-     design-system.md § Color roles
-     Brand is reserved for interaction and emphasis — never a surface behind
-     long-form text except the CTA band and the primary product card.
+     design.md § 8
      ========================================================================= */
 
-  /* Brand ------------------------------------------------------------------ */
+  /* Brand — the one thing carried over from the previous system. -------------
+     Reserved for interaction and emphasis. Never a surface behind long-form
+     text except the closing conversion band. */
   --color-brand: #ae2448;
-  /* Button state rule: "hover darkens fill 8%". Precomputed so components
-     never perform colour maths. #ae2448 × 0.92. */
   --color-brand-hover: #a02142;
 
   /* Ink / dark surfaces ---------------------------------------------------- */
-  --color-ink: #161717; /* dark section background AND body text on light */
-  --color-ink-elevated: #2d2e2e; /* cards on dark sections */
+  --color-ink: #161717;
+  --color-ink-elevated: #2d2e2e;
+  --color-ink-muted: #666563;
 
   /* Light surfaces --------------------------------------------------------- */
-  --color-surface-page: #ffffff; /* header, light sections */
-  --color-surface-light: #f6f6f6; /* light cards, timeline rail, media plates */
-  --color-surface-subtle: #fafafa; /* eyebrow pill fill */
-  /* ⚠ #f7f7f7, #edeef0, #e6e7e8 in Figma are one-off duplicates of
-     --color-surface-light / --color-surface-page. Collapsed, not tokenised. */
+  --color-surface-page: #ffffff;
+  --color-surface-light: #f6f6f6;
 
   /* Foreground ------------------------------------------------------------- */
   --color-on-dark: #ffffff;
-  --color-on-dark-muted: rgb(255 255 255 / 0.5); /* inactive tab label */
+  --color-on-dark-muted: rgb(255 255 255 / 0.5);
 
-  /* Borders and rules ------------------------------------------------------ */
-  --color-border-subtle: rgb(255 255 255 / 0.1); /* cards + tab lists on dark */
-  --color-border-light: #e5f2f2; /* eyebrow pill border */
-  --color-divider: #666666; /* deep-dive list rules */
+  /* Borders and rules ------------------------------------------------------
+     1px, never 0.5px. Sub-pixel borders render inconsistently across devices
+     and disappear entirely at some zoom levels. */
+  --color-border-hairline: rgb(22 23 23 / 0.1); /* on light */
+  --color-border-subtle: rgb(255 255 255 / 0.1); /* on dark */
+  --color-divider: #666563;
+
+  /* Form field border. Ink @50%, measured at 3.37:1 on --color-surface-light,
+     which clears the 3:1 floor for a UI boundary. */
+  --color-border-field: rgb(22 23 23 / 0.5);
 
   /* Status ----------------------------------------------------------------- */
   --color-success: #53d258;
   --color-error: #e25c5c;
 
   /* Overlays --------------------------------------------------------------- */
-  /* Hero scrim over photography. MEASURED, not assumed.
-     design-system.md said "ship at 45% minimum and verify against the actual
-     photograph" — so it was verified against `public/hero.png`, cover-cropped at
-     six frame sizes from 360x560 to 1920x611, computing the worst-case contrast
-     of white text over every pixel of the centred content band:
+  /* Hero scrim over photography. MEASURED against `public/hero.png`,
+     cover-cropped at six frame sizes from 360x560 to 1920x611, computing the
+     worst-case contrast of white text over every pixel of the content band:
 
-       Figma  20%  ->  1.61:1   catastrophic
-              45%  ->  3.36:1   large text only, fails body text
-              55%  ->  4.74:1   minimum that clears AA
-       SHIPPED 60% ->  5.74:1
+       20%  ->  1.61:1   catastrophic
+       45%  ->  3.36:1   large text only, fails body text
+       55%  ->  4.74:1   minimum that clears AA
+       60%  ->  5.74:1   SHIPPED
 
-     The result is identical at every breakpoint: the sun stays inside the
-     content band at every crop, so it always sets the worst case.
-
-     55% is the floor and is what ships: the sub-headline (18) and helper text
-     (14) are not "large text" and so need the full 4.5:1. Anything lighter
-     fails them. Flat, not the gradient the redesign spec suggests: the approved
-     headline is 32 characters longer than the one Figma draws, so it reflows,
-     and a gradient's contrast depends on exactly where the text lands. Flat is
-     provable at any reflow.
+     Identical at every breakpoint: the sun stays inside the content band at
+     every crop, so it always sets the worst case.
 
      RE-MEASURE THIS TOKEN IF THE PHOTOGRAPH CHANGES. */
   --color-scrim: rgb(0 0 0 / 0.55);
-  --color-overlay-strong: rgb(255 255 255 / 0.2); /* secondary-on-dark fill */
-  --color-overlay-soft: rgb(255 255 255 / 0.1); /* secondary-on-brand fill */
-
-  /* Bordered-variant hover fills.
-     Button state rule: "fill a bordered variant at 10% of its border colour."
-     Precomputed rather than composed in markup, so an opacity modifier never
-     appears on a utility class. */
+  --color-overlay-strong: rgb(255 255 255 / 0.2);
+  --color-overlay-soft: rgb(255 255 255 / 0.1);
   --color-overlay-strong-hover: rgb(255 255 255 / 0.3);
   --color-overlay-soft-hover: rgb(255 255 255 / 0.2);
-  --color-ink-hover: rgb(22 23 23 / 0.1); /* secondary-on-light hover fill */
+  --color-ink-hover: rgb(22 23 23 / 0.1);
 
-  /* Field border.
-     [NOT IN FIGMA] design-system.md: "The frame contains no drawn form
-     fields." Its "1px subtle border" cannot be --color-border-subtle (white
-     @10%, a dark-surface token) and cannot be --color-border-light (#E5F2F2,
-     which sits at 1.05:1 on --color-surface-light and fails the 3:1 UI
-     boundary requirement). Set to ink @50%, measured at 3.37:1 on
-     --color-surface-light. Requires design confirmation. */
-  --color-border-field: rgb(22 23 23 / 0.5);
-
-  /* Hairline rule beneath the header in its opaque state.
-     The benchmark uses `#3532331a` — its ink at 10%. Expressed here against
-     Omanga's ink instead of importing the foreign value, and at 1px rather than
-     the benchmark's 0.5px: design-system.md already rules that sub-pixel borders
-     "render inconsistently across devices and disappear entirely at some zoom
-     levels".
-
-     On the dark/transparent state the equivalent is --color-border-subtle
-     (white @10%), which already exists. */
-  --color-border-hairline: rgb(22 23 23 / 0.1);
-
-  /* Inactive / disabled ----------------------------------------------------
-     design-system.md: the neutral steps exist "for disabled and inactive
-     states rather than inventing greys". Named for that purpose so a generic
-     grey can never be reached for by accident. */
+  /* Inactive / disabled ---------------------------------------------------- */
   --color-inactive-surface: #f3f3f3;
   --color-disabled-surface: #cfcfcf;
-  --color-disabled-ink: rgb(36 36 36 / 0.4); /* #242424 @ 40% */
+  --color-disabled-ink: rgb(36 36 36 / 0.4);
 
   /* ===========================================================================
-     TYPOGRAPHY — families
-     Two families only, split by role. Any third family in the Figma file is an
-     artifact (⚠ Helvetica Light, Plus Jakarta Sans, SF Pro, Kantumruy Pro,
-     Arial, Julius Sans One are all discarded).
+     TYPOGRAPHY — family
+     design.md § 2
+
+     ONE family for the entire site. Headings, body, navigation, buttons, form
+     fields and footer. There is no second family and no separate UI face —
+     the reference has one and splitting it was Omanga's own decision.
      ========================================================================= */
-  /* Headings, body and section text.
-     [OVERRIDES design-system.md] The system specified Poppins and listed
-     "Helvetica Light (hero)" among the appearances to discard entirely. Reversed
-     by decision: Helvetica is now the project family.
+  --font-sans: var(--font-kantumruy), Arial, sans-serif;
 
-     A system-font stack, not a webfont, because Helvetica cannot be one. It is
-     licensed by Monotype, is not on Google Fonts, and cannot be self-hosted
-     through `next/font` without buying it. So what each visitor actually sees is:
+  /* Aliases, so the migration does not have to touch every call site at once.
+     Both resolve to the same stack; new code should use `font-sans`. */
+  --font-heading: var(--font-sans);
+  --font-ui: var(--font-sans);
 
-       macOS / iOS   real Helvetica (and Helvetica Neue Light for weight 300)
-       Windows       Arial substituted — no Light cut, so 300 renders as 400
-       Android       neither exists; Roboto or Liberation Sans substitutes
-
-     That matters more here than on most projects: project-context.md says the
-     audience is largely "mid-range Android over unreliable mobile networks", so
-     the majority of real visitors will never see Helvetica. Arimo — free, on
-     Google Fonts, metrically identical to Helvetica and Arial — would give every
-     platform the same metrics if that becomes a problem.
-
-     Upside: one fewer webfont to download than before. */
-  --font-heading: Helvetica, "Helvetica Neue", Arial, ui-sans-serif, sans-serif;
-
-  /* UI chrome: nav, buttons, labels, footer. Unchanged — the instruction named
-     Poppins only. Worth noting that the original two-family rationale was an
-     editorial face against a UI face, and Helvetica against Inter is two
-     neo-grotesques doing nearly the same job. Collapsing --font-ui into
-     --font-heading is a one-line change if that is wanted. */
-  --font-ui: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-
-  /* 300 is the hero display's weight, from the frame's "Helvetica Light".
-     Available on macOS, absent on Windows and Android — see above. */
-  --font-weight-light: 300;
+  /* Three weights. 300 is gone — it was the previous display weight and is the
+     main reason the old hero read as thin rather than confident. */
   --font-weight-regular: 400;
-  --font-weight-semibold: 600;
+  --font-weight-medium: 500; /* every heading */
+  --font-weight-bold: 600; /* inline <strong> only */
 
   /* ===========================================================================
      TYPOGRAPHY — scale
-     Fluid between the 360px mobile column and the 1440px wide canvas, per
-     design-system.md § Breakpoints ("type and spacing scale via fluid
-     clamping between mobile and wide"). Line height is unitless and tracking
-     is in `em` so both survive the clamp.
+     design.md § 2
 
-     Roles whose mobile size design-system.md does not state are marked
-     [DERIVED] — they are engineering decisions pending design confirmation,
-     interpolated to keep the scale's ratios intact.
+     Fluid between a 320px and a 1440px viewport. Line height is unitless and
+     tracking is in `em`, so both survive the clamp.
+
+     Five line heights (1, 1.1, 1.2, 1.3, 1.5) and two tracking values
+     (0, -0.03em) across the whole scale. Every heading is weight 500.
      ========================================================================= */
 
-  /* Display — hero. One per page. 36 → 64 / 70.
-     [OVERRIDES design-system.md] Two of its rules are reversed here by decision,
-     both taken from the hero frame's export:
+  /* Display — 64 → 112. An emphasis role, not a size the page reaches for.
+     Belongs to the closing conversion band and nowhere else. */
+  --text-display: clamp(4rem, 3.1429rem + 4.2857vw, 7rem);
+  --text-display--line-height: 1.1;
+  --text-display--letter-spacing: -0.03em;
+  --text-display--font-weight: var(--font-weight-medium);
 
-       weight    600 SemiBold -> 300 Light  ("Helvetica Light", size 64)
-       tracking  -1.4 (-0.0219em) -> +2 (+0.03125em), from `.kerning(1.99865)`
+  /* H1 — 40 → 64. The hero headline. One per page. */
+  --text-h1: clamp(2.5rem, 2rem + 2.2vw, 4rem);
+  --text-h1--line-height: 1.2;
+  --text-h1--letter-spacing: -0.03em;
+  --text-h1--font-weight: var(--font-weight-medium);
 
-     design-system.md had said to drop the frame's positive tracking, and that
-     "negative tracking applies only at 24 and above". Both now stand reversed for
-     this role only; every other role keeps its specified tracking.
-
-     Tracking is in `em`, so it stays proportional as the size clamps down — 2px at
-     64 becomes about 1.1px at 36 rather than staying absolute and looking loose on
-     a phone.
-
-     Not reversed: the frame's uppercase. The instruction supplied the string in
-     sentence case, and typography.css pins `text-transform: none` on headings. */
-  --text-display: clamp(2.25rem, 1.6667rem + 2.5926vw, 4rem);
-  --text-display--line-height: 1.09375;
-  --text-display--letter-spacing: 0.03125em;
-  --text-display--font-weight: var(--font-weight-light);
-
-  /* H2 — the only section-level heading size. 28 → 48 / 52.8 / -1.44 */
-  --text-h2: clamp(1.75rem, 1.3333rem + 1.8519vw, 3rem);
+  /* H2 — 32 → 48. The section-level heading. */
+  --text-h2: clamp(2rem, 1.7rem + 1.6vw, 3rem);
   --text-h2--line-height: 1.1;
   --text-h2--letter-spacing: -0.03em;
-  --text-h2--font-weight: 400;
+  --text-h2--font-weight: var(--font-weight-medium);
 
-  /* H3 — timeline step. 22 → 36 / 44 / -1.2 */
-  --text-h3: clamp(1.375rem, 1.0833rem + 1.2963vw, 2.25rem);
-  --text-h3--line-height: 1.2222;
-  --text-h3--letter-spacing: -0.0333em;
-  --text-h3--font-weight: 400;
+  /* H3 — 30 → 40. */
+  --text-h3: clamp(1.875rem, 1.68rem + 0.85vw, 2.5rem);
+  --text-h3--line-height: 1.3;
+  --text-h3--letter-spacing: -0.03em;
+  --text-h3--font-weight: var(--font-weight-medium);
 
-  /* H3 — deep-dive feature. [DERIVED mobile 20] → 28 / 36.4 / 0 */
-  --text-h3-feature: clamp(1.25rem, 1.0833rem + 0.7407vw, 1.75rem);
-  --text-h3-feature--line-height: 1.3;
-  --text-h3-feature--letter-spacing: 0em;
-  --text-h3-feature--font-weight: 400;
+  /* H4 — 24 → 28. */
+  --text-h4: clamp(1.5rem, 1.4rem + 0.35vw, 1.75rem);
+  --text-h4--line-height: 1.3;
+  --text-h4--letter-spacing: -0.03em;
+  --text-h4--font-weight: var(--font-weight-medium);
 
-  /* H4 — comparison column. [DERIVED mobile 18] → 24 / 32 / 0 */
-  --text-h4: clamp(1.125rem, 1rem + 0.5556vw, 1.5rem);
-  --text-h4--line-height: 1.3333;
-  --text-h4--letter-spacing: 0em;
-  --text-h4--font-weight: 400;
+  /* H5 — 22 → 26. */
+  --text-h5: clamp(1.375rem, 1.3rem + 0.2vw, 1.625rem);
+  --text-h5--line-height: 1.3;
+  --text-h5--letter-spacing: 0em;
+  --text-h5--font-weight: var(--font-weight-medium);
 
-  /* Eyebrow / tab label. [DERIVED mobile 16] → 20 / 30 / 0 */
-  --text-eyebrow: clamp(1rem, 0.9167rem + 0.3704vw, 1.25rem);
-  --text-eyebrow--line-height: 1.5;
-  --text-eyebrow--letter-spacing: 0em;
-  --text-eyebrow--font-weight: 400;
+  /* H6 / eyebrow / tab label — 16 → 20. */
+  --text-h6: clamp(1rem, 0.95rem + 0.2vw, 1.25rem);
+  --text-h6--line-height: 1.3;
+  --text-h6--letter-spacing: 0em;
+  --text-h6--font-weight: var(--font-weight-medium);
 
-  /* Body. 16 → 18 / 27 / 0 */
-  --text-body: clamp(1rem, 0.9583rem + 0.1852vw, 1.125rem);
-  --text-body--line-height: 1.5;
-  --text-body--letter-spacing: 0em;
-  --text-body--font-weight: 400;
+  /* Body large — 18 → 20. Section intros. */
+  --text-large: clamp(1.125rem, 1.0893rem + 0.1786vw, 1.25rem);
+  --text-large--line-height: 1.5;
+  --text-large--letter-spacing: 0em;
+  --text-large--font-weight: var(--font-weight-regular);
 
-  /* Body small / badge. 14 / 22 / 0 — fixed, does not scale. */
-  --text-body-sm: 0.875rem;
-  --text-body-sm--line-height: 1.5714;
-  --text-body-sm--letter-spacing: 0em;
-  --text-body-sm--font-weight: 400;
+  /* Body — 16 → 18. The document default, and the button label size. */
+  --text-main: clamp(1rem, 0.9643rem + 0.1786vw, 1.125rem);
+  --text-main--line-height: 1.5;
+  --text-main--letter-spacing: 0em;
+  --text-main--font-weight: var(--font-weight-regular);
 
-  /* UI chrome (Inter). Fixed sizes — chrome does not participate in the
-     fluid scale, so controls keep a stable hit area at every width. */
+  /* Body small — 14 → 16. Helper lines, footer links, captions.
+     Fluid, not fixed: the reference scales its smallest role too, and a fixed
+     14 is disproportionately large on a 320 screen beside a fluid body. */
+  --text-small: clamp(0.875rem, 0.8393rem + 0.1786vw, 1rem);
+  --text-small--line-height: 1.5;
+  --text-small--letter-spacing: 0em;
+  --text-small--font-weight: var(--font-weight-regular);
 
-  /* Button + UI label. Inter SemiBold 14 / 17 */
-  --text-ui: 0.875rem;
-  --text-ui--line-height: 1.2143;
-  --text-ui--letter-spacing: 0em;
-  --text-ui--font-weight: 600;
-
-  /* Nav link. Inter Regular 14 / 17 */
-  --text-nav: 0.875rem;
-  --text-nav--line-height: 1.2143;
-  --text-nav--letter-spacing: 0em;
-  --text-nav--font-weight: 400;
-
-  /* Footer link. Inter Regular 14 / 24 */
-  --text-footer: 0.875rem;
-  --text-footer--line-height: 1.7143;
-  --text-footer--letter-spacing: 0em;
-  --text-footer--font-weight: 400;
-
-  /* Footer column heading. Inter SemiBold 14 / 24.
-     design-system.md § Typography hierarchy lists this as its own role, one row
-     below the footer link — same size and line height, different weight. It is
-     the only pairing in the table that differs by weight alone, which is exactly
-     why it needs its own token: writing `font-semibold` beside `text-footer`
-     would reach for a Tailwind default instead of --font-weight-semibold. */
-  --text-footer-heading: 0.875rem;
-  --text-footer-heading--line-height: 1.7143;
-  --text-footer-heading--letter-spacing: 0em;
-  --text-footer-heading--font-weight: 600;
-
-  /* Caption / legal. Inter Regular 12 / 20 / +1 */
-  --text-caption: 0.75rem;
-  --text-caption--line-height: 1.6667;
-  --text-caption--letter-spacing: 0.0833em;
-  --text-caption--font-weight: 400;
-
-  /* Wordmark. Inter SemiBold 24 */
-  --text-wordmark: 1.5rem;
-  --text-wordmark--line-height: 1.2;
-  --text-wordmark--letter-spacing: 0em;
-  --text-wordmark--font-weight: 600;
+  /* Button label. Body size at line-height 1 — the reference sets a button's
+     line box to exactly the cap height so the pill's padding is the only thing
+     controlling its height. */
+  --text-button: var(--text-main);
+  --text-button--line-height: 1;
+  --text-button--letter-spacing: 0em;
+  --text-button--font-weight: var(--font-weight-regular);
 
   /* ===========================================================================
      SPACING
-     4px base, 8px rhythm. Tailwind's dynamic scale already resolves every
-     multiple of 4 from `--spacing` (p-2 = 8, p-6 = 24, p-12.5 = 50, p-32.5 =
-     130), so the numeric steps need no individual tokens and no arbitrary
-     values. Only values that carry *meaning* are named below.
+     design.md § 3
 
-     ⚠ Figma's raw 9, 11, 13, 17, 21, 31, 37, 46 and 163 are off-grid and are
-     not tokenised. The 37 padding compensates for a 5px border — use 32 with
-     border-box instead.
+     Eight steps, every one fluid between 320px and 1440px. A fixed 64px gap is
+     20% of a 320 screen and 3% of a 1920 one; making every step fluid is what
+     stops mobile layouts feeling cramped between elements while being
+     over-spaced around them.
+
+     `--spacing` stays at 4px so Tailwind's dynamic scale still resolves for the
+     few places a static value is genuinely correct (border offsets, icon boxes).
+     Section markup uses the named steps below.
      ========================================================================= */
   --spacing: 0.25rem;
 
-  /* Page gutter.
-     [DEVIATES FROM FIGMA] design-system.md gives four discrete steps
-     (20/40/64/100) and they are kept below, unused, so the change is one line to
-     revert. Shipped value is the benchmark's fluid margin — `clamp(1rem,
-     0.42857rem + 2.857vw, 3rem)`, which resolves to 16 at 360 and 48 at 1680+.
+  --space-1: clamp(0.375rem, 0.3393rem + 0.1786vw, 0.5rem); /* 6 → 8 */
+  --space-2: clamp(0.625rem, 0.5893rem + 0.1786vw, 0.75rem); /* 10 → 12 */
+  --space-3: clamp(0.875rem, 0.8393rem + 0.1786vw, 1rem); /* 14 → 16 */
+  --space-4: clamp(1.25rem, 1.1786rem + 0.3571vw, 1.5rem); /* 20 → 24 */
+  --space-5: clamp(1.75rem, 1.6786rem + 0.3571vw, 2rem); /* 28 → 32 */
+  --space-6: clamp(2rem, 1.8571rem + 0.7143vw, 2.5rem); /* 32 → 40 */
+  --space-7: clamp(2.25rem, 2.0357rem + 1.0714vw, 3rem); /* 36 → 48 */
+  --space-8: clamp(2.5rem, 2.0714rem + 2.1429vw, 4rem); /* 40 → 64 */
 
-     Markedly tighter than the Figma frame's 100 at the wide end. Deliberate: a
-     1520 column inside a 100 gutter would need a 1720 viewport before it stopped
-     being clipped. */
-  --spacing-gutter-fluid: clamp(1rem, 0.42857rem + 2.857vw, 3rem);
+  /* Page gutter. The only horizontal padding on the page. One fluid value, not
+     four breakpoint steps — four steps means four widths at which the
+     horizontal rhythm is momentarily wrong. */
+  --spacing-gutter: clamp(1rem, 0.4286rem + 2.857vw, 3rem); /* 16 → 48 */
 
-  /* Retained, currently unreferenced — the Figma frame's discrete gutters. */
-  --spacing-gutter-mobile: 1.25rem; /* 20 */
-  --spacing-gutter-tablet: 2.5rem; /* 40 */
-  --spacing-gutter-desktop: 4rem; /* 64 */
-  --spacing-gutter-wide: 6.25rem; /* 100 */
+  /* ===========================================================================
+     SECTION RHYTHM
+     design.md § 4
 
-  /* Section vertical rhythm.
-     [SUPERSEDED by --spacing-section-* below] The four discrete steps are kept,
-     unreferenced, so the change is one line to revert. The rule they encoded —
-     "130 on dark, 100 on light, do not vary per section" — no longer holds; see
-     the fluid scale below for why. */
-  --spacing-section-mobile: 4rem; /* 64 */
-  --spacing-section-tablet: 5.5rem; /* 88 */
-  --spacing-section-light: 6.25rem; /* 100 */
-  --spacing-section-dark: 8.125rem; /* 130 */
-
-  /* -------------------------------------------------------------------------
-     Section rhythm — MEASURED from claritybusinesstravel.com, 2026-08-05.
-
-     The benchmark does not vary rhythm by surface. It has one value for a
-     normal section and two exceptions, and it applies them as spacer divs
-     before and after the section content rather than as padding. Verified
-     arithmetically on its second section: 144 + 506 + 144 = 794 exactly.
-
-     Omanga keeps padding rather than spacer divs — same rendered result, one
-     less empty element per section, and `Section` already owns the rhythm — but
-     takes the benchmark's values and its single-value-for-all-surfaces rule.
-
-     Consequence, recorded so it is not rediscovered in review: dark sections no
-     longer get more rhythm than light ones. That pairing was Omanga's own, not
-     the benchmark's, and keeping it would have made the page denser than the
-     reference in exactly the places the reference is most generous.
-
-     Each curve was solved from computed values sampled at 360 / 768 / 1024 /
-     1920 in a same-origin iframe. All four fit a linear ramp from 360px; `main`
-     reaches its maximum at 1920, the other three at 1440.
-
-       role        @360     @1920
-       small       49.14    80
-       main        66       144
-       large       90.56    160
-       page-top    116      224
-     ---------------------------------------------------------------------- */
-
-  /* The normal section. Every band on the homepage uses this. */
-  --spacing-section-main: clamp(4.125rem, 3rem + 5vw, 9rem);
-
-  /* A band that sits tighter than its neighbours — a strip rather than a
-     section. The partner logos are the only case on this page. */
-  --spacing-section-small: clamp(3.0713rem, 2.4286rem + 2.857vw, 5rem);
-
-  /* A band that needs more air than the rest. Reserved for the closing CTA,
-     which is the page's one full-bleed emphasis surface. */
-  --spacing-section-large: clamp(5.6602rem, 4.2136rem + 6.4286vw, 10rem);
-
-  /* Retained for the first band below a transparent header. Unreferenced today
-     — the Hero sets its own minimum height — but it is the benchmark's fourth
-     step and omitting it would leave the scale looking arbitrary. */
-  --spacing-section-page-top: clamp(7.25rem, 5rem + 10vw, 14rem);
-
-  /* Measures — maximum line length for readable copy. */
-  --spacing-measure-body: 47.25rem; /* 756 */
-  --spacing-measure-narrow: 40.5rem; /* 648 */
-  --spacing-measure-feature: 30.375rem; /* 486 */
+     Rhythm does NOT vary by surface. Light and dark bands take the same value.
+     Applied as padding-block by `Section`; no component sets its own.
+     ========================================================================= */
+  --section-small: clamp(3rem, 2.4286rem + 2.857vw, 5rem); /* 48 → 80 */
+  --section-main: clamp(4rem, 3rem + 5vw, 9rem); /* 64 → 144 */
+  --section-large: clamp(5.5rem, 4.2143rem + 6.4286vw, 10rem); /* 88 → 160 */
+  --section-page-top: clamp(7rem, 5rem + 10vw, 14rem); /* 112 → 224 */
 
   /* ===========================================================================
      LAYOUT
-     Canvas 1440, content column 1240, 12 columns / 24 gutter within it.
+     design.md § 5
      ========================================================================= */
-  /* Aspect ratios, so no media box ever needs an arbitrary ratio value. */
-  --aspect-portrait: 3 / 4;
-  --aspect-landscape: 4 / 3;
-  --aspect-wide: 16 / 9;
+  --site-width: 95rem; /* 1520 outer */
+  --site-columns: 12;
+  --site-gutter: 1rem; /* 16 */
 
-  /* [MEASURED] The benchmark's product-card art box is 3:2 — its own
-     `u-ratio-3-2`, rendering 408 x 272 inside a 456 card. Omanga's card art was
-     `aspect-square`, which is the one card dimension that did not come from the
-     reference: it was a normalisation of two disagreeing Figma readings
-     (491 x 478 and 491 x 482) taken before the reference was measured.
+  /* The content column. Caps at 1424 and centres above that: the outer page is
+     1520 and the margin sits inside it, exactly as the reference composes it. */
+  --container-content: var(--site-width);
 
-     A square box is ~33% taller than 3:2 at the same width, which is most of why
-     the cards read as tall and the copy beneath them as cramped. */
-  --aspect-card: 3 / 2;
+  /* Timeline block. 486 track + 48 gap + 32 rail + 48 gap + 486 track.
+     Centring this rather than running a two-column grid across the full content
+     column is what makes both sides' copy stop the same distance short of the
+     rail at every width above 1100. */
+  --container-timeline: 68.75rem; /* 1100 */
+  --container-track: 30.375rem; /* 486 */
+  --container-media-square: 42rem; /* 672 */
 
-  /* Content column.
-     [DEVIATES FROM FIGMA] design-system.md § Grid system says "Canvas 1440.
-     Content column 1240. Page gutter 100", taken from the Omanga frame. This is
-     now 1520 — the structural benchmark's `--site--width: 95rem` — by explicit
-     decision, because the redesign follows claritybusinesstravel.com's skeleton.
-
-     Consequence, recorded so it is not rediscovered in review: the Header, Footer
-     and Hero no longer match the Figma frame's horizontal measurements, and the
-     footer's 322 brand column is now a smaller fraction of the row than the frame
-     drew. design-system.md § Grid system is stale until it is updated. */
-  --container-content: 95rem; /* 1520 */
-  --container-track: 30.375rem; /* 486 — timeline / deep-dive track */
-  --container-media-square: 42rem; /* 672 — deep-dive media plate */
-
-  /* Section heading measure.
-     [MEASURED from the structural benchmark] Every one of its section headings
-     carries `u-max-width-30ch`, which at its 52.8px h2 resolves to 881px. Omanga's
-     h2 tops out at 48, so the same 30 characters land at 800.
-
-     Expressed in px rather than `ch` because the cap is applied by the parent, and
-     the parent is at the root font size — a `ch` value there would resolve against
-     16px, not against the heading. The cap only does anything at the wide end,
-     where the h2 is at its 48 maximum, so a fixed value and a `ch` value are the
-     same measurement in the only place either is reachable.
-
-     Without this, a long section heading runs the full 1520 content column: the
-     deep-dive's heading sets 62 characters on one line, which is roughly twice the
-     line length the type scale is drawn for. */
-  --container-heading: 50rem; /* 800 — 30ch at the h2's 48 maximum */
-
-  /* Timeline block.
-     [MEASURED from the structural benchmark] Its timeline list is 1100 wide and
-     centred inside a 1424 container, and 1100 is not a chosen number — it is the
-     geometry adding up:
-
-       486 track + 48 gap + 32 rail + 48 gap + 486 track = 1100
-
-     Centring a 1100 block is what makes both sides' copy stop 48 short of the rail
-     at every width above 1100. Omanga previously ran a two-column grid across the
-     whole 1520 column, which put each side's copy at ~700 — half again the 486
-     track the token below already names — and left the two headings floating a
-     long way apart with the copy stretched thin between them. */
-  --container-timeline: 68.75rem; /* 1100 = 486 + 48 + 32 + 48 + 486 */
-
-  /* Hero action group, narrow screens only.
-     design-system.md § Breakpoints says "buttons full-width, stacked at 12 gap",
-     and full-width is what the hero shipped. At 360 that makes the primary 328
-     wide for a 21-character label — the control reads as a banner rather than a
-     button, and it changes width on every device.
-
-     Capped and centred instead, so the pair is one fixed size everywhere below
-     tablet and both buttons stay equal to each other. 288 is on the 4px grid and
-     leaves a 20 margin inside the 16 gutter at 360. */
+  /* Hero action group, narrow screens only. Capped and centred rather than
+     full-width, so the pair is one fixed size below tablet and both buttons stay
+     equal to each other. */
   --container-hero-actions: 18rem; /* 288 */
 
-  /* Hero headline measure. The frame's `.frame(width: 1134)`.
-     1134 is off the 4px grid, so it normalises to 1136 — which is 71rem exactly.
-     Distinct from the body measures: the headline is display-size, so it can carry
-     a far longer line than the 648–756 that body copy caps at. */
-  --container-hero-heading: 71rem; /* 1136 — normalised from Figma's 1134 */
+  /* Hero band minimum height. The reference's hero band measures 612 at
+     desktop. A minimum only — a fixed maximum would clip content at 200% zoom
+     and in the 320px reflow case, which WCAG 1.4.4 and 1.4.10 both forbid.
 
-  /* Hero band minimum height.
-     Figma pins the hero frame at 1440x611 with both minHeight and maxHeight.
-     611 is off the 4px grid, so it normalises to 612 per the instruction to map
-     stray Figma values onto the nearest step.
+     [FIXED] Fluid from 768 rather than a single step that only engaged at 1024.
+     The band was content-sized below desktop, which put it at 404px at 768 —
+     a hero shorter than the section beneath it, and barely half the reference's.
+     Ramps 480 at tablet to the reference's 612 at wide.
 
-     Only the minimum ships. Figma's fixed maxHeight would clip the content at
-     200% zoom and at 320px reflow, which WCAG 1.4.4 and 1.4.10 both forbid, so
-     the band is allowed to grow past 612 when the content needs it. */
-  --spacing-hero-min: 38.25rem; /* 612 — normalised from Figma's 611 */
+     Applied from `tablet:` only. Below 768 the content is already taller than
+     any sensible minimum, and forcing one there would push the first section
+     below the fold on a phone for no gain. */
+  --spacing-hero-min: clamp(30rem, 20.571rem + 19.643vw, 38.25rem); /* 480 → 612 */
 
-  /* Header height. The benchmark's `--nav_1--height: 4rem`.
-     The one fixed height in the system. Justified because the header is a bar of
-     controls rather than a container of content — its height is a design decision,
-     not a consequence of what is inside it. */
+  /* Header height. The one fixed height in the system, justified because the
+     header is a bar of controls rather than a container of content. */
   --spacing-header: 4rem; /* 64 */
-  /* Footer brand column. design-system.md § Grid system: "Footer: brand column
-     322, then four equal link columns, 40 gap, 93 page gutter." Only the brand
-     column needs a value — the four link columns are equal fractions, and the
-     93 gutter is ⚠ off-grid and is not tokenised: the footer uses the standard
-     Container gutter like every other band. */
-  --container-footer-brand: 20.125rem; /* 322 */
 
-  /* The footer band's column track list, so the 322 + four-equal-columns grid is
-     declared once as a token rather than as an arbitrary template in markup.
-     `minmax(0, 1fr)` rather than `1fr`: a bare `1fr` has an automatic minimum,
-     so one long label ("Coverage — 43 countries") would push its column wider
-     than its siblings and break the equal-column rule. */
+  /* Footer brand column, then four equal link columns.
+     `minmax(0, 1fr)` rather than a bare `1fr`: a bare `1fr` has an automatic
+     minimum, so one long label would push its column wider than its siblings. */
+  --container-footer-brand: 20.125rem; /* 322 */
   --grid-template-columns-footer: var(--container-footer-brand) repeat(
       4,
       minmax(0, 1fr)
     );
 
-  /* Timeline rail gutter. The benchmark's `about-timeline_circle-wrapper` is 2rem
-     wide and the rail and the marker are both centred inside it, so one value
-     positions the rail, the marker and the two column templates below. */
+  /* Timeline rail. One value positions the rail, the marker and both templates. */
   --spacing-rail: 2rem; /* 32 */
-
-  /* The timeline's two column templates.
-     [MEASURED] Desktop is the benchmark's `minmax(0,1fr) max-content minmax(0,1fr)`
-     with the rail column pinned to its real 32 rather than left to its content.
-     Narrow is the benchmark's own collapse: the rail moves to the leading edge and
-     the copy takes the rest of the row, both sides reading left to right.
-
-     Declared as tokens because a bare template in markup is exactly the arbitrary
-     value the system's rules exist to keep out — and because the desktop template
-     and --container-timeline have to agree or the copy stops hugging the rail. */
   --grid-template-columns-timeline: minmax(0, 1fr) var(--spacing-rail)
     minmax(0, 1fr);
   --grid-template-columns-timeline-narrow: var(--spacing-rail) minmax(0, 1fr);
-
-  /* The travel of the timeline's scroll-progress fill.
-     [MEASURED from the structural benchmark] Its progress bar is 50vh tall and is
-     pulled up by exactly its own height, which is what makes the fill land on the
-     vertical centre of the viewport. See `TimelineConnector` for how the two
-     values combine; they are a matched pair and neither is meaningful alone. */
   --spacing-rail-progress: 50vh;
+
+  /* Aspect ratios, so no media box needs an arbitrary ratio value. */
+  --aspect-portrait: 3 / 4;
+  --aspect-landscape: 4 / 3;
+  --aspect-wide: 16 / 9;
+  /* Card art. 3:2, from the reference's 408x272 art box inside a 456 card.
+     A square box is ~33% taller at the same width, which is most of why cards
+     read as tall and their copy as cramped. */
+  --aspect-card: 3 / 2;
 
   /* ===========================================================================
      RADIUS
-     Six tokens. ⚠ Figma contains 8, 9, 10, 12, 15, 16, 40, 50, 100, 1822,
-     1864, 1894 and 33554400 — every one maps onto the set below.
-     Named by role, not by t-shirt size, so `rounded-lg` (a Tailwind default)
-     can never be mistaken for a system token.
+     design.md § 6 — four values, named by size.
      ========================================================================= */
-  --radius-pill: 9999px; /* buttons, eyebrow badges, tab list, tab pill */
-  --radius-dot: 9999px; /* timeline markers */
-  --radius-card: 0.5rem; /* 8  — product cards */
-  --radius-chip: 0.75rem; /* 12 — stat chips, CTA-band controls */
-  --radius-panel: 1rem; /* 16 — comparison cards, media plates, panels */
-  --radius-device: 3.125rem; /* 50 — phone mockup frame only */
+  --radius-xs: 0.25rem; /* 4  — form fields, small inline chips */
+  --radius-sm: 0.5rem; /* 8  — cards */
+  --radius-md: 1rem; /* 16 — panels, media plates */
+  --radius-pill: 100vw; /* buttons, badges, tab pills, avatars, dots */
 
   /* ===========================================================================
-     SHADOW
-     One elevation, one use. Cards, buttons, inputs and the header are flat;
-     separation comes from surface colour and border. There is no hover shadow.
-     ⚠ Zero-value shadows on the timeline dots are Figma artifacts — omitted.
+     ELEVATION
+     design.md § 7 — THERE IS NONE.
+
+     The reference declares zero box-shadows. Depth is surface colour and
+     hairline borders. Do not reintroduce `--shadow-elevated`.
      ========================================================================= */
-  --shadow-elevated: 0 12px 24px rgb(0 0 0 / 0.1);
 
-  /* Not an elevation. A ring of the page surface around the timeline marker, so
-     the rail and the progress fill running behind it are broken rather than
-     drawn straight through the dot.
-
-     [MEASURED] The benchmark's marker carries `0 0 0 8px` of its own background
-     for the same reason. It is a shadow only in the sense that `box-shadow` is
-     the property that paints an outer ring without affecting layout — a border
-     would grow the 16 dot, and an outline would not follow the radius on every
-     engine. */
+  /* Not an elevation. A ring of the page surface around the timeline marker so
+     the rail behind it is broken rather than drawn through it. `box-shadow` is
+     simply the property that paints an outer ring without affecting layout — a
+     border would grow the dot, and an outline would not follow the radius on
+     every engine. */
   --shadow-rail-break: 0 0 0 8px var(--color-surface-page);
 
   /* ===========================================================================
      Z-INDEX
-     [NOT IN FIGMA] No layering scale exists in the design file. This ladder is
-     an engineering decision: wide gaps so a layer can be inserted without a
-     renumber, and only as many rungs as the page actually needs.
-     Exposed as utilities in utilities.css.
+     Wide gaps so a layer can be inserted without a renumber, and only as many
+     rungs as the page actually needs. Exposed as utilities in utilities.css.
      ========================================================================= */
   --z-base: 0;
   --z-raised: 10; /* card art, decorative offsets */
   --z-scrim: 20; /* photography scrim */
   --z-overlay-content: 30; /* text sitting above a scrim */
-  --z-header: 40; /* sticky header — the only fixed element */
+  --z-header: 40; /* sticky header */
   --z-menu: 50; /* mobile nav panel */
   --z-skip-link: 60; /* must clear everything when focused */
 
   /* ===========================================================================
      MOTION
-     design-system.md § Motion principles. Transform and opacity only.
-     Exposed as utilities in utilities.css; keyframes in animations.css.
+     design.md § 11. Transform and opacity only.
      ========================================================================= */
-  --ease-standard: cubic-bezier(0, 0, 0.2, 1); /* ease-out */
+  --ease-standard: cubic-bezier(0, 0, 0.2, 1); /* hover, focus, state */
+  --ease-entrance: cubic-bezier(0.39, 0.575, 0.565, 1); /* outSine, reveals */
+  --ease-dropdown: cubic-bezier(0.075, 0.82, 0.165, 1); /* outCirc, panels */
 
-  /* [MEASURED] The benchmark's two authored easings, read out of its Webflow
-     interaction data rather than inferred from the rendered result.
-
-     `--ease-entrance` is its `outSine`. Against --ease-standard it leaves its
-     start position more gently and settles later, which is the whole difference
-     between a reveal that snaps and one that arrives. --ease-standard stays as
-     it is: it is the hover/state curve, and the benchmark uses plain `ease` at
-     200ms there, which --ease-standard already improves on.
-
-     `--ease-dropdown` is its `outCirc` — a much steeper deceleration, correct
-     for a panel that has to cover distance and stop dead. */
-  --ease-entrance: cubic-bezier(0.39, 0.575, 0.565, 1); /* outSine */
-  --ease-dropdown: cubic-bezier(0.075, 0.82, 0.165, 1); /* outCirc */
-
-  --duration-standard: 200ms; /* hover, focus, fill and border changes */
+  --duration-standard: 200ms; /* hover, focus, fill and border */
   --duration-underline: 250ms; /* active tab underline slide */
-  --duration-emphasis: 300ms; /* tab panel change, accordion expand, menu */
-  /* [MEASURED] 400ms -> 500ms. The benchmark's reveal duration. */
+  --duration-emphasis: 300ms; /* panel change, accordion, menu */
   --duration-entrance: 500ms; /* one-shot entrance on intersection */
   --duration-counter: 1200ms; /* stat count-up, once on first view */
 
-  /* Partner-strip drift, for one full pass of the logo set.
-     Not a per-component value: it is the only continuous-loop duration the page
-     owns, and it belongs beside the others so the pace is tunable in one place.
-
-     20s over a 1152px track is about 29px per second — slow enough to read as a
-     drift rather than a slideshow, which is what keeps a decorative loop from
-     competing with the copy beside it. The set is 576px, so a full cycle returns
-     to its start every 10s. */
+  /* Partner-strip drift, one full pass of the logo set. 20s over a 1152px track
+     is ~29px/s — a drift rather than a slideshow, which is what keeps a
+     decorative loop from competing with the copy beside it. */
   --duration-marquee: 20s;
 
-  /* Hero Ken Burns. Long enough that the movement reads as drift rather than
-     as an animation, matching the slow push the structural benchmark applies
-     to its hero photography. */
+  /* Hero Ken Burns. Long enough that the movement reads as drift. */
   --duration-hero-pan: 24s;
   --motion-hero-pan-scale: 1.08;
 
-  /* [MEASURED] 1rem -> 2.5rem. The benchmark reveals from `translateY(40px)`.
-     16px is close enough to the final position that the motion reads as a
-     flicker; 40px is far enough to read as an arrival. This is the single
-     largest contributor to the difference in perceived polish. */
-  --motion-entrance-offset: 2.5rem; /* 40px upward translate */
-  --motion-stagger-step: 80ms; /* between siblings */
-
-  /* [MEASURED] The benchmark holds each reveal 200ms after it is triggered.
-     The delay is what stops a band of siblings all firing the instant the
-     section's top edge crosses the threshold, and it is why its reveals read as
-     deliberate rather than reactive. Applied on top of the stagger, not instead
-     of it. */
+  /* Reveal geometry. 40px is far enough to read as an arrival; 16px reads as a
+     flicker. The 200ms hold is what stops a band of siblings all firing the
+     instant the section's top edge crosses the threshold. */
+  --motion-entrance-offset: 2.5rem; /* 40 */
+  --motion-stagger-step: 80ms;
   --motion-entrance-delay: 200ms;
 
   /* ===========================================================================
      FOCUS
-     One ring, identical across buttons, links, tabs and inputs. Never removed.
+     design.md § 12. One ring, identical everywhere, never removed.
      ========================================================================= */
   --focus-ring-width: 2px;
   --focus-ring-offset: 2px;
@@ -620,10 +370,8 @@
 
   /* ===========================================================================
      BREAKPOINTS
-     Named after the design-system.md table so a media query reads as the
-     design intent. Tailwind's sm/md/lg/xl defaults are intentionally left in
-     place — removing them would break the existing (pre-redesign) components
-     that still ship in `app/`.
+     design.md § 10. Three named breakpoints, and they only ever change layout —
+     never a font size or a padding value, because both are fluid.
      ========================================================================= */
   --breakpoint-tablet: 48rem; /* 768  */
   --breakpoint-desktop: 64rem; /* 1024 */
@@ -631,8 +379,23 @@
 }
 
 /* -----------------------------------------------------------------------------
-   Minimum supported viewport. design-system.md requires no horizontal scroll at
-   360 and survival of 320px reflow (WCAG 1.4.10).
+   Tailwind default breakpoints are removed.
+
+   Two breakpoint vocabularies in one codebase is how a layout ends up changing
+   at 640px for no design reason. `tablet` / `desktop` / `wide` are the only
+   ones this system has.
+   -------------------------------------------------------------------------- */
+@theme {
+  --breakpoint-sm: initial;
+  --breakpoint-md: initial;
+  --breakpoint-lg: initial;
+  --breakpoint-xl: initial;
+  --breakpoint-2xl: initial;
+}
+
+/* -----------------------------------------------------------------------------
+   Minimum supported viewport. No horizontal scroll at 320, and the 200%-zoom
+   reflow case (WCAG 1.4.10) must survive.
    -------------------------------------------------------------------------- */
 :root {
   --viewport-min: 20rem; /* 320 */

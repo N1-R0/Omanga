@@ -138,7 +138,7 @@ export function Header({
           descendant needs to know the bar's height at all.
         */
         "sticky top-0 z-header flex h-header items-center",
-        "border-b border-border-hairline bg-surface-page text-ink",
+        "border-b border-border-hairline bg-surface-page text-ink focus-ring-on-light",
         "transition-header",
         isHidden && "-translate-y-full",
         /*
@@ -158,7 +158,7 @@ export function Header({
           equal widths regardless of their contents, which is what holds the centre
           still.
         */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-fluid-4">
           <div className="flex flex-1 items-center justify-start">
             <Logo wordmark={wordmark} label={homeLabel} />
           </div>
@@ -178,7 +178,7 @@ export function Header({
             />
           </div>
 
-          <div className="flex flex-1 items-center justify-end gap-3">
+          <div className="flex flex-1 items-center justify-end gap-fluid-2">
             {/*
               Desktop only below `desktop`, the primary call to action moves into
               the disclosure panel, which is where the mobile reference puts it.

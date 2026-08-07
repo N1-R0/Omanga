@@ -11,7 +11,7 @@ import { FlagItem } from "./FlagItem";
  *
  * The supplied spec bottom-aligns ten columns inside a 488-tall row and gives
  * each one a bottom padding: 168, 208, 312, 352, 392, 392, 352, 312, 208, 168.
- * Five values, none of them named in `design-system.md` § Spacing philosophy.
+ * Five values, none of them named in `design.md` § Spacing philosophy.
  *
  * Those five are an artifact of bottom alignment, not the design. Bottom-aligned,
  * a column's box height is its flags plus its padding, so the padding is whatever
@@ -71,7 +71,7 @@ export function FlagColumn({ flags, elevation }: FlagColumnProps) {
   return (
     <li
       className={cx(
-        "flex flex-row items-center gap-3 desktop:flex-col desktop:gap-4 wide:gap-12",
+        "flex flex-row items-center gap-fluid-2 desktop:flex-col desktop:gap-fluid-3 wide:gap-fluid-7",
         ELEVATION_CLASS[elevation],
       )}
     >

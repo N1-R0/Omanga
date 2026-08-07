@@ -6,7 +6,7 @@ import { cx } from "@/lib/cx";
 import { MOTION } from "@/lib/motion";
 
 const BASE_CLASS =
-  "relative rounded-pill px-3 py-3 font-ui text-ui hit-area focus-ring transition-standard tablet:px-5";
+  "relative rounded-pill px-fluid-2 py-fluid-2 font-sans text-button hit-area focus-ring transition-standard tablet:px-fluid-4";
 
 const LABEL_CLASS = "relative z-raised";
 

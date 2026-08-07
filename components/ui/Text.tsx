@@ -10,25 +10,32 @@ import type { Measure, TextRole } from "@/types/ui.types";
  * design question.
  *
  * Colour is inherited from the section surface. Secondary text is expressed as
- * opacity, never as a separate grey — design-system.md is explicit about this,
- * and it is also what keeps secondary text legible on both the light and the
- * dark surface without two tokens.
+ * opacity, never as a separate grey — which is what keeps it legible on both the
+ * light and the dark surface without a second token.
  */
 
 const ROLE_CLASS: Readonly<Record<TextRole, string>> = {
-  /** 18/27 at the wide end, 16 on mobile, in the heading family. */
-  body: "font-heading text-body",
-  /** 14/22. Badge text and helper lines. */
-  small: "font-heading text-body-sm",
-  /** Inter 12/20 with +1 tracking. Legal and metadata only. */
-  caption: "font-ui text-caption",
+  /** 18 → 20. Section intros — the paragraph directly under a section heading. */
+  lead: "font-sans text-large",
+  /** 16 → 18. The document default. */
+  body: "font-sans text-main",
+  /** 14 → 16. Helper lines, footer links, legal and metadata. */
+  small: "font-sans text-small",
 } as const;
 
 /**
- * Maximum measure. design-system.md: body copy caps at 648–756px on wide
- * screens, feature copy at 486px. `body` is the 756 cap; `narrow` is 648.
+ * Measure caps, in characters. design.md § 2.
+ *
+ * Applied here, on the paragraph itself, because `ch` resolves against the
+ * font-size of the element carrying it. A cap on a wrapper at the root size is
+ * not the measure it claims to be.
+ *
+ * A body element only ever takes a body measure; `hero` and `heading` belong to
+ * `Heading` and passing one here is a type error.
  */
-const MEASURE_CLASS: Readonly<Record<Measure, string>> = {
+type BodyMeasure = Extract<Measure, "body" | "narrow" | "feature" | "none">;
+
+const MEASURE_CLASS: Readonly<Record<BodyMeasure, string>> = {
   body: "measure-body",
   narrow: "measure-narrow",
   feature: "measure-feature",
@@ -43,9 +50,9 @@ export type TextProps = {
   role: TextRole;
   /**
    * Line-length cap. Defaults to `none` so the parent decides — a paragraph
-   * inside a card should fill the card, not stop at 756px.
+   * inside a card should fill the card, not stop at 70 characters.
    */
-  measure?: Measure;
+  measure?: BodyMeasure;
   /**
    * Secondary copy: the same colour at 80% opacity. Measured at 4.9:1 on the
    * light surface and 14:1 on the dark one, so both clear AA.

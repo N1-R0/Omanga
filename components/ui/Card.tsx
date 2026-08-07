@@ -19,7 +19,7 @@ import { cx } from "@/lib/cx";
  */
 
 /**
- * The six card surfaces in design-system.md § Card variants.
+ * The six card surfaces in design.md § 9.
  *
  * Padding differs between them because the design specifies it — 24 on product
  * cards, 32 on comparison cards, 16 on stat chips, 0 on media plates — not
@@ -51,7 +51,7 @@ type CardVariant =
  * [MEASURED from the structural benchmark] Product cards are padded 24 on three
  * sides and 32 at the bottom, not 24 all round.
  *
- * design-system.md § Card variants gives one figure — "Padding | 24" — and the
+ * design.md § 9 gives one figure — "Padding | 24" — and the
  * benchmark's own card rule gives three: `padding: 1.5rem 1.5rem 2rem`. The
  * extra 8 at the bottom is what stops the action pill sitting tight against the
  * card's lower edge once the text block is pushed down there, and it is the
@@ -63,15 +63,15 @@ type CardVariant =
  * plates are symmetrical in both the design file and the benchmark.
  */
 const VARIANT_CLASS: Readonly<Record<CardVariant, string>> = {
-  "product-primary": "rounded-card bg-brand px-6 pt-6 pb-8 text-on-dark",
+  "product-primary": "rounded-sm bg-brand px-fluid-4 pt-fluid-4 pb-fluid-5 text-on-dark",
   "product-secondary":
-    "rounded-card bg-surface-light px-6 pt-6 pb-8 text-ink",
+    "rounded-sm bg-surface-light px-fluid-4 pt-fluid-4 pb-fluid-5 text-ink",
   comparison:
-    "rounded-panel border border-border-subtle bg-ink-elevated p-8 text-on-dark",
+    "rounded-md border border-border-subtle bg-ink-elevated p-fluid-5 text-on-dark",
   "comparison-emphasis":
-    "rounded-panel border-emphasis border-brand bg-ink-elevated p-8 text-on-dark",
-  stat: "rounded-chip bg-surface-light p-4 text-ink",
-  "media-plate": "rounded-panel bg-surface-light",
+    "rounded-md border-emphasis border-brand bg-ink-elevated p-fluid-5 text-on-dark",
+  stat: "rounded-sm bg-surface-light p-fluid-3 text-ink",
+  "media-plate": "rounded-md bg-surface-light",
 } as const;
 
 export type CardProps = {
@@ -118,7 +118,7 @@ export function Card({
       what made the art read as part of the copy rather than as the card's
       subject. The copy block below keeps 24 for its own rows.
     */
-    <div className={cx("flex h-full flex-col gap-8", VARIANT_CLASS[variant])}>
+    <div className={cx("flex h-full flex-col gap-fluid-5", VARIANT_CLASS[variant])}>
       {media}
 
       {/*
@@ -149,7 +149,7 @@ export function Card({
           groups here rather than one gap value doing both jobs — which is also
           what keeps the action from reading as one more line of copy.
         */
-        <div className={cx("flex flex-col gap-8", hasMedia && "mt-auto")}>
+        <div className={cx("flex flex-col gap-fluid-5", hasMedia && "mt-auto")}>
           {/*
             The eyebrow and the action are wrapped; the heading and body are not.
 
@@ -165,7 +165,7 @@ export function Card({
             two: `heading` and `body` need to fill the card so their text wraps
             at the card's edge rather than at its longest word.
           */}
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-fluid-4">
             {eyebrow !== undefined && <div>{eyebrow}</div>}
             {heading}
             {body}

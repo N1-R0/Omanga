@@ -38,6 +38,20 @@ export const SITE_URL =
 export const SITE_LOCALE = "en" as const;
 
 /**
+ * Where the wallet sign-up lives.
+ *
+ * Off-site: the wallet is issued by a separate platform, so every "open a
+ * wallet" call to action leaves omanga.biz. Defined here rather than typed into
+ * each content module so the destination has exactly one owner — the previous
+ * arrangement had the hero pointing at the marketing `/payments` page and the
+ * legacy group holding a second, differently-cased copy of this URL.
+ *
+ * Any CTA using this must also set `isExternal: true`, which is what adds
+ * `target="_blank"` and `rel="noopener noreferrer"` at render time.
+ */
+export const WALLET_URL = "https://omanga.useinclude.com/" as const;
+
+/**
  * Brand colours as literals, for the two consumers that cannot read a CSS
  * token: the `viewport` theme-colour meta tag and the Open Graph
  * `ImageResponse`. Both run outside the stylesheet. Values mirror

@@ -71,7 +71,7 @@ export function Services({ content, headingId }: ServicesProps) {
       />
 
       {/* [ASSUMPTION] The copy document does not place the closing line. Confirm with design. */}
-      <div className="pt-12">
+      <div className="pt-fluid-7">
         <Reveal>
           <Text role="body" measure="narrow" isSecondary>
             {content.closing}

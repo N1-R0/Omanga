@@ -66,13 +66,15 @@ export function HeroContent({
         The page's single `h1`, at the h1 role — 40 → 64, weight 500,
         −0.03em tracking, sentence case.
 
-        `measure="hero"` caps it at 20 characters, applied on the heading itself
-        so the `ch` unit resolves against the clamped display size rather than
-        against the root. That cap is the most important single value in the
-        hero: uncapped, this headline sets one 71-character line at wide widths
-        and reads as a sentence someone typed rather than as a statement someone
-        chose. At 20ch it breaks to three lines with a strong ragged right edge,
-        which is the shape the reference draws.
+        `measure="hero"` owns where the headline breaks, applied on the heading
+        itself so the `ch` unit resolves against the clamped size rather than
+        against the root.
+
+        It is set so the headline is THREE lines at the wide end and folds to
+        four and five as the column narrows. That is the whole point of
+        putting the cap on the heading rather than letting the container decide:
+        the break is chosen, and it stays chosen at every width instead of
+        landing wherever the column happens to run out.
       */}
       <Heading id={headingId} level="h1" role="hero" measure="hero">
         {heading}

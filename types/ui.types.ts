@@ -123,7 +123,7 @@ export type AlignBlock = "start" | "center" | "end" | "between";
 /**
  * Maximum line length for readable copy, in characters. design.md § 2.
  *
- * `hero` (20ch) and `heading` (30ch) are heading measures and are applied by
+ * `hero` (28ch) and `heading` (30ch) are heading measures and are applied by
  * `Heading`; the other three are body measures applied by `Text`.
  */
 export type Measure = "hero" | "heading" | "body" | "narrow" | "feature" | "none";

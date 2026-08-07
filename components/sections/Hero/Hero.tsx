@@ -15,7 +15,7 @@ import { HeroImage } from "./HeroImage";
  * Geometry, measured from the reference at 1512px:
  *
  *   band height       612, as a minimum only
- *   headline          left-aligned, flush to the page gutter, 20ch measure
+ *   headline          left-aligned, flush to the page gutter, three lines
  *   contents          the h1 and nothing above it
  *   scrim             55%, measured against this photograph — see --color-scrim
  *

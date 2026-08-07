@@ -121,15 +121,30 @@
    size. `Heading` and `Text` both apply them alongside their role class, which
    is what makes that guaranteed rather than conventional.
 
-   In Kantumruy Pro one `ch` is ~0.612em, so 20ch at the h1's 64px maximum is
-   783px — the reference's measured hero cap, to the pixel.
+   In Kantumruy Pro one `ch` is ~0.612em.
    -------------------------------------------------------------------------- */
 
-/* The hero headline. The single most important measure in the system: a
-   headline that runs the full content column reads as a paragraph, not as a
-   statement. */
+/* The hero headline.
+   Set so the headline breaks to exactly three lines at the wide end and folds to
+   four and five as the column narrows — the break point is owned here rather
+   than left to wherever the content column happens to run out.
+
+   28ch, because that is the longest line of this headline's best three-line
+   split: "Travel Africa with a" / "customized payment solution" / "and one
+   insurance plan", whose longest line is 27 characters.
+
+   The cap has to engage before the container does, or the break is a coincidence
+   of the viewport rather than a decision. At the h1's 64px maximum, 28ch is
+   ~1097px against a 1424 content column — so it does, with room to spare, and
+   the shape holds from 1280 all the way up.
+
+   Uncapped, the column allows ~36 characters per line, which greedy-wraps to
+   "…and one insurance" / "plan" and strands a four-letter widow on the last
+   line. Wider than the reference's 20ch only because this headline is 71
+   characters against theirs at 52 — bring it back toward 20ch if the copy is
+   ever shortened. */
 @utility measure-hero {
-  max-inline-size: 20ch;
+  max-inline-size: 28ch;
 }
 
 /* Section headings. */

@@ -76,7 +76,7 @@ export type HeadingProps = {
    * Defaults to `heading` (30ch) rather than to `none`, because an uncapped
    * heading is a defect the design system exists to prevent and a default of
    * `none` would make the correct behaviour the thing every caller has to
-   * remember. The hero opts up to `hero` (20ch); a heading inside a card that is
+   * remember. The hero opts up to `hero` (28ch); a heading inside a card that is
    * already narrow opts out with `none`.
    */
   measure?: HeadingMeasure;

@@ -120,7 +120,10 @@
   --text-display--letter-spacing: -0.03em;
   --text-display--font-weight: var(--font-weight-medium);
 
-  /* H1 — 40 → 64. The hero headline. One per page. */
+  /* H1 — 40 → 64. The hero headline. One per page.
+     The reference's exact scale. The headline is set to break to three lines at
+     the wide end, and three lines is reachable at 64 — the line count is owned
+     by `measure-hero`, not by shrinking the type to force a break. */
   --text-h1: clamp(2.5rem, 2rem + 2.2vw, 4rem);
   --text-h1--line-height: 1.2;
   --text-h1--letter-spacing: -0.03em;

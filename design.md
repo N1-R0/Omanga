@@ -35,10 +35,12 @@ this system exists to keep.
 6. **Generous, and consistently so.** 144px between sections, 40px between
    cards, 80px between feature columns at desktop. One rhythm value for every
    surface — light bands and dark bands get identical space.
-7. **Headings are measure-capped.** The hero headline caps at **20ch**, section
+7. **Headings are measure-capped.** The hero headline caps at **28ch**, section
    headings at **30ch**. This is the single most important rule for perceived
    quality: a headline that runs the full content column reads as a paragraph,
-   not as a statement.
+   not as a statement. The cap also owns the line count — the hero's is set to
+   break at three lines, so where it folds is a decision rather than an accident
+   of the container width.
 
 ---
 
@@ -97,13 +99,21 @@ margins from its spacing scale rather than from a typographic default.
 
 | Cap | Value | Applies to |
 | --- | --- | --- |
-| Hero headline | **20ch** | The page's single `h1` |
+| Hero headline | **28ch** | The page's single `h1` |
 | Section heading | **30ch** | Every `h2` |
 | Body copy | 70ch | Standalone paragraphs |
 | Feature copy | 45ch | Copy inside a column or card |
 
-`ch` units, not pixels. The cap has to track the font size it is applied at,
-and a pixel value silently stops being 20 characters the moment the clamp moves.
+`ch` units, not pixels. The cap has to track the font size it is applied at, and
+a pixel value silently stops being 20 characters the moment the clamp moves.
+
+The hero cap also owns the **line count**. It is set so the headline breaks to
+three lines at the wide end and folds to four and five as the column narrows —
+28ch is the longest line of this headline's best three-line split. The cap
+engages at ~1097px against a 1424 content column, so the break is a decision
+rather than a coincidence of the viewport. It is wider than the reference's 20ch
+only because Omanga's headline is 71 characters against theirs at 52; the `h1`
+scale itself is unchanged. Shorten the copy and bring the cap back toward 20ch.
 
 ---
 

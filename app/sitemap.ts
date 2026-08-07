@@ -6,6 +6,7 @@ const ROUTES = [
   "/",
   "/about",
   "/contact",
+  "/get-started",
   "/insurance",
   "/payments",
   "/plans",

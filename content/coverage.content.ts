@@ -97,10 +97,9 @@ const COVERAGE_FLAGS: readonly ImageAsset[] = [
  * frame draws this action as a tertiary text link with a trailing arrow, not a
  * filled button. Emphasis is the section's hierarchy, not the copy's.
  *
- * [NOTE] `/get-started` has no route yet. It is not marked `isRoutePending`
- * because `site.content.ts` owns that link and does not mark it either; flagging
- * it in one place and not the other would make the two disagree. The missing
- * stub is a routing task, tracked there.
+ * [RESOLVED] This note previously recorded that `/get-started` had no route. It
+ * does now, and `PRIMARY_CTA` in `site.content.ts` points at it, so there is no
+ * longer a missing stub behind the approved primary label.
  */
 const COVERAGE_ACTION: CallToAction = {
   label: "See all countries",

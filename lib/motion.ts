@@ -10,6 +10,12 @@ type MotionTokens = {
   readonly staggerStep: number;
   readonly entranceOffset: number;
   readonly entranceDelay: number;
+  /**
+   * Parallax travel in each direction, in pixels. Mirrors
+   * `--spacing-parallax-overscan`, which sizes the layer this value moves — the
+   * two must stay equal or the transform exposes an edge at the end of its range.
+   */
+  readonly parallaxOverscan: number;
   readonly easeStandard: Bezier;
   readonly easeEntrance: Bezier;
   readonly easeDropdown: Bezier;
@@ -23,6 +29,7 @@ export const MOTION: MotionTokens = {
   staggerStep: 0.08,
   entranceOffset: 40,
   entranceDelay: 0.2,
+  parallaxOverscan: 64,
   easeStandard: [0, 0, 0.2, 1],
   easeEntrance: [0.39, 0.575, 0.565, 1],
   easeDropdown: [0.075, 0.82, 0.165, 1],

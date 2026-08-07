@@ -1,6 +1,7 @@
 import { Field } from "@/components/ui/Field";
 import { describedBy } from "@/lib/field-ids";
 import { cx } from "@/lib/cx";
+import type { Tone } from "@/types/ui.types";
 
 /**
  * A multi-line text field.
@@ -11,13 +12,38 @@ import { cx } from "@/lib/cx";
  *
  * `rows` sets the initial height only; the control resizes vertically. No
  * fixed height, per the layout rule that height follows content.
+ *
+ * [ADDED] The `tone` axis, mirroring `Input`'s exactly — including the underline
+ * treatment on the two dark surfaces. It has no caller today: the Get Started
+ * enquiry form has no approved multi-line field. It is here rather than left
+ * light-only because `Field` now requires a tone from every control, and a
+ * primitive that could only sit on one surface while its sibling sits on three
+ * would drift the moment a form needs it.
  */
 
-const CONTROL_CLASS =
-  "w-full resize-y rounded-sm border bg-surface-light px-fluid-3 py-fluid-2 font-sans text-main text-ink focus-ring transition-standard placeholder:text-secondary disabled:bg-inactive-surface disabled:text-disabled-ink";
+const BASE_CONTROL_CLASS =
+  "w-full resize-y font-sans text-main focus-ring transition-standard placeholder:text-secondary";
+
+const TONE_CONTROL_CLASS: Readonly<Record<Tone, string>> = {
+  light:
+    "rounded-sm border bg-surface-light px-fluid-3 py-fluid-2 text-ink disabled:bg-inactive-surface disabled:text-disabled-ink",
+  dark: "border-b bg-transparent py-fluid-2 text-on-dark disabled:text-disabled-ink",
+  brand:
+    "border-b bg-transparent py-fluid-2 text-on-dark disabled:text-disabled-ink",
+} as const;
+
+const TONE_BORDER_CLASS: Readonly<
+  Record<Tone, { readonly resting: string; readonly error: string }>
+> = {
+  light: { resting: "border-border-field", error: "border-error" },
+  dark: { resting: "border-on-dark", error: "border-on-dark" },
+  brand: { resting: "border-on-dark", error: "border-on-dark" },
+} as const;
 
 export type TextareaProps = {
   id: string;
+  /** The surface this field sits on. Passed explicitly, never inferred. */
+  tone: Tone;
   name?: string;
   label: string;
   requirementNote: string;
@@ -33,6 +59,7 @@ export type TextareaProps = {
 
 export function Textarea({
   id,
+  tone,
   name,
   label,
   requirementNote,
@@ -45,10 +72,12 @@ export function Textarea({
   rows = 4,
 }: TextareaProps) {
   const hasError = error !== undefined;
+  const border = TONE_BORDER_CLASS[tone];
 
   return (
     <Field
       id={id}
+      tone={tone}
       label={label}
       requirementNote={requirementNote}
       description={description}
@@ -68,8 +97,9 @@ export function Textarea({
           hasError,
         })}
         className={cx(
-          CONTROL_CLASS,
-          hasError ? "border-error" : "border-border-field",
+          BASE_CONTROL_CLASS,
+          TONE_CONTROL_CLASS[tone],
+          hasError ? border.error : border.resting,
         )}
       />
     </Field>

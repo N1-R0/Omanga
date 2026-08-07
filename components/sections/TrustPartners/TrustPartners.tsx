@@ -6,8 +6,13 @@ import type { TrustPartnersContent } from "@/content/trust.content";
 import { PartnerLogos } from "./PartnerLogos";
 
 /**
- * The homepage's Trust / Partners strip — the page's proof layer, which
- * `project-context.md` names a launch requirement rather than polish.
+ * The Trust / Partners strip — the proof layer that `project-context.md` names a
+ * launch requirement rather than polish.
+ *
+ * Rendered on the homepage and on `/get-started`. It takes its content and its
+ * heading id as props and knows nothing about which page mounts it, so appearing
+ * on a second route required no change here — which is the point of "no component
+ * knows its position on the page or which section contains it".
  *
  * A Server Component with nothing interactive in it: a label and three images, no
  * links, no state, so nothing hydrates and the label is in the server HTML.
@@ -42,11 +47,11 @@ import { PartnerLogos } from "./PartnerLogos";
  * `--color-ink` on white measures ~4.9:1, so a 12px label still clears AA.
  *
  * ---------------------------------------------------------------------------
- * [NOTE] This section is light, and so is the Solutions Overview above it.
- * `component-rules.md` asks consecutive sections to alternate surface; the frame
- * paints both white, and the strip's layout pattern is unlike anything around it.
- * Surface alternation is a page-composition decision and belongs to whoever
- * assembles the eleven sections, not to this one.
+ * [NOTE] This strip is light, and on both pages that mount it the section
+ * directly above is light too. `component-rules.md` asks consecutive sections to
+ * alternate surface; the frame paints both white, and the strip's layout pattern
+ * is unlike anything around it. Surface alternation is a page-composition
+ * decision and belongs to whoever assembles a page, not to this component.
  *
  * The section is CTA-free and stays that way. The frame draws no action, the
  * partners are not linked, and adding either would be inventing content.

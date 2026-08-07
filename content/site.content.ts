@@ -1,4 +1,4 @@
-import { CONTACT_EMAIL, WALLET_URL } from "@/config/site";
+import { CONTACT_EMAIL } from "@/config/site";
 import type { CallToAction, LinkTarget } from "@/types/content.types";
 
 /**
@@ -23,16 +23,40 @@ import type { CallToAction, LinkTarget } from "@/types/content.types";
  * Approved label, exactly as written. Sections import this rather than retyping
  * it, so the label cannot drift between the hero, the CTA band and the header.
  *
- * [FIXED] `href` was `/get-started`, which is not a route in this application
- * and has been returning a 404 from both the header and the closing band — the
- * two highest-intent controls on the site. It now points at the wallet sign-up,
- * which is what "Get Started" means here and is the same destination the hero's
- * primary already uses.
+ * ---------------------------------------------------------------------------
+ * [CHANGED] Destination is `/get-started`, on site.
+ *
+ * The history matters, because this is the second time the value has moved. It
+ * was originally `/get-started`, was repointed at `WALLET_URL` because that route
+ * did not exist and both controls were returning a 404, and now returns to
+ * `/get-started` because the route does exist — it is the page whose entire job
+ * is to resolve "payments, insurance, or both" before the visitor commits.
+ *
+ * Two consequences, both deliberate:
+ *
+ *   - `isExternal` is gone, not set to `false`. The destination is internal, so
+ *     the flag has nothing to describe, and `Button` already defaults it — which
+ *     means no `target="_blank"` and no `rel`, correctly. It also removes a
+ *     latent defect: `Header` and `MobileNav` never forwarded `isExternal` to
+ *     their `Button`, so while this pointed off-site the header's own control was
+ *     the one link on the page opening an external URL in the same tab with no
+ *     `rel`. That is now moot rather than merely unnoticed.
+ *
+ *   - The site's two highest-intent controls are now internal links, which is
+ *     what `get-started-seo.md` § Internal linking asks for: the page is a router
+ *     and "a router with no inbound links routes nobody", listing the nav and the
+ *     homepage among the required inbound sources. The off-site wallet sign-up is
+ *     still one press away — it is the hero's primary on the homepage and will be
+ *     the Get Started page's own primary — so no path to the wallet is lost.
+ *
+ * `WALLET_URL` therefore has no consumer in this module and its import is gone —
+ * an unused import is a build warning, and the build must pass with none. The
+ * constant itself is untouched in `config/site.ts`, where `hero.content.ts`
+ * imports it for "Open Your Free Wallet".
  */
 export const PRIMARY_CTA: CallToAction = {
   label: "Get Started",
-  href: WALLET_URL,
-  isExternal: true,
+  href: "/get-started",
   emphasis: "primary",
 } as const;
 

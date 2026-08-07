@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 
+import { cx } from "@/lib/cx";
 import { fieldIds } from "@/lib/field-ids";
+import type { Tone } from "@/types/ui.types";
 
 /**
  * The label / control / description / error scaffold that every form control
@@ -18,11 +20,28 @@ import { fieldIds } from "@/lib/field-ids";
  * a silent screen-reader failure that no visual review would catch.
  *
  * Field renders no control of its own. It does not know what it wraps.
+ *
+ * ---------------------------------------------------------------------------
+ * [ADDED] A `tone` axis, because the enquiry form sits on the brand band.
+ *
+ * `tone` is the system's established "surface a component is being rendered
+ * onto" union, passed explicitly and never inferred, exactly as `Button` and
+ * `Badge` take it. Only the two surfaces that exist for a form today are
+ * mapped; `dark` reuses the brand treatment because both are light-on-dark and
+ * neither has a second measurement behind it yet.
+ *
+ * The error message is the reason this axis has to reach `Field` rather than
+ * stopping at the control. The message ships in `--color-ink` on the light
+ * surface — a deliberate choice, since the error red fails AA for text — and ink
+ * on the brand fill measures 2.66:1, which fails outright. On brand the message
+ * is white at 6.70:1.
  */
 
 export type FieldProps = {
   /** Must match the control's `id`. The label's `htmlFor` points at it. */
   id: string;
+  /** The surface this field sits on. Passed explicitly, never inferred. */
+  tone: Tone;
   /**
    * Always visible, always associated. A placeholder never substitutes for a
    * label, which is why there is no "hide label" option here.
@@ -50,8 +69,21 @@ export type FieldProps = {
   children: ReactNode;
 };
 
+/**
+ * Message colour per surface.
+ *
+ * Measured against each fill: ink on `--color-surface-page` is 18.1:1, white on
+ * `--color-brand` is 6.70:1. Both clear AA for text.
+ */
+const TONE_MESSAGE_CLASS: Readonly<Record<Tone, string>> = {
+  light: "text-ink",
+  dark: "text-on-dark",
+  brand: "text-on-dark",
+} as const;
+
 export function Field({
   id,
+  tone,
   label,
   requirementNote,
   description,
@@ -86,7 +118,11 @@ export function Field({
         message text itself carries the meaning, so nothing is lost.
       */}
       {error !== undefined && (
-        <p id={errorId} role="alert" className="font-sans text-small text-ink">
+        <p
+          id={errorId}
+          role="alert"
+          className={cx("font-sans text-small", TONE_MESSAGE_CLASS[tone])}
+        >
           {error}
         </p>
       )}

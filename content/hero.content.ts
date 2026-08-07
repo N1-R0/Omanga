@@ -44,7 +44,13 @@ import type { CallToAction, ImageAsset } from "@/types/content.types";
  * also the header's and the closing band's destination and three copies of a URL
  * is three places for it to be wrong.
  */
-const PRIMARY_ACTION: CallToAction = {
+/**
+ * Exported because a second section now uses it: the Get Started page's closing
+ * band takes this exact action rather than the site's `Get Started` primary,
+ * which on that page would link to the page it sits on. One owner for the label
+ * and the destination, so the two cannot drift.
+ */
+export const HERO_PRIMARY_ACTION: CallToAction = {
   label: "Open Your Free Wallet",
   href: WALLET_URL,
   isExternal: true,
@@ -106,7 +112,7 @@ export type HeroSectionContent = {
 export const heroContent: HeroSectionContent = {
   heading:
     "Travel Africa with a customized payment solution and one insurance plan",
-  actions: [PRIMARY_ACTION, SECONDARY_ACTION],
+  actions: [HERO_PRIMARY_ACTION, SECONDARY_ACTION],
   helperText: "No monthly fee. Set up in minutes.",
   image: IMAGE,
 } as const;

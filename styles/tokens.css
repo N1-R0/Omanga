@@ -272,6 +272,60 @@
      below the fold on a phone for no gain. */
   --spacing-hero-min: clamp(30rem, 20.571rem + 19.643vw, 38.25rem); /* 480 → 612 */
 
+  /* Secondary hero band minimum height, for a page hero that opens a route
+     other than the homepage. 90% of `--spacing-hero-min` at both ends, on the
+     same 768 → 1440 anchors, so the two ramp together and the relationship
+     holds at every width rather than only at the extremes.
+
+     A second step rather than a second one-off: the homepage hero is the
+     tallest band on the site by design, and a page hero that is a text band
+     rather than a photographic one has less to hold open. Everything the
+     primary token says still applies — a minimum, never a maximum, and applied
+     from `tablet:` only. */
+  --spacing-hero-compact: clamp(27rem, 18.429rem + 17.857vw, 34.5rem); /* 432 → 552 */
+
+  /* Full-bleed photographic band height.
+     [MEASURED] 525 tall against a 1512 frame in the Get Started screenshot,
+     where the image runs edge to edge with no gutter. 525 / 1512 is 34.722vw,
+     so the middle term reproduces the measured proportion exactly at every
+     width rather than only at the width it was measured on.
+
+     The two ends are what make it behave. Below ~806px the ratio would put the
+     band under 280 — a letterbox strip rather than a photograph — so the floor
+     holds it at 280. Above 1512 the cap stops the band growing past its measured
+     height and becoming taller than the hero above it.
+
+     A height rather than an aspect ratio on the box: `--aspect-*` has no step
+     near 2.9:1, and a ratio alone has neither the floor nor the cap. The box is
+     still fully sized before the image loads, which is the CLS guarantee the
+     ratio tokens exist to give. */
+  --spacing-image-band: clamp(17.5rem, 34.722vw, 32.8125rem); /* 280 → 525 */
+
+  /* Enquiry form column.
+     [MEASURED] The form occupies 972 of a 1486 frame in the Get Started
+     screenshot — 65% of it, centred, narrower than the content column around it.
+     A form that ran the full 1240 would put a two-column field grid at 600 per
+     field, which is twice any sensible input width and reads as a spreadsheet.
+
+     Not derivable from a text measure: form geometry is set by its controls, not
+     by a line length, so `--container-*` is the right namespace and no existing
+     entry is close. */
+  --container-form: 50rem; /* 800 */
+
+  /* Parallax overscan — how far the image layer extends past its box on each
+     edge, and therefore the maximum travel available to it. The layer is
+     2 × this taller than the box it sits in, so no edge can be exposed at
+     either end of the scroll.
+
+     64 is one header height, the smallest overscan that reads as depth rather
+     than as a glitch, and small enough that the crop it costs the photograph is
+     not noticeable.
+
+     MIRRORED in `MOTION.parallaxOverscan` (`lib/motion.ts`), which Framer Motion
+     needs as a number because it cannot read a custom property. Change both
+     together. */
+  --spacing-parallax-overscan: 4rem; /* 64 */
+
   /* Header height. The one fixed height in the system, justified because the
      header is a bar of controls rather than a container of content. */
   --spacing-header: 4rem; /* 64 */

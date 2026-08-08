@@ -25,6 +25,39 @@ export const ENQUIRY_FIELDS = {
   needs: "enquiry-needs",
 } as const;
 
+/**
+ * The honeypot control's name, and the only anti-spam measure the markup
+ * carries.
+ *
+ * Not a member of `ENQUIRY_FIELDS`: that record is the set of fields a person
+ * fills in, and everything that iterates it — labels, validation, the delivered
+ * email — would be wrong if this were in it. It is a decoy, so it is named like
+ * one a scripted filler would want to complete and nothing like the string a
+ * reader would associate with a trap.
+ *
+ * Kept in this module rather than in the Route Handler because the form renders
+ * the control and the server reads it, which is the same two-caller problem the
+ * rest of this file exists to solve.
+ */
+export const ENQUIRY_HONEYPOT_FIELD = "enquiry-website" as const;
+
+/**
+ * Whether a submission filled the decoy.
+ *
+ * The control is `aria-hidden`, off the tab order and clipped to a pixel, so no
+ * person reaches it and no assistive technology announces it. A non-empty value
+ * therefore means something walked the DOM and filled every input it found.
+ *
+ * Deliberately separate from `validateEnquiry`. A failed validation is a message
+ * to a user; this is a silent discard, and folding the two together would put a
+ * bot on the same code path as a person who mistyped their address.
+ */
+export function isHoneypotFilled(values: FormData): boolean {
+  const decoy = values.get(ENQUIRY_HONEYPOT_FIELD);
+
+  return typeof decoy === "string" && decoy.trim() !== "";
+}
+
 /** The two fields without which a reply is impossible. */
 export type RequiredEnquiryField = "name" | "email";
 

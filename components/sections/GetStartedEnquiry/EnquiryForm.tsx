@@ -13,7 +13,7 @@ import {
   type GetStartedEnquiryContent,
   type LinkedMessage,
 } from "@/content/get-started-enquiry.content";
-import { validateEnquiry } from "@/lib/enquiry";
+import { ENQUIRY_HONEYPOT_FIELD, validateEnquiry } from "@/lib/enquiry";
 import type { RequiredEnquiryField } from "@/lib/enquiry";
 
 /**
@@ -28,7 +28,8 @@ import type { RequiredEnquiryField } from "@/lib/enquiry";
  *
  *   this file          fields, messages, pending / success / error states
  *   lib/enquiry.ts     the wire field names, sanitisation, validation rules
- *   app/api/enquiry    the server handler and, once wired, Zoho delivery
+ *   lib/rate-limit.ts  the per-address submission counter, server-side only
+ *   app/api/enquiry    the server handler, the spam guards and Zoho delivery
  *
  * Validation is not duplicated: `validateEnquiry` is the same function the Route
  * Handler runs, so the client genuinely mirrors the server rather than
@@ -44,10 +45,16 @@ import type { RequiredEnquiryField } from "@/lib/enquiry";
  * Progressive enhancement, honestly stated. The markup is a real `form` with a
  * real submit button and native `required` and `type="email"` attributes, so the
  * fields are usable and programmatically described before this component
- * hydrates. Submission still needs JavaScript today. Once Zoho delivery is live,
- * giving the `form` an `action` pointing at the same route makes it work without
- * — the handler already accepts `FormData`, which is exactly what a native
- * submission posts.
+ * hydrates. Submission still needs JavaScript.
+ *
+ * That is now a deliberate stopping point rather than a pending task. Giving the
+ * `form` an `action` would make it post natively — the handler accepts
+ * `FormData`, which is exactly what a native submission sends — but the browser
+ * would then navigate to the endpoint and render its JSON, and the brief is
+ * explicit that submission must not take the visitor off the page. Closing the
+ * gap properly means a Server Action returning state to a `useActionState` form,
+ * which is a different component from this one and a decision worth making on
+ * its own.
  */
 
 type Status = "idle" | "pending" | "success" | "failure";
@@ -169,6 +176,40 @@ export function EnquiryForm({ content }: EnquiryFormProps) {
       what assistive technology reads, and they are the server's contract too.
     */
     <form noValidate onSubmit={handleSubmit}>
+      {/*
+        The honeypot. Rendered first so a filler that stops at the first input
+        meets it before anything real, and rendered outside the `Stack` so it
+        cannot open a gap in the layout — a `visually-hidden` element inside a
+        flex column still counts as a child and still gets a gap on either side.
+
+        Nothing about the section's appearance changes: the wrapper is clipped to
+        one pixel by the project's `visually-hidden` utility.
+
+        Three attributes carry the accessibility of this, and all three are
+        required together. `aria-hidden` takes the control out of the
+        accessibility tree, so no screen reader announces a field that is not
+        real. `tabIndex={-1}` takes it out of the tab order, which is what makes
+        the `aria-hidden` legitimate — an `aria-hidden` subtree containing a
+        tabbable control is itself a violation, since a keyboard user would land
+        somewhere their screen reader cannot describe. `autoComplete="off"` stops
+        a browser's own form fill from putting a value in it and getting a real
+        visitor's enquiry silently discarded.
+
+        There is no `label`, deliberately. The control has no presence in the
+        accessibility tree to name, and a label would be user-facing copy — which
+        would belong in a content module, be sent for approval, and be read by
+        nobody.
+      */}
+      <div className="visually-hidden" aria-hidden="true">
+        <input
+          id={ENQUIRY_HONEYPOT_FIELD}
+          name={ENQUIRY_HONEYPOT_FIELD}
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
+
       <Stack gap="2xl">
         {invalidFields.length > 0 && (
           /*

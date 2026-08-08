@@ -11,6 +11,38 @@
    ========================================================================== */
 
 /* -----------------------------------------------------------------------------
+   Pinned variant
+   A width breakpoint alone cannot describe a sticky, full-height column: that
+   layout needs vertical room, and width says nothing about how much there is.
+
+   Browser zoom is what makes the difference visible. Zoom shrinks the CSS
+   viewport while leaving content size in CSS pixels unchanged, so a viewport
+   that is 810px tall at 100% is 648px at 125% — while the heading and the copy
+   that have to fit inside it are exactly as tall as they were. A layout pinned
+   to `100vh` and gated on width alone has no way to know this happened.
+
+   64rem mirrors `--breakpoint-desktop`. 42rem is the height below which the
+   pinned column's own content stops fitting inside it — heading block, gap, the
+   tallest copy block, and the gutters at their floor, which come to roughly
+   40rem at the narrow end of the desktop range. The extra 2rem is margin for a
+   heading that wraps to one more line than expected.
+
+   [TUNABLE] 42rem is the single number that decides where the effect stops. It
+   is derived from the copy, so revisit it when the copy in `services.content.ts`
+   changes length: too low and the column is pinned in a viewport it overflows,
+   too high and the effect is given up while there was still room for it.
+
+   Below this, the section falls back to its unpinned two-column layout, where
+   the copy blocks flow normally and all three are visible. A degradation of the
+   effect, not of the content.
+   -------------------------------------------------------------------------- */
+@custom-variant pinned {
+  @media (min-width: 64rem) and (min-height: 42rem) {
+    @slot;
+  }
+}
+
+/* -----------------------------------------------------------------------------
    Fluid spacing scale
    design.md § 3 — eight steps, every one a clamp between 320 and 1440.
 

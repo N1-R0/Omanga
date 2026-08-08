@@ -109,7 +109,7 @@
      Fluid between a 320px and a 1440px viewport. Line height is unitless and
      tracking is in `em`, so both survive the clamp.
 
-     Five line heights (1, 1.1, 1.2, 1.3, 1.5) and two tracking values
+     Four line heights (1, 1.1, 1.3, 1.5) and two tracking values
      (0, -0.03em) across the whole scale. Every heading is weight 500.
      ========================================================================= */
 
@@ -123,9 +123,19 @@
   /* H1 — 40 → 64. The hero headline. One per page.
      The reference's exact scale. The headline is set to break to three lines at
      the wide end, and three lines is reachable at 64 — the line count is owned
-     by `measure-hero`, not by shrinking the type to force a break. */
+     by `measure-hero`, not by shrinking the type to force a break.
+
+     [CHANGED] Line height 1.2 → 1.1. At 64px the lines were 76.8px apart and the
+     headline read as three separate statements rather than one; 70.4px closes
+     the gap without the descenders of one line reaching the caps of the next.
+
+     1.1 rather than an intermediate value on purpose. This scale holds a closed
+     set of line heights, and `display` and `h2` — the two roles either side of
+     this one — are both already at 1.1. Splitting the difference at 1.15 would
+     buy a barely visible 3px and cost the set its sixth value, which is how a
+     type scale stops being a scale. */
   --text-h1: clamp(2.5rem, 2rem + 2.2vw, 4rem);
-  --text-h1--line-height: 1.2;
+  --text-h1--line-height: 1.1;
   --text-h1--letter-spacing: -0.03em;
   --text-h1--font-weight: var(--font-weight-medium);
 

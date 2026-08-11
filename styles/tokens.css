@@ -404,8 +404,23 @@
      "match the design exactly" rules out.
 
      Both product cards take this ratio together, so they stay equal-height
-     siblings. The section is taller than it was, which is what the frames show. */
-  --aspect-product-visual: 491 / 482;
+     siblings.
+
+     [TUNED — 491/482 -> 6/5] The frames' own art area is square within 2%, and at
+     that ratio the cards stood far taller than the benchmark's second section,
+     which is the layout this page follows. 6/5 takes roughly 17% off the art box
+     and brings the cards back toward it.
+
+     This is the floor, not a preference. Both compositions are authored from the
+     top of the box and the taller of the two sets it:
+
+       payments    balance card ends at 388 of its 491 canvas   0.79 x width
+       insurance   last row ends at 656 of its 800 canvas       0.645 x width,
+                   centred, so 0.094 clear at each end
+
+     6/5 gives a box 0.833 x width tall. Anything shorter starts cutting the
+     payments Send row, which is the element the whole sequence acts on. */
+  --aspect-product-visual: 6 / 5;
 
   /* ===========================================================================
      RADIUS
@@ -553,8 +568,22 @@
      decorative loop from competing with the copy beside it. */
   --duration-marquee: 20s;
 
-  /* Hero Ken Burns. Long enough that the movement reads as drift. */
-  --duration-hero-pan: 24s;
+  /* Hero Ken Burns.
+
+     [TUNED — 24s -> 12s -> 8s] 24s moved the image under 2% over a typical time
+     on the hero and read as completely static.
+
+     [NOT MEASURED — see below] 8s is reasoned from the benchmark, not taken from
+     it. Its hero is a four-image slideshow, each frame pushing while it is on
+     screen and crossfading to the next; the cycle is what makes its motion read
+     as brisk. Omanga's hero is a single photograph, so there is no crossfade to
+     hide a slow push behind and the pan itself has to carry the movement. 8s over
+     1.08 is about 1% per second, which is visible without reading as a zoom.
+
+     The benchmark's exact frame duration could not be read: its timing lives in
+     Webflow interaction JavaScript rather than in CSS, so it needs a live browser
+     to measure. **Worth re-measuring and matching properly.** */
+  --duration-hero-pan: 8s;
   --motion-hero-pan-scale: 1.08;
 
   /* Reveal geometry. 40px is far enough to read as an arrival; 16px reads as a

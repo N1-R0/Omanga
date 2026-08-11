@@ -4,6 +4,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { SkipLink } from "@/components/layout/SkipLink";
+import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { fontVariables } from "@/config/fonts";
 import { BRAND_COLOR, SITE_NAME, SITE_URL } from "@/config/site";
 import { footerContent, formatCopyright } from "@/content/footer.content";
@@ -76,6 +77,14 @@ export default function RedesignRootLayout({
           involved — a positive one here is the usual way this gets broken.
         */}
         <SkipLink label={SKIP_LINK_LABEL} targetId={MAIN_CONTENT_ID} />
+
+        {/*
+          Renders nothing. Mounted here rather than per page because scroll is a
+          document-wide concern and one instance must own it — two would fight
+          over the same scroll position. It sits after the skip link so it cannot
+          come between that and the tab order.
+        */}
+        <SmoothScroll />
 
         <Header
           items={navigationContent.items}

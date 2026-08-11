@@ -175,7 +175,17 @@ export function SolutionsOverview({
             <Reveal index={1}>
               <SolutionCard
                 content={content.insurance}
-                emphasis="primary"
+                /*
+                  [CHANGED] Was `primary`, which paints the brand fill.
+
+                  The stepper visual is authored on a light ground and its rows
+                  are white — on #ae2448 the whole composition inverted and the
+                  recessed rows read as mauve. Both cards now take the light
+                  surface, and the brand survives in the section as the active
+                  row's icon tile, which is what keeps the two cards from reading
+                  as one undifferentiated pair.
+                */
+                emphasis="secondary"
                 presentation="insurance-visual"
                 headingLevel="h3"
                 headingId={INSURANCE_HEADING_ID}

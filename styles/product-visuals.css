@@ -51,28 +51,6 @@
   --pv: 0.203666cqw;
 }
 
-/* The plate the insurance stack sits on.
-
-   [CHANGED — contrast] White at 20%, filling the art box.
-
-   Previously the stack sat straight on the brand fill and the recessed cards read
-   as mauve rather than as the same object further back. A white wash lifts the
-   whole visual area off `--color-brand` and gives the cards a surface to recede
-   into, which is what makes their own opacity steps legible.
-
-   20% is deliberately low: on #ae2448 it resolves to a pale rose that reads as a
-   panel without competing with the white cards on top of it. */
-@utility pv-plate {
-  position: absolute;
-  inset: 0;
-  /* [TUNED] 40 authored pixels resolved to ~30 real at 1440, against a card whose
-     own radius is 8 — the plate read rounder than the card containing it. 20 lands
-     at ~15 real at 1440 and ~10 at 1024, which sits just under `--radius-md` and
-     reads as a panel inside the card rather than as a pill. */
-  border-radius: calc(20 * var(--pv));
-  background-color: rgb(255 255 255 / 0.2);
-}
-
 /* =============================================================================
    PAYMENTS — main-glass-container (2081:1221)
    ========================================================================== */
@@ -549,149 +527,176 @@
 }
 
 /* =============================================================================
-   INSURANCE — Visual Workspace (2081:1295)
+   INSURANCE — kyc-verification-stepper (2115:1111)
+
+   A vertical list of cover items with the active one held at the centre, sharp
+   and full width, the rest receding above and below. The active item cycles, so
+   the list appears to scroll through itself.
+
+   [MEASURED] The frame is authored on an 800 canvas, not 491, so this section
+   overrides `--pv`. Its seven rows:
+
+     distance   left   width   height
+     0 active    120     560      112
+     1           140     520       96
+     2           160     480       90
+     3           180     440       84
+
+   Every row shares a centre line at x 400, which is the fact the whole
+   implementation rests on: a uniform scale about the centre reproduces the left
+   and right insets at once, so a row can move between distances on a transform
+   alone rather than by animating width — § 11 rule 1.
+
+   Scale is the width ratio against the active row: 520/560, 480/560, 440/560.
+   The frame's heights are not in the same proportion (96 vs the 104 a uniform
+   scale gives), a two-authored-pixel difference at a distance that also carries
+   blur. Matching it exactly would mean animating height, which the rule forbids.
+
+   Vertical travel is a percentage of the row's own height, taken from the frame's
+   row centres — 182, 241, 308, 392, 496, 559, 614 against the active 392.
    ========================================================================== */
 
-@utility pv-stack {
+@utility pv-stepper {
   position: absolute;
-  inset-inline: 0;
-  inset-block-start: calc(48 * var(--pv));
-  block-size: calc(430 * var(--pv));
+  inset: 0;
+  /* One authored pixel on the 800 canvas this frame uses. */
+  --pv: 0.125cqw;
 }
 
-/* All three cards are the same size and sit at the front slot. Depth is offset,
-   opacity and blur — never scale — which is how the frame draws it and what lets
-   a card move between slots on a transform alone. The cards are wider than the
-   box (116 + 459.604 > 491), so the stack bleeds off the right edge and is
-   clipped: the frame's own composition. */
-@utility pv-tier-card {
+/* Every row is positioned at the active slot and reaches its own from there. */
+@utility pv-step {
   position: absolute;
-  inset-inline-start: calc(116 * var(--pv));
-  inset-block-start: calc(119 * var(--pv));
-  inline-size: calc(459.604 * var(--pv));
-  block-size: calc(137.881 * var(--pv));
+  inset-inline-start: calc(120 * var(--pv));
+  /* Anchored to the box's vertical centre, not the frame's authored y.
+
+     The frame is 800 tall and the art box is 0.833 x width, so the authored
+     offsets would sit the stack too low and clip the last row. Centring puts the
+     active row on the box's centre line and leaves 0.094 x width clear at each
+     end. `margin-block-start` rather than a transform, because the slot classes
+     already own `transform` for the travel between distances. */
+  inset-block-start: 50%;
+  margin-block-start: calc(-56 * var(--pv));
+  inline-size: calc(560 * var(--pv));
+  block-size: calc(112 * var(--pv));
   display: flex;
   align-items: center;
-  gap: calc(18.802 * var(--pv));
-  padding: calc(22.98 * var(--pv));
-  border-radius: calc(29.248 * var(--pv));
-  border: calc(1.045 * var(--pv)) solid rgb(22 23 23 / 0.06);
-  background-color: #fff;
-  box-shadow: 0 calc(25.069 * var(--pv)) calc(25.069 * var(--pv))
-    rgb(0 0 0 / 0.24);
+  gap: calc(24 * var(--pv));
+  padding-inline: calc(28 * var(--pv));
+  border-radius: calc(24 * var(--pv));
+  transition-property: transform, opacity, filter, background-color, box-shadow,
+    color;
+  transition-duration: var(--duration-tier-move);
+  transition-timing-function: var(--ease-dropdown);
 }
 
-/* Per-slot surface and recession.
-   The frame authors three separate cards, so its back two also differ in padding
-   (20.891 vs 22.98) and badge size (50.139 vs 56.406). Those are not reproduced:
-   here one card *moves between* slots, and changing padding mid-move would animate
-   layout, which § 11 rule 1 forbids. The difference is two authored pixels behind
-   a blur — invisible — and the alternative would be three cards crossfading,
-   which is the effect the rotation exists to avoid.
-
-   Blur is a class rather than an animated value so it can transition in CSS
-   alongside the transform, and so the radius can be written in `--pv` and scale
-   with the box. Opacity and offset are animated by the component. */
-@utility pv-tier-slot {
-  transition: filter var(--duration-tier-move) var(--ease-dropdown),
-    background-color var(--duration-tier-move) var(--ease-dropdown),
-    box-shadow var(--duration-tier-move) var(--ease-dropdown);
-}
-
-/* [CHANGED — contrast] The cards are white, not #1c1c1e.
-
-   The frame draws near-black cards on a light page. On the brand card that
-   inverted badly: dark cards on crimson had almost no luminance separation, and
-   the recessed two turned muddy. White cards keep the frame's structure and its
-   opacity ladder — 1 / 0.95 / 0.8 fill, 1 / 0.65 / 0.35 element opacity — with
-   the luminance running the other way, which is what the design intends and the
-   brand surface inverted. */
-@utility pv-tier-front {
-  z-index: 3;
-  filter: none;
-  background-color: #fff;
-}
-
-@utility pv-tier-mid {
-  z-index: 2;
-  filter: blur(calc(0.783 * var(--pv)));
-  background-color: rgb(255 255 255 / 0.95);
-  box-shadow: 0 calc(12.535 * var(--pv)) calc(25.069 * var(--pv))
-    rgb(0 0 0 / 0.13);
-}
-
-@utility pv-tier-back {
-  z-index: 1;
-  filter: blur(calc(2.089 * var(--pv)));
-  background-color: rgb(255 255 255 / 0.8);
-  box-shadow: none;
-}
-
-@utility pv-tier-badge {
+@utility pv-step-icon {
   display: flex;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  inline-size: calc(56.406 * var(--pv));
-  block-size: calc(56.406 * var(--pv));
-  border-radius: calc(999 * var(--pv));
-  color: var(--color-ink);
+  inline-size: calc(48 * var(--pv));
+  block-size: calc(48 * var(--pv));
+  border-radius: calc(14 * var(--pv));
+  transition-property: background-color, color;
+  transition-duration: var(--duration-tier-move);
+  transition-timing-function: var(--ease-dropdown);
 }
 
-@utility pv-tier-copy {
-  display: flex;
-  min-inline-size: 0;
-  flex: 1 0 0;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: calc(4.178 * var(--pv));
-}
-
-/* The frame's three greys, inverted for the white surface. Its ladder is
-   #ffffff / #8e8e93 / #aeaeae on #1c1c1e; this is the mirror of it, each step
-   measured against white:
-
-     title  #1c1c1e   15.8:1
-     sub    #55555a    7.4:1
-     note   #6e6e73    4.9:1
-
-   All three clear AA for body text, which the frame's #aeaeae on #1c1c1e does
-   not — so the inversion is also a contrast fix, not only a colour swap. */
-@utility pv-tier-title {
-  color: #1c1c1e;
-  font-size: calc(16.713 * var(--pv));
-  font-weight: var(--font-weight-bold);
+@utility pv-step-label {
+  font-size: calc(26 * var(--pv));
+  letter-spacing: calc(-0.3 * var(--pv));
   white-space: nowrap;
-}
-
-@utility pv-tier-sub {
-  color: #55555a;
-  font-size: calc(13.579 * var(--pv));
-  font-weight: var(--font-weight-medium);
-  white-space: nowrap;
-}
-
-@utility pv-tier-note {
   overflow: hidden;
-  inline-size: 100%;
-  color: #6e6e73;
-  font-size: calc(11.49 * var(--pv));
-  line-height: 1.4;
   text-overflow: ellipsis;
 }
 
-/* The active indicator. A core with an aura, drawn as two radii rather than
-   imported as the frame's flattened SVG so it inherits the brand colour. */
-@utility pv-glow {
-  position: absolute;
-  inset-inline-start: calc(56 * var(--pv));
-  inset-block-start: calc(110 * var(--pv));
-  inline-size: calc(32 * var(--pv));
-  block-size: calc(32 * var(--pv));
-  border-radius: calc(999 * var(--pv));
-  background-color: var(--color-on-dark);
-  box-shadow:
-    0 0 0 calc(6 * var(--pv)) rgb(255 255 255 / 0.18),
-    0 0 calc(16 * var(--pv)) calc(4 * var(--pv)) rgb(255 255 255 / 0.35);
-  transform: scale(0.44);
+/* ---------------------------------------------------------------------------
+   The seven slots, top to bottom. Distance from the centre sets scale, travel,
+   opacity, blur and stacking — the active row is nearest the viewer and each step
+   away sits behind the one before it.
+   ------------------------------------------------------------------------ */
+@utility pv-step-d0 {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  filter: none;
+  z-index: 7;
+  background-color: #fff;
+  color: #111;
+  box-shadow: 0 calc(10 * var(--pv)) calc(30 * var(--pv)) rgb(22 23 23 / 0.1);
+}
+
+@utility pv-step-d1-up {
+  transform: translateY(-75%) scale(0.929);
+  opacity: 0.85;
+  filter: blur(calc(0.5 * var(--pv)));
+  z-index: 6;
+  background-color: rgb(255 255 255 / 0.8);
+  color: #3a3a3a;
+  box-shadow: 0 calc(6 * var(--pv)) calc(18 * var(--pv)) rgb(22 23 23 / 0.05);
+}
+
+@utility pv-step-d1-down {
+  transform: translateY(92.9%) scale(0.929);
+  opacity: 0.85;
+  filter: blur(calc(0.5 * var(--pv)));
+  z-index: 6;
+  background-color: rgb(255 255 255 / 0.8);
+  color: #3a3a3a;
+  box-shadow: 0 calc(6 * var(--pv)) calc(18 * var(--pv)) rgb(22 23 23 / 0.05);
+}
+
+@utility pv-step-d2-up {
+  transform: translateY(-134.8%) scale(0.857);
+  opacity: 0.6;
+  filter: blur(calc(1.5 * var(--pv)));
+  z-index: 5;
+  background-color: rgb(255 255 255 / 0.6);
+  color: #6e6e73;
+}
+
+@utility pv-step-d2-down {
+  transform: translateY(149.1%) scale(0.857);
+  opacity: 0.6;
+  filter: blur(calc(1.5 * var(--pv)));
+  z-index: 5;
+  background-color: rgb(255 255 255 / 0.6);
+  color: #6e6e73;
+}
+
+@utility pv-step-d3-up {
+  transform: translateY(-187.5%) scale(0.786);
+  opacity: 0.32;
+  filter: blur(calc(3 * var(--pv)));
+  z-index: 4;
+  background-color: rgb(255 255 255 / 0.45);
+  color: #9a9a9f;
+}
+
+@utility pv-step-d3-down {
+  transform: translateY(198.2%) scale(0.786);
+  opacity: 0.32;
+  filter: blur(calc(3 * var(--pv)));
+  z-index: 4;
+  background-color: rgb(255 255 255 / 0.45);
+  color: #9a9a9f;
+}
+
+/* ---------------------------------------------------------------------------
+   Icon tiles. The frame gives every step its own hue; here the active tile takes
+   the brand and the rest are neutral.
+
+   Two reasons. The frame's palette is seven arbitrary product colours and this
+   system has one brand plus greys — importing six more would be a bigger change
+   to the palette than the visual is worth. And with the card no longer brand
+   filled, this is the only brand colour left in the section, which is what stops
+   the two solution cards reading as one undifferentiated pair.
+   ------------------------------------------------------------------------ */
+@utility pv-step-icon-active {
+  background-color: var(--color-brand);
+  color: var(--color-on-dark);
+}
+
+@utility pv-step-icon-idle {
+  background-color: rgb(22 23 23 / 0.06);
+  color: #6e6e73;
 }

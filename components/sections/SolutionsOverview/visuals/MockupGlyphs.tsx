@@ -126,12 +126,87 @@ export function ChevronRight() {
   );
 }
 
-/** The tier badge mark. Protection, which is what the tier is selling. */
-export function ShieldCheck() {
+/*
+ * The insurance cover glyphs. One per row of the stepper, each naming what that
+ * row covers rather than decorating it.
+ */
+
+/** Hospital access. */
+export function Building() {
   return (
     <Glyph>
-      <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
-      <path d="m9 12 2 2 4-4" />
+      <rect width="16" height="20" x="4" y="2" rx="2" />
+      <path d="M9 22v-4h6v4" />
+      <path d="M8 6h.01" />
+      <path d="M16 6h.01" />
+      <path d="M12 6h.01" />
+      <path d="M12 10h.01" />
+      <path d="M12 14h.01" />
+      <path d="M16 10h.01" />
+      <path d="M8 10h.01" />
+    </Glyph>
+  );
+}
+
+/** Emergency evacuation. */
+export function Plane() {
+  return (
+    <Glyph>
+      <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" />
+    </Glyph>
+  );
+}
+
+/** Diagnostic scans. The frame's own active glyph. */
+export function Scan() {
+  return (
+    <Glyph>
+      <path d="M3 7V5a2 2 0 0 1 2-2h2" />
+      <path d="M17 3h2a2 2 0 0 1 2 2v2" />
+      <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
+      <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
+    </Glyph>
+  );
+}
+
+/** Inpatient care. */
+export function Bed() {
+  return (
+    <Glyph>
+      <path d="M2 4v16" />
+      <path d="M2 8h18a2 2 0 0 1 2 2v10" />
+      <path d="M2 17h20" />
+      <path d="M6 8v9" />
+    </Glyph>
+  );
+}
+
+/** Telemedicine. */
+export function Video() {
+  return (
+    <Glyph>
+      <path d="m16 10 4.5-3a.5.5 0 0 1 .8.4v9.2a.5.5 0 0 1-.8.4L16 14" />
+      <rect x="2" y="6" width="14" height="12" rx="2" />
+    </Glyph>
+  );
+}
+
+/** Prescription drugs. */
+export function Pill() {
+  return (
+    <Glyph>
+      <path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z" />
+      <path d="m8.5 8.5 7 7" />
+    </Glyph>
+  );
+}
+
+/** Round-the-clock support. */
+export function Clock() {
+  return (
+    <Glyph>
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 6v6l4 2" />
     </Glyph>
   );
 }

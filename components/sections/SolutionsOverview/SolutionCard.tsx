@@ -7,6 +7,8 @@ import type { SolutionContent } from "@/content/solutions.content";
 import type { HeadingLevel, Tone } from "@/types/ui.types";
 
 import { SolutionIllustration } from "./SolutionIllustration";
+import { InsuranceVisual } from "./visuals/InsuranceVisual";
+import { PaymentsVisual } from "./visuals/PaymentsVisual";
 
 /**
  * One of the section's two product cards.
@@ -92,15 +94,60 @@ const EMPHASIS: Readonly<
   secondary: { card: "product-secondary", button: "light" },
 } as const;
 
+/**
+ * How the card's art behaves. Passed by the section rather than carried in the
+ * content module: an illustration, a device mockup and an interface visual are
+ * design treatments, not copy.
+ *
+ * The two `*-visual` members are interactive product mockups that replaced the
+ * static artwork; the two image members are the treatments that artwork used.
+ * Both kinds stay in the union deliberately — `SolutionIllustration` documents
+ * two measured image treatments and remains the path back if a visual is ever
+ * withdrawn, which is cheaper than deleting it and re-deriving the insets later.
+ *
+ * Resolving the member to a component here rather than in the section is what
+ * keeps this file the single place that knows how the two cards differ, which is
+ * the same argument the component's own docblock makes for there being one card
+ * and not two.
+ */
+type Presentation =
+  | "illustration"
+  | "device"
+  | "insurance-visual"
+  | "payments-visual";
+
+/**
+ * The card's media region.
+ *
+ * `image.alt` feeds the visual's accessible name as well as the image's, so the
+ * decorative-or-described decision is made once, in the content module, whichever
+ * treatment the card is using.
+ */
+function SolutionMedia({
+  content,
+  presentation,
+  imageSizes,
+}: Pick<SolutionCardProps, "content" | "presentation" | "imageSizes">) {
+  switch (presentation) {
+    case "insurance-visual":
+      return <InsuranceVisual label={content.image.alt} />;
+    case "payments-visual":
+      return <PaymentsVisual label={content.image.alt} />;
+    default:
+      return (
+        <SolutionIllustration
+          image={content.image}
+          presentation={presentation}
+          sizes={imageSizes}
+        />
+      );
+  }
+}
+
 export type SolutionCardProps = {
   content: SolutionContent;
   emphasis: Emphasis;
-  /**
-   * How the card's art behaves. Passed by the section rather than carried in
-   * the content module: an illustration and a device mockup are a design
-   * treatment, not copy.
-   */
-  presentation: "illustration" | "device";
+  presentation: Presentation;
   /**
    * The document outline level for this card's heading. Passed in so the
    * section owns the outline and the card cannot skip a level.
@@ -126,10 +173,10 @@ export function SolutionCard({
     <Card
       variant={surface.card}
       media={
-        <SolutionIllustration
-          image={content.image}
+        <SolutionMedia
+          content={content}
           presentation={presentation}
-          sizes={imageSizes}
+          imageSizes={imageSizes}
         />
       }
       heading={

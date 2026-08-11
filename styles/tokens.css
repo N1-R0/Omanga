@@ -55,6 +55,26 @@
   --color-success: #53d258;
   --color-error: #e25c5c;
 
+  /* Insurance tier accents -------------------------------------------------
+     The only colours in the system that are neither brand, ink, surface nor
+     status. They exist because the three holiday-insurance tiers have to be
+     distinguishable inside one product visual, and the rest of the palette is
+     one crimson plus greys — so tier would otherwise be carried by text alone.
+
+     Used on the tier badge and nowhere else: not as a surface, not as a text
+     colour, not as a border. They are metallic references, not a semantic ramp,
+     which is why they carry no numbered stops.
+
+     Each is measured against `--color-ink`, because the badge glyph is ink on
+     the accent and a badge is a non-text UI boundary (WCAG 1.4.11, 3:1 floor):
+
+       silver   #c7cbd1   on ink   10.42:1
+       gold     #d9a94c   on ink    8.03:1
+       diamond  #9ec5e8   on ink    9.66:1 */
+  --color-tier-silver: #c7cbd1;
+  --color-tier-gold: #d9a94c;
+  --color-tier-diamond: #9ec5e8;
+
   /* Overlays --------------------------------------------------------------- */
   /* Hero scrim over photography. MEASURED against `public/hero.png`,
      cover-cropped at six frame sizes from 360x560 to 1920x611, computing the
@@ -202,6 +222,11 @@
   --text-button--letter-spacing: 0em;
   --text-button--font-weight: var(--font-weight-regular);
 
+  /* No role here for the product visuals' type. Their sizes are authored against
+     a fixed 491-wide canvas and scale with the card's art box rather than with
+     the viewport, so they cannot be expressed as clamps in this scale. They live
+     in `styles/product-visuals.css`, which explains why. */
+
   /* ===========================================================================
      SPACING
      design.md § 3
@@ -262,6 +287,7 @@
   --container-timeline: 68.75rem; /* 1100 */
   --container-track: 30.375rem; /* 486 */
   --container-media-square: 42rem; /* 672 */
+
 
   /* Hero action group, narrow screens only. Capped and centred rather than
      full-width, so the pair is one fixed size below tablet and both buttons stay
@@ -365,6 +391,22 @@
      read as tall and their copy as cramped. */
   --aspect-card: 3 / 2;
 
+  /* Product visual art box.
+     [MEASURED from the approved Figma frames 2081:1153 / 2081:1253] Both draw
+     their art area as a 491 x 482 `Container:margin` inside a 539 card — square,
+     within 2%, not the 3:2 the static artwork used.
+
+     A separate ratio rather than a change to `--aspect-card`: 3:2 is the measured
+     ratio for a *contained image*, and the reasoning for it still holds for every
+     other card. These two hold a depicted interface authored at a fixed 491-wide
+     canvas, and a 3:2 box cannot contain it — the payments panel alone is 555
+     tall. Forcing it would mean recomposing the mockup, which is the one thing
+     "match the design exactly" rules out.
+
+     Both product cards take this ratio together, so they stay equal-height
+     siblings. The section is taller than it was, which is what the frames show. */
+  --aspect-product-visual: 491 / 482;
+
   /* ===========================================================================
      RADIUS
      design.md § 6 — four values, named by size.
@@ -376,11 +418,58 @@
 
   /* ===========================================================================
      ELEVATION
-     design.md § 7 — THERE IS NONE.
+     design.md § 7 — NONE IN THE LAYOUT SYSTEM.
 
-     The reference declares zero box-shadows. Depth is surface colour and
-     hairline borders. Do not reintroduce `--shadow-elevated`.
+     The reference declares zero box-shadows. Depth between page elements is
+     surface colour and hairline borders. Cards, buttons, panels, fields and
+     every hover state stay flat: § 11 principle 5 — "Nothing scales, lifts or
+     shadows on hover" — is unchanged, and `--shadow-elevated` is still not a
+     token that exists.
+
+     ---------------------------------------------------------------------------
+     [SCOPED EXCEPTION — product visuals only]
+
+     The two solution cards now hold interface mockups rather than flat artwork,
+     and a mockup is a picture of a different surface. Inside that picture the
+     system's own rule does not apply, because the shadows are not lifting an
+     Omanga element off an Omanga surface — they are describing the depth of a
+     product UI being depicted. The alternative was hairline borders inside the
+     mockup, which reads as a wireframe rather than as a product.
+
+     The boundary is enforceable and worth stating precisely: these four tokens
+     may only be applied inside a card art box. If one appears on a `Card`, a
+     `Button`, a `Section` or any hover state, that is the bug this note exists
+     to make obvious.
+
+     Values are two-layer where the surface is white-on-light, because a single
+     large-radius shadow at a low alpha reads as a grey halo rather than as a
+     lift, and single-layer where it is ink-on-brand, where there is no halo to
+     avoid.
      ========================================================================= */
+
+  /* The floating panel inside a light art box — the payments balance card. */
+  --shadow-glass-raised: 0 4px 16px rgb(22 23 23 / 0.08),
+    0 1px 3px rgb(22 23 23 / 0.06);
+
+  /* Pills and circular controls sitting on that panel or beside it. */
+  --shadow-glass-control: 0 2px 6px rgb(22 23 23 / 0.08);
+
+  /* The Send button's pressed state. An inner shadow, so the control reads as
+     depressed into its own surface rather than as a different colour. Paired
+     with a 0.96 scale in `MOTION.pressScale`; neither alone reads as a press. */
+  --shadow-glass-pressed: inset 0 2px 5px rgb(22 23 23 / 0.28);
+
+  /* Ink tier cards on the brand art box. Stronger and lower-contrast than the
+     light-surface pair: on #ae2448 a 0.08 alpha shadow is invisible. */
+  --shadow-glass-dark: 0 8px 24px rgb(0 0 0 / 0.28);
+
+  /* Recession in the tier stack. Blur, not opacity — measured: at 0.55 and 0.32
+     opacity the brand fill read through the ink cards and turned them mauve, so
+     the cards behind stopped looking like the same object further back and
+     started looking like a different, muddier component. Fully opaque cards with
+     2.5px and 5.5px blur hold both the depth and the colour. */
+  --blur-tier-mid: 2.5px;
+  --blur-tier-back: 5.5px;
 
   /* Not an elevation. A ring of the page surface around the timeline marker so
      the rail behind it is broken rather than drawn through it. `box-shadow` is
@@ -415,6 +504,49 @@
   --duration-emphasis: 300ms; /* panel change, accordion, menu */
   --duration-entrance: 500ms; /* one-shot entrance on intersection */
   --duration-counter: 1200ms; /* stat count-up, once on first view */
+
+  /* Product-visual sequence. The payments visual runs one ordered sequence on
+     first view and then stops: count up, press Send, confirm. Each value is a
+     step in that sequence rather than a general-purpose duration, which is why
+     they are named for the step and not for a speed.
+
+     `press` is 120ms down and the same back up. Below ~100ms a press reads as a
+     colour change; above ~150ms it reads as a slide. 0.96 is the scale — a
+     press that does not move is not a press, and 0.9 overshoots into a bounce.
+
+     `settle` is the beat between the press releasing and the confirmation
+     arriving. It exists so the two are read as cause and effect rather than as
+     one simultaneous change. */
+  /* [TUNED] The count was 1200ms and the whole sequence was over in under two
+     seconds — it read as a glitch rather than as a balance updating, and on a
+     section this far down the page most people arrived after it had finished.
+
+     2200ms for the count, then a 700ms beat before the press so the two are
+     legibly separate events, then the press, then the confirmation. Full sequence
+     is now ~3.7s from first view. */
+  --duration-balance-count: 2200ms;
+  --duration-press-delay: 700ms;
+  --duration-press: 120ms;
+  --motion-press-scale: 0.96;
+  --duration-settle: 420ms;
+
+  /* One piece's fall, entry to exit. Per-piece classes scale this 0.9–1.15 and
+     stagger entry to 520ms, so the pour runs about 2.1s end to end. */
+  --duration-confetti: 1400ms;
+
+  /* Tier rotation. The insurance stack is the page's second sanctioned
+     continuous loop, after the partner marquee, and ships under the same
+     conditions: transform and opacity only, and it never gates content — all
+     three tiers are in the DOM and readable with no script at all.
+
+     2600ms hold is long enough to read "Gold plan · Covered · 14 days" before
+     the card moves, which is the whole point of the loop; 600ms is the move.
+     Together they put a full three-tier cycle at 9.6s.
+
+     Marked `data-motion="loop"` at the call site so the global reduced-motion
+     rule in animations.css freezes it on frame one. */
+  --duration-tier-move: 600ms;
+  --duration-tier-hold: 2600ms;
 
   /* Partner-strip drift, one full pass of the logo set. 20s over a 1152px track
      is ~29px/s — a drift rather than a slideshow, which is what keeps a

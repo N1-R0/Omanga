@@ -40,6 +40,9 @@
 @import "./typography.css";
 @import "./animations.css";
 @import "./utilities.css";
+/* Last, and deliberately its own layer: the only file in the system that carries
+   raw colour, radius, shadow and type values. Its header explains why. */
+@import "./product-visuals.css";
 
 @layer base {
   /* ---------------------------------------------------------------------------

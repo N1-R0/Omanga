@@ -176,7 +176,7 @@ export function SolutionsOverview({
               <SolutionCard
                 content={content.insurance}
                 emphasis="primary"
-                presentation="illustration"
+                presentation="insurance-visual"
                 headingLevel="h3"
                 headingId={INSURANCE_HEADING_ID}
                 imageSizes={IMAGE_SIZES}
@@ -187,7 +187,7 @@ export function SolutionsOverview({
               <SolutionCard
                 content={content.payments}
                 emphasis="secondary"
-                presentation="device"
+                presentation="payments-visual"
                 headingLevel="h3"
                 headingId={PAYMENTS_HEADING_ID}
                 imageSizes={IMAGE_SIZES}

@@ -1,0 +1,697 @@
+/* =============================================================================
+   Omanga — Product visual glass system
+   -----------------------------------------------------------------------------
+   The interface mockups inside the two solution cards, reproduced from the
+   approved Figma frames:
+
+     payments    node 2081:1153  ->  main-glass-container  2081:1221
+     insurance   node 2081:1253  ->  Visual Workspace      2081:1295
+
+   WHY THIS FILE EXISTS, AND WHY IT IS THE ONLY PLACE RAW VALUES ARE ALLOWED
+
+   Everything below is a measurement of a *depicted* interface, not of the Omanga
+   page. The design draws a soft, glassy product UI — translucent white surfaces,
+   backdrop blur, six distinct shadow recipes, radii of 26 / 29 / 32 / 33 / 42 /
+   60, and type at 11.49 / 13 / 13.579 / 15 / 16 / 16.713 / 18 / 48. None of that
+   is expressible in the design system: `design.md` § 6 has four radii, § 7 has no
+   elevation, and § 2 has eleven type roles that are all page roles.
+
+   Rather than smuggle those numbers into markup as arbitrary values, or dilute
+   the token system with sixty entries no other component can use, they are
+   collected here. `components/` still declares nothing: it applies these classes
+   by name. This is the same containment `marquee-track` and `marquee-set` in
+   utilities.css already use for a single consumer, one order of magnitude larger.
+
+   THE SCALE UNIT
+
+   Both frames are authored against a 491-wide art box. `--pv` is one authored
+   pixel expressed in container-query units, so every value below is written as
+   the number the design file actually contains and the whole mockup renders as an
+   exact scale model of the frame at any card width.
+
+   This matters because the box does not track the viewport: it measures 400 at
+   1440, 247 at 1024 — where the cards take eight of twelve columns beside the
+   heading column — and 248 at 320. It is narrowest at 1024 and at 320 alike, so
+   viewport breakpoints get the relationship backwards, and a fixed-pixel mockup
+   would overflow at exactly the widths where it has least room. Scaling by the
+   container removes the problem rather than managing it: nothing is ever hidden,
+   shrunk or re-laid-out, because at every width this is the same picture.
+
+   Sub-pixel values are the design's own (the insurance stack is authored at a
+   fractional scale). They are kept rather than rounded so the file diffs cleanly
+   against the frame.
+   ========================================================================== */
+
+/* -----------------------------------------------------------------------------
+   The box. Declares the container the scale unit resolves against.
+   -------------------------------------------------------------------------- */
+@utility pv-box {
+  container-type: inline-size;
+  /* One authored pixel. 100cqw / 491. */
+  --pv: 0.203666cqw;
+}
+
+/* The plate the insurance stack sits on.
+
+   [CHANGED — contrast] White at 20%, filling the art box.
+
+   Previously the stack sat straight on the brand fill and the recessed cards read
+   as mauve rather than as the same object further back. A white wash lifts the
+   whole visual area off `--color-brand` and gives the cards a surface to recede
+   into, which is what makes their own opacity steps legible.
+
+   20% is deliberately low: on #ae2448 it resolves to a pale rose that reads as a
+   panel without competing with the white cards on top of it. */
+@utility pv-plate {
+  position: absolute;
+  inset: 0;
+  /* [TUNED] 40 authored pixels resolved to ~30 real at 1440, against a card whose
+     own radius is 8 — the plate read rounder than the card containing it. 20 lands
+     at ~15 real at 1440 and ~10 at 1024, which sits just under `--radius-md` and
+     reads as a panel inside the card rather than as a pill. */
+  border-radius: calc(20 * var(--pv));
+  background-color: rgb(255 255 255 / 0.2);
+}
+
+/* =============================================================================
+   PAYMENTS — main-glass-container (2081:1221)
+   ========================================================================== */
+
+/* The panel is 555 tall in a 482 box and sits 30 from the top, so its foot —
+   the transaction pill — is clipped by the art box. That clip is the design's,
+   not an accident: the frame renders the pill half-cut at the card's edge, the
+   same way the previous device mockup ran off the bottom. */
+@utility pv-panel {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: calc(30 * var(--pv));
+  block-size: calc(555 * var(--pv));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(40 * var(--pv));
+  padding-inline: calc(30 * var(--pv));
+  padding-block: calc(48 * var(--pv));
+  border-radius: calc(60 * var(--pv));
+  border: 1px solid rgb(255 255 255 / 0.65);
+  background-color: rgb(255 255 255 / 0.35);
+  backdrop-filter: blur(calc(20 * var(--pv)));
+  box-shadow: 0 calc(20 * var(--pv)) calc(50 * var(--pv)) rgb(0 0 0 / 0.06);
+}
+
+@utility pv-nav {
+  display: flex;
+  inline-size: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* profile-button / bell-button. 64 square, radius 32. */
+@utility pv-control-lg {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  inline-size: calc(64 * var(--pv));
+  block-size: calc(64 * var(--pv));
+  border-radius: calc(32 * var(--pv));
+  border: 1px solid rgb(255 255 255 / 0.75);
+  background-color: rgb(255 255 255 / 0.55);
+  box-shadow: 0 calc(4 * var(--pv)) calc(10 * var(--pv)) rgb(0 0 0 / 0.04);
+}
+
+@utility pv-overview {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  padding-inline: calc(24 * var(--pv));
+  padding-block: calc(10 * var(--pv));
+  border-radius: calc(999 * var(--pv));
+  border: 1px solid rgb(255 255 255 / 0.75);
+  background-color: rgb(255 255 255 / 0.55);
+  box-shadow: 0 calc(3 * var(--pv)) calc(8 * var(--pv)) rgb(0 0 0 / 0.03);
+  color: #111;
+  font-size: calc(15 * var(--pv));
+  letter-spacing: calc(-0.2 * var(--pv));
+  white-space: nowrap;
+}
+
+@utility pv-balance-card {
+  display: flex;
+  flex-shrink: 0;
+  inline-size: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: calc(20 * var(--pv));
+  padding-inline: calc(40 * var(--pv));
+  padding-block-start: calc(36 * var(--pv));
+  padding-block-end: calc(32 * var(--pv));
+  border-radius: calc(42 * var(--pv));
+  border: 1px solid rgb(255 255 255 / 0.65);
+  background-color: rgb(255 255 255 / 0.42);
+  box-shadow: 0 calc(8 * var(--pv)) calc(30 * var(--pv)) rgb(0 0 0 / 0.05);
+}
+
+/* The design's one uppercase, letterspaced label. It reads as instrument
+   chrome, which is why § 2's sentence-case page roles do not apply to it. */
+@utility pv-balance-label {
+  color: #555;
+  font-size: calc(13 * var(--pv));
+  letter-spacing: calc(1.5 * var(--pv));
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@utility pv-balance-value {
+  color: #111;
+  font-size: calc(48 * var(--pv));
+  font-weight: var(--font-weight-medium);
+  letter-spacing: calc(-0.5 * var(--pv));
+  white-space: nowrap;
+  /* Without this the digits reflow the row for the whole 1200ms count. */
+  font-variant-numeric: tabular-nums;
+}
+
+@utility pv-balance-row {
+  display: flex;
+  inline-size: 100%;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* visibility-button. 44 square, radius 26, the most transparent surface. */
+@utility pv-control-sm {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  inline-size: calc(44 * var(--pv));
+  block-size: calc(44 * var(--pv));
+  border-radius: calc(26 * var(--pv));
+  border: 1px solid rgb(255 255 255 / 0.65);
+  background-color: rgb(255 255 255 / 0.25);
+  box-shadow: 0 calc(2 * var(--pv)) calc(6 * var(--pv)) rgb(0 0 0 / 0.03);
+}
+
+@utility pv-action-row {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: calc(12 * var(--pv));
+  block-size: calc(54 * var(--pv));
+}
+
+/* Send.
+
+   [FROM FIGMA] The fill is a four-stop linear gradient at 141.786deg plus a
+   radial white bloom, and the button is near-black — not brand crimson. Recorded
+   because it is the one place a control on an Omanga surface is not brand
+   coloured, and it is the design's decision, confirmed twice.
+
+   The inset white hairline is the top-edge catchlight that makes the pill read as
+   a physical object rather than a dark rectangle; it is `inset` in the same
+   `box-shadow` as the lift, which is why both live on this class. */
+@utility pv-send {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: calc(10 * var(--pv));
+  block-size: calc(54 * var(--pv));
+  padding-inline-start: calc(22 * var(--pv));
+  padding-inline-end: calc(26 * var(--pv));
+  border-radius: calc(999 * var(--pv));
+  background-image: radial-gradient(
+      closest-side at 50% 50%,
+      rgb(255 255 255 / 0.07) 0%,
+      rgb(255 255 255 / 0.02) 60%,
+      rgb(255 255 255 / 0) 100%
+    ),
+    linear-gradient(
+      141.786deg,
+      rgb(59 59 59) 0%,
+      rgb(41 41 41) 25.362%,
+      rgb(32 32 32) 50.725%,
+      rgb(21 21 21) 72.464%
+    );
+  color: #fff;
+  font-size: calc(18 * var(--pv));
+  white-space: nowrap;
+  box-shadow:
+    inset 0 1px calc(2 * var(--pv)) rgb(255 255 255 / 0.08),
+    0 calc(8 * var(--pv)) calc(9 * var(--pv)) rgb(0 0 0 / 0.12);
+}
+
+/* Send, depressed. The lift is withdrawn and replaced by an inner shadow, so the
+   control reads as pushed into its own surface. Paired with the 0.96 scale in
+   `MOTION.pressScale` — neither alone reads as a press. */
+@utility pv-send-pressed {
+  box-shadow:
+    inset 0 calc(2 * var(--pv)) calc(5 * var(--pv)) rgb(0 0 0 / 0.45),
+    0 calc(1 * var(--pv)) calc(2 * var(--pv)) rgb(0 0 0 / 0.1);
+}
+
+@utility pv-request {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  inline-size: calc(120 * var(--pv));
+  block-size: calc(54 * var(--pv));
+  padding-inline: calc(24 * var(--pv));
+  border-radius: calc(999 * var(--pv));
+  border: 1px solid rgb(255 255 255 / 0.75);
+  background-color: rgb(255 255 255 / 0.58);
+  color: #555;
+  font-size: calc(18 * var(--pv));
+  white-space: nowrap;
+  box-shadow: 0 calc(4 * var(--pv)) calc(12 * var(--pv)) rgb(0 0 0 / 0.03);
+}
+
+/* more-button. 54 square, radius 33. */
+@utility pv-control-md {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  inline-size: calc(54 * var(--pv));
+  block-size: calc(54 * var(--pv));
+  border-radius: calc(33 * var(--pv));
+  border: 1px solid rgb(255 255 255 / 0.75);
+  background-color: rgb(255 255 255 / 0.58);
+  box-shadow: 0 calc(4 * var(--pv)) calc(12 * var(--pv)) rgb(0 0 0 / 0.03);
+}
+
+@utility pv-history-wrap {
+  display: flex;
+  inline-size: 100%;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: center;
+  padding-block-start: calc(16 * var(--pv));
+  opacity: 0.8;
+}
+
+@utility pv-history-pill {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: calc(8 * var(--pv));
+  padding-inline: calc(20 * var(--pv));
+  padding-block: calc(12 * var(--pv));
+  border-radius: calc(999 * var(--pv));
+  border: 1px solid rgb(255 255 255 / 0.45);
+  background-color: rgb(255 255 255 / 0.35);
+  color: #777;
+  font-size: calc(16 * var(--pv));
+  white-space: nowrap;
+  box-shadow: 0 calc(3 * var(--pv)) calc(8 * var(--pv)) rgb(0 0 0 / 0.02);
+}
+
+/* The confirmation.
+
+   Not in the frame — the frame draws one resting state — so it is built from the
+   frame's own vocabulary. It replaces the balance card's *contents*, label and
+   figure and controls together, while the card itself keeps its authored size and
+   position: "the frame stays the same, only the content changes".
+
+   `pv-success` occupies the full inner height of the balance card so the
+   confirmation is the panel's subject rather than a line at its foot. The mark is
+   88 and the word is set at the balance figure's own 48, which is what makes it
+   read as the outcome of the sequence instead of a status note. */
+@utility pv-success {
+  position: relative;
+  display: flex;
+  inline-size: 100%;
+  flex: 1 0 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(16 * var(--pv));
+  text-align: center;
+}
+
+@utility pv-success-mark {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  inline-size: calc(88 * var(--pv));
+  block-size: calc(88 * var(--pv));
+  border-radius: calc(999 * var(--pv));
+  background-color: var(--color-success);
+  color: var(--color-ink);
+  box-shadow: 0 calc(8 * var(--pv)) calc(24 * var(--pv))
+    rgb(83 210 88 / 0.35);
+}
+
+@utility pv-success-title {
+  color: #111;
+  font-size: calc(48 * var(--pv));
+  font-weight: var(--font-weight-medium);
+  letter-spacing: calc(-0.5 * var(--pv));
+  white-space: nowrap;
+}
+
+@utility pv-success-sub {
+  color: #555;
+  font-size: calc(16 * var(--pv));
+  white-space: nowrap;
+}
+
+/* Confetti — pours from above.
+
+   [MODELLED ON canvas-confetti] Its documented physics are the reference: pieces
+   enter above the frame, fall under `gravity`, carry a horizontal `drift`, tumble,
+   and expire after a fixed lifetime. Implemented here rather than installed
+   because `motion` is already the project's animation dependency and a canvas
+   would have to be measured and resized to sit inside a container-scaled box.
+   Its `disableForReducedMotion` behaviour is reproduced too — see below.
+
+   One pour, on the confirmation only. It fires once and is gone, so this is
+   feedback, which § 11 names as a sanctioned use of motion; the continuous-loop
+   exception the tier rotation needed does not apply.
+
+   Transform and opacity only. Every per-piece value — entry column, drift, spin,
+   delay, duration — lives in the twelve classes below rather than as inline style
+   on the element, because components in this system declare no `style` prop. The
+   stagger is what makes it a pour rather than a volley. */
+@keyframes pv-confetti-fall {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--pv-drift), var(--pv-fall), 0)
+      rotate(var(--pv-spin));
+    opacity: 0;
+  }
+}
+
+@utility pv-confetti {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+@utility pv-confetti-piece {
+  position: absolute;
+  /* Starts above the frame, so the first thing seen is it entering. */
+  inset-block-start: calc(-28 * var(--pv));
+  inline-size: calc(8 * var(--pv));
+  block-size: calc(13 * var(--pv));
+  border-radius: calc(2 * var(--pv));
+  --pv-fall: calc(320 * var(--pv));
+  --pv-drift: 0px;
+  --pv-spin: 180deg;
+  animation: pv-confetti-fall var(--duration-confetti) var(--ease-standard) both;
+
+  /* canvas-confetti's `disableForReducedMotion`, in CSS. The global rule in
+     animations.css collapses the duration, which would leave every piece parked
+     on its final keyframe; this removes them instead, which is what "no confetti"
+     should mean. */
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    display: none;
+  }
+}
+
+/* The twelve columns. Entry point across the frame, drift and spin alternating
+   direction, delay staggered to 520ms and duration varied so the pieces do not
+   fall as a rank. */
+@utility pv-confetti-1 {
+  inset-inline-start: 6%;
+  --pv-drift: calc(14 * var(--pv));
+  --pv-spin: 250deg;
+  animation-delay: 0ms;
+}
+
+@utility pv-confetti-2 {
+  inset-inline-start: 15%;
+  --pv-drift: calc(-10 * var(--pv));
+  --pv-spin: -190deg;
+  animation-delay: 180ms;
+  animation-duration: calc(var(--duration-confetti) * 1.15);
+}
+
+@utility pv-confetti-3 {
+  inset-inline-start: 23%;
+  --pv-drift: calc(18 * var(--pv));
+  --pv-spin: 320deg;
+  animation-delay: 70ms;
+  animation-duration: calc(var(--duration-confetti) * 0.9);
+}
+
+@utility pv-confetti-4 {
+  inset-inline-start: 32%;
+  --pv-drift: calc(-16 * var(--pv));
+  --pv-spin: -260deg;
+  animation-delay: 340ms;
+}
+
+@utility pv-confetti-5 {
+  inset-inline-start: 40%;
+  --pv-drift: calc(9 * var(--pv));
+  --pv-spin: 210deg;
+  animation-delay: 120ms;
+  animation-duration: calc(var(--duration-confetti) * 1.08);
+}
+
+@utility pv-confetti-6 {
+  inset-inline-start: 49%;
+  --pv-drift: calc(-20 * var(--pv));
+  --pv-spin: -300deg;
+  animation-delay: 460ms;
+  animation-duration: calc(var(--duration-confetti) * 0.94);
+}
+
+@utility pv-confetti-7 {
+  inset-inline-start: 57%;
+  --pv-drift: calc(15 * var(--pv));
+  --pv-spin: 275deg;
+  animation-delay: 30ms;
+}
+
+@utility pv-confetti-8 {
+  inset-inline-start: 66%;
+  --pv-drift: calc(-12 * var(--pv));
+  --pv-spin: -225deg;
+  animation-delay: 250ms;
+  animation-duration: calc(var(--duration-confetti) * 1.12);
+}
+
+@utility pv-confetti-9 {
+  inset-inline-start: 74%;
+  --pv-drift: calc(20 * var(--pv));
+  --pv-spin: 340deg;
+  animation-delay: 400ms;
+  animation-duration: calc(var(--duration-confetti) * 0.92);
+}
+
+@utility pv-confetti-10 {
+  inset-inline-start: 82%;
+  --pv-drift: calc(-8 * var(--pv));
+  --pv-spin: -200deg;
+  animation-delay: 90ms;
+}
+
+@utility pv-confetti-11 {
+  inset-inline-start: 90%;
+  --pv-drift: calc(16 * var(--pv));
+  --pv-spin: 290deg;
+  animation-delay: 520ms;
+  animation-duration: calc(var(--duration-confetti) * 1.05);
+}
+
+@utility pv-confetti-12 {
+  inset-inline-start: 96%;
+  --pv-drift: calc(-18 * var(--pv));
+  --pv-spin: -310deg;
+  animation-delay: 210ms;
+  animation-duration: calc(var(--duration-confetti) * 0.96);
+}
+
+/* Icon boxes, at the four sizes the frame uses. */
+@utility pv-icon-40 {
+  inline-size: calc(40 * var(--pv));
+  block-size: calc(40 * var(--pv));
+}
+
+@utility pv-icon-24 {
+  inline-size: calc(24 * var(--pv));
+  block-size: calc(24 * var(--pv));
+}
+
+@utility pv-icon-20 {
+  inline-size: calc(20 * var(--pv));
+  block-size: calc(20 * var(--pv));
+}
+
+@utility pv-icon-16 {
+  inline-size: calc(16 * var(--pv));
+  block-size: calc(16 * var(--pv));
+}
+
+@utility pv-icon-12 {
+  inline-size: calc(12 * var(--pv));
+  block-size: calc(12 * var(--pv));
+}
+
+/* =============================================================================
+   INSURANCE — Visual Workspace (2081:1295)
+   ========================================================================== */
+
+@utility pv-stack {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: calc(48 * var(--pv));
+  block-size: calc(430 * var(--pv));
+}
+
+/* All three cards are the same size and sit at the front slot. Depth is offset,
+   opacity and blur — never scale — which is how the frame draws it and what lets
+   a card move between slots on a transform alone. The cards are wider than the
+   box (116 + 459.604 > 491), so the stack bleeds off the right edge and is
+   clipped: the frame's own composition. */
+@utility pv-tier-card {
+  position: absolute;
+  inset-inline-start: calc(116 * var(--pv));
+  inset-block-start: calc(119 * var(--pv));
+  inline-size: calc(459.604 * var(--pv));
+  block-size: calc(137.881 * var(--pv));
+  display: flex;
+  align-items: center;
+  gap: calc(18.802 * var(--pv));
+  padding: calc(22.98 * var(--pv));
+  border-radius: calc(29.248 * var(--pv));
+  border: calc(1.045 * var(--pv)) solid rgb(22 23 23 / 0.06);
+  background-color: #fff;
+  box-shadow: 0 calc(25.069 * var(--pv)) calc(25.069 * var(--pv))
+    rgb(0 0 0 / 0.24);
+}
+
+/* Per-slot surface and recession.
+   The frame authors three separate cards, so its back two also differ in padding
+   (20.891 vs 22.98) and badge size (50.139 vs 56.406). Those are not reproduced:
+   here one card *moves between* slots, and changing padding mid-move would animate
+   layout, which § 11 rule 1 forbids. The difference is two authored pixels behind
+   a blur — invisible — and the alternative would be three cards crossfading,
+   which is the effect the rotation exists to avoid.
+
+   Blur is a class rather than an animated value so it can transition in CSS
+   alongside the transform, and so the radius can be written in `--pv` and scale
+   with the box. Opacity and offset are animated by the component. */
+@utility pv-tier-slot {
+  transition: filter var(--duration-tier-move) var(--ease-dropdown),
+    background-color var(--duration-tier-move) var(--ease-dropdown),
+    box-shadow var(--duration-tier-move) var(--ease-dropdown);
+}
+
+/* [CHANGED — contrast] The cards are white, not #1c1c1e.
+
+   The frame draws near-black cards on a light page. On the brand card that
+   inverted badly: dark cards on crimson had almost no luminance separation, and
+   the recessed two turned muddy. White cards keep the frame's structure and its
+   opacity ladder — 1 / 0.95 / 0.8 fill, 1 / 0.65 / 0.35 element opacity — with
+   the luminance running the other way, which is what the design intends and the
+   brand surface inverted. */
+@utility pv-tier-front {
+  z-index: 3;
+  filter: none;
+  background-color: #fff;
+}
+
+@utility pv-tier-mid {
+  z-index: 2;
+  filter: blur(calc(0.783 * var(--pv)));
+  background-color: rgb(255 255 255 / 0.95);
+  box-shadow: 0 calc(12.535 * var(--pv)) calc(25.069 * var(--pv))
+    rgb(0 0 0 / 0.13);
+}
+
+@utility pv-tier-back {
+  z-index: 1;
+  filter: blur(calc(2.089 * var(--pv)));
+  background-color: rgb(255 255 255 / 0.8);
+  box-shadow: none;
+}
+
+@utility pv-tier-badge {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  inline-size: calc(56.406 * var(--pv));
+  block-size: calc(56.406 * var(--pv));
+  border-radius: calc(999 * var(--pv));
+  color: var(--color-ink);
+}
+
+@utility pv-tier-copy {
+  display: flex;
+  min-inline-size: 0;
+  flex: 1 0 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(4.178 * var(--pv));
+}
+
+/* The frame's three greys, inverted for the white surface. Its ladder is
+   #ffffff / #8e8e93 / #aeaeae on #1c1c1e; this is the mirror of it, each step
+   measured against white:
+
+     title  #1c1c1e   15.8:1
+     sub    #55555a    7.4:1
+     note   #6e6e73    4.9:1
+
+   All three clear AA for body text, which the frame's #aeaeae on #1c1c1e does
+   not — so the inversion is also a contrast fix, not only a colour swap. */
+@utility pv-tier-title {
+  color: #1c1c1e;
+  font-size: calc(16.713 * var(--pv));
+  font-weight: var(--font-weight-bold);
+  white-space: nowrap;
+}
+
+@utility pv-tier-sub {
+  color: #55555a;
+  font-size: calc(13.579 * var(--pv));
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+@utility pv-tier-note {
+  overflow: hidden;
+  inline-size: 100%;
+  color: #6e6e73;
+  font-size: calc(11.49 * var(--pv));
+  line-height: 1.4;
+  text-overflow: ellipsis;
+}
+
+/* The active indicator. A core with an aura, drawn as two radii rather than
+   imported as the frame's flattened SVG so it inherits the brand colour. */
+@utility pv-glow {
+  position: absolute;
+  inset-inline-start: calc(56 * var(--pv));
+  inset-block-start: calc(110 * var(--pv));
+  inline-size: calc(32 * var(--pv));
+  block-size: calc(32 * var(--pv));
+  border-radius: calc(999 * var(--pv));
+  background-color: var(--color-on-dark);
+  box-shadow:
+    0 0 0 calc(6 * var(--pv)) rgb(255 255 255 / 0.18),
+    0 0 calc(16 * var(--pv)) calc(4 * var(--pv)) rgb(255 255 255 / 0.35);
+  transform: scale(0.44);
+}

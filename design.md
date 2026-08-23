@@ -310,11 +310,30 @@ Buttons own no layout. Width is the parent's decision.
 ### Navigation
 
 - Height **64px**, sticky.
-- Transparent over the hero photograph; opaque white with a 1px hairline once
-  scrolled.
-- Links at `text-main` (16 → 18), weight 400. **Not 14px.**
-- Link group gap `--space-6`; button group gap `--space-2`.
+- Opaque white at all times, with a 1px hairline bottom rule.
+- Links at `text-main` (16 → 18), weight 400. **Not 14px.** The 2026-08-07 audit
+  of the reference read this size, a pass at `text-small` was tried, and it was
+  reverted. Spacing is what was wrong, not the type.
+- **No gap on the link row.** Each link carries `--space-3` of padding-inline,
+  so adjacent labels sit 28 → 32 apart and every pixel of that distance is
+  inside a target. The reference's nav list sets no gap either. The stacked
+  mobile panel does use a `--space-3` gap — full-width rows have no horizontal
+  padding to borrow.
+- Button group gap `--space-2`.
+- **Hover:** label to brand at weight 500, and a 3px rule in `currentColor`
+  slides in from the left over `--duration-underline` (250ms). The current page
+  holds that same rule at full width, drawn from `aria-current` rather than a
+  parallel class.
+- The label reserves its weight-500 width at rest. Kantumruy Pro is variable on
+  the weight axis, so a link that bolds on hover without a reservation widens
+  and pushes the rest of the group sideways.
 - Mobile panel opens and closes in 200ms.
+
+[CHANGED, 2026-08-23] Only the spacing model moved. The link gap was `--space-6`
+from the 2026-08-07 audit; it is now padding on the link and no gap at all,
+which is how the reference's own nav is built. Type size was briefly taken to
+`text-small` in the same pass and put back — recorded because the "Not 14px"
+note above has now been tested rather than merely asserted.
 
 ### Footer
 
@@ -395,8 +414,12 @@ padding value.
 4. **`prefers-reduced-motion` removes entrance, slide and counting motion**,
    holds the final state, and freezes looping animation on frame one. Global, so
    a new component cannot forget it.
-5. Hover states are colour transitions at 200ms. Nothing scales, lifts or
-   shadows on hover.
+5. Hover states are colour transitions at 200ms. Nothing lifts or shadows on
+   hover, and nothing scales **except a rule sliding into view** — the nav
+   link's underline is drawn at full width and revealed with `scaleX`, which is
+   the one sanctioned transform on hover and the only reason
+   `--duration-underline` exists. It moves a 3px rule, not a box: no text is
+   scaled and no element changes the space it occupies.
 
 ---
 

@@ -40,19 +40,34 @@ import type { CallToAction, LinkTarget } from "@/types/content.types";
 
 /**
  * Nav destinations map onto routes that exist in the application today. None is
- * pending: `/`, `/insurance`, `/payments`, `/about` and `/contact` are all live
- * routes in the legacy group and will be migrated in a later phase.
+ * pending: `/`, `/insurance`, `/payments`, `/plans`, `/about` and `/contact` are
+ * all live routes in the legacy group and will be migrated in a later phase.
  *
  * [QUESTION] The label is "Payment" (singular, approved) while the route is
  * `/payments` (existing). There is also an external payments destination in
  * the legacy link module. This points at the internal route: the SEO plan asks
  * for 22–28 internal links, and sending the primary nav off-site would work
  * against that. Confirm the intended target.
+ *
+ * ---------------------------------------------------------------------------
+ * [DEVIATION] "Plans" is a sixth item the approved copy does not list.
+ *
+ * project-context.md § Non-negotiable copy facts states the set as a *resolved*
+ * conflict — "Nav is Home · Insurance · Payment · About · Contact" — so this is
+ * a deliberate departure from an approved decision rather than a gap being
+ * filled, added on instruction. Recorded here because a resolved conflict that
+ * quietly reopens is the kind of thing that gets re-litigated six weeks later
+ * with nobody able to say when it changed.
+ *
+ * Position is after Payment: `/plans` sells the Silver/Gold/Diamond insurance
+ * tiers, so it sits with the products rather than with the company pages, and
+ * placing it after both keeps Insurance and Payment adjacent.
  */
 const PRIMARY_ITEMS: readonly LinkTarget[] = [
   { label: "Home", href: "/" },
   { label: "Insurance", href: "/insurance" },
   { label: "Payment", href: "/payments" },
+  { label: "Plans", href: "/plans" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ] as const;

@@ -235,6 +235,91 @@
 }
 
 /* -----------------------------------------------------------------------------
+   Navigation link
+   The rule beneath a nav link, and the width the label reserves for going
+   medium-weight on hover. One utility because the two are inseparable: the
+   weight change is what makes the reservation necessary.
+
+   Three things are happening.
+
+   1. `::after` is the rule. It is drawn at full width and scaled to zero on the
+      x-axis, so hovering slides it in from the left rather than fading a border
+      in. `--duration-underline` already exists for exactly this movement.
+
+   2. `[aria-current="page"]` holds it at full width. The current page's rule is
+      driven by the accessibility attribute rather than a parallel class, so the
+      two cannot drift apart — an item that looks current is current, by
+      construction.
+
+   3. `::before` reserves the medium-weight width. Kantumruy Pro is variable on
+      the weight axis, so 500 is wider than 400 and bolding on hover would push
+      every sibling sideways — and, because the bar centres its navigation
+      between two equal regions, shift the whole group. The pseudo-element
+      carries the same label at 500, hidden, stacked in the same grid cell, so
+      the box is always medium-width and the visible label changes weight inside
+      a box that never moves. It needs `data-label` on the element.
+
+   `visibility: hidden` rather than `opacity: 0` — it keeps the reservation out
+   of the accessibility tree, so the label is not announced twice.
+
+   [DEVIATION] design.md § 11 rule 5 read "Hover states are colour transitions
+   at 200ms. Nothing scales, lifts or shadows on hover." The slide is a scale
+   and the weight change is not a colour. Both are instructed; § 9 and § 11 have
+   been amended rather than left contradicting this file.
+   -------------------------------------------------------------------------- */
+@utility nav-link {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+
+  & > *,
+  &::before {
+    grid-area: 1 / 1;
+  }
+
+  &::before {
+    content: attr(data-label);
+    font-weight: var(--font-weight-medium);
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    block-size: 3px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--duration-underline) var(--ease-standard);
+    pointer-events: none;
+  }
+
+  &:focus-visible::after,
+  &[aria-current="page"]::after {
+    transform: scaleX(1);
+  }
+
+  /* Matches how Tailwind compiles `hover:`, so the rule and the weight change
+     arrive together. Unguarded, a tap on a touch device would leave the
+     underline stuck open on a link whose label never went medium. */
+  @media (hover: hover) {
+    &:hover::after {
+      transform: scaleX(1);
+    }
+  }
+
+  /* The rule still arrives, it just stops travelling to get there. */
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      transition: none;
+    }
+  }
+}
+
+/* -----------------------------------------------------------------------------
    Minimum hit area
    WCAG 2.1 AA target size. Enforced by the primitive so callers cannot ship an
    undersized control. `min-*` so a control still grows with its content.

@@ -31,7 +31,7 @@ import "@/styles/globals.css";
  * traceable to one import in one file.
  *
  * Still outstanding for a later phase: `loading.tsx` and `error.tsx` for this
- * segment, and stub routes for the fifteen footer destinations flagged
+ * segment, and stub routes for the fourteen footer destinations flagged
  * `isRoutePending` in `content/footer.content.ts`.
  */
 

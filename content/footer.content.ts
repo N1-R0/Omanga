@@ -33,15 +33,16 @@ import type { FooterLinkColumn, LinkTarget } from "@/types/content.types";
  * ---------------------------------------------------------------------------
  * ROUTE TODO REGISTER
  *
- * Fifteen approved labels point at routes that do not exist yet. Each is marked
+ * Fourteen approved labels point at routes that do not exist yet — `/coverage`
+ * was the fifteenth and now resolves to `/insurance#coverage`. Each is marked
  * `isRoutePending`, which renders `data-route-pending` on the anchor so the
  * outstanding set is auditable in the DOM as well as greppable here. They are
  * 404s until a later phase adds the stubs, and every flag must be cleared
  * before launch:
  *
- *   /coverage · /our-mission · /partners · /careers · /faqs · /help-centre ·
- *   /claims · /privacy-policy · /terms-of-use · /policy-terms ·
- *   /complaints-procedure · /cookie-policy
+ *   /our-mission · /partners · /careers · /faqs · /help-centre · /claims ·
+ *   /privacy-policy · /terms-of-use · /policy-terms · /complaints-procedure ·
+ *   /cookie-policy
  *
  * The paths are conventional slugs derived from the approved labels, not
  * approved URLs. Confirm them before the stub routes are built — renaming a URL
@@ -58,7 +59,18 @@ const SERVICES: FooterLinkColumn = {
     { label: "Omanga Payment Solutions", href: "/payments" },
     { label: "Holiday Insurance", href: "/insurance" },
     { label: "Insurance Plans", href: "/plans" },
-    { label: "Coverage — 43 countries", href: "/coverage", isRoutePending: true },
+    /*
+      [RESOLVED] `/coverage` never existed and was one of the fifteen pending
+      routes. `Omanga-Insurance-Page-Content-Spec` § 10 repoints it at the
+      insurance page's § 6 anchor, which is a real destination, so the flag is
+      cleared rather than left waiting on a route nobody is going to build.
+
+      The spec makes the same move for "Insurance Plans" — `/plans` →
+      `/insurance#plans`, with a 301 — and that half is deliberately not
+      applied: `Plans` stays a nav item pointing at the real `/plans` route on
+      instruction. See `content/insurance.content.ts` § CONFLICT.
+    */
+    { label: "Coverage — 43 countries", href: "/insurance#coverage" },
   ],
 } as const;
 

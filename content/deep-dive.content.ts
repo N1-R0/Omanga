@@ -105,23 +105,32 @@ const INSURANCE_FEATURES: readonly DeepDiveFeature[] = [
   },
 ] as const;
 
+const OMANGA_PAYMENTS: DeepDiveProduct = {
+  id: "omanga-payments",
+  tabLabel: "Omanga Payments",
+  features: PAYMENTS_FEATURES,
+} as const;
+
+/**
+ * Exported because the insurance page renders this same product untabbed.
+ *
+ * Shared rather than copied, so the six features cannot drift between the two
+ * pages. That the content appears twice at all is a deliberate override of
+ * `Omanga-Insurance-Page-Content-Spec` § 3 — see
+ * `content/insurance-deep-dive.content.ts`, where the objection is recorded.
+ */
+export const holidayInsuranceProduct: DeepDiveProduct = {
+  id: "holiday-insurance",
+  tabLabel: "Holiday Insurance",
+  features: INSURANCE_FEATURES,
+} as const;
+
 export const deepDiveContent: DeepDiveContent = {
   heading: "A closer look at Omanga Payments and Holiday Insurance",
   // The Figma reads "the wallet, the card and the three insurance plans"; the approved
   // document drops "the card", and copy outranks the frame.
   intro: "Everything the wallet and the three insurance plans actually do.",
-  products: [
-    {
-      id: "omanga-payments",
-      tabLabel: "Omanga Payments",
-      features: PAYMENTS_FEATURES,
-    },
-    {
-      id: "holiday-insurance",
-      tabLabel: "Holiday Insurance",
-      features: INSURANCE_FEATURES,
-    },
-  ],
+  products: [OMANGA_PAYMENTS, holidayInsuranceProduct],
 } as const;
 
 /** Shared so the `h2` and the section's `aria-labelledby` cannot drift apart. */

@@ -54,20 +54,17 @@ import type { PageMetaContent } from "@/types/content.types";
  * `layout.tsx`; pages hold section composition only", this file holds section
  * calls and nothing else.
  *
- * Four of the legacy group's pages remain — `/about`, `/contact`, `/payments`
- * and `/plans`. Until the last one moves, navigating between the two groups is
- * a full page load, because each group owns a separate root layout.
+ * Three of the legacy group's pages remain — `/about`, `/contact` and
+ * `/payments`. Until they move, navigating between the two groups is a full
+ * page load, because each group owns a separate root layout.
  *
  * ---------------------------------------------------------------------------
- * [OUTSTANDING] Two sections of the content spec are not built.
- *
- * § 5 Insurance plans (`#plans`) and § 6 Plan details & coverage (`#coverage`).
- * Both content modules exist — `insurance-plans.content.ts` and
- * `insurance-coverage.content.ts` — and neither is mounted, so **every
- * `#plans` link on this page is currently a dead anchor**: the hero primary,
- * § 4's contextual link, the care band's `View plans` and the closing CTA.
- * That is four controls that scroll nowhere, and it is the first thing to fix
- * now that the page is live.
+ * Spec § 5 Insurance plans and § 6 Plan details & coverage are not sections of
+ * this page. Both are mounted on `app/(redesign)/plans/page.tsx` instead — see
+ * the `[CHANGED]` note in `content/insurance.content.ts` — so the four controls
+ * the spec sends to `#plans` (the hero primary, § 4's contextual link, the care
+ * band's `View plans`, the closing CTA) are routes to `/plans` rather than
+ * anchors, and all four now land on rendered content.
  */
 
 /**

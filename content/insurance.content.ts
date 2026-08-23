@@ -60,9 +60,9 @@
  * band's `View plans`, the closing CTA — now leaves the page. Four controls,
  * one constant, which is why they read this rather than typing a path.
  *
- * Until `/plans` is redesigned they resolve to the legacy page. That is a real
- * page about the plans, so the links work; they simply cross into the old
- * design until the redesign moves into place.
+ * `/plans` is now the redesigned page — `app/(redesign)/plans/page.tsx`, which
+ * mounts § 5 and § 6 — so the four links stay inside the redesign and no longer
+ * cross into the legacy design.
  *
  * `INSURANCE_COVERAGE_ANCHOR` survives as a real anchor, because the comparison
  * table is a section *within* `/plans` and § 5's "see the full comparison" link

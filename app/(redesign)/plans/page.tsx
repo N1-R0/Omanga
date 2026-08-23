@@ -26,15 +26,29 @@ import { buildPageGraph } from "@/lib/schema";
 import type { PageMetaContent } from "@/types/content.types";
 
 /**
- * The Plans page — built behind `/preview` while the legacy page stays live.
+ * The Plans page.
  *
- * `app/(legacy)/plans/page.tsx` owns `/plans`, and two route groups cannot
- * resolve to the same URL, so this builds at `/preview/plans` and is renamed
- * into place when the last section lands. The third route to follow that
- * sequence, after the homepage (41ff9c6) and the insurance page.
+ * Built at `(redesign)/preview/plans` while `app/(legacy)/plans` held the live
+ * `/plans` route — two route groups cannot own the same URL, so the redesign
+ * could not sit at its real path until the legacy page went. Now moved into
+ * place: the legacy page is deleted, this route owns `/plans`, and the
+ * `preview` segment is gone with it. The third route to follow that sequence,
+ * after the homepage (41ff9c6) and the insurance page.
  *
  * Chrome comes from `app/(redesign)/layout.tsx`. This file holds section
- * composition only, and sections are mounted one per screenshot.
+ * composition only.
+ *
+ * Three of the legacy group's pages remain — `/about`, `/contact` and
+ * `/payments`. Until they move, navigating between the two groups is a full
+ * page load, because each group owns a separate root layout.
+ *
+ * ---------------------------------------------------------------------------
+ * Each card's button goes to that tier's own Paystack page, as on the legacy
+ * page — `PLAN_CHECKOUT_URLS` in `config/site.ts`, read by
+ * `insurance-plans.content.ts`. The redesign had briefly pointed all three at
+ * `WALLET_URL`, which made the buyer choose the tier a second time after
+ * leaving. The `[VERIFY]` on which Paystack page belongs to which tier is
+ * recorded at the constant.
  *
  * ---------------------------------------------------------------------------
  * [DEVIATION] The content spec has no plans *page*.
@@ -65,16 +79,9 @@ import type { PageMetaContent } from "@/types/content.types";
  * document. Reversible in one prop pair — see `InsurancePlans`.
  *
  * ---------------------------------------------------------------------------
- * The move, when the last section lands
- *
- *   1. delete `app/(legacy)/plans/`
- *   2. `git mv "app/(redesign)/preview/plans" "app/(redesign)/plans"`
- *   3. flip `robots` below to `{ index: true, follow: true }`
- *   4. change `plansMeta.path` from `/preview/plans` to `/plans`
- *
- * `/plans` is already in `app/sitemap.ts`, already the nav's `Plans`
+ * `/plans` was already in `app/sitemap.ts`, already the nav's `Plans`
  * destination, already the footer's "Insurance Plans" link, and already where
- * `INSURANCE_PLANS_HREF` points — so none of those need touching on the move.
+ * `INSURANCE_PLANS_HREF` points — so the move touched none of them.
  */
 
 /**
@@ -92,19 +99,17 @@ const plansMeta: PageMetaContent = {
   title: "Insurance Plans — Silver, Gold and Diamond | Omanga",
   description:
     "Compare Omanga Holiday Insurance plans side by side. Silver, Gold and Diamond from $50 a month, with ward type, scan allowances and hospital access set out in full.",
-  path: "/preview/plans",
+  path: "/plans",
 };
 
 export const metadata: Metadata = {
   title: { absolute: plansMeta.title },
   description: plansMeta.description,
   alternates: { canonical: plansMeta.path },
-  /*
-    The preview route is publicly reachable, so it is kept out of the index
-    explicitly — a crawler that found it would otherwise index a half-built page
-    duplicating the one currently live at `/plans`.
-  */
-  robots: { index: false, follow: false },
+  // Indexable now that this is the real route. It was `noindex` behind
+  // `/preview` so a crawler could not find a half-built duplicate of the page
+  // that was live at the time.
+  robots: { index: true, follow: true },
   openGraph: {
     type: "website",
     url: plansMeta.path,
@@ -120,7 +125,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function PlansPreviewPage() {
+export default function PlansPage() {
   /*
     `buildPageGraph` emits Organization, WebSite, this WebPage and the two
     Service nodes. § 11.5's `Product` + `Offer` ×3 belongs on this page rather

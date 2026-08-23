@@ -1,9 +1,20 @@
-import { WALLET_URL } from "@/config/site";
+import { PLAN_CHECKOUT_URLS } from "@/config/site";
 import {
   INSURANCE_COVERAGE_ANCHOR,
   type InsurancePlanName,
 } from "@/content/insurance.content";
 import type { CallToAction } from "@/types/content.types";
+
+/**
+ * Checkout destinations, one per tier — see `PLAN_CHECKOUT_URLS` in
+ * `config/site.ts` for the URLs and the `[VERIFY]` on their mapping.
+ *
+ * The annotation is the point of this line. `config/` does not import from
+ * `content/`, so the constant cannot be keyed by `InsurancePlanName` where it is
+ * declared; assigning it here fails the build if a tier is renamed, added or
+ * loses its link, which is the check `Record` would have given at the source.
+ */
+const CHECKOUT_URLS: Record<InsurancePlanName, string> = PLAN_CHECKOUT_URLS;
 
 /**
  * Insurance plans — spec § 5, filled out from the live plan cards.
@@ -132,7 +143,7 @@ const SILVER: InsurancePlan = {
   ],
   action: {
     label: "Select Silver",
-    href: WALLET_URL,
+    href: CHECKOUT_URLS.Silver,
     isExternal: true,
     emphasis: "primary",
   },
@@ -160,7 +171,7 @@ const GOLD: InsurancePlan = {
   ],
   action: {
     label: "Select Gold",
-    href: WALLET_URL,
+    href: CHECKOUT_URLS.Gold,
     isExternal: true,
     emphasis: "primary",
   },
@@ -182,7 +193,7 @@ const DIAMOND: InsurancePlan = {
   ],
   action: {
     label: "Select Diamond",
-    href: WALLET_URL,
+    href: CHECKOUT_URLS.Diamond,
     isExternal: true,
     emphasis: "primary",
   },

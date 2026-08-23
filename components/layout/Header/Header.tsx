@@ -26,8 +26,11 @@ import type { CallToAction, LinkTarget } from "@/types/content.types";
  * Figma frame draws and what every other band on the page expects. Consequences of
  * the revert, so none of it lingers as dead weight:
  *
- *   - The header is `sticky` again, not `fixed`, so it occupies its own height and
- *     no page has to compensate for a bar floating above it.
+ *   - The header returned to being in-flow rather than overlaying the hero.
+ *     [SUPERSEDED] It is `fixed` again — not to overlay anything, but because
+ *     `sticky` jitters under Lenis. Its height is reserved once by `pt-header`
+ *     on the `body`, so no page compensates for it individually and the
+ *     original objection still does not apply.
  *   - The hero's extra top padding is gone, along with the `--spacing-hero-top`
  *     token that existed only to hold header height + hero padding.
  *   - There is no `isOverlay` prop and no tone switching, so the failure mode it
@@ -59,6 +62,28 @@ import type { CallToAction, LinkTarget } from "@/types/content.types";
  * away on the small scroll a focus jump or an anchor link causes.
  */
 const HIDE_AFTER_PX = 64;
+
+/**
+ * How far the page must move before the bar accepts a change of direction.
+ *
+ * [FIXED] Without this the bar juddered on every wheel gesture.
+ *
+ * Direction was `y > lastY` — a zero threshold. `SmoothScroll` replaces native
+ * scrolling with Lenis, which writes an interpolated, fractional scroll
+ * position, so through the ease-out tail of every gesture `window.scrollY`
+ * oscillates by well under a pixel and the sign of the delta alternates frame
+ * to frame. `isHidden` flipped with it, and because the bar transitions
+ * `transform` over `--duration-emphasis`, each flip restarted a 300ms animation
+ * from wherever the bar had got to. The result was a header that slid halfway
+ * up and dropped back, repeatedly. Rubber-band overscroll at either end of the
+ * document did the same thing.
+ *
+ * 8px is above the noise floor and far below a deliberate scroll, so a real
+ * gesture still turns the bar on its first frame. Movement under the threshold
+ * does not update `lastYRef` either — a slow scroll accumulates toward it
+ * rather than being repeatedly discarded.
+ */
+const DIRECTION_THRESHOLD_PX = 8;
 
 export type HeaderProps = {
   items: readonly LinkTarget[];
@@ -103,10 +128,33 @@ export function Header({
       frame = window.requestAnimationFrame(() => {
         frame = 0;
 
-        const y = window.scrollY;
-        const isScrollingDown = y > lastYRef.current;
+        /*
+          Clamped at zero. Rubber-band overscroll at the top of the document
+          reports a negative offset, which would otherwise read as a large
+          upward movement followed by a large downward one as it settles.
+        */
+        const y = Math.max(0, window.scrollY);
 
-        setIsHidden(isScrollingDown && y > HIDE_AFTER_PX);
+        /*
+          Near the top the bar is always shown, whatever the direction. Without
+          this an upward scroll that finishes in increments smaller than the
+          threshold could leave the bar hidden while the page sits at the top.
+        */
+        if (y <= HIDE_AFTER_PX) {
+          setIsHidden(false);
+          lastYRef.current = y;
+          return;
+        }
+
+        const delta = y - lastYRef.current;
+
+        // Below the threshold this is Lenis settling, not the reader scrolling.
+        // `lastYRef` is deliberately left alone so slow movement accumulates.
+        if (Math.abs(delta) < DIRECTION_THRESHOLD_PX) {
+          return;
+        }
+
+        setIsHidden(delta > 0);
         lastYRef.current = y;
       });
     };
@@ -137,7 +185,33 @@ export function Header({
           flex context means `Container` is the item being centred, and no
           descendant needs to know the bar's height at all.
         */
-        "sticky top-0 z-header flex h-header items-center",
+        /*
+          [FIXED] `fixed`, not `sticky`. This is what stopped the bar jittering
+          while scrolling.
+
+          `SmoothScroll` writes `scrollTop` from inside Lenis's own animation
+          frame. The browser then recomputes every `position: sticky` element's
+          offset against that new position — in a different phase from the write
+          — so a sticky element resolves a frame behind the compositor's paint
+          and visibly wobbles by a few pixels through the whole gesture. It is
+          the best-known failure mode of scroll interpolation, and it is
+          unrelated to the hide/show threshold above: that one was the bar
+          changing its mind, this one is the bar lagging the page.
+
+          A fixed element is painted in viewport coordinates with no per-frame
+          offset to recompute, so there is nothing to fall behind.
+
+          The structural benchmark does the same thing, and its own CSS gives it
+          away: alongside `--nav_1--height: 4rem` it defines
+          `--nav_1--height-total: var(--nav_1--height)`. A sticky bar occupies
+          its own space and would never need a second variable for its height —
+          that token exists to reserve room for a bar taken out of flow.
+
+          Ours is reserved the same way, by `pt-header` on the `body` in
+          `app/(redesign)/layout.tsx`. That is one declaration in one place, and
+          it replaces what the previous revert removed for the opposite reason.
+        */
+        "fixed inset-x-0 top-0 z-header flex h-header items-center",
         "border-b border-border-hairline bg-surface-page text-ink focus-ring-on-light",
         "transition-header",
         isHidden && "-translate-y-full",
@@ -187,7 +261,12 @@ export function Header({
               it is ever rendered.
             */}
             <div className="hidden desktop:block">
-              <Button as="link" variant="primary" tone="light" href={action.href}>
+              <Button
+                as="link"
+                variant="primary"
+                tone="light"
+                href={action.href}
+              >
                 {action.label}
               </Button>
             </div>

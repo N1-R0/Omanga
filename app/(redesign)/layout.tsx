@@ -71,7 +71,16 @@ export default function RedesignRootLayout({
         still puts the footer at the bottom of the viewport rather than halfway
         up it.
       */}
-      <body className="flex min-h-full flex-col">
+      {/*
+        `pt-header` reserves the bar's height.
+
+        `Header` is `fixed` rather than `sticky` — see its own note for why, in
+        short: sticky elements lag the scroll by a frame under Lenis and visibly
+        jitter. Fixed takes it out of flow, so the space it used to occupy has to
+        come from somewhere, and one declaration here is cheaper than every page
+        compensating for a bar floating above it.
+      */}
+      <body className="flex min-h-full flex-col pt-header">
         {/*
           First in the document, therefore first in tab order. No `tabindex` is
           involved — a positive one here is the usual way this gets broken.

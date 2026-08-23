@@ -48,6 +48,18 @@ import { INSURANCE_COVERAGE_ANCHOR } from "@/content/insurance.content";
  * one accordion per plan rather than horizontal scroll — a four-column table is
  * unusable at 375px. Recorded here because it constrains the component that
  * consumes this data, not the data itself.
+ *
+ * [DEVIATION from that note] Horizontal scroll ships below tablet, which the
+ * note rules out. The note's own premise is right — this data does not fit four
+ * columns at 375px, and it cannot be made to: the table's min-content width is
+ * about 560 against a 340 content band, and stripping the header buttons and
+ * halving the cell padding still leaves it over budget. Until the accordion
+ * exists the choice is therefore between scrolling the overflow and clipping it,
+ * and it had been clipping it — `body` sets `overflow-x: clip`, so the Diamond
+ * column was simply absent below tablet with no way to reach it. Scrolling an
+ * awkward table beats hiding the top tier on the page that sells it.
+ *
+ * The accordion remains the target and stays [OUTSTANDING] in `ComparisonTable`.
  */
 
 /**
@@ -71,6 +83,21 @@ export type InsuranceCoverageContent = {
    * A `th` with no content is a column with no name.
    */
   readonly featureColumnLabel: string;
+  /**
+   * Accessible name for the table's scroll region.
+   *
+   * Below tablet the table sits in a focusable horizontally-scrollable box. A
+   * scroll container that takes focus has to say what it is, or a screen-reader
+   * user meets an unnamed tab stop between two paragraphs.
+   */
+  readonly tableLabel: string;
+  /**
+   * Visible cue that the table scrolls sideways, shown below tablet only.
+   *
+   * Overflow with no affordance is overflow nobody finds — the Diamond column is
+   * off-screen at 375px and nothing about a clipped edge says "drag me".
+   */
+  readonly scrollHint: string;
   readonly heading: string;
   readonly intro: string;
   /** Most-decisive first; the universal rows last. Order is the spec's. */
@@ -175,6 +202,8 @@ const ROWS: readonly CoverageRow[] = [
 export const insuranceCoverageContent: InsuranceCoverageContent = {
   anchorId: INSURANCE_COVERAGE_ANCHOR,
   featureColumnLabel: "Benefit",
+  tableLabel: "Plan comparison",
+  scrollHint: "Scroll sideways to see every plan.",
   heading: "What each plan covers",
   intro:
     "The full detail, side by side. If you're deciding between two plans, the differences are in the ward type, the scan allowances and the hospital categories you can access.",

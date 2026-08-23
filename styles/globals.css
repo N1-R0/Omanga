@@ -80,7 +80,17 @@
        wins. `clip` suppresses the overflow without creating a scrollport at all,
        so there is nothing to disagree about.
 
-       Only a guard either way — nothing on the page overflows horizontally. */
+       [CORRECTED] This had read "only a guard either way — nothing on the page
+       overflows horizontally." That was not true, and believing it cost the
+       plans page its Diamond column: the comparison table's min-content width
+       exceeded the content band below tablet, and this rule silently clipped the
+       overflow instead of revealing it. Clipping is invisible, which is what
+       made the bug survive.
+
+       So: a guard, not a licence. Anything that can exceed the content band owns
+       its own scroll container — see `ComparisonTable`. This rule is the last
+       line against a stray wide child breaking the 320px reflow, not a reason
+       for a component to skip handling its own overflow. */
     overflow-x: clip;
   }
 

@@ -70,6 +70,8 @@ export function InsuranceCoverage({
               rows={content.rows}
               plans={plans}
               featureColumnLabel={content.featureColumnLabel}
+              tableLabel={content.tableLabel}
+              scrollHint={content.scrollHint}
             />
           </Reveal>
         </Stack>

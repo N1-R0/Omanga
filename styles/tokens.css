@@ -299,6 +299,20 @@
   --container-track: 30.375rem; /* 486 */
   --container-media-square: 42rem; /* 672 */
 
+  /* Comparison table floor width — the width below which the table scrolls
+     horizontally instead of shrinking further.
+
+     [MEASURED] The table's own min-content width is about 560: a Benefit column
+     held open by `Echocardiography,` at 14/600, and three plan columns each held
+     open by their `Select …` pill. Left to that intrinsic width every column
+     ends up exactly as wide as its longest word, which reads as four crushed
+     strips rather than a table. 600 is that floor plus enough slack for the
+     values to sit off their own column edges.
+
+     A minimum, never a maximum: above tablet the content band is wider than this
+     and `w-full` wins, so this value has no effect on the desktop layout at all.
+     ========================================================================= */
+  --container-comparison-table: 37.5rem; /* 600 */
 
   /* Hero action group, narrow screens only. Capped and centred rather than
      full-width, so the pair is one fixed size below tablet and both buttons stay

@@ -36,13 +36,13 @@ import { cx } from "@/lib/cx";
  * ---------------------------------------------------------------------------
  * Spec § 6.1 § Table notes asks for two behaviours. One is here, one is not.
  *
- *   - **Sticky header row.** Implemented — see the cell class below, which also
- *     covers why it releases at the foot of the table.
+ *   - **Sticky header row.** Implemented from tablet up — see the cell class
+ *     below, which also covers why it releases at the foot of the table, and the
+ *     scroll wrapper, which covers why it cannot survive below tablet.
  *   - **[OUTSTANDING] An accordion per plan below tablet**, explicitly *instead
  *     of* horizontal scroll: "a 4-column table is unusable at 375px". Not built.
- *     Four columns currently squeeze rather than overflow at that width. It
- *     needs a second rendering of the same data, which is a component of its
- *     own.
+ *     It needs a second rendering of the same data, which is a component of its
+ *     own. Horizontal scroll is the interim — see the wrapper.
  *
  * [BLOCKER] Four cells are empty by design — see the content module. An empty
  * cell is the honest rendering of an unknown; a dash would read as "not
@@ -63,11 +63,21 @@ import { cx } from "@/lib/cx";
   offsetting by its height would leave a 64px gap above the tier row for the
   whole time the table is in view.
 
+  `tablet:` rather than unconditional, for the reason the wrapper below sets out:
+  under tablet the scroll box is the sticky element's scrollport and it never
+  scrolls vertically, so `sticky` there is not a working sticky header but a cell
+  pinned to a box that does not move. Declaring it only where it resolves against
+  the page keeps the class honest about where the behaviour exists.
+
+  `top-0` rather than `top-header`: the site's bar hides on scroll down, so
+  offsetting by its height would leave a 64px gap above the tier row for the
+  whole time the table is in view.
+
   The fill is explicit — a transparent sticky cell lets rows scroll visibly
   behind it — and `z-raised` keeps it above them.
 */
 const HEADER_CELL_CLASS =
-  "sticky top-0 z-raised bg-surface-page px-fluid-3 py-fluid-4 align-bottom";
+  "tablet:sticky top-0 z-raised bg-surface-page px-fluid-3 py-fluid-4 align-bottom";
 const LABEL_CELL_CLASS = "px-fluid-3 py-fluid-4 text-left align-middle";
 const VALUE_CELL_CLASS = "px-fluid-3 py-fluid-4 text-center align-middle";
 
@@ -76,85 +86,135 @@ export type ComparisonTableProps = {
   plans: readonly InsurancePlan[];
   /** Names the visually empty first column. */
   featureColumnLabel: string;
+  /** Names the scroll region below tablet, which is focusable. */
+  tableLabel: string;
+  /** Visible cue that the table scrolls sideways. Below tablet only. */
+  scrollHint: string;
 };
 
 export function ComparisonTable({
   rows,
   plans,
   featureColumnLabel,
+  tableLabel,
+  scrollHint,
 }: ComparisonTableProps) {
   /*
-    [REMOVED] The `overflow-x-auto` wrapper this table used to sit in.
+    [RESTORED, gated] The `overflow-x-auto` wrapper, which had been removed
+    outright. Both the removal note and its replacement were wrong about the
+    facts, so both are corrected here.
 
-    It broke the sticky header outright. `overflow-x: auto` against a visible
-    `overflow-y` computes the vertical axis to `auto` too, which makes the
-    wrapper the sticky element's scrollport — and a wrapper sized to its own
-    content never scrolls vertically, so the row pinned to nothing.
+    What the removal note got right: `overflow-x: auto` against a visible
+    `overflow-y` computes the vertical axis to `auto` too, so the wrapper becomes
+    the sticky element's scrollport — and a wrapper sized to its own content
+    never scrolls vertically, so the pinned row pins to nothing. That is real,
+    and it is why the wrapper is gated rather than simply put back.
 
-    Nothing is lost: the table sets no minimum width, so it fits every viewport
-    without scrolling sideways. What it does at 375 is squeeze four columns
-    rather than overflow them, which is the outstanding accordion above and not
-    a scrolling problem.
+    What it got wrong: "the table sets no minimum width, so it fits every
+    viewport". A table cannot lay out narrower than its min-content width, and
+    this one's is about 560 — a Benefit column held open by `Echocardiography,`
+    and three plan columns held open by their `Select …` pills. The content band
+    at 375px is about 340. So the table did not squeeze at that width, it
+    overflowed by some 220px, and because `body` sets `overflow-x: clip` the
+    overflow was neither scrolled nor visible: the Diamond column was absent
+    below tablet, unreachable, on the page whose whole purpose is comparing
+    tiers. Squeezing was never what was happening.
+
+    `tablet:overflow-x-visible` is what reconciles the two. Above tablet the
+    content band is wider than `min-w-comparison-table`, so the box never
+    scrolls and — with both axes visible again — it is not a scrollport at all
+    and the header sticks to the page as before. Below tablet the table scrolls
+    sideways and the sticky header is the thing given up. That is the trade in
+    one direction only: a header that does not follow is an irritation, a tier
+    that cannot be seen is a misrepresentation.
+
+    `tabIndex={0}` with `role="region"` is not decoration. A box that scrolls
+    must be scrollable by keyboard (WCAG 2.1.1), which means it must be able to
+    take focus, and a focusable region must have an accessible name or it is an
+    unnamed tab stop between two paragraphs. The name is content, so it arrives
+    as a prop.
   */
   return (
-    <table className="w-full border-collapse">
-      <thead>
-        <tr className="border-b border-ink">
-          <th scope="col" className={cx(HEADER_CELL_CLASS, "text-left")}>
-            {/*
-              The frame leaves this cell blank. A blank `th` is a column with no
-              accessible name, so the name is present and visually hidden.
-            */}
-            <span className="sr-only">{featureColumnLabel}</span>
-          </th>
+    <Stack gap="md">
+      <div
+        role="region"
+        aria-label={tableLabel}
+        tabIndex={0}
+        className="overflow-x-auto tablet:overflow-x-visible focus-ring"
+      >
+        <table className="w-full min-w-comparison-table border-collapse">
+          <thead>
+            <tr className="border-b border-ink">
+              <th scope="col" className={cx(HEADER_CELL_CLASS, "text-left")}>
+                {/*
+                  The frame leaves this cell blank. A blank `th` is a column with
+                  no accessible name, so the name is present and visually hidden.
+                */}
+                <span className="sr-only">{featureColumnLabel}</span>
+              </th>
 
-          {plans.map((plan) => (
-            <th key={plan.name} scope="col" className={HEADER_CELL_CLASS}>
-              <Stack gap="sm" align="center">
-                <Text role="small" as="span">
-                  <strong>{plan.name}</strong>
-                </Text>
+              {plans.map((plan) => (
+                <th key={plan.name} scope="col" className={HEADER_CELL_CLASS}>
+                  <Stack gap="sm" align="center">
+                    <Text role="small" as="span">
+                      <strong>{plan.name}</strong>
+                    </Text>
 
-                <Button
-                  as="link"
-                  variant={plan.action.emphasis}
-                  tone="light"
-                  href={plan.action.href}
-                  isExternal={plan.action.isExternal}
-                >
-                  {plan.action.label}
-                </Button>
-              </Stack>
-            </th>
-          ))}
-        </tr>
-      </thead>
+                    <Button
+                      as="link"
+                      variant={plan.action.emphasis}
+                      tone="light"
+                      href={plan.action.href}
+                      isExternal={plan.action.isExternal}
+                    >
+                      {plan.action.label}
+                    </Button>
+                  </Stack>
+                </th>
+              ))}
+            </tr>
+          </thead>
 
-      <tbody>
-        {rows.map((row, index) => (
-          <tr
-            key={row.label}
-            className={cx(
-              "border-b border-border-hairline",
-              // The frame alternates #FAFAFA against white. The system's
-              // nearest fill is `surface-light`, which every other inset
-              // surface on the site already uses.
-              index % 2 === 0 ? "bg-surface-light" : "bg-surface-page",
-            )}
-          >
-            <th scope="row" className={LABEL_CELL_CLASS}>
-              <Text role="small" as="span">
-                <strong>{row.label}</strong>
-              </Text>
-            </th>
+          <tbody>
+            {rows.map((row, index) => (
+              <tr
+                key={row.label}
+                className={cx(
+                  "border-b border-border-hairline",
+                  // The frame alternates #FAFAFA against white. The system's
+                  // nearest fill is `surface-light`, which every other inset
+                  // surface on the site already uses.
+                  index % 2 === 0 ? "bg-surface-light" : "bg-surface-page",
+                )}
+              >
+                <th scope="row" className={LABEL_CELL_CLASS}>
+                  <Text role="small" as="span">
+                    <strong>{row.label}</strong>
+                  </Text>
+                </th>
 
-            <ValueCell value={row.silver} />
-            <ValueCell value={row.gold} />
-            <ValueCell value={row.diamond} />
-          </tr>
-        ))}
-      </tbody>
-    </table>
+                <ValueCell value={row.silver} />
+                <ValueCell value={row.gold} />
+                <ValueCell value={row.diamond} />
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/*
+        The cue, below tablet only — above it the box does not scroll and an
+        instruction to scroll would be a lie. `aria-hidden` because the region
+        above is already named and announced as scrollable; a screen reader
+        reading "Scroll sideways" after that is noise, and the keyboard path is
+        the region's own focus, not this line.
+      */}
+      <div className="tablet:hidden" aria-hidden="true">
+        <Text role="small" isSecondary>
+          {scrollHint}
+        </Text>
+      </div>
+    </Stack>
   );
 }
 

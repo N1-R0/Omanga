@@ -78,7 +78,7 @@ All sizes are fluid between a 320px and a 1440px viewport.
 
 | Role | Min → Max | Line height | Tracking | Weight |
 | --- | --- | --- | --- | --- |
-| `display` | 64 → 112 | 1.1 | −0.03em | 500 |
+| `display` | 56 → 96 | 1.1 | −0.03em | 500 |
 | `h1` | 40 → 64 | 1.2 | −0.03em | 500 |
 | `h2` | 32 → 42 | 1.1 | −0.03em | 500 |
 | `h3` | 30 → 40 | 1.3 | −0.03em | 500 |
@@ -91,6 +91,12 @@ All sizes are fluid between a 320px and a 1440px viewport.
 
 `display` is an emphasis role, not a size the page reaches for casually. It
 belongs to the closing conversion band and nowhere else. The hero uses `h1`.
+
+[CHANGED, 2026-08-23] Display was 64 → 112, the reference's own figure. Reduced
+because at 112 the closing band's heading was the largest thing on any page by a
+wide margin and read as shouting rather than as emphasis — and the band now
+closes four pages rather than one. It still clears `h1` at 40 → 64 comfortably,
+so the role keeps its job.
 
 Paragraphs carry `margin-block: var(--space-4)` — the reference sets text
 margins from its spacing scale rather than from a typographic default.

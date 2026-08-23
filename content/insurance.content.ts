@@ -45,16 +45,34 @@
  */
 
 /**
- * In-page anchors.
+ * Where the plan content lives.
  *
- * Ids rather than hrefs, so the section that renders the heading and the links
- * that point at it read the same constant. `#` is added at the link site.
+ * ---------------------------------------------------------------------------
+ * [CHANGED] Both destinations are on `/plans`, not anchors on this page.
+ *
+ * Spec § 5 and § 6 are sections of the insurance page, addressed as `#plans`
+ * and `#coverage`, and § 1 301s `/plans` into them. Instructed otherwise: the
+ * plan grid and the comparison table become a standalone `/plans` page, which
+ * is also the route the nav's `Plans` item already points at.
+ *
+ * So `INSURANCE_PLANS_HREF` is a route, not a fragment. Every link that the
+ * spec sends to `#plans` — the hero primary, § 4's contextual link, the care
+ * band's `View plans`, the closing CTA — now leaves the page. Four controls,
+ * one constant, which is why they read this rather than typing a path.
+ *
+ * Until `/plans` is redesigned they resolve to the legacy page. That is a real
+ * page about the plans, so the links work; they simply cross into the old
+ * design until the redesign moves into place.
+ *
+ * `INSURANCE_COVERAGE_ANCHOR` survives as a real anchor, because the comparison
+ * table is a section *within* `/plans` and § 5's "see the full comparison" link
+ * still jumps to it.
  */
-export const INSURANCE_PLANS_ANCHOR = "plans" as const;
-export const INSURANCE_COVERAGE_ANCHOR = "coverage" as const;
+export const INSURANCE_PLANS_HREF = "/plans" as const;
 
-export const INSURANCE_PLANS_HREF = `#${INSURANCE_PLANS_ANCHOR}` as const;
-export const INSURANCE_COVERAGE_HREF = `#${INSURANCE_COVERAGE_ANCHOR}` as const;
+export const INSURANCE_COVERAGE_ANCHOR = "coverage" as const;
+export const INSURANCE_COVERAGE_HREF =
+  `${INSURANCE_PLANS_HREF}#${INSURANCE_COVERAGE_ANCHOR}` as const;
 
 /**
  * The three tiers, in the approved order.

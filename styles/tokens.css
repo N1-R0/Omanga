@@ -133,9 +133,20 @@
      (0, -0.03em) across the whole scale. Every heading is weight 500.
      ========================================================================= */
 
-  /* Display — 64 → 112. An emphasis role, not a size the page reaches for.
-     Belongs to the closing conversion band and nowhere else. */
-  --text-display: clamp(4rem, 3.1429rem + 4.2857vw, 7rem);
+  /* Display — 56 → 96. An emphasis role, not a size the page reaches for.
+     Belongs to the closing conversion band and nowhere else.
+
+     [CHANGED] Down from 64 → 112, the reference's own display size. At 112 the
+     closing band's heading was the largest thing on any page by a wide margin
+     and read as shouting rather than as emphasis — and it is now the last thing
+     before the footer on four pages rather than one. Still comfortably above
+     `h1` at 40 → 64, so the role keeps its job: this is the page's one
+     emphasis size, just less of it.
+
+     The token is the only place it is set. `Heading role="display"` is used by
+     `CTAContent` and nowhere else, by rule, so this line changes the closing
+     band on every page and nothing else. */
+  --text-display: clamp(3.5rem, 2.7857rem + 3.5714vw, 6rem);
   --text-display--line-height: 1.1;
   --text-display--letter-spacing: -0.03em;
   --text-display--font-weight: var(--font-weight-medium);

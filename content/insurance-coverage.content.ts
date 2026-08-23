@@ -37,7 +37,11 @@ import { INSURANCE_COVERAGE_ANCHOR } from "@/content/insurance.content";
  * [MOVED] § 6.3 is no longer part of this section. "How care works" is now its
  * own band with its own `h2` and image — see
  * `content/insurance-care.content.ts`, where the deviation and the spec § 11.4
- * link conflict are both recorded. This module holds § 6.1 and § 6.2 only.
+ * link conflict are both recorded.
+ *
+ * [MOVED] § 6.2 has also gone, to `content/insurance-inclusions.content.ts` —
+ * the Figma frame gives the five universal inclusions a section of their own.
+ * This module holds § 6.1, the comparison table, and nothing else.
  *
  * ---------------------------------------------------------------------------
  * [DESIGN] Spec § 6.1 § Table notes: sticky header row on scroll, and on mobile
@@ -60,19 +64,17 @@ export type CoverageRow = {
   readonly diamond?: string;
 };
 
-export type CoverageInclusion = {
-  readonly term: string;
-  readonly description: string;
-};
-
 export type InsuranceCoverageContent = {
   readonly anchorId: typeof INSURANCE_COVERAGE_ANCHOR;
+  /**
+   * Accessible name for the table's first column, which is visually empty.
+   * A `th` with no content is a column with no name.
+   */
+  readonly featureColumnLabel: string;
   readonly heading: string;
   readonly intro: string;
   /** Most-decisive first; the universal rows last. Order is the spec's. */
   readonly rows: readonly CoverageRow[];
-  readonly inclusionsHeading: string;
-  readonly inclusions: readonly CoverageInclusion[];
 };
 
 /**
@@ -82,7 +84,7 @@ export type InsuranceCoverageContent = {
  * it is the cell's value. Whatever renders it must also give it an accessible
  * name — a bare "✓" announces as nothing useful.
  */
-const INCLUDED = "Included" as const;
+export const INCLUDED = "Included" as const;
 
 const ROWS: readonly CoverageRow[] = [
   {
@@ -92,8 +94,15 @@ const ROWS: readonly CoverageRow[] = [
     diamond: "$120",
   },
   {
+    /*
+      [CORRECTED] The spec gives Silver "Category A + B" and states that
+      "'Category A + B' appears on all three live cards". The live cards read
+      Category A, Category A + B, Category A + B + C — a clean three-step ladder
+      that the spec flattened at the bottom. Live values ship; see
+      `insurance-plans.content.ts`.
+    */
     label: "Hospital access",
-    silver: "Category A + B",
+    silver: "Category A",
     gold: "Category A + B",
     diamond: "Category A + B + C",
   },
@@ -163,39 +172,13 @@ const ROWS: readonly CoverageRow[] = [
   },
 ] as const;
 
-const INCLUSIONS: readonly CoverageInclusion[] = [
-  {
-    term: "Telemedicine",
-    description:
-      "Virtual consultations with licensed doctors, wherever you are.",
-  },
-  {
-    term: "Roaming",
-    description:
-      "Your cover travels with you across the countries Omanga serves.",
-  },
-  {
-    term: "24/7 dedicated contact centre",
-    description: "Round-the-clock support when you need it.",
-  },
-  {
-    term: "Health-tips newsletter",
-    description: "Weekly wellness tips and health insights.",
-  },
-  {
-    term: "Mobile app",
-    description: "Manage your policy and claims on the go.",
-  },
-] as const;
-
 export const insuranceCoverageContent: InsuranceCoverageContent = {
   anchorId: INSURANCE_COVERAGE_ANCHOR,
+  featureColumnLabel: "Benefit",
   heading: "What each plan covers",
   intro:
     "The full detail, side by side. If you're deciding between two plans, the differences are in the ward type, the scan allowances and the hospital categories you can access.",
   rows: ROWS,
-  inclusionsHeading: "Included on every plan, whichever you choose",
-  inclusions: INCLUSIONS,
 } as const;
 
 export const INSURANCE_COVERAGE_HEADING_ID =

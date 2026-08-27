@@ -2,12 +2,32 @@ import { Heading } from "@/components/ui/Heading";
 import { Reveal } from "@/components/ui/Reveal";
 import { Text } from "@/components/ui/Text";
 import { cx } from "@/lib/cx";
-import type { HowItWorksStep } from "@/content/how-it-works.content";
 
 import { TimelineMarker } from "./TimelineMarker";
 
 /** Which side of the centre rail this step sits on above the desktop breakpoint. */
 export type TimelineSide = "start" | "end";
+
+/**
+ * One entry on the rail: an id, a heading and a body.
+ *
+ * [CHANGED] Declared here rather than imported as `HowItWorksStep`. The timeline
+ * now renders two pages — the homepage's three process steps and the About
+ * page's two Mission/Vision phases — and a component typed against one page's
+ * content module cannot serve the other. Both content types satisfy this
+ * structurally, so the homepage is unaffected and neither module imports from
+ * the other.
+ *
+ * This is the same arrangement `WhyOmanga`, `CTA` and `TrustPartners` already
+ * have: the component takes its content as a prop and knows nothing about which
+ * page renders it, which is what keeps one timeline on the site rather than two
+ * that drift apart.
+ */
+export type TimelineStep = {
+  readonly id: string;
+  readonly heading: string;
+  readonly body: string;
+};
 
 /**
  * One step of the timeline: a marker in the rail column and a block of copy beside
@@ -74,7 +94,7 @@ const SIDE_CLASS: Readonly<Record<TimelineSide, string>> = {
 const TRACK_CLASS = "max-w-track";
 
 export type TimelineItemProps = {
-  step: HowItWorksStep;
+  step: TimelineStep;
   side: TimelineSide;
   /** Position among the steps, for the entrance stagger. */
   index: number;

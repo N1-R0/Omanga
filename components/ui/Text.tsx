@@ -6,8 +6,11 @@ import type { Measure, TextRole } from "@/types/ui.types";
 /**
  * Body copy.
  *
- * Three roles only. Anything that needs a fourth size is either a heading or a
- * design question.
+ * Four roles. The fourth — `prose` — was added for the About page's Our Story
+ * panel and is the only one that is not a size this component started with; the
+ * note on `TextRole` and on `--text-prose` records why the gap was real. The
+ * guard the old "three roles only" line existed to hold still applies: anything
+ * that needs a fifth size is either a heading or a design question.
  *
  * Colour is inherited from the section surface. Secondary text is expressed as
  * opacity, never as a separate grey — which is what keeps it legible on both the
@@ -15,6 +18,8 @@ import type { Measure, TextRole } from "@/types/ui.types";
  */
 
 const ROLE_CLASS: Readonly<Record<TextRole, string>> = {
+  /** 22 → 28. Prose that is the subject of its own band, not an intro to one. */
+  prose: "font-sans text-prose",
   /** 18 → 20. Section intros — the paragraph directly under a section heading. */
   lead: "font-sans text-large",
   /** 16 → 18. The document default. */

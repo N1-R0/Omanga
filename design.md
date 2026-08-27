@@ -85,9 +85,29 @@ All sizes are fluid between a 320px and a 1440px viewport.
 | `h4` | 24 → 28 | 1.3 | −0.03em | 500 |
 | `h5` | 22 → 26 | 1.3 | 0 | 500 |
 | `h6` | 16 → 20 | 1.3 | 0 | 500 |
+| `text-prose` | 22 → 28 | 1.5 | 0 | 400 |
 | `text-large` | 18 → 20 | 1.5 | 0 | 400 |
 | `text-main` | 16 → 18 | 1.5 | 0 | 400 |
 | `text-small` | 14 → 16 | 1.5 | 0 | 400 |
+
+[ADDED, 2026-08-27] `text-prose` — a fourth body size, for prose that is the
+subject of its own band rather than an introduction to one. One caller: the
+About page's Our Story panel, whose spec requires the block "set large — close
+to sub-headline scale, far larger than normal body copy", with emphasis carried
+by colour rather than weight.
+
+The gap it fills is real rather than a caller wanting a bespoke size. `text-large`
+at 18 → 20 is two pixels off the body default and does not read as large; every
+role that does read as large is weight 500 and tracked, which is heading
+treatment applied to a paragraph. Nothing in the scale expressed body copy that
+is the largest thing in its section, because the reference audited in § 0 has no
+such band.
+
+Nothing else moves to accommodate it. Line height is 1.5, the value every body
+role already takes — not an intermediate 1.4, which would cost § 1 principle 3
+its closed set of line heights. Tracking is 0 and weight is 400, exactly as the
+table above assigns to body copy. It is the only role at that size which is not
+a heading.
 
 `display` is an emphasis role, not a size the page reaches for casually. It
 belongs to the closing conversion band and nowhere else. The hero uses `h1`.

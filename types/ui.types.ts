@@ -62,11 +62,19 @@ export type HeadingRole =
 /**
  * Body text roles. design.md § 2.
  *
+ * - `prose` — 22 → 28. Prose that is the subject of its own band.
  * - `lead`  — 18 → 20. Section intros.
  * - `body`  — 16 → 18. The document default.
  * - `small` — 14 → 16. Helper lines, footer links, legal and metadata.
+ *
+ * `prose` is the fourth, added for the About page's Our Story panel. Every one
+ * of its values — weight 400, line height 1.5, tracking 0 — is what § 2's table
+ * already assigns to body copy; only the size is new. See the token for why the
+ * gap was real rather than a caller wanting a bespoke size. It is not a general
+ * "big text" role: a section reaching for it is claiming that its prose is the
+ * largest thing in the band, and if that is not true the role is `lead`.
  */
-export type TextRole = "lead" | "body" | "small";
+export type TextRole = "prose" | "lead" | "body" | "small";
 
 /**
  * Icon sizes. design.md § 9: "Icon sizes are 16, 24 or 32.

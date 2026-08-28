@@ -70,11 +70,26 @@ import { COUNTRIES_SERVED } from "@/content/site.content";
  * standalone *Why We Do What We Do* panel — to be retired, which is § 7's own
  * recommendation and is what this page does.
  *
- * [NOTE] Every product claim in it — the wallet and card, spending across
- * Africa, short-term cover, established local providers — already appears in
- * approved homepage copy. § 7: "Nothing new is claimed."
+ * [CORRECTED] § 7's paragraph reads "a multi-currency wallet and card". The
+ * card claim is struck: `FORBIDDEN_COPY_TERMS` in `content/site.content.ts`
+ * records that "tracked changes removed every 'card' claim from the approved
+ * copy; 'one card' became 'a customized payment solution'. Physical-card
+ * language must not reappear in copy, image alt text, or component names."
+ *
+ * § 7 asserts that "every product claim in the paragraph (52 countries,
+ * multi-currency wallet and card, short-term cover, established local
+ * providers) already appears in approved Homepage copy" — and for the card it
+ * does not, because the tracked changes removed it. project-context.md outranks
+ * a page spec, the same precedence that resolves 52 to 43.
+ *
+ * Two words are dropped rather than substituted: "a multi-currency wallet"
+ * stands on its own, and replacing the claim with "a customized payment
+ * solution" would put procurement language in the page's emotional close.
+ *
+ * [NOTE] Every remaining product claim — the wallet, spending across Africa,
+ * short-term cover, established local providers — is in approved homepage copy.
  */
-const INTRO = `Africa rewards the traveller who arrives ready. Omanga brings the essentials into one place — a multi-currency wallet and card that works across ${COUNTRIES_SERVED} African countries, and short-term health cover from established local providers — so that the practical side of the trip is handled before you land and the continent gets your full attention. The spirit of Ubuntu lives in us all; through our collective unity, we achieve great things.`;
+const INTRO = `Africa rewards the traveller who arrives ready. Omanga brings the essentials into one place — a multi-currency wallet that works across ${COUNTRIES_SERVED} African countries, and short-term health cover from established local providers — so that the practical side of the trip is handled before you land and the continent gets your full attention. The spirit of Ubuntu lives in us all; through our collective unity, we achieve great things.`;
 
 /**
  * The artwork is read from the homepage band rather than redeclared, so the

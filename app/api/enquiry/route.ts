@@ -1,9 +1,15 @@
 import nodemailer from "nodemailer";
 import type { Transporter } from "nodemailer";
 
+import {
+  CONTACT_FORM_KIND,
+  FORM_KIND_FIELD,
+  validateContactEnquiry,
+} from "@/lib/contact-enquiry";
+import { composeContactEnquiryEmail } from "@/lib/contact-enquiry-email";
 import { isHoneypotFilled, validateEnquiry } from "@/lib/enquiry";
-import type { EnquirySubmission } from "@/lib/enquiry";
 import { composeEnquiryEmail } from "@/lib/enquiry-email";
+import type { EnquiryEmail } from "@/lib/enquiry-email";
 import { createRateLimiter } from "@/lib/rate-limit";
 
 /**
@@ -100,6 +106,23 @@ export const maxDuration = 30;
  * instance. A limiter constructed inside the handler would start empty on every
  * request and permit everything.
  */
+/*
+  [NOTE] One bucket for the endpoint, now that two forms post to it. Five contact
+  enquiries therefore exhaust the Get Started form's quota for the same address,
+  and the reverse.
+
+  Left shared deliberately. Keying the bucket per form would mean reading the body
+  to learn which form sent it, and that inverts the ordering this handler is built
+  around — "rate limit: cheapest check, and the one that has to run before any work
+  is done on behalf of a caller flooding the endpoint". Trading the abuse guard's
+  position for a quota split matters far less than it costs: five submissions from
+  one address in an hour is already generous for either form, and a visitor who
+  legitimately files five contact enquiries is not about to open a wallet in the
+  same hour.
+
+  If it ever bites, the fix is a second limiter keyed on address alone with a
+  higher combined ceiling — not moving the body parse above this.
+*/
 const checkRateLimit = createRateLimiter({
   limit: 5,
   windowMs: 60 * 60 * 1000,
@@ -215,8 +238,9 @@ function getTransporter(config: MailConfig): Transporter {
  * them — which is the behaviour the `from` header would otherwise have been
  * abused to get.
  */
-async function deliverEnquiry(
-  submission: EnquirySubmission,
+async function deliver(
+  email: EnquiryEmail,
+  replyTo: string,
 ): Promise<DeliveryResult> {
   const config = readMailConfig();
 
@@ -224,7 +248,7 @@ async function deliverEnquiry(
     return "not-configured";
   }
 
-  const { subject, text, html } = composeEnquiryEmail(submission);
+  const { subject, text, html } = email;
 
   try {
     /*
@@ -235,7 +259,7 @@ async function deliverEnquiry(
     await getTransporter(config).sendMail({
       from: config.user,
       to: config.recipient,
-      replyTo: submission.email,
+      replyTo,
       subject,
       text,
       html,
@@ -247,6 +271,64 @@ async function deliverEnquiry(
 
     return "failed";
   }
+}
+
+/* -----------------------------------------------------------------------------
+   Which form posted, and what to send
+   -------------------------------------------------------------------------- */
+
+/**
+ * A validated submission reduced to the two things delivery needs, or the fields
+ * that failed.
+ *
+ * This is what lets one handler serve two forms without a cast. Each branch below
+ * narrows its own validator's result, so the submission type never has to be
+ * widened or asserted — the handler downstream sees only a composed email and a
+ * reply address and knows nothing about which form produced them.
+ */
+type Prepared =
+  | {
+      readonly isValid: true;
+      readonly email: EnquiryEmail;
+      readonly replyTo: string;
+    }
+  | { readonly isValid: false; readonly invalidFields: readonly string[] };
+
+/**
+ * Routes a submission to its form's validator and email template.
+ *
+ * A hidden field rather than a second endpoint: every guard in the handler — the
+ * limiter, the body parse, the honeypot, the 503 when mail is unconfigured, the
+ * response codes — is identical for both forms, and so is the SMTP transport and
+ * its connection pool. See `FORM_KIND_FIELD` for the full reasoning.
+ *
+ * Absent means the Get Started form, so that form's existing requests are
+ * unchanged and it needed no edit. An unrecognised value falls through to the
+ * same default, which is the safe direction: a validator rejects a submission it
+ * cannot read rather than accepting one it should not.
+ */
+function prepare(values: FormData): Prepared {
+  if (values.get(FORM_KIND_FIELD) === CONTACT_FORM_KIND) {
+    const validation = validateContactEnquiry(values);
+
+    return validation.isValid
+      ? {
+          isValid: true,
+          email: composeContactEnquiryEmail(validation.data),
+          replyTo: validation.data.email,
+        }
+      : { isValid: false, invalidFields: validation.invalidFields };
+  }
+
+  const validation = validateEnquiry(values);
+
+  return validation.isValid
+    ? {
+        isValid: true,
+        email: composeEnquiryEmail(validation.data),
+        replyTo: validation.data.email,
+      }
+    : { isValid: false, invalidFields: validation.invalidFields };
 }
 
 /* -----------------------------------------------------------------------------
@@ -284,21 +366,25 @@ export async function POST(request: Request): Promise<Response> {
     return Response.json({ ok: true }, { status: 202 });
   }
 
-  const validation = validateEnquiry(values);
+  const prepared = prepare(values);
 
-  if (!validation.isValid) {
+  if (!prepared.isValid) {
     /*
       Field names, not messages. Every user-facing string belongs to the content
       module, and a server that returned prose would be a second place for copy to
       live — and a place with no locale.
+
+      Each form's validator returns its own field-name union and each form's
+      content module owns the mapping to its own approved messages, so neither can
+      show the other's.
     */
     return Response.json(
-      { invalidFields: validation.invalidFields },
+      { invalidFields: prepared.invalidFields },
       { status: 422 },
     );
   }
 
-  const result = await deliverEnquiry(validation.data);
+  const result = await deliver(prepared.email, prepared.replyTo);
 
   if (result === "sent") {
     return Response.json({ ok: true }, { status: 202 });

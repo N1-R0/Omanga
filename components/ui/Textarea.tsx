@@ -55,6 +55,14 @@ export type TextareaProps = {
   defaultValue?: string;
   /** Initial visible lines. Defaults to 4, which is the enquiry form's shape. */
   rows?: number;
+  /**
+   * [ADDED] Validation on blur, mirroring `Input` and `Select`.
+   *
+   * The Contact form's message is the first required textarea on the site, and
+   * "errors clear as they are corrected" needs the same hook the other two
+   * controls already have.
+   */
+  onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
 };
 
 export function Textarea({
@@ -70,6 +78,7 @@ export function Textarea({
   isDisabled = false,
   defaultValue,
   rows = 4,
+  onBlur,
 }: TextareaProps) {
   const hasError = error !== undefined;
   const border = TONE_BORDER_CLASS[tone];
@@ -87,6 +96,7 @@ export function Textarea({
         id={id}
         name={name ?? id}
         rows={rows}
+        onBlur={onBlur}
         required={isRequired}
         disabled={isDisabled}
         defaultValue={defaultValue}

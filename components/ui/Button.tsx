@@ -37,10 +37,23 @@ type ButtonPresentation = {
   tone: Tone;
   /**
    * Optional trailing icon at 16px, decorative and hidden from assistive tech.
-   * Leading icons are not supported: the design has none, and adding a slot
-   * for a use case that does not exist is how a primitive rots.
    */
   trailingIcon?: ReactNode;
+  /**
+   * Optional leading icon at 16px, decorative and hidden from assistive tech.
+   *
+   * [ADDED] This slot said "leading icons are not supported: the design has
+   * none, and adding a slot for a use case that does not exist is how a
+   * primitive rots." The use case now exists and is specified rather than
+   * inferred: the Contact page's § 2 requires "`Chat on WhatsApp`, solid button,
+   * WhatsApp glyph left of label", and a channel's own mark to the left of the
+   * verb is what tells a visitor which app is about to open.
+   *
+   * It stays a narrow slot. Both icons are decorative and neither may be the
+   * control's only label — a button with an icon and no text is a different
+   * component, and this one always renders `children`.
+   */
+  leadingIcon?: ReactNode;
 };
 
 export type ButtonProps =
@@ -141,7 +154,7 @@ const DISABLED_CLASS =
   "bg-disabled-surface text-disabled-ink border-transparent hover:bg-disabled-surface";
 
 export function Button(props: ButtonProps) {
-  const { children, variant, tone, trailingIcon } = props;
+  const { children, variant, tone, trailingIcon, leadingIcon } = props;
 
   // The text variant carries no fill or border, so horizontal padding would
   // push it out of alignment with the copy column it sits under.
@@ -158,6 +171,7 @@ export function Button(props: ButtonProps) {
           ? { target: "_blank", rel: "noopener noreferrer" }
           : {})}
       >
+        {leadingIcon}
         {children}
         {trailingIcon}
       </Link>
@@ -181,6 +195,7 @@ export function Button(props: ButtonProps) {
         isInoperable && DISABLED_CLASS,
       )}
     >
+      {leadingIcon}
       {children}
       {/* The icon slot is reserved whether or not it is filled, so swapping in
           the spinner cannot change the button's width mid-submission. */}

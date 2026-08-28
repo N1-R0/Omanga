@@ -95,7 +95,7 @@ const MAX_LENGTH: Readonly<Record<keyof EnquirySubmission, number>> = {
  * an address is whether mail to it is accepted. This catches typos and empty
  * submissions, which is all client-side email validation can honestly do.
  */
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
  * Strips the characters that turn a form value into a mail header.
@@ -107,7 +107,7 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  * remember. Other control characters go with them because nothing legitimate
  * puts them in a name or a destination.
  */
-function sanitise(value: unknown, maxLength: number): string {
+export function sanitise(value: unknown, maxLength: number): string {
   if (typeof value !== "string") {
     return "";
   }

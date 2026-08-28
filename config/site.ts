@@ -52,6 +52,138 @@ export const SITE_LOCALE = "en" as const;
 export const WALLET_URL = "https://omanga.useinclude.com/" as const;
 
 /**
+ * The office address, as supplied.
+ *
+ * One owner, like every other contact route: the Contact page's § 5 renders it,
+ * the footer's `[VERIFY]` address slot wants the same string, and two copies of
+ * an address is how a moved office gets updated in one place.
+ *
+ * ---------------------------------------------------------------------------
+ * [VERIFY] Whether this is the *registered* address.
+ *
+ * The Contact spec § 5 asks for "a registered address and company number", and
+ * § Schema is explicit about what turns on the distinction: "Do not mark up a
+ * `PostalAddress` until a registered address is confirmed. Structured data
+ * asserting a location Omanga has not published is a factual accuracy risk."
+ *
+ * This was supplied as "the address" without that qualifier, so it renders as a
+ * plain paragraph — where § 5 puts it — and is deliberately *not* in the schema
+ * graph. A trading address and a registered office are frequently different, and
+ * for a payments and insurance product the registered one is what a quality
+ * rater and a regulator look for. Confirm which this is before it reaches
+ * `Organization.address` or the footer's legal block.
+ *
+ * The company number is still absent. § E-E-A-T item 3 wants both together.
+ */
+export const OFFICE_ADDRESS =
+  "Plot 175 Akin Adesola St. Victoria Island, Lagos, Nigeria" as const;
+
+/**
+ * The office as an embeddable Google map.
+ *
+ * Derived from `OFFICE_ADDRESS` rather than typed, so the map and the printed
+ * address cannot disagree. A map pinning a different place from the address
+ * beneath it is worse than no map.
+ *
+ * ---------------------------------------------------------------------------
+ * [VERIFY] The embed URL is the keyless form, which is not the documented one.
+ *
+ * Google's supported endpoint is the Maps Embed API —
+ * `https://www.google.com/maps/embed/v1/place?key=…&q=…` — which needs an API key.
+ * There is none in the environment and `.env.example` defines no slot for one, so
+ * this uses `maps.google.com/maps?q=…&output=embed`: widely used, works today, and
+ * undocumented, which means Google can change it without notice.
+ *
+ * Moving to the supported endpoint is a one-line change here plus a
+ * `NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY` in the environment. Worth doing before
+ * launch — an embed key is public by design and is restricted by HTTP referrer
+ * rather than kept secret, so it carries none of the risk the SMTP credentials do.
+ *
+ * [REMOVED] A companion `OFFICE_MAP_URL` pointing at the documented Maps URLs
+ * `search` endpoint, for a "Get directions" link beneath the map. The link was
+ * removed on instruction and the constant went with it rather than sitting
+ * unreferenced — Google's own frame already opens directions from its pin, so
+ * nothing a visitor could do was lost. It is two lines to restore if a directions
+ * link is ever wanted back.
+ */
+export const OFFICE_MAP_EMBED_URL =
+  `https://maps.google.com/maps?q=${encodeURIComponent(OFFICE_ADDRESS)}&output=embed` as const;
+
+/**
+ * The support channel, as a complete `wa.me` deep link.
+ *
+ * Off-site, like the wallet: the conversation happens in WhatsApp, so every
+ * "chat with us" control leaves omanga.biz. Defined here rather than in a
+ * content module because the Contact page uses it twice — the hero's support
+ * block and § 5's support card — and the footer will want it too. The Contact
+ * spec is explicit that this must be "one number, one entry point, no
+ * fragmentation", which is only enforceable if it has one owner.
+ *
+ * Any CTA using this must also set `isExternal: true`, which is what adds
+ * `target="_blank"` and `rel="noopener noreferrer"` at render time. The Contact
+ * spec § 2 requires exactly that, and requires it not be intercepted with a
+ * modal: on mobile the link deep-links into the WhatsApp app, on desktop it
+ * opens WhatsApp Web.
+ *
+ * The prefilled opener is part of the URL, per § 2: "Prefill the message body
+ * with a neutral opener… so the visitor doesn't stare at an empty compose box.
+ * Keep the prefill generic — do not prefill an enquiry category from the hero,
+ * because the hero is not a category selection." Supplied as-is and generic.
+ *
+ * ---------------------------------------------------------------------------
+ * [VERIFIED] Confirmed working against the live account, 2026-08-27.
+ *
+ * Worth recording why that is worth stating: the number is `23408099441818`,
+ * which is Nigeria's country code `234` followed by `08099441818` — still
+ * carrying the national trunk prefix `0`. `wa.me` documents an E.164 number with
+ * no `+`, no spaces and no trunk prefix, which would make the canonical form
+ * `2348099441818`. It was raised as a likely defect on those grounds and tested;
+ * WhatsApp resolves this form, so it ships as supplied.
+ *
+ * If the link ever starts returning "phone number shared via url is invalid",
+ * dropping the `0` after `234` is the first thing to try. Do not change it
+ * speculatively — a working link is the only evidence that matters here, and the
+ * Contact spec § 5 is explicit that a dead `wa.me` link is unacceptable.
+ */
+export const WHATSAPP_URL =
+  "https://wa.me/23408099441818?text=Hello%2C%20I%E2%80%99m%20interested%20in%20Omanga%E2%80%99s%20services%20and%20would%20like%20some%20guidance." as const;
+
+/**
+ * The same number, formatted for a visitor to read.
+ *
+ * A second constant rather than one derived from the other, and the reason is the
+ * trunk prefix recorded above: `WHATSAPP_URL` carries `23408099441818`, fourteen
+ * digits, because that is the string confirmed working. Deriving a display form
+ * from it means programmatically deciding the `0` after `234` is a trunk prefix
+ * and dropping it — which is almost certainly right and is still a guess about a
+ * phone number, made in a regex, at render time.
+ *
+ * So it is written out, in international format, with the grouping a Nigerian
+ * number takes. The same arrangement `BRAND_COLOR` already has beside its CSS
+ * token: two representations of one fact, because one consumer cannot read the
+ * other's form.
+ *
+ * ---------------------------------------------------------------------------
+ * [VERIFY] That this is the number a visitor should save.
+ *
+ * It is `WHATSAPP_URL`'s digits with the national trunk `0` removed, which is what
+ * E.164 requires and what a visitor outside Nigeria has to dial. If the WhatsApp
+ * account is registered to a different number and the URL only works because
+ * WhatsApp normalises it, then this string is wrong in the one place being wrong
+ * matters — a number someone copies into their contacts.
+ *
+ * Confirm against the WhatsApp Business profile, not against the link working.
+ *
+ * [NOTE] This is not a phone number for calling, and it is not published as one.
+ * The Contact spec § 0 mandates "no phone number appears anywhere on the page",
+ * and § 5 repeats it. That mandate replaces *calling* with chat — its own
+ * placeholder note lists "no WhatsApp number" among the values Omanga was expected
+ * to supply. So this renders as the chat channel's identifier, linked to `wa.me`
+ * and never to `tel:`.
+ */
+export const WHATSAPP_NUMBER_DISPLAY = "+234 809 944 1818" as const;
+
+/**
  * Per-tier insurance checkout, one Paystack page each.
  *
  * Off-site, like the wallet: payment is taken by Paystack, so `Select Gold`

@@ -48,7 +48,19 @@ const FONT_STACK =
   "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
 
 const NOT_PROVIDED = "Not provided";
-const TITLE = "New Get Started Enquiry";
+
+/**
+ * [GENERALISED] This module rendered exactly one form's email. The Contact page's
+ * `Talk to us` form needs the same shell with different rows, and duplicating a
+ * table-layout HTML email is how two templates end up differing in a client
+ * nobody tests in.
+ *
+ * So the shell, the escaping, the row renderers and the preview-text trick are
+ * shared, and each form supplies a `title`, its rows and a source label.
+ * `composeEnquiryEmail` keeps its exact previous behaviour and output — it is now
+ * a thin caller of `composeFormEmail` — so the Get Started form is untouched.
+ */
+const GET_STARTED_TITLE = "New Get Started Enquiry";
 
 /**
  * Escapes a submitted value for interpolation into markup.
@@ -86,13 +98,23 @@ function needsLabel(value: string): string {
   );
 }
 
-type Row = {
+export type Row = {
   readonly label: string;
   readonly value: string;
   /** Marked in the output, and rendered as "Not provided" when empty. */
   readonly isOptional: boolean;
   /** Renders the value as a link. Used for the reply address. */
   readonly href?: string;
+  /**
+   * Render the value as a block of prose rather than a single line — preserving
+   * the submitter's own line breaks.
+   *
+   * Added for the Contact form's message field, which is the first multi-line
+   * value the rail carries. `white-space: pre-wrap` is what keeps their
+   * paragraphing; without it a message arrives as one run of text and reads as
+   * though they typed it that way.
+   */
+  readonly isMultiline?: boolean;
 };
 
 function rowsFor(submission: EnquirySubmission): readonly Row[] {
@@ -118,14 +140,22 @@ function renderTextRow({ label, value, isOptional }: Row): string {
   return `${label}${suffix}: ${value === "" ? NOT_PROVIDED : value}`;
 }
 
-function renderHtmlRow({ label, value, isOptional, href }: Row): string {
+function renderHtmlRow({
+  label,
+  value,
+  isOptional,
+  href,
+  isMultiline = false,
+}: Row): string {
   const isEmpty = value === "";
 
   const rendered = isEmpty
     ? `<span style="color:${MUTED_INK};font-style:italic;">${NOT_PROVIDED}</span>`
-    : href === undefined
-      ? escapeHtml(value)
-      : `<a href="${escapeHtml(href)}" style="color:${BRAND_COLOR};text-decoration:underline;">${escapeHtml(value)}</a>`;
+    : href !== undefined
+      ? `<a href="${escapeHtml(href)}" style="color:${BRAND_COLOR};text-decoration:underline;">${escapeHtml(value)}</a>`
+      : isMultiline
+        ? `<span style="white-space:pre-wrap;">${escapeHtml(value)}</span>`
+        : escapeHtml(value);
 
   const note = isOptional
     ? ` <span style="font-weight:400;text-transform:none;letter-spacing:0;color:${MUTED_INK};">(optional)</span>`
@@ -140,18 +170,35 @@ function renderHtmlRow({ label, value, isOptional, href }: Row): string {
               </tr>`;
 }
 
-function renderText(submission: EnquirySubmission): string {
+/**
+ * Everything one form's email needs beyond the shared shell.
+ *
+ * `replyName` and `previewValue` are separate because they do different jobs:
+ * the first completes the "reply to reach X" line, the second is the line clients
+ * show beside the subject in the message list.
+ */
+export type FormEmail = {
+  readonly title: string;
+  readonly rows: readonly Row[];
+  readonly replyName: string;
+  readonly previewValue: string;
+  /** Named in the footer, so a reader knows which form produced the mail. */
+  readonly sourceLabel: string;
+};
+
+function renderText(email: FormEmail): string {
   return [
-    TITLE,
+    email.title,
     "",
-    ...rowsFor(submission).map(renderTextRow),
+    ...email.rows.map(renderTextRow),
     "",
-    `Reply to this email to reach ${submission.name} directly.`,
+    `Reply to this email to reach ${email.replyName} directly.`,
   ].join("\n");
 }
 
-function renderHtml(submission: EnquirySubmission): string {
-  const rows = rowsFor(submission).map(renderHtmlRow).join("");
+function renderHtml(email: FormEmail): string {
+  const { title, replyName, previewValue, sourceLabel } = email;
+  const rows = email.rows.map(renderHtmlRow).join("");
 
   /*
     Preview text: the line most clients show beside the subject in the message
@@ -159,7 +206,7 @@ function renderHtml(submission: EnquirySubmission): string {
     the body, which is the only way to control it.
   */
   const preview = escapeHtml(
-    `${submission.name} — ${submission.destination === "" ? NOT_PROVIDED : submission.destination}`,
+    `${replyName} — ${previewValue === "" ? NOT_PROVIDED : previewValue}`,
   );
 
   return `<!doctype html>
@@ -168,7 +215,7 @@ function renderHtml(submission: EnquirySubmission): string {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="color-scheme" content="light" />
-    <title>${TITLE}</title>
+    <title>${escapeHtml(title)}</title>
   </head>
   <body style="margin:0;padding:0;background-color:${PAGE_FILL};">
     <div style="display:none;max-height:0;max-width:0;overflow:hidden;opacity:0;color:transparent;font-size:1px;line-height:1px;">${preview}</div>
@@ -191,7 +238,7 @@ function renderHtml(submission: EnquirySubmission): string {
 
             <tr>
               <td style="padding:28px 28px 4px;">
-                <div style="font:700 22px/1.3 ${FONT_STACK};color:${INK_COLOR};">${TITLE}</div>
+                <div style="font:700 22px/1.3 ${FONT_STACK};color:${INK_COLOR};">${escapeHtml(title)}</div>
               </td>
             </tr>
             ${rows}
@@ -199,14 +246,14 @@ function renderHtml(submission: EnquirySubmission): string {
             <tr>
               <td style="padding:20px 28px 28px;">
                 <div style="font:400 14px/1.6 ${FONT_STACK};color:${MUTED_INK};">
-                  Reply to this email to reach ${escapeHtml(submission.name)} directly.
+                  Reply to this email to reach ${escapeHtml(replyName)} directly.
                 </div>
               </td>
             </tr>
           </table>
 
           <div style="font:400 12px/1.6 ${FONT_STACK};color:${MUTED_INK};padding-top:16px;max-width:600px;">
-            Sent automatically from the Get Started form on omanga.biz
+            Sent automatically from the ${escapeHtml(sourceLabel)} on omanga.biz
           </div>
         </td>
       </tr>
@@ -221,12 +268,34 @@ export type EnquiryEmail = {
   readonly html: string;
 };
 
+/**
+ * Assembles one form's notification email from the shared shell.
+ *
+ * The only exported renderer. A second form supplies its own rows and title and
+ * gets the identical shell, which is what stops two table-layout templates
+ * drifting apart in a mail client nobody tests in.
+ */
+export function composeFormEmail(email: FormEmail): EnquiryEmail {
+  return {
+    subject: `${email.title} — ${email.replyName}`,
+    text: renderText(email),
+    html: renderHtml(email),
+  };
+}
+
+/**
+ * The Get Started form's email. Behaviour and output are unchanged — this is the
+ * same subject, the same rows and the same shell it produced before the shell
+ * was shared.
+ */
 export function composeEnquiryEmail(
   submission: EnquirySubmission,
 ): EnquiryEmail {
-  return {
-    subject: `${TITLE} — ${submission.name}`,
-    text: renderText(submission),
-    html: renderHtml(submission),
-  };
+  return composeFormEmail({
+    title: GET_STARTED_TITLE,
+    rows: rowsFor(submission),
+    replyName: submission.name,
+    previewValue: submission.destination,
+    sourceLabel: "Get Started form",
+  });
 }

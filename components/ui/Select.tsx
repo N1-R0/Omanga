@@ -72,6 +72,16 @@ export type SelectProps = {
   isDisabled?: boolean;
   defaultValue?: string;
   onBlur?: (event: React.FocusEvent<HTMLSelectElement>) => void;
+  /**
+   * [ADDED] Fires on selection.
+   *
+   * Only for a select whose value changes what else the form renders — the
+   * Contact form's enquiry type reveals two company fields. A select that merely
+   * collects a value needs nothing here: the control is uncontrolled, the value
+   * is read from `FormData` at submit, and adding a handler to track it would put
+   * state in a component that does not need any.
+   */
+  onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
 export function Select({
@@ -87,6 +97,7 @@ export function Select({
   isDisabled = false,
   defaultValue,
   onBlur,
+  onChange,
 }: SelectProps) {
   const hasError = error !== undefined;
 
@@ -113,6 +124,7 @@ export function Select({
         disabled={isDisabled}
         defaultValue={defaultValue}
         onBlur={onBlur}
+        onChange={onChange}
         aria-invalid={hasError || undefined}
         aria-describedby={describedBy(id, {
           hasDescription: description !== undefined,

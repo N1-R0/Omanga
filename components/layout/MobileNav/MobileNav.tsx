@@ -9,7 +9,7 @@ import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import { useDismiss } from "@/hooks/useDismiss";
 import { useFocusReturn } from "@/hooks/useFocusReturn";
 import { cx } from "@/lib/cx";
-import type { CallToAction, LinkTarget } from "@/types/content.types";
+import type { CallToAction, NavigationEntry } from "@/types/content.types";
 import type { Tone } from "@/types/ui.types";
 
 import { MobileNavToggle } from "./MobileNavToggle";
@@ -51,7 +51,7 @@ import { MobileNavToggle } from "./MobileNavToggle";
  */
 
 export type MobileNavProps = {
-  items: readonly LinkTarget[];
+  items: readonly NavigationEntry[];
   /**
    * The header's primary call to action.
    *

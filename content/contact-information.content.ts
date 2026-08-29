@@ -4,7 +4,7 @@ import {
   WHATSAPP_NUMBER_DISPLAY,
   WHATSAPP_URL,
 } from "@/config/site";
-import { COUNTRIES_SERVED } from "@/content/site.content";
+import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { LinkTarget } from "@/types/content.types";
 
 /**
@@ -61,9 +61,9 @@ import type { LinkTarget } from "@/types/content.types";
  * Transcribed because it is Omanga's published claim on the live Contact page,
  * which the spec names as its only source of fact.
  */
-const COVERAGE_BODY = `Omanga serves travellers across ${COUNTRIES_SERVED} African countries, with payments and health cover in one account.`;
+const COVERAGE_BODY = `Omanga serves travellers across ${COUNTRIES_SERVED_DISPLAY} African countries, with payments and health cover in one account.`;
 
-const COVERAGE_LINK_LABEL = `See all ${COUNTRIES_SERVED} countries`;
+const COVERAGE_LINK_LABEL = `See all ${COUNTRIES_SERVED_DISPLAY} countries`;
 
 /**
  * [BLOCKER → CHANGED] The coverage link's destination.

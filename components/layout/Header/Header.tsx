@@ -3,12 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 
 import { Container } from "@/components/layout/Container";
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { Logo } from "@/components/layout/Logo";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { Navigation } from "@/components/layout/Navigation";
 import { Button } from "@/components/ui/Button";
 import { cx } from "@/lib/cx";
-import type { CallToAction, LinkTarget } from "@/types/content.types";
+import type { CallToAction, NavigationEntry } from "@/types/content.types";
 
 /**
  * The site header.
@@ -86,7 +87,7 @@ const HIDE_AFTER_PX = 64;
 const DIRECTION_THRESHOLD_PX = 8;
 
 export type HeaderProps = {
-  items: readonly LinkTarget[];
+  items: readonly NavigationEntry[];
   action: CallToAction;
   landmarkLabel: string;
   /** Wordmark text and the accessible name for the home link. */
@@ -94,6 +95,13 @@ export type HeaderProps = {
   homeLabel: string;
   openLabel: string;
   closeLabel: string;
+  /** Strings for the language menu, from `content/language.content.ts`. */
+  language: {
+    triggerLabel: string;
+    menuLabel: string;
+    currentSuffix: string;
+    pendingNote: string;
+  };
 };
 
 export function Header({
@@ -104,6 +112,7 @@ export function Header({
   homeLabel,
   openLabel,
   closeLabel,
+  language,
 }: HeaderProps) {
   const [isHidden, setIsHidden] = useState(false);
 
@@ -254,6 +263,23 @@ export function Header({
 
           <div className="flex flex-1 items-center justify-end gap-fluid-2">
             {/*
+              Before the call to action, and rendered at every width.
+
+              It stays in the bar on a phone rather than moving into the
+              disclosure panel, unlike the primary button: someone who cannot
+              read the header has to be able to change the language without
+              first finding a menu labelled in a language they do not read. It
+              is a flag and a 44px target, so it costs the narrow bar almost
+              nothing.
+            */}
+            <LanguageSwitcher
+              triggerLabel={language.triggerLabel}
+              menuLabel={language.menuLabel}
+              currentSuffix={language.currentSuffix}
+              pendingNote={language.pendingNote}
+            />
+
+            {/*
               Desktop only below `desktop`, the primary call to action moves into
               the disclosure panel, which is where the mobile reference puts it.
               Rule 12 still holds — the button exists at every breakpoint and is one
@@ -261,10 +287,17 @@ export function Header({
               it is ever rendered.
             */}
             <div className="hidden desktop:block">
+              {/*
+                `compact` here and nowhere else. The bar is a fixed 4rem and its
+                nav sits at `--text-small`; the measured page-body button size
+                reads as oversized against both. Every other call to action on
+                the site keeps the default.
+              */}
               <Button
                 as="link"
                 variant="primary"
                 tone="light"
+                size="compact"
                 href={action.href}
               >
                 {action.label}

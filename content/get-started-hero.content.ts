@@ -1,4 +1,4 @@
-import { COUNTRIES_SERVED } from "@/content/site.content";
+import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { Eyebrow } from "@/types/content.types";
 
 /**
@@ -51,7 +51,7 @@ import type { Eyebrow } from "@/types/content.types";
  * approved version of it: "Start with the one your trip needs most — you can add
  * the other at any time, without a second signup."
  */
-const INTRO = `Omanga is an integrated destination services platform: a multi-currency wallet for spending across ${COUNTRIES_SERVED} African countries, and short-term holiday insurance from established Nigerian health providers — set up in one account, before you fly.`;
+const INTRO = `Omanga is an integrated destination services platform: a multi-currency wallet for spending across ${COUNTRIES_SERVED_DISPLAY} African countries, and short-term holiday insurance from established Nigerian health providers — set up in one account, before you fly.`;
 
 export type GetStartedHeroContent = {
   readonly eyebrow: Eyebrow;

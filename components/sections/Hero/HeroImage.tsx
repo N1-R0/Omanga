@@ -3,7 +3,7 @@ import Image from "next/image";
 import type { ImageAsset } from "@/types/content.types";
 
 /**
- * The hero's full-bleed background photograph and its scrim.
+ * The hero's full-bleed background photograph.
  *
  * Absolutely positioned behind the content, which is one of the three cases
  * layout rules sanction for absolute positioning ("scrims, decorative art, and
@@ -26,19 +26,17 @@ import type { ImageAsset } from "@/types/content.types";
  * shared component for the full-bleed case, not an inline `img` in a section.
  *
  * ---------------------------------------------------------------------------
- * The scrim is not applied here, and that is deliberate.
+ * [CHANGED, 2026-08-29] There is no scrim on this band any more.
  *
- * The `scrim` utility sets `position: relative` so its `::after` has something to
- * anchor to. Putting it on this element — which must be `position: absolute` —
- * makes two utilities in the same layer fight over one property, and which one
- * wins depends on the order Tailwind happens to emit them in. It resolves
- * correctly today purely because `.absolute` is emitted after `.scrim`. That is
- * not a thing to depend on.
+ * It was never applied on this element — it sat on the `section` in `Hero` — and
+ * it has now been removed there. `Hero`'s block comment carries the measured
+ * contrast consequence and the options for closing it.
  *
- * So `Hero` carries `scrim` on the `section`, which is already `relative`, and
- * this element sits behind it. component-rules.md's requirement that "the
- * component enforces it rather than each caller" still holds — the caller of
- * `Hero` cannot turn the scrim off, and there is no prop to try.
+ * If one is ever restored, it belongs on the `section` again and not here. The
+ * `scrim` utility sets `position: relative` so its `::after` has something to
+ * anchor to; on this element, which must be `position: absolute`, two utilities
+ * in the same layer would fight over one property and the winner would depend on
+ * the order Tailwind happens to emit them in.
  */
 
 export type HeroImageProps = {

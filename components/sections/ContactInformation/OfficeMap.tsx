@@ -4,8 +4,10 @@ import { Card } from "@/components/ui/Card";
 import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
 import { TextLink } from "@/components/ui/TextLink";
-import { OFFICE_MAP_EMBED_URL, WHATSAPP_URL } from "@/config/site";
+import { WHATSAPP_URL } from "@/config/site";
 import type { OfficeMapContent } from "@/content/contact-information.content";
+
+import { MapFrame } from "./MapFrame";
 
 /**
  * The office on an embedded Google map, with the address in text beneath it.
@@ -35,20 +37,20 @@ import type { OfficeMapContent } from "@/content/contact-information.content";
  *                      information; the map is an illustration of it.
  *
  * ---------------------------------------------------------------------------
- * [BLOCKER — privacy] The frame contacts Google and sets cookies, and nothing on
- * this site asks first.
+ * [RESOLVED — privacy] The frame contacted Google before anything asked.
  *
- * There is no cookie banner or consent mechanism anywhere in the application, and
- * § E-E-A-T item 4 lists the Privacy Policy as still unpublished — "a consent
- * checkbox that links to nothing is a compliance gap". An embedded Google map is
- * the site's first third-party request that carries identifiers, so it is also the
- * first thing that policy will have to disclose.
+ * This note previously stood as an open blocker: "no cookie banner or consent
+ * mechanism anywhere in the application", with two suggested fixes — gate the
+ * frame behind a consent choice, or swap it for a static image.
  *
- * `loading="lazy"` narrows the exposure to visitors who scroll this far and does
- * not remove it. Two ways to close it properly, neither of which is mine to pick:
- * gate the frame behind a consent choice, or replace it with a static map image
- * that only contacts Google when a visitor asks to go there. Raised rather than
- * resolved.
+ * The first is now implemented. The `<iframe>` moved into `MapFrame`, which is a
+ * client component behind the functional-cookie gate, so the request to
+ * `maps.google.com` is not made at all until a visitor allows it. The Privacy
+ * Policy and Cookie Policy that this note said were unpublished are now at
+ * `/privacy-policy` and `/cookie-policy`, and both name Google as the recipient.
+ *
+ * What stays here: the address as real text beneath the frame, which is the
+ * accessible carrier of the information and does not depend on the map loading.
  */
 
 /**
@@ -74,26 +76,15 @@ export function OfficeMap({ content, address }: OfficeMapProps) {
           in the accessibility tree — a screen-reader user reaches it and is told
           nothing about what they have entered. It is chrome rather than marketing
           copy, so it lives in the content module for the same reason the skip link
-          label and the navigation landmark name do.
+          label and the navigation landmark name do. It is passed through to
+          `MapFrame` so the string still has exactly one owner.
 
-          `loading="lazy"` is the mobile-data answer to § 6's objection: no tile is
-          requested until the frame approaches the viewport.
-
-          `referrerPolicy` is Google's own recommendation for the embed — it sends
-          the origin over HTTPS and nothing on a downgrade.
-
-          No `allowFullScreen` and no `sandbox`. Full screen is a feature this does
-          not need, and a `sandbox` tight enough to matter breaks the map's own
-          scripts while leaving the network request — the thing that actually
-          carries the privacy cost — untouched.
+          The frame itself, its `loading`, its `referrerPolicy` and the consent
+          gate in front of all three now live in `MapFrame` — the gate has to read
+          client state, and this component is a server component. The reasoning
+          for each attribute moved with it.
         */}
-        <iframe
-          src={OFFICE_MAP_EMBED_URL}
-          title={content.frameTitle}
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          className="size-full border-0"
-        />
+        <MapFrame title={content.frameTitle} />
       </div>
 
       {/*

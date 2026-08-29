@@ -215,10 +215,29 @@ export function SolutionCard({
 
           `Card` bottom-aligns this region, so the two pills sit on one line
           across the row however much body copy each card carries.
+
+          [CHANGED, 2026-08-29] `primary`, was `secondary`. Asked for the brand
+          colours, so on a light card the pill is now a brand fill with a white
+          label rather than an ink outline.
+
+          It puts two primary buttons in one section, against `design.md` rule 3
+          ("one primary per section"), and that is a deliberate reading of the
+          rule rather than an oversight. The rule exists so a section has one
+          obvious action; these two cards are peers offering different products,
+          not a hierarchy with a winner. Promoting one and de-weighting the other
+          would be the content decision this section's own comment says nobody
+          has made. Two equal primaries say the same thing the two equal cards
+          already say.
+
+          Contrast is unchanged on the light card — brand fill with a white label
+          is the same pairing the header CTA uses. On a brand-filled card
+          (`emphasis="primary"`, currently unused) `primary`/`brand` resolves to a
+          white fill with a brand label, which is the inversion the `Button`
+          primitive already measures.
         */
         <Button
           as="link"
-          variant="secondary"
+          variant="primary"
           tone={surface.button}
           href={content.action.href}
         >

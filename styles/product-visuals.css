@@ -583,6 +583,10 @@
   gap: calc(24 * var(--pv));
   padding-inline: calc(28 * var(--pv));
   border-radius: calc(24 * var(--pv));
+  /* The frame sets its idle rows in Medium and the active one in Semi Bold.
+     Weight is inherited by the label rather than set on it, so the active slot
+     can raise it without a second selector. */
+  font-weight: var(--font-weight-medium);
   transition-property: transform, opacity, filter, background-color, box-shadow,
     color;
   transition-duration: var(--duration-tier-move);
@@ -621,7 +625,9 @@
   filter: none;
   z-index: 7;
   background-color: #fff;
-  color: #111;
+  /* #111518 in the frame. */
+  color: #111518;
+  font-weight: var(--font-weight-bold);
   box-shadow: 0 calc(10 * var(--pv)) calc(30 * var(--pv)) rgb(22 23 23 / 0.1);
 }
 
@@ -682,21 +688,792 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Icon tiles. The frame gives every step its own hue; here the active tile takes
-   the brand and the rest are neutral.
+   Icon tiles — one hue per cover item.
 
-   Two reasons. The frame's palette is seven arbitrary product colours and this
-   system has one brand plus greys — importing six more would be a bigger change
-   to the palette than the visual is worth. And with the card no longer brand
-   filled, this is the only brand colour left in the section, which is what stops
-   the two solution cards reading as one undifferentiated pair.
+   [CHANGED, 2026-08-29] This was a brand tile for the active row and a flat grey
+   for the rest. The frame's own palette was asked for instead, and the tints
+   below are taken from node 2654:115547 verbatim:
+
+     #b2cbef  blue        #eadcdc  rose       #dfc9f2  purple
+     #e5bca2  tan         #a1caec  sky        #bee6be  green
+     #e5dfda  warm grey
+
+   ---------------------------------------------------------------------------
+   THE HUE FOLLOWS THE ITEM, NOT THE SLOT, AND THAT IS THE ONE DEPARTURE
+
+   In the frame each of the seven colours sits at a fixed position, because the
+   frame is a still: one row is drawn active and given a saturated tile, the
+   other six are pale.
+
+   This list moves. Binding a colour to a slot would repaint every tile each time
+   the stack advances — seven rows changing colour in step, which reads as a
+   fault rather than as motion. Binding it to the item means each row keeps its
+   own colour as it travels and the palette stays put while the content moves.
+
+   The frame's active/idle distinction is kept exactly, just expressed per hue:
+   the active tile is the saturated tone with a white glyph, an idle tile is the
+   pale tint with the saturated tone as its glyph. At any single moment the
+   composition is the frame's — one saturated tile, six pale ones.
+
+   The saturated tones are not in the frame, which only ever needed one. Each is
+   the darkest member of its own tint's hue family that keeps a white 24px glyph
+   legible on it.
    ------------------------------------------------------------------------ */
+@utility pv-tile-blue {
+  --pv-tile-tint: #b2cbef;
+  --pv-tile-solid: #3f7ac4;
+}
+
+@utility pv-tile-rose {
+  --pv-tile-tint: #eadcdc;
+  --pv-tile-solid: #b8555f;
+}
+
+@utility pv-tile-purple {
+  --pv-tile-tint: #dfc9f2;
+  --pv-tile-solid: #9b51e0;
+}
+
+@utility pv-tile-tan {
+  --pv-tile-tint: #e5bca2;
+  --pv-tile-solid: #bf7038;
+}
+
+@utility pv-tile-sky {
+  --pv-tile-tint: #a1caec;
+  --pv-tile-solid: #2f86c6;
+}
+
+@utility pv-tile-green {
+  --pv-tile-tint: #bee6be;
+  --pv-tile-solid: #45914e;
+}
+
+@utility pv-tile-sand {
+  --pv-tile-tint: #e5dfda;
+  --pv-tile-solid: #7d7065;
+}
+
 @utility pv-step-icon-active {
+  background-color: var(--pv-tile-solid);
+  color: #fff;
+}
+
+@utility pv-step-icon-idle {
+  background-color: var(--pv-tile-tint);
+  color: var(--pv-tile-solid);
+}
+
+/* =============================================================================
+   PAYMENTS FEATURES — the three cards in `/payments` § 4
+   -----------------------------------------------------------------------------
+   A second, separate visual family. It does NOT reuse the `pv-*` classes above,
+   and the reason is measured and already recorded in `SolutionCard`: those
+   surfaces are translucent white on a light ground, and on the brand fill the
+   whole composition inverts — "the recessed rows read as mauve". These cards ARE
+   brand-filled, so their visuals are built the opposite way round: OPAQUE WHITE
+   objects carrying ink text, sitting on #ae2448.
+
+   That is what the reference does too. Its cards are a flat brand field with one
+   or two solid white objects on it and no translucency anywhere, which is what
+   keeps the objects reading as objects rather than as a wash.
+
+   THE CARD IS THE VISUAL. Each card carries a heading and nothing else — no
+   eyebrow, no body, no action — so the artwork is the argument and the heading
+   only names it. The proportions below are set by that: the head block is sized
+   to two lines of `h4` and the art box takes everything under it.
+
+   THE SCALE UNIT
+
+   `pf-box` opens its own query container. `--pf` is one authored pixel against a
+   400-WIDE, 400-TALL canvas, so every number below is the number the layout was
+   drawn at and the whole visual is an exact scale model at any card width.
+
+   Same technique as `--pv`, two differences: a 400 canvas rather than 491,
+   because these cards sit three-up where the solution cards sit two-up and the
+   same authored pixel has to stay legible in a narrower box; and a SQUARE box
+   rather than 3:2. The square is what makes the visual dominant — at 3:2 the
+   artwork was a strip under a heading, and the instruction was for the artwork to
+   be the thing you look at.
+   ========================================================================== */
+
+@utility pf-box {
+  container-type: inline-size;
+  /* One authored pixel. 100cqw / 400. */
+  --pf: 0.25cqw;
+}
+
+/* The card itself.
+
+   Not the `Card` primitive, and this is a real departure rather than an
+   oversight. `Card` fixes its slot order as media -> eyebrow -> heading -> body
+   -> action and pads uniformly, and this card needs the opposite order and a
+   full-bleed art box that reaches three edges. Neither is expressible through
+   its props, and adding them would mean two new axes on a shipped component for
+   one caller.
+
+   What it borrows rather than reinvents: the brand surface, `--radius-md` (the
+   system's step for "panels, media plates, large surfaces" — which is what this
+   is), and no shadow, per § 7. */
+@utility pf-card {
+  display: flex;
+  block-size: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--radius-md);
   background-color: var(--color-brand);
   color: var(--color-on-dark);
 }
 
-@utility pv-step-icon-idle {
-  background-color: rgb(22 23 23 / 0.06);
-  color: #6e6e73;
+/* The heading block. Generous above, tighter below — the space under the
+   heading belongs to the artwork, so pulling it in is what visually hands the
+   card over to the visual. */
+@utility pf-card-head {
+  padding-inline: var(--space-5);
+  padding-block-start: var(--space-7);
+  padding-block-end: var(--space-5);
+  text-align: center;
+}
+
+/* [DEVIATES from design.md § 1 principle 1] The card heading is 600, not 500.
+
+   "Every heading on the reference — display through h6 — is weight 500. Not 300,
+   not 600, and never bold. Hierarchy comes from size and space, never from
+   weight." That rule is overridden here on instruction, matching the reference
+   these cards were designed against, whose card headings are bold.
+
+   It is applied as a wrapper rule rather than a prop on `Heading`, because
+   `Heading` takes no `className` by design and adding a weight axis to it would
+   make the exception available to every heading on the site. Contained here, it
+   reaches exactly these three. */
+@utility pf-card-heading {
+  & > :is(h1, h2, h3, h4, h5, h6) {
+    font-weight: var(--font-weight-bold);
+  }
+}
+
+/* One shadow recipe for every white object in the family, soft and low, so the
+   objects sit on the field rather than float above it. This is the one place the
+   system's "there are none" rule on elevation is set aside, and it is set aside
+   for a depicted object rather than for a page element. */
+@utility pf-surface {
+  background-color: var(--color-surface-page);
+  box-shadow: 0 calc(8 * var(--pf)) calc(24 * var(--pf)) rgb(0 0 0 / 0.12);
+}
+
+/* -----------------------------------------------------------------------------
+   1 · ACCOUNT DRAWER — a bottom sheet listing the currencies held
+   -------------------------------------------------------------------------- */
+
+/* Taller than the room below it, so the last row is clipped by the card's edge.
+   The clip is the point and is the same device `pv-panel` uses: a drawer that
+   ends inside the frame reads as a small white box, one that runs off the edge
+   reads as a sheet pulled up over a screen behind it. */
+@utility pf-drawer {
+  position: absolute;
+  inset-inline: calc(30 * var(--pf));
+  inset-block-start: calc(78 * var(--pf));
+  block-size: calc(354 * var(--pf));
+  border-start-start-radius: calc(30 * var(--pf));
+  border-start-end-radius: calc(30 * var(--pf));
+  padding-inline: calc(20 * var(--pf));
+  padding-block-start: calc(16 * var(--pf));
+  display: flex;
+  flex-direction: column;
+  gap: calc(14 * var(--pf));
+}
+
+@utility pf-grabber {
+  align-self: center;
+  inline-size: calc(48 * var(--pf));
+  block-size: calc(5 * var(--pf));
+  border-radius: 100vw;
+  background-color: rgb(22 23 23 / 0.15);
+}
+
+@utility pf-drawer-title {
+  font-size: calc(15 * var(--pf));
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-ink);
+}
+
+@utility pf-account-row {
+  display: flex;
+  align-items: center;
+  gap: calc(12 * var(--pf));
+  border-radius: calc(14 * var(--pf));
+  padding-inline: calc(10 * var(--pf));
+  padding-block: calc(10 * var(--pf));
+}
+
+/* The held position. A brand tint rather than a fill, so the row reads as
+   selected without becoming a second brand block inside a brand card. */
+@utility pf-account-row-active {
+  background-color: rgb(174 36 72 / 0.08);
+}
+
+@utility pf-flag {
+  position: relative;
+  flex-shrink: 0;
+  inline-size: calc(32 * var(--pf));
+  block-size: calc(32 * var(--pf));
+  border-radius: 100vw;
+  overflow: hidden;
+  background-color: var(--color-surface-light);
+}
+
+@utility pf-account-code {
+  font-size: calc(14.5 * var(--pf));
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--color-ink);
+}
+
+@utility pf-account-name {
+  font-size: calc(11.5 * var(--pf));
+  line-height: 1.15;
+  color: var(--color-ink-muted);
+}
+
+@utility pf-account-balance {
+  margin-inline-start: auto;
+  font-size: calc(14 * var(--pf));
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--color-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* -----------------------------------------------------------------------------
+   2 · RATE TICKER — the four permitted pairs, live
+   -------------------------------------------------------------------------- */
+
+/* Centred in the box rather than pinned, because unlike the drawer this object
+   is complete — nothing about a rate list wants to run off an edge. */
+@utility pf-ticker {
+  position: absolute;
+  inset-inline: calc(28 * var(--pf));
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+  border-radius: calc(26 * var(--pf));
+  padding: calc(24 * var(--pf));
+  display: flex;
+  flex-direction: column;
+  gap: calc(16 * var(--pf));
+}
+
+@utility pf-ticker-head {
+  display: flex;
+  align-items: center;
+  gap: calc(8 * var(--pf));
+  font-size: calc(11.5 * var(--pf));
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+@utility pf-live-dot {
+  inline-size: calc(7 * var(--pf));
+  block-size: calc(7 * var(--pf));
+  border-radius: 100vw;
+  background-color: var(--color-brand);
+  animation: pf-pulse var(--duration-live-pulse) ease-in-out infinite;
+}
+
+/* Opacity only. The dot's size is fixed, so the pulse cannot shift anything
+   around it — and `data-motion="loop"` at the call site is what freezes it on
+   frame one under reduced motion, where a fully opaque dot is the honest still. */
+@keyframes pf-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@utility pf-rate-row {
+  display: flex;
+  align-items: center;
+  gap: calc(10 * var(--pf));
+}
+
+/* The two flags of a corridor, overlapped so they read as one pair rather than
+   as two separate marks. The negative offset lives here rather than as an
+   arbitrary value in markup, per § 3: "No arbitrary values, no raw Tailwind
+   numeric steps in section markup." */
+@utility pf-rate-flags {
+  display: flex;
+
+  & > * + * {
+    margin-inline-start: calc(-6 * var(--pf));
+  }
+}
+
+@utility pf-rate-pair {
+  font-size: calc(13 * var(--pf));
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-ink);
+}
+
+@utility pf-rate-value {
+  margin-inline-start: auto;
+  font-size: calc(14 * var(--pf));
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The delta. Colour is not the only signal — the sign travels in the text — so
+   this does not fail "never signal state by colour alone". */
+@utility pf-rate-delta {
+  min-inline-size: calc(46 * var(--pf));
+  text-align: end;
+  font-size: calc(12 * var(--pf));
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility pf-rate-delta-up {
+  color: #1f8f3a;
+}
+
+@utility pf-rate-delta-down {
+  color: var(--color-brand);
+}
+
+@utility pf-ticker-foot {
+  font-size: calc(11 * var(--pf));
+  line-height: 1.25;
+  color: var(--color-ink-muted);
+}
+
+/* -----------------------------------------------------------------------------
+   3 · COUNTRY CHIPS — two rows drifting in opposite directions
+   -------------------------------------------------------------------------- */
+
+/* [REMOVED, 2026-08-29] `pf-chip-count` and `pf-chip-caption` — the large `50+`
+   and the line under it.
+
+   The figure was added when the card lost its body copy, on the reasoning that a
+   bare pair of drifting rows needed something to say what they amounted to. The
+   caption was added to say what the figure counted. Both removed on instruction,
+   and the card is better for it: the heading directly above already reads "Spend
+   across 50+ African countries", so the figure was the same claim twice within
+   about 80 pixels and the caption was the other half of it — and together they
+   competed with the heading, which is the one thing on this card meant to be
+   read.
+
+   What is left is the argument in its plainest form: named countries, more of
+   them than the frame can hold, moving. Nothing states the count inside the
+   artwork, which is correct — the heading states it, and the metric row beneath
+   the section evidences it.
+
+   [NOTE] The rows now sit in a lot of open brand field. That is the intended
+   reading — space is what makes the chips the subject — but it is the emptiest
+   of the three cards by some margin. A third row is the obvious lever if it reads
+   as thin rather than as composed; the chip sets are already split two ways, so
+   it would mean deciding which countries a third group holds.
+*/
+
+/* Centred in the box, filling it. Not absolutely positioned at a hand-set
+   offset: with nothing above them the rows are the whole composition, and
+   centring is what keeps that true if a row is ever added or removed. */
+@utility pf-chip-rows {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: calc(20 * var(--pf));
+}
+
+@utility pf-chip-row {
+  overflow: hidden;
+  /* Fades both ends into the brand field, so chips enter and leave rather than
+     appearing at a hard edge. A mask rather than a gradient overlay: an overlay
+     would need the field's exact colour and would break the moment the card
+     surface changed. */
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black calc(40 * var(--pf)),
+    black calc(100% - 40 * var(--pf)),
+    transparent
+  );
+}
+
+@utility pf-chip-track {
+  display: flex;
+  inline-size: max-content;
+  animation: pf-drift var(--duration-chip-drift) linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* The second row runs the other way, which is the whole reason there are two.
+   One direction reads as a ticker; two reading against each other read as a
+   field wider than the frame. */
+@utility pf-chip-track-reverse {
+  animation-direction: reverse;
+}
+
+@utility pf-chip-set {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: calc(12 * var(--pf));
+  /* The seam. Matches the gap, so -50% lands exactly on the join. */
+  padding-inline-end: calc(12 * var(--pf));
+}
+
+/* [CHANGED, 2026-08-29] Scaled up from 14/16/11 with a 20 flag.
+
+   Two rows used to sit under a 72-tall figure and a caption; they are now the
+   card's entire contents, so they carry weight the smaller chip could not. */
+@utility pf-chip {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: calc(11 * var(--pf));
+  border-radius: 100vw;
+  padding-inline: calc(20 * var(--pf));
+  padding-block: calc(14 * var(--pf));
+  font-size: calc(16 * var(--pf));
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--color-ink);
+}
+
+@utility pf-chip-flag {
+  position: relative;
+  flex-shrink: 0;
+  inline-size: calc(24 * var(--pf));
+  block-size: calc(24 * var(--pf));
+  border-radius: 100vw;
+  overflow: hidden;
+}
+
+@keyframes pf-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* =============================================================================
+   DEEP DIVE — the preview panel's twelve feature visuals
+   -----------------------------------------------------------------------------
+   `ProductDeepDive` shows a feature list beside a brand plate. The plate held no
+   artwork — `deep-dive.content.ts` carried a [BLOCKER] saying the Figma draws a
+   UI mockup there and none had been supplied. These are that artwork, one per
+   feature, swapped as the reader moves down the list.
+
+   ---------------------------------------------------------------------------
+   WHY A THIRD VISUAL FAMILY, AND NOT A REUSE OF EITHER EXISTING ONE
+
+   The site already has two, and neither could take this job:
+
+     pv-*   glass. Translucent white on a light ground. On the brand plate the
+            recessed surfaces read as mauve — the failure already recorded at
+            the head of PAYMENTS FEATURES. That rules out the wallet panel and
+            the insurance stepper, the two richest pieces on the site.
+     pf-*   opaque white objects on brand. The right language, wrong box: those
+            are authored square against a 400 canvas and this plate is 3:2, so a
+            square composition dropped into it letterboxes.
+
+   So `dd-*` borrows pf-*'s language — opaque white, ink text, real shadows, no
+   translucency — and re-authors it against this plate's proportions. A third
+   family deliberately, rather than a fourth ratio prop bolted onto an existing
+   one.
+
+   ---------------------------------------------------------------------------
+   TWELVE COMPOSITIONS FROM A HANDFUL OF PRIMITIVES
+
+   Each feature gets an arrangement, not a bespoke drawing: a card, some rows,
+   some pills, a tile. Twelve hand-drawn illustrations would drift apart within a
+   month of edits; twelve arrangements of the same parts cannot.
+
+   Every visual is ornamental and sits inside an `aria-hidden` plate. The
+   feature's heading and body are immediately to its left and carry the meaning,
+   which is what makes hiding the artwork honest here rather than lossy — the
+   same contract `ArtBox` and `FeatureArtBox` already hold.
+   ========================================================================== */
+
+@utility dd-stage {
+  position: absolute;
+  inset: 0;
+  container-type: inline-size;
+  /* One authored pixel against a 600-wide plate. */
+  --dd: 0.16667cqw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* [CHANGED, 2026-08-29] 32, was 48.
+
+     The compositions read as small objects floating in a large maroon field.
+     The plate is 600 authored wide, so 48 each side spent 16% of it on margin
+     before anything was drawn; 32 leaves 536 to work in. The rest of the fix is
+     in the widths and type sizes below — a composition cannot be made prominent
+     by cropping its margin alone. */
+  padding: calc(32 * var(--dd));
+}
+
+/* The white surface every object is made of. One shadow, one radius, one place
+   to change both. */
+@utility dd-surface {
+  background-color: var(--color-surface-page);
+  color: var(--color-ink);
+  border-radius: calc(24 * var(--dd));
+  box-shadow: 0 calc(12 * var(--dd)) calc(34 * var(--dd)) rgb(0 0 0 / 0.16);
+}
+
+/* Carries no width. The two width utilities below set it instead, because an
+   override between two `@utility` rules is a coin toss — they carry equal
+   specificity, so the winner depends on the order Tailwind emits them in. Every
+   caller states which width it wants. */
+@utility dd-card {
+  display: flex;
+  flex-direction: column;
+  gap: calc(14 * var(--dd));
+  padding: calc(26 * var(--dd));
+}
+
+/* A card with the stage to itself. 500 of the 536 the stage leaves, so the card
+   is the plate rather than an object sitting on it. */
+@utility dd-card-wide {
+  inline-size: calc(500 * var(--dd));
+}
+
+@utility dd-row {
+  display: flex;
+  align-items: center;
+  gap: calc(14 * var(--dd));
+}
+
+/* A rule between rows. Ink at 8% rather than a border token: this sits on white
+   inside a brand plate, where the system's hairline is tuned for a page. */
+@utility dd-row-divided {
+  border-block-start: 1px solid rgb(22 23 23 / 0.08);
+  padding-block-start: calc(14 * var(--dd));
+}
+
+@utility dd-tile {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  /* 44, not 48. `care-access` is the tallest composition — four tile rows with
+     dividers — and at 48 it filled 99% of the stage's height, leaving nothing
+     for a longer label to wrap into. 44 puts it at 94% and every other
+     composition well under. */
+  inline-size: calc(44 * var(--dd));
+  block-size: calc(44 * var(--dd));
+  border-radius: calc(14 * var(--dd));
+  background-color: rgb(174 36 72 / 0.1);
+  color: var(--color-brand);
+}
+
+@utility dd-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(8 * var(--dd));
+  padding-inline: calc(20 * var(--dd));
+  padding-block: calc(12 * var(--dd));
+  border-radius: 100vw;
+  font-size: calc(19 * var(--dd));
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* The one filled object per composition, so the eye lands on the thing the
+   feature is actually about. */
+@utility dd-pill-brand {
+  background-color: var(--color-brand);
+  color: var(--color-on-dark);
+}
+
+@utility dd-label {
+  font-size: calc(17 * var(--dd));
+  line-height: 1.2;
+  color: var(--color-ink-muted);
+}
+
+@utility dd-title {
+  font-size: calc(22 * var(--dd));
+  font-weight: var(--font-weight-medium);
+  line-height: 1.2;
+  color: var(--color-ink);
+}
+
+@utility dd-figure {
+  font-size: calc(48 * var(--dd));
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+  letter-spacing: calc(-0.6 * var(--dd));
+  color: var(--color-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+@utility dd-value {
+  margin-inline-start: auto;
+  font-size: calc(20 * var(--dd));
+  font-weight: var(--font-weight-medium);
+  line-height: 1.2;
+  color: var(--color-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------------------------------------------------------------------------
+   Composition helpers. Each is used by one or two visuals and exists because the
+   arrangement is the artwork — a stack that is not offset is just a list.
+   ------------------------------------------------------------------------ */
+
+/* Three cards fanned behind one another. Negative `margin-block-start` rather
+   than absolute positioning, so the stack stays centred in the plate at every
+   width without anything knowing the plate's size. */
+@utility dd-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  inline-size: calc(500 * var(--dd));
+}
+
+/* No width here. Each of the three below sets its own, and a shared
+   `inline-size: 100%` would race them: `@utility` rules carry equal specificity,
+   so which one won would depend on the order Tailwind happened to emit them in. */
+@utility dd-stack-item {
+  padding: calc(22 * var(--dd));
+}
+
+@utility dd-stack-behind {
+  inline-size: calc(420 * var(--dd));
+  opacity: 0.55;
+}
+
+@utility dd-stack-mid {
+  inline-size: calc(460 * var(--dd));
+  margin-block-start: calc(-14 * var(--dd));
+  opacity: 0.8;
+}
+
+@utility dd-stack-front {
+  inline-size: calc(500 * var(--dd));
+  margin-block-start: calc(-14 * var(--dd));
+  z-index: 1;
+}
+
+/* A column of sources feeding one destination. */
+@utility dd-flow {
+  display: flex;
+  align-items: center;
+  gap: calc(22 * var(--dd));
+}
+
+@utility dd-flow-sources {
+  display: flex;
+  flex-direction: column;
+  gap: calc(10 * var(--dd));
+}
+
+/* A card sharing the stage with a source column and an arrow.
+
+   The plate is 600 authored wide with 48 of padding each side, so a composition
+   has 504 to work in. `dd-card-wide` plus the sources and the arrow comes to
+   512 and overruns; this is the width that fits. */
+@utility dd-card-narrow {
+  inline-size: calc(330 * var(--dd));
+}
+
+@utility dd-flow-arrow {
+  flex-shrink: 0;
+  inline-size: calc(34 * var(--dd));
+  block-size: calc(34 * var(--dd));
+  color: rgb(255 255 255 / 0.85);
+}
+
+/* The trip timeline, shared by trip-length and renew-and-extend. */
+@utility dd-track {
+  position: relative;
+  block-size: calc(14 * var(--dd));
+  border-radius: 100vw;
+  background-color: rgb(22 23 23 / 0.1);
+}
+
+@utility dd-track-fill {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  border-radius: 100vw;
+  background-color: var(--color-brand);
+}
+
+/* The extension segment, in a lighter brand so the two read as one trip in two
+   parts rather than as two trips. */
+@utility dd-track-extend {
+  position: absolute;
+  inset-block: 0;
+  border-radius: 100vw;
+  background-color: rgb(174 36 72 / 0.35);
+}
+
+/* Country chips. The payments page has a drifting version of this; here the
+   plate sits beside a list the reader is working through, and a second
+   continuous animation in view competes with it — so these are static. */
+@utility dd-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: calc(12 * var(--dd));
+  inline-size: calc(536 * var(--dd));
+}
+
+@utility dd-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(8 * var(--dd));
+  padding-inline: calc(18 * var(--dd));
+  padding-block: calc(12 * var(--dd));
+  border-radius: 100vw;
+  font-size: calc(19 * var(--dd));
+  line-height: 1;
+  white-space: nowrap;
+}
+
+@utility dd-chip-flag {
+  inline-size: calc(24 * var(--dd));
+  block-size: calc(24 * var(--dd));
+  flex-shrink: 0;
+}
+
+/* Three plan tiers, the middle one raised. */
+@utility dd-tiers {
+  display: flex;
+  align-items: flex-end;
+  gap: calc(16 * var(--dd));
+}
+
+@utility dd-tier {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(12 * var(--dd));
+  inline-size: calc(160 * var(--dd));
+  padding-block: calc(28 * var(--dd));
+  padding-inline: calc(16 * var(--dd));
+}
+
+@utility dd-tier-raised {
+  padding-block: calc(44 * var(--dd));
 }

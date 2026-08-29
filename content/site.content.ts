@@ -97,12 +97,45 @@ export const MAIN_CONTENT_ID = "main-content" as const;
 /**
  * Approved factual constants.
  *
- * The country count is a resolved conflict: the redesign spec's 52 is obsolete
- * and must be rejected everywhere, including alt text, meta descriptions and
- * schema `areaServed`. Exporting it as a constant means no section can type
- * the wrong number without deleting this line first.
+ * Exporting the count as a constant means no section can type the wrong number
+ * without deleting this line first.
+ *
+ * ---------------------------------------------------------------------------
+ * [CHANGED, 2026-08-29] 43 → 50, and the rendered figure is now open-ended.
+ *
+ * The previous value came from the CEO-approved copy document's tracked changes,
+ * which replaced every "52" the redesign spec carried with "43". That figure was
+ * shipped across ten content modules, the homepage meta description, the footer's
+ * coverage label and `Organization.areaServed`.
+ *
+ * Superseded on instruction: the count is **50+**. Two consequences worth
+ * recording, because both are departures from how this constant behaved:
+ *
+ *   1. The rendered figure is no longer the bare number. "50" and "50+" are
+ *      different claims — one is exact, the other is a floor — and every place
+ *      this appears in copy means the floor. `COUNTRIES_SERVED_DISPLAY` is
+ *      therefore what copy interpolates, and the bare number stays for the one
+ *      consumer that needs arithmetic rather than a label.
+ *
+ *   2. The payments content spec's own "52+" is *not* what shipped either. It
+ *      was raised alongside this change and 50+ was confirmed over it, so a
+ *      later reader finding 52 in that document is finding the superseded value,
+ *      not an unapplied correction.
  */
-export const COUNTRIES_SERVED = 43 as const;
+export const COUNTRIES_SERVED = 50 as const;
+
+/**
+ * The count as copy renders it.
+ *
+ * A separate constant rather than a `+` typed at each site, for the reason every
+ * other duplicated fact on this site has one owner: eleven interpolations that
+ * each append their own suffix is eleven places for one of them to say "50
+ * countries" when the claim is "50 or more".
+ *
+ * Every user-facing string interpolates this. `COUNTRIES_SERVED` itself is only
+ * for a consumer that needs the number as a number.
+ */
+export const COUNTRIES_SERVED_DISPLAY = `${COUNTRIES_SERVED}+` as const;
 
 /**
  * Product vocabulary guard.
@@ -114,3 +147,14 @@ export const COUNTRIES_SERVED = 43 as const;
  * string that renders.
  */
 export const FORBIDDEN_COPY_TERMS = ["card", "cards"] as const;
+
+/**
+ * Anchor for the live exchange-rate section on `/payments`.
+ *
+ * Lives here rather than in `services.content.ts` because it has two owners in
+ * different route groups — the homepage service card links to it, and the legacy
+ * payments page renders it. A constant in a shared module is what stops the link
+ * and its target drifting apart, which is exactly how `/insurance#coverage` ended
+ * up pointing at a page with no coverage section on it.
+ */
+export const PAYMENTS_RATES_ANCHOR = "rates" as const;

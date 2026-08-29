@@ -49,7 +49,17 @@ export function SupportBlock({ content }: SupportBlockProps) {
         */}
         <Heading
           id="contact-support-heading"
-          level="h3"
+          /*
+            [FIXED] Was `h3`, directly after the page's `h1`, which skipped `h2`
+            entirely — the first heading a screen reader met after the page title
+            was two levels down, implying a parent section that does not exist.
+
+            `level` and `role` are separate props precisely so this can be
+            corrected without touching the type scale: the outline level moves to
+            `h2` and the visual size stays `step`, so nothing on the page looks
+            different.
+          */
+          level="h2"
           role="step"
           measure="none"
         >

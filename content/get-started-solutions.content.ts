@@ -1,4 +1,4 @@
-import { COUNTRIES_SERVED } from "@/content/site.content";
+import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { CallToAction, Eyebrow } from "@/types/content.types";
 
 /**
@@ -71,7 +71,7 @@ const PAYMENTS: GetStartedSolution = {
    * replacing 52 — but the site has one owner for it, and typing it again would
    * be a second place for it to go stale.
    */
-  body: `A multi-currency wallet built for spending across the continent. Fund in USD, GBP or CAD at transparent real-time rates, send and receive in six currencies, and pay directly from your balance in ${COUNTRIES_SERVED} African countries — online or in person, with no FX surprises at checkout.`,
+  body: `A multi-currency wallet built for spending across the continent. Fund in USD, GBP or CAD at transparent real-time rates, send and receive in six currencies, and pay directly from your balance in ${COUNTRIES_SERVED_DISPLAY} African countries — online or in person, with no FX surprises at checkout.`,
   action: {
     label: "Explore Payment Solutions",
     href: "/payments",

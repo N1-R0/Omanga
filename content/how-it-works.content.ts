@@ -1,3 +1,4 @@
+import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { Eyebrow } from "@/types/content.types";
 
 // Section 5 of Omanga-Homepage-Copy-Approval NJ edits.docx, tracked changes accepted.
@@ -38,9 +39,10 @@ export const howItWorksContent: HowItWorksContent = {
     {
       id: "explore",
       heading: "Explore Africa confidently",
-      // The Figma reads 52 countries. project-context.md: "43 African countries. Not 52.
-      // The spec's 52 is obsolete — reject it everywhere."
-      body: "Spend across 43 African countries, reach healthcare if you need it, and travel knowing both your money and your health are handled.",
+      // [CHANGED, 2026-08-29] The count is interpolated, not typed. The Figma read
+      // 52, the tracked changes made it 43, and it is now 50+ — three values for one
+      // fact in one year is the argument for the constant owning it.
+      body: `Spend across ${COUNTRIES_SERVED_DISPLAY} African countries, reach healthcare if you need it, and travel knowing both your money and your health are handled.`,
     },
   ],
 } as const;

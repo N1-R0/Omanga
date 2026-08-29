@@ -58,8 +58,14 @@ import type { ImageAsset } from "@/types/content.types";
  *
  * [DISCREPANCY] Two filenames do not match the marks they contain:
  * `fusepay-logo.png` renders "fuspay", and `philip-hmo-logo.png` renders
- * "phillips.hmo". The existing files are used as-is rather than renamed, because
- * `app/(legacy)` still references both paths.
+ * "phillips.hmo".
+ *
+ * [UNBLOCKED, 2026-08-29] The reason they were left alone is gone. The note used
+ * to read "used as-is rather than renamed, because `app/(legacy)` still
+ * references both paths" — that group was deleted with the `/payments` migration,
+ * and this module is now the only consumer of either file. Renaming them is two
+ * lines here plus two `git mv`s, and worth doing in the same change as the SVG
+ * re-export above rather than on its own.
  */
 const PARTNER_LOGOS: readonly ImageAsset[] = [
   {

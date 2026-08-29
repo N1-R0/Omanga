@@ -1,12 +1,11 @@
 import { Stack } from "@/components/layout/Stack";
 import { Heading } from "@/components/ui/Heading";
-import { Text } from "@/components/ui/Text";
 import type { CallToAction } from "@/types/content.types";
 
 import { HeroActions } from "./HeroActions";
 
 /**
- * The hero's copy: one headline, the actions, and the risk-reducing line.
+ * The hero's copy: one headline and the actions.
  *
  * ---------------------------------------------------------------------------
  * REDESIGNED against the reference. Three things changed and each is deliberate.
@@ -33,22 +32,30 @@ import { HeroActions } from "./HeroActions";
  *    heading below it on one shared vertical edge. That single continuous edge
  *    down the left of the page is most of what reads as "designed".
  *
- * What remains is a three-step hierarchy — statement, action, reassurance —
- * with nothing competing with the statement.
+ * 4. [2026-08-29] THE RISK-REDUCING LINE IS GONE.
+ *    "No monthly fee. Set up in minutes." sat under the actions. Removed on
+ *    instruction, and it takes the same argument as 1 and 2 one step further:
+ *    the reference's hero band holds its `h1` and nothing else, and this band is
+ *    now the headline and the two buttons.
+ *
+ *    It also removes one of the two elements the unscrimmed photograph could not
+ *    carry — see the contrast table in `Hero`. That is a side effect, not the
+ *    reason, and the secondary button's label is still on the wing.
+ *
+ * What remains is a two-step hierarchy — statement, then action — with nothing
+ * competing with the statement.
  */
 
 export type HeroContentProps = {
   headingId: string;
   heading: string;
   actions: readonly [CallToAction, CallToAction];
-  helperText: string;
 };
 
 export function HeroContent({
   headingId,
   heading,
   actions,
-  helperText,
 }: HeroContentProps) {
   return (
     /*
@@ -81,13 +88,6 @@ export function HeroContent({
       </Heading>
 
       <HeroActions actions={actions} />
-
-      {/*
-        The risk-reducing line, beneath the actions rather than above them —
-        it exists to lower the cost of pressing the button directly above it, so
-        it has to be read after the button, not before.
-      */}
-      <Text role="small">{helperText}</Text>
     </Stack>
   );
 }

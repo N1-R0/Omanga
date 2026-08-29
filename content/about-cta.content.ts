@@ -1,6 +1,6 @@
 import { ctaContent } from "@/content/cta.content";
 import type { CtaContent } from "@/content/cta.content";
-import { COUNTRIES_SERVED } from "@/content/site.content";
+import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 
 /**
  * Final CTA — spec § 7.
@@ -89,7 +89,7 @@ import { COUNTRIES_SERVED } from "@/content/site.content";
  * [NOTE] Every remaining product claim — the wallet, spending across Africa,
  * short-term cover, established local providers — is in approved homepage copy.
  */
-const INTRO = `Africa rewards the traveller who arrives ready. Omanga brings the essentials into one place — a multi-currency wallet that works across ${COUNTRIES_SERVED} African countries, and short-term health cover from established local providers — so that the practical side of the trip is handled before you land and the continent gets your full attention. The spirit of Ubuntu lives in us all; through our collective unity, we achieve great things.`;
+const INTRO = `Africa rewards the traveller who arrives ready. Omanga brings the essentials into one place — a multi-currency wallet that works across ${COUNTRIES_SERVED_DISPLAY} African countries, and short-term health cover from established local providers — so that the practical side of the trip is handled before you land and the continent gets your full attention. The spirit of Ubuntu lives in us all; through our collective unity, we achieve great things.`;
 
 /**
  * The artwork is read from the homepage band rather than redeclared, so the

@@ -21,12 +21,17 @@ import {
  * The insurance card visual: what the cover includes, as a list that scrolls
  * through itself with the active item held at the centre.
  *
- * Structure and geometry are the approved Figma frame's — node 2115:1111,
- * `kyc-verification-stepper` — reproduced row for row: seven rows sharing a
- * centre line, the active one full width and sharp, the rest receding above and
- * below by scale, opacity and blur. Every measurement lives in
+ * Structure and geometry are the approved Figma frame's — `kyc-verification-stepper`,
+ * node 2115:1111 and re-read 2026-08-29 as 2654:115547 — reproduced row for row:
+ * seven rows sharing a centre line, the active one full width and sharp, the rest
+ * receding above and below by scale, opacity and blur. Every measurement lives in
  * `styles/product-visuals.css` under INSURANCE; this file is structure and
  * behaviour only.
+ *
+ * [CHANGED, 2026-08-29] The tiles carry the frame's own palette. They were a
+ * brand tile for the active row and flat grey for the rest; the frame's seven
+ * hues were asked for instead. The colours, and why a hue belongs to an item
+ * rather than to the slot it is passing through, are in `product-visuals.css`.
  *
  * ---------------------------------------------------------------------------
  * [CONTENT] The frame's rows are a KYC flow — "Bank account", "Ownership",
@@ -64,19 +69,31 @@ import {
  *     and `data-motion="loop"` marks it for the CSS half of the same policy.
  */
 
-/** The seven rows, in the order the cover reads. */
+/**
+ * The seven rows, in the order the cover reads, each with its own tile hue.
+ *
+ * `tile` names a class in `styles/product-visuals.css`, which is where the two
+ * colours behind each name live — this file names a hue and never states one.
+ * That file also carries why the hue belongs to the item rather than to the slot
+ * it currently occupies.
+ *
+ * The assignment is by fit, not by the frame's top-to-bottom order: sky for
+ * telemedicine, green for drugs, rose for evacuation. Nothing depends on it, and
+ * a colour can be swapped by editing one word here.
+ */
 const COVER = [
-  { key: "hospital", label: "Hospital access", Glyph: Building },
-  { key: "evacuation", label: "Emergency evacuation", Glyph: Plane },
-  { key: "scans", label: "Diagnostic scans", Glyph: Scan },
-  { key: "inpatient", label: "Inpatient care", Glyph: Bed },
-  { key: "telemedicine", label: "Telemedicine", Glyph: Video },
-  { key: "drugs", label: "Prescription drugs", Glyph: Pill },
-  { key: "support", label: "24/7 support", Glyph: Clock },
+  { key: "hospital", label: "Hospital access", Glyph: Building, tile: "pv-tile-blue" },
+  { key: "evacuation", label: "Emergency evacuation", Glyph: Plane, tile: "pv-tile-rose" },
+  { key: "scans", label: "Diagnostic scans", Glyph: Scan, tile: "pv-tile-purple" },
+  { key: "inpatient", label: "Inpatient care", Glyph: Bed, tile: "pv-tile-tan" },
+  { key: "telemedicine", label: "Telemedicine", Glyph: Video, tile: "pv-tile-sky" },
+  { key: "drugs", label: "Prescription drugs", Glyph: Pill, tile: "pv-tile-green" },
+  { key: "support", label: "24/7 support", Glyph: Clock, tile: "pv-tile-sand" },
 ] as const satisfies readonly {
   key: string;
   label: string;
   Glyph: ComponentType;
+  tile: string;
 }[];
 
 /**
@@ -141,6 +158,7 @@ export function InsuranceVisual({ label }: InsuranceVisualProps) {
               <span
                 className={cx(
                   "pv-step-icon",
+                  item.tile,
                   isActive ? "pv-step-icon-active" : "pv-step-icon-idle",
                 )}
               >

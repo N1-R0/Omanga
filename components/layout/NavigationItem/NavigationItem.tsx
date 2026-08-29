@@ -17,6 +17,12 @@ import type { Tone } from "@/types/ui.types";
  * border, CTA band". Hover takes the label to brand at weight 500 and slides a
  * rule in from the left; the current page holds that same rule at full width.
  *
+ * [CHANGED, 2026-08-29] `text-small` rather than `text-main`, on instruction —
+ * 14 → 16 instead of 16 → 18. A deviation from § 9, and the reason it is safe is
+ * that the size only ever applies to nav links: `--text-small` is an existing
+ * role token, so nothing here is an arbitrary value, and the 44px `hit-area`
+ * floor is unchanged, so the smaller label does not shrink the target.
+ *
  * State is never colour alone: the current page carries `aria-current`, which
  * is also what draws its rule, and hover adds a weight change on top of the
  * colour so the two are separable without relying on hue.
@@ -35,7 +41,7 @@ import type { Tone } from "@/types/ui.types";
  * directly. `data-label` is required by it and is set below.
  */
 const BASE_CLASS =
-  "nav-link px-fluid-3 font-sans text-main hit-area focus-ring transition-standard";
+  "nav-link px-fluid-2 font-sans text-small hit-area focus-ring transition-standard";
 
 /**
  * State × tone.

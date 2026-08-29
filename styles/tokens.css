@@ -116,6 +116,18 @@
   --font-heading: var(--font-sans);
   --font-ui: var(--font-sans);
 
+  /* The one exception to "one family": the wordmark.
+
+     A logotype is not typography in the sense the rule above governs — it is a
+     fixed piece of brand artwork that happens to be set in live text rather
+     than exported as an SVG, which is why `Logo` renders it as a <span> at all.
+     Fraunces gives it a voice the UI face cannot, and the vendored font file is
+     subset to capitals only so this token cannot quietly become a second body
+     family. See `config/fonts.ts`.
+
+     Only `components/layout/Logo` may use it. */
+  --font-wordmark: var(--font-fraunces), "Times New Roman", Times, serif;
+
   /* Three weights. 300 is gone — it was the previous display weight and is the
      main reason the old hero read as thin rather than confident. */
   --font-weight-regular: 400;
@@ -204,6 +216,27 @@
   --text-h6--line-height: 1.3;
   --text-h6--letter-spacing: 0em;
   --text-h6--font-weight: var(--font-weight-medium);
+
+  /* Wordmark — 22 → 26. The same size as H5, which is what the wordmark used
+     before it got its own family, so the header lockup keeps its proportions.
+
+     It is a separate role rather than a reuse of H5 because two of its three
+     other values differ, and both differences follow from the caps setting:
+
+       letter-spacing  Capitals set solid look cramped — the sidebearings that
+                       suit mixed case are too tight when every glyph is
+                       full-height. 0.06em is the loosening that separates the
+                       letters without the word falling apart into six of them.
+       font-weight     600 rather than 500. Fraunces at 500 reads lighter beside
+                       Kantumruy Pro's nav links at the same optical size, and a
+                       wordmark that recedes next to the navigation is the wrong
+                       hierarchy. 600 is already sanctioned above.
+
+     Only `components/layout/Logo` may use this role. */
+  --text-wordmark: clamp(1.375rem, 1.3rem + 0.2vw, 1.625rem);
+  --text-wordmark--line-height: 1.3;
+  --text-wordmark--letter-spacing: 0.06em;
+  --text-wordmark--font-weight: var(--font-weight-bold);
 
   /* Body prose — 22 → 28. Editorial prose set as the subject of its own band.
      Today's one caller is the About page's Our Story panel.
@@ -317,6 +350,25 @@
      1520 and the margin sits inside it, exactly as the reference composes it. */
   --container-content: var(--site-width);
 
+  /* Minimum height of a half-bleed band's artwork cell.
+
+     Below desktop the band stacks and this is the photograph's whole height, so
+     it is set to read as a band rather than as a strip — a little under the
+     image band's floor, because this one sits beside copy rather than breaking
+     two text sections apart. At desktop the copy is usually taller and this
+     stops mattering.
+
+     Not `--spacing-image-band`: that token is the full-bleed parallax band's,
+     shared by three pages, and tying this to it would move this band every time
+     that one is tuned. They are different things that happen to be photographs.
+
+     [CHANGED] Raised from 288 → 480. The band takes two thirds of the width at
+     desktop rather than a half, and at the old height that read as a letterbox
+     strip beside a short copy column rather than as the reference's tall panel.
+     The copy is usually shorter than this now, so this token — not the copy —
+     is what sets the band's height at desktop. */
+  --spacing-bleed-media: clamp(20rem, 52vw, 41rem); /* 320 → 656 */
+
   /* Timeline block. 486 track + 48 gap + 32 rail + 48 gap + 486 track.
      Centring this rather than running a two-column grid across the full content
      column is what makes both sides' copy stop the same distance short of the
@@ -345,30 +397,46 @@
      equal to each other. */
   --container-hero-actions: 18rem; /* 288 */
 
-  /* Hero band minimum height. The reference's hero band measures 612 at
-     desktop. A minimum only — a fixed maximum would clip content at 200% zoom
-     and in the 320px reflow case, which WCAG 1.4.4 and 1.4.10 both forbid.
+  /* Hero band minimum height.
 
-     [FIXED] Fluid from 768 rather than a single step that only engaged at 1024.
-     The band was content-sized below desktop, which put it at 404px at 768 —
-     a hero shorter than the section beneath it, and barely half the reference's.
-     Ramps 480 at tablet to the reference's 612 at wide.
+     [CHANGED, 2026-08-29] 80% of the viewport, on instruction. It was a fluid
+     clamp from 480 at tablet to the reference's measured 612 at wide.
 
-     Applied from `tablet:` only. Below 768 the content is already taller than
-     any sensible minimum, and forcing one there would push the first section
-     below the fold on a phone for no gain. */
-  --spacing-hero-min: clamp(30rem, 20.571rem + 19.643vw, 38.25rem); /* 480 → 612 */
+     Still a minimum, never a maximum. A fixed 80vh would clip content at 200%
+     zoom and in the 320px reflow case, which WCAG 1.4.4 and 1.4.10 both forbid,
+     so the band grows past this whenever the copy needs it to.
+
+     `svh`, not `vh`. On a mobile browser `vh` resolves against the viewport with
+     the toolbars retracted, so a band set in `vh` is taller than the visible
+     screen on arrival and gets clipped at the bottom until the user scrolls.
+     `svh` is the small viewport — toolbars showing — which is the state the page
+     actually loads in, so 80% means 80% of what the visitor can see.
+
+     Now applied at every width, where the old token was gated behind `tablet:`.
+     That gate existed because a fixed 480px minimum is a large fraction of a
+     phone screen and would have pushed the next section below the fold. A
+     relative unit scales with the device instead, so the objection is gone and
+     the hero keeps the same proportion everywhere. */
+  --spacing-hero-min: 80svh;
 
   /* Secondary hero band minimum height, for a page hero that opens a route
-     other than the homepage. 90% of `--spacing-hero-min` at both ends, on the
-     same 768 → 1440 anchors, so the two ramp together and the relationship
-     holds at every width rather than only at the extremes.
+     other than the homepage.
 
-     A second step rather than a second one-off: the homepage hero is the
+     [STALE RELATIONSHIP, 2026-08-29] This was 90% of `--spacing-hero-min` at
+     both ends of the same 768 → 1440 ramp, so the two moved together. That tie
+     is broken: the homepage hero is now viewport-relative (80svh) and this is
+     still a fluid clamp in rem, so the ratio between them varies with the
+     window instead of holding at 90%.
+
+     Left as it is deliberately. The homepage change was instructed for that band
+     only, and quietly converting every page hero to a viewport height would
+     restyle eight routes nobody asked about. **Decide whether the page heroes
+     should follow.** Until then this token stands on its own numbers.
+
+     The reasoning for it being smaller is unchanged: the homepage hero is the
      tallest band on the site by design, and a page hero that is a text band
-     rather than a photographic one has less to hold open. Everything the
-     primary token says still applies — a minimum, never a maximum, and applied
-     from `tablet:` only. */
+     rather than a photographic one has less to hold open. It is a minimum,
+     never a maximum, and is applied from `tablet:` only. */
   --spacing-hero-compact: clamp(27rem, 18.429rem + 17.857vw, 34.5rem); /* 432 → 552 */
 
   /* Full-bleed photographic band height.
@@ -385,8 +453,31 @@
      A height rather than an aspect ratio on the box: `--aspect-*` has no step
      near 2.9:1, and a ratio alone has neither the floor nor the cap. The box is
      still fully sized before the image loads, which is the CLS guarantee the
-     ratio tokens exist to give. */
-  --spacing-image-band: clamp(17.5rem, 34.722vw, 32.8125rem); /* 280 → 525 */
+     ratio tokens exist to give.
+
+     [CHANGED, 2026-08-29] 525 → 600 → 680, in two steps on instruction.
+
+     All three terms scale together each time, so the band keeps the measured
+     proportion and only its size changes: the middle term is always the cap
+     expressed against the 1512 frame (680 / 1512 = 44.974vw), and the floor stays
+     at the same fraction of the cap that stopped the band reading as a letterbox
+     strip on a phone. The two ends still meet the ratio where they always did —
+     the floor releases at ~800px and the cap engages at 1512.
+
+     ONE TOKEN, THREE PAGES. `/get-started`, `/insurance` and `/payments` all
+     render this band and all three get taller. That is intended — it is one band
+     with one height, and a per-page height would mean a second token and a prop
+     on a component whose whole point is that it knows nothing about its caller.
+
+     [TRADE-OFF, compounding] The band is now decisively the tallest element on
+     these pages. The original cap's stated reason was to stop it "growing past
+     its measured height and becoming taller than the hero"; `--spacing-hero-compact`
+     caps at 552, so the band is 128 taller than the hero it follows — and on
+     `/get-started` and `/insurance` a wordless photograph is now the largest
+     thing on the page. Accepted on instruction, and recorded because the reason
+     the cap existed has now been fully spent rather than merely stretched.
+     34.5rem (552) is the ceiling that restores the old relationship. */
+  --spacing-image-band: clamp(22.5rem, 44.974vw, 42.5rem); /* 360 → 680 */
 
   /* Enquiry form column.
      [MEASURED] The form occupies 972 of a 1486 frame in the Get Started
@@ -619,6 +710,28 @@
      decorative loop from competing with the copy beside it. */
   --duration-marquee: 20s;
 
+  /* Country-chip drift in the `/payments` § 4 coverage card, one full pass of
+     one chip set.
+
+     Slower than the partner strip in absolute terms and slower again in relative
+     terms, because the track is a fraction of the width: this sits inside a card
+     art box, not across the content column. The two rows run in opposite
+     directions, and at anything brisker they read as two things competing rather
+     than as one field of countries.
+
+     A separate token rather than reusing `--duration-marquee`: that value is
+     tuned to a 1152px track of three logos, and sharing it would tie the pace of
+     a card visual to a change made for the partner band. */
+  --duration-chip-drift: 34s;
+
+  /* The live dot beside the rate ticker's label, one full pulse.
+
+     Slow on purpose. A dot blinking at one second reads as an alert; at two and a
+     half it reads as a heartbeat, which is the claim — the rates are being kept
+     current, not demanding attention. Frozen on frame one under reduced motion by
+     the global rule, via `data-motion="loop"` at the call site. */
+  --duration-live-pulse: 2500ms;
+
   /* Hero Ken Burns.
 
      [TUNED — 24s -> 12s -> 8s] 24s moved the image under 2% over a typical time
@@ -633,8 +746,18 @@
 
      The benchmark's exact frame duration could not be read: its timing lives in
      Webflow interaction JavaScript rather than in CSS, so it needs a live browser
-     to measure. **Worth re-measuring and matching properly.** */
-  --duration-hero-pan: 8s;
+     to measure. **Worth re-measuring and matching properly.**
+
+     [CHANGED, 2026-08-29] 4s rather than 8s, on instruction — the push was asked
+     to be faster. The scale is untouched at 1.08, so the same distance is
+     covered in half the time: about 2% per second instead of 1%.
+
+     Duration is the right control to move here and scale is not. The pan runs
+     `forwards`, so its end state is where the image spends the rest of the
+     visit; raising the scale would crop more of the photograph permanently,
+     which on this image means pushing the aircraft wing further into the copy
+     column. Shortening the duration changes only how quickly it arrives. */
+  --duration-hero-pan: 4s;
   --motion-hero-pan-scale: 1.08;
 
   /* Reveal geometry. 40px is far enough to read as an arrival; 16px reads as a

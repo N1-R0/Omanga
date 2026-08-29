@@ -1,3 +1,5 @@
+import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
+
 /**
  * Why Omanga content — the comparison section.
  *
@@ -92,10 +94,10 @@ const WITH_OMANGA: ComparisonGroup = {
     "Transparent, real-time rates shown before you confirm",
     // [UNVERIFIED] Clipped in the frame at "…health provide". Reconstructed.
     "Short-term cover from established Nigerian health providers",
-    // [CORRECTED] The frame reads 52. project-context.md: "43 African countries.
-    // Not 52. The spec's 52 is obsolete — reject it everywhere." Six sections
-    // have now shipped with 43.
-    "One account across 43 African countries",
+    // [CHANGED, 2026-08-29] Interpolated rather than typed. The frame read 52, the
+    // tracked changes made it 43, and it is now 50+ — the constant owns it so the
+    // next move is one line rather than eleven.
+    `One account across ${COUNTRIES_SERVED_DISPLAY} African countries`,
     "Payments and insurance managed in the same place",
   ],
 } as const;

@@ -5,7 +5,7 @@ import { InsuranceCoverage } from "@/components/sections/InsuranceCoverage";
 import { InsuranceInclusions } from "@/components/sections/InsuranceInclusions";
 import { InsurancePlans } from "@/components/sections/InsurancePlans";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { SITE_LOCALE, SITE_NAME } from "@/config/site";
+
 import {
   INSURANCE_COVERAGE_HEADING_ID,
   insuranceCoverageContent,
@@ -22,8 +22,9 @@ import {
   PLANS_CTA_HEADING_ID,
   plansCtaContent,
 } from "@/content/plans-cta.content";
-import { buildPageGraph } from "@/lib/schema";
+import { buildPageGraph, buildPlanProducts } from "@/lib/schema";
 import type { PageMetaContent } from "@/types/content.types";
+import { buildPageMetadata } from "@/lib/seo";
 
 /**
  * The Plans page.
@@ -102,41 +103,48 @@ const plansMeta: PageMetaContent = {
   path: "/plans",
 };
 
-export const metadata: Metadata = {
-  title: { absolute: plansMeta.title },
-  description: plansMeta.description,
-  alternates: { canonical: plansMeta.path },
-  // Indexable now that this is the real route. It was `noindex` behind
-  // `/preview` so a crawler could not find a half-built duplicate of the page
-  // that was live at the time.
-  robots: { index: true, follow: true },
-  openGraph: {
-    type: "website",
-    url: plansMeta.path,
-    siteName: SITE_NAME,
-    locale: SITE_LOCALE,
-    title: plansMeta.title,
-    description: plansMeta.description,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: plansMeta.title,
-    description: plansMeta.description,
-  },
-};
+/**
+ * Metadata comes from the shared builder in `lib/seo.ts`.
+ *
+ * [REPLACED] A hand-written ~20-line object, one of six near-identical copies.
+ * Five of those six shipped no `og:image` and no `twitter:image` at all — the
+ * pages shared as a bare link with no card. The builder sets the share image for
+ * every page, so that class of omission cannot recur. Its own comment records
+ * how the gap arose.
+ */
+export const metadata: Metadata = buildPageMetadata(plansMeta);
 
 export default function PlansPage() {
   /*
     `buildPageGraph` emits Organization, WebSite, this WebPage and the two
-    Service nodes. § 11.5's `Product` + `Offer` ×3 belongs on this page rather
-    than on `/insurance` now that the prices render here — it needs a builder in
-    `lib/schema.ts`, which every page shares, so it lands with § 5 rather than
-    ahead of it. Structured data must not describe content the page does not
-    render.
+    Service nodes.
+
+    [SHIPPED] § 11.5's `Product` + `Offer` ×3, which this note deferred until the
+    builder existed and § 5 had landed. Both are now true, so it is emitted.
+
+    The condition the note set — "structured data must not describe content the
+    page does not render" — is met literally: the products are built from
+    `insurancePlansContent.plans`, the same array the cards above render from, so
+    the marked-up name, description and price are the strings on the page rather
+    than a second copy of them. `buildPlanProducts` records what is deliberately
+    left out, and why.
   */
   return (
     <>
-      <JsonLd graph={buildPageGraph(plansMeta)} />
+      <JsonLd
+        graph={buildPageGraph(plansMeta, {
+          crumb: "Insurance Plans",
+          nodes: buildPlanProducts(
+            insurancePlansContent.plans.map((plan) => ({
+              name: plan.name,
+              description: plan.description,
+              price: plan.price,
+              currency: insurancePlansContent.currency,
+              url: plan.action.href,
+            })),
+          ),
+        })}
+      />
 
       {/*
         Stage 1. Choose your plan — spec § 5. Carries the page's `h1`; see the

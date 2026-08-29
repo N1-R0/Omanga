@@ -9,7 +9,7 @@ import { InsuranceProof } from "@/components/sections/InsuranceProof";
 import { TrustPartners } from "@/components/sections/TrustPartners";
 import { WhyOmanga } from "@/components/sections/WhyOmanga";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { SITE_LOCALE, SITE_NAME } from "@/config/site";
+
 import {
   INSURANCE_CARE_HEADING_ID,
   insuranceCareContent,
@@ -38,6 +38,7 @@ import {
 import { TRUST_HEADING_ID, trustContent } from "@/content/trust.content";
 import { buildPageGraph } from "@/lib/schema";
 import type { PageMetaContent } from "@/types/content.types";
+import { buildPageMetadata } from "@/lib/seo";
 
 /**
  * The Insurance page.
@@ -88,28 +89,16 @@ const insuranceMeta: PageMetaContent = {
   path: "/insurance",
 };
 
-export const metadata: Metadata = {
-  title: { absolute: insuranceMeta.title },
-  description: insuranceMeta.description,
-  alternates: { canonical: insuranceMeta.path },
-  // Indexable now that this is the real route. It was `noindex` behind
-  // `/preview` so a crawler could not find a half-built duplicate of the page
-  // that was live at the time.
-  robots: { index: true, follow: true },
-  openGraph: {
-    type: "website",
-    url: insuranceMeta.path,
-    siteName: SITE_NAME,
-    locale: SITE_LOCALE,
-    title: insuranceMeta.title,
-    description: insuranceMeta.description,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: insuranceMeta.title,
-    description: insuranceMeta.description,
-  },
-};
+/**
+ * Metadata comes from the shared builder in `lib/seo.ts`.
+ *
+ * [REPLACED] A hand-written ~20-line object, one of six near-identical copies.
+ * Five of those six shipped no `og:image` and no `twitter:image` at all — the
+ * pages shared as a bare link with no card. The builder sets the share image for
+ * every page, so that class of omission cannot recur. Its own comment records
+ * how the gap arose.
+ */
+export const metadata: Metadata = buildPageMetadata(insuranceMeta);
 
 export default function InsurancePreviewPage() {
   /*
@@ -126,7 +115,7 @@ export default function InsurancePreviewPage() {
   */
   return (
     <>
-      <JsonLd graph={buildPageGraph(insuranceMeta)} />
+      <JsonLd graph={buildPageGraph(insuranceMeta, { crumb: "Holiday Insurance" })} />
 
       {/*
         Stage 1. The hero — spec § 2, and the page's only `h1`. The outline

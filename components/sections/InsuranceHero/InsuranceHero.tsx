@@ -29,8 +29,16 @@ import type { InsuranceHeroContent } from "@/content/insurance-hero.content";
  * does. `Omanga-Insurance-Page-Content-Spec` § 2 is explicit about the reason:
  * the structural reference "offers the reader nothing to click" and relies on
  * its sticky nav, which suits a sales-led B2B funnel. Omanga's visitor arrives
- * self-serve, so a two-tier CTA row is inserted beneath the sub-paragraph and
- * the layout above it is held exactly.
+ * self-serve, so a CTA is inserted beneath the sub-paragraph and the layout
+ * above it is held exactly.
+ *
+ * ---------------------------------------------------------------------------
+ * [CHANGED, 2026-08-29] One action, not two.
+ *
+ * Both specs put a primary and a ghost secondary in this band. Both pages
+ * dropped the secondary in the same change, so `content.action` is a single
+ * value rather than a tuple. See `InsuranceHeroContent` for the reasoning and
+ * `InsuranceHeroActions` for what it cost the markup — nothing.
  */
 
 export type InsuranceHeroProps = {
@@ -68,12 +76,12 @@ export function InsuranceHero({ content, headingId }: InsuranceHeroProps) {
             </Text>
 
             {/*
-              The buttons and the line beneath them are one group, tighter than
-              the parent's `xl` step: the helper text explains the buttons and
-              belongs to them, not to the paragraph above.
+              The button and the line beneath it are one group, tighter than the
+              parent's `xl` step: the helper text explains the button and belongs
+              to it, not to the paragraph above.
             */}
             <Stack gap="md" align="center">
-              <InsuranceHeroActions actions={content.actions} />
+              <InsuranceHeroActions action={content.action} />
 
               {/*
                 `role="small"` rather than a caption. It is a plain qualifier on

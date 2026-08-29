@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import type { DeepDiveProduct } from "@/content/deep-dive.content";
 
 import { FeatureList } from "./FeatureList";
@@ -24,18 +26,32 @@ export function ProductContent({
   product,
   isReducedMotion,
 }: ProductContentProps) {
+  /**
+   * The open feature, owned here because two children read it: the list marks it
+   * expanded, and the panel draws its artwork. It was `FeatureList`'s own state
+   * until the panel had anything to show.
+   */
+  const [firstFeature] = product.features;
+  const [activeId, setActiveId] = useState(firstFeature?.id ?? "");
+
   return (
     <div className={LAYOUT_CLASS}>
       <div className={LIST_CELL_CLASS}>
         <FeatureList
           productId={product.id}
           features={product.features}
+          activeId={activeId}
+          onSelect={setActiveId}
           isReducedMotion={isReducedMotion}
         />
       </div>
 
       <div className={PANEL_CELL_CLASS}>
-        <PreviewPanel preview={product.preview} sizes={PREVIEW_SIZES} />
+        <PreviewPanel
+          preview={product.preview}
+          sizes={PREVIEW_SIZES}
+          activeFeatureId={activeId}
+        />
       </div>
     </div>
   );

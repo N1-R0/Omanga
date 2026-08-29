@@ -5,16 +5,22 @@ import Link from "next/link";
  * The brand lockup: the mark beside the wordmark, linking home.
  *
  * design.md § 3 names an "8 — icon-to-label, wordmark
- * gap" step, and § Typography hierarchy gives the wordmark its own role (Inter
- * SemiBold 24). Two entries for one element is what tells us the lockup is a
- * mark plus a text wordmark rather than a single image, and the Figma header and
- * footer frames both draw it that way.
+ * gap" step, and § Typography hierarchy gives the wordmark its own role. Two
+ * entries for one element is what tells us the lockup is a mark plus a text
+ * wordmark rather than a single image, and the Figma header and footer frames
+ * both draw it that way.
  *
  * The wordmark is text, not an image, for three reasons: it inherits the
  * surface's colour so one component serves the white header and the dark footer
  * without a second asset, it scales with the user's font size, and it means the
  * brand name is real text in the server HTML rather than something only a
  * sighted user can read.
+ *
+ * [CHANGED, 2026-08-29] The wordmark is set in Fraunces caps rather than in the
+ * UI face at H5. It is the only place on the site with a second family, and the
+ * font file is subset to capitals so it stays that way — see `config/fonts.ts`
+ * and the `--text-wordmark` role in `styles/tokens.css`, which carry the
+ * reasoning for the family, the optical size and the caps tracking.
  *
  * Colour comes from the surface. There is no `tone` prop — a logo that could
  * pick its own colour could pick the wrong one.
@@ -101,7 +107,17 @@ export function Logo({ wordmark, label }: LogoProps) {
         */
         className="size-8"
       />
-      <span className="font-sans text-h5">{wordmark}</span>
+      {/*
+        Uppercased in CSS, not in the passed string.
+
+        The prop keeps the brand's own casing — "Omanga" — so the accessible
+        name, the copy in `header.content.ts` and anything that reads this text
+        stay in the form a person would write. `uppercase` is a presentational
+        choice about the logotype, and a screen reader announcing "O-M-A-N-G-A"
+        because the string itself was capitalised is a real risk with some
+        voices.
+      */}
+      <span className="font-wordmark text-wordmark uppercase">{wordmark}</span>
     </Link>
   );
 }

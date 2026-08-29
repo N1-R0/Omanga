@@ -398,3 +398,89 @@
   transition-duration: var(--duration-emphasis);
   transition-timing-function: var(--ease-standard);
 }
+
+/* -----------------------------------------------------------------------------
+   Half-bleed split
+   For a band whose copy sits on the content column while its artwork runs to one
+   viewport edge — `/payments` § 6, built to the reference's app band.
+
+   `Section` cannot express this. It paints the surface on the `section` and puts
+   everything inside one `Container`, so a child either sits on the content column
+   or escapes it entirely; there is no way for one of two grid cells to stay
+   aligned while the other bleeds. So that band renders its own `section`, and
+   these utilities carry the arithmetic rather than putting a `calc()` in markup —
+   design.md § 3: "No arbitrary values, no raw Tailwind numeric steps in section
+   markup."
+
+   THE COPY CELL. Its inline-start padding reproduces exactly where `Container`
+   puts its content edge: the page margin, plus half of whatever the viewport has
+   over the content column when it is wider. So the heading lands on the same
+   vertical line as every other heading on the page, at any width and at any
+   column split.
+
+   [CHANGED] It used to cap the inner block at half the content column and push it
+   to the cell's end. That only aligned while the split was 50/50 — the moment the
+   copy cell became a third of the band the cap was wider than the cell and the
+   alignment was lost. Insetting from the start edge is independent of the split,
+   which is what makes the column ratio a design decision rather than a load-
+   bearing one.
+
+   [KNOWN] `100vw` includes the scrollbar where the browser lays one over the
+   content, so the copy can sit up to a scrollbar-width off the container on those
+   engines. The alternative — resolving a percentage against the section — is not
+   available, because a percentage inside a custom property resolves against the
+   element that *uses* it, not the one that declares it.
+
+   Below desktop the grid is one column and the normal page gutter applies: at
+   those widths a half-bleed split is a stacked band with a photograph under it,
+   which is the correct degradation and needs no special case.
+   -------------------------------------------------------------------------- */
+@utility bleed-copy {
+  padding-inline: var(--spacing-gutter);
+
+  @media (width >= theme(--breakpoint-desktop)) {
+    padding-inline-start: calc(
+      max((100vw - var(--container-content)) / 2, 0px) + var(--spacing-gutter)
+    );
+    padding-inline-end: var(--space-8);
+  }
+}
+
+/* The band itself. Fills the viewport from desktop up.
+
+   `dvh`, not `vh`: on mobile browsers `vh` is measured against the viewport with
+   the address bar retracted, so a `100vh` band is taller than the screen until
+   the user scrolls and the bar collapses. `dvh` tracks the bar. It costs nothing
+   here — this only applies at desktop, where the two are identical — and it is
+   the right unit if the rule is ever extended downward.
+
+   Desktop only, deliberately. Below the breakpoint the band stacks into copy
+   above a photograph, and forcing that pair into one screen would squeeze both:
+   the copy would set its own height and the photograph would take whatever was
+   left, which on a short phone is a strip. There the media keeps its own token
+   floor and the band is as tall as its contents need.
+
+   The header is fixed and overlays the top 64px of whatever is beneath it, so a
+   full-height band sits under it by that much. That is intended — the copy is
+   vertically centred and the artwork is a photograph, so neither has anything at
+   its top edge to lose. */
+@utility bleed-band {
+  @media (width >= theme(--breakpoint-desktop)) {
+    min-block-size: 100dvh;
+  }
+}
+
+/* The artwork cell. Full height of the band, flush to the viewport's inline end.
+
+   `block-size: 100%` is what makes the photograph fill a band taller than its
+   own content: the grid row stretches to the band's height, and without this the
+   cell would sit at its intrinsic height inside a stretched row.
+
+   `min-block-size` is the floor below desktop, where `bleed-band` does not
+   apply and the band is as tall as its contents. */
+@utility bleed-media {
+  position: relative;
+  overflow: hidden;
+  block-size: 100%;
+  min-block-size: var(--spacing-bleed-media);
+}

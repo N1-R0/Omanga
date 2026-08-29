@@ -1,4 +1,4 @@
-import { COUNTRIES_SERVED } from "@/content/site.content";
+import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { ComparisonGroup } from "@/content/why-omanga.content";
 
 /**
@@ -44,7 +44,7 @@ const WITH_OMANGA: ComparisonGroup = {
     "Admission through a provider relationship, not a reimbursement form",
     "Short-term cover for the length of your trip, cancel anytime",
     "Three plans from $50 a month — match the cover to the trip",
-    `One plan across ${COUNTRIES_SERVED} African countries, roaming included`,
+    `One plan across ${COUNTRIES_SERVED_DISPLAY} African countries, roaming included`,
     "Insurance and your Omanga wallet in the same account",
   ],
 } as const;

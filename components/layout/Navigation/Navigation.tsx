@@ -2,10 +2,12 @@
 
 import { usePathname } from "next/navigation";
 
+import { NavigationDropdown } from "@/components/layout/NavigationDropdown";
 import { NavigationGroup } from "@/components/layout/NavigationGroup";
 import { NavigationItem } from "@/components/layout/NavigationItem";
 import { isCurrentPath } from "@/lib/is-current-path";
-import type { LinkTarget } from "@/types/content.types";
+import { isLinkGroup } from "@/types/content.types";
+import type { NavigationEntry } from "@/types/content.types";
 import type { Tone } from "@/types/ui.types";
 
 /**
@@ -29,7 +31,7 @@ import type { Tone } from "@/types/ui.types";
  */
 
 export type NavigationProps = {
-  items: readonly LinkTarget[];
+  items: readonly NavigationEntry[];
   /**
    * Accessible name for the landmark.
    *
@@ -57,15 +59,61 @@ export function Navigation({
   return (
     <nav aria-label={landmarkLabel}>
       <NavigationGroup orientation={orientation}>
-        {items.map((item) => (
-          <li key={item.href}>
-            <NavigationItem
-              link={item}
-              isCurrent={isCurrentPath(pathname, item.href)}
-              tone={tone}
-            />
-          </li>
-        ))}
+        {items.map((entry) => {
+          if (!isLinkGroup(entry)) {
+            return (
+              <li key={entry.href}>
+                <NavigationItem
+                  link={entry}
+                  isCurrent={isCurrentPath(pathname, entry.href)}
+                  tone={tone}
+                />
+              </li>
+            );
+          }
+
+          /*
+            The row gets a dropdown. The column does not.
+
+            A disclosure nested inside the mobile panel — itself a disclosure —
+            means two taps to reach Contact, and it puts a collapsed region
+            inside an animating one, where the panel's `clip-path` wipe would
+            clip a submenu that opened after it. The panel is six rows tall with
+            room to spare, so the group is simply flattened: its label becomes a
+            heading over its children and every destination is one tap away.
+
+            The heading is a real `h2`, not a styled span. It names the list
+            beneath it, which is the only thing that tells a screen-reader user
+            why two of these links are grouped.
+          */
+          if (orientation === "column") {
+            return (
+              <li key={entry.label} className="flex flex-col items-center gap-fluid-2">
+                <h2 className="font-sans text-small text-ink-muted uppercase">
+                  {entry.label}
+                </h2>
+
+                <ul role="list" className="flex flex-col items-center gap-fluid-3">
+                  {entry.items.map((item) => (
+                    <li key={item.href}>
+                      <NavigationItem
+                        link={item}
+                        isCurrent={isCurrentPath(pathname, item.href)}
+                        tone={tone}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            );
+          }
+
+          return (
+            <li key={entry.label}>
+              <NavigationDropdown group={entry} pathname={pathname} tone={tone} />
+            </li>
+          );
+        })}
       </NavigationGroup>
     </nav>
   );

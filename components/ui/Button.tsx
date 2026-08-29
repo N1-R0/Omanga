@@ -23,6 +23,21 @@ import type { Tone } from "@/types/ui.types";
 /** design.md § 9. Closed set of three. */
 type ButtonVariant = "primary" | "secondary" | "text";
 
+/**
+ * How much room the control takes, independent of what it looks like.
+ *
+ * `main` is the measured default described above and is what every button on
+ * the page uses. `compact` exists for the header bar and is not a general
+ * "small button": the bar is a fixed 4rem, its nav sits at `--text-small`, and
+ * a `--text-main` pill beside those labels is the one place the measured size
+ * reads as oversized rather than as an invitation.
+ *
+ * Two sizes, and the second one justified by a specific container. A `sm | md |
+ * lg` scale would invite every caller to pick a size by eye, which is how a
+ * page ends up with four button heights and no rule.
+ */
+type ButtonSize = "main" | "compact";
+
 type ButtonPresentation = {
   /**
    * The label. Verb-led, and passed in as content — the component never
@@ -35,6 +50,8 @@ type ButtonPresentation = {
    * Passed explicitly; never inferred from a parent class.
    */
   tone: Tone;
+  /** Defaults to `main`. Only the header bar passes `compact`. */
+  size?: ButtonSize;
   /**
    * Optional trailing icon at 16px, decorative and hidden from assistive tech.
    */
@@ -100,9 +117,26 @@ export type ButtonProps =
  * screen. `hit-area` holds the 44px WCAG floor underneath.
  */
 const BASE_CLASS =
-  "inline-flex items-center justify-center gap-fluid-1 font-sans text-button hit-area focus-ring transition-standard";
+  "inline-flex items-center justify-center gap-fluid-1 font-sans hit-area focus-ring transition-standard";
 
-const SHAPE_CLASS = "rounded-pill py-fluid-3 px-fluid-4";
+/**
+ * Size × the two things a size decides: the label and the padding.
+ *
+ * `compact` steps both down one rung of the same scales rather than picking new
+ * numbers — `--text-small` instead of `--text-main`, `--space-2`/`--space-3`
+ * instead of `--space-3`/`--space-4`. The pill therefore keeps its proportions
+ * and nothing here is an arbitrary value.
+ *
+ * `hit-area` is in `BASE_CLASS` and applies to both, so the compact button is
+ * visually smaller but still meets the 44px WCAG floor. Below roughly 20px of
+ * block padding that floor is what actually sets the height, which is the point
+ * at which shrinking the padding further would stop doing anything.
+ */
+const SIZE_CLASS: Readonly<Record<ButtonSize, { text: string; shape: string }>> =
+  {
+    main: { text: "text-button", shape: "py-fluid-3 px-fluid-4" },
+    compact: { text: "text-small", shape: "py-fluid-2 px-fluid-3" },
+  } as const;
 
 /**
  * Variant × tone.
@@ -154,11 +188,20 @@ const DISABLED_CLASS =
   "bg-disabled-surface text-disabled-ink border-transparent hover:bg-disabled-surface";
 
 export function Button(props: ButtonProps) {
-  const { children, variant, tone, trailingIcon, leadingIcon } = props;
+  const {
+    children,
+    variant,
+    tone,
+    size = "main",
+    trailingIcon,
+    leadingIcon,
+  } = props;
+
+  const { text, shape: padding } = SIZE_CLASS[size];
 
   // The text variant carries no fill or border, so horizontal padding would
   // push it out of alignment with the copy column it sits under.
-  const shape = variant === "text" ? "rounded-pill" : SHAPE_CLASS;
+  const shape = variant === "text" ? "rounded-pill" : cx("rounded-pill", padding);
 
   if (props.as === "link") {
     const { href, isExternal = false } = props;
@@ -166,7 +209,7 @@ export function Button(props: ButtonProps) {
     return (
       <Link
         href={href}
-        className={cx(BASE_CLASS, shape, VARIANT_CLASS[variant][tone])}
+        className={cx(BASE_CLASS, text, shape, VARIANT_CLASS[variant][tone])}
         {...(isExternal
           ? { target: "_blank", rel: "noopener noreferrer" }
           : {})}
@@ -190,6 +233,7 @@ export function Button(props: ButtonProps) {
       aria-busy={isLoading || undefined}
       className={cx(
         BASE_CLASS,
+        text,
         shape,
         VARIANT_CLASS[variant][tone],
         isInoperable && DISABLED_CLASS,

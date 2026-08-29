@@ -31,9 +31,37 @@ export const CONTACT_EMAIL = "info@omanga.biz" as const;
  * Read from the environment so preview deployments do not emit production
  * canonicals. `NEXT_PUBLIC_` because the value is genuinely public and is
  * needed when composing absolute URLs during static rendering.
+ *
+ * ---------------------------------------------------------------------------
+ * [FIXED] The fallback was `https://omanga.biz`, and it was wrong in production.
+ *
+ * The host serves `www.omanga.biz` and 301-redirects the bare apex to it —
+ * verified live: requesting `https://omanga.biz/insurance` lands on
+ * `https://www.omanga.biz/insurance`. But with `NEXT_PUBLIC_SITE_URL` unset in
+ * production, this fallback made every page emit:
+ *
+ *   <link rel="canonical" href="https://omanga.biz/insurance">   ← redirects away
+ *   <meta property="og:url" content="https://omanga.biz/insurance">
+ *   robots.txt  Sitemap: https://omanga.biz/sitemap.xml          ← redirects away
+ *   sitemap.xml every <loc> on the apex                          ← all redirect
+ *
+ * A canonical pointing at a URL that redirects elsewhere is a self-contradicting
+ * signal: the page says "the real me is over there", and over there says "no, back
+ * here". Google's documented response is to distrust the annotation and choose a
+ * canonical itself, which means Omanga had no reliable control over which
+ * hostname got indexed, with ranking signals split across two of them.
+ *
+ * The fallback now names the host that is actually served, so the correct value
+ * ships even when the environment variable is missing — which is the state that
+ * caused this. Setting `NEXT_PUBLIC_SITE_URL=https://www.omanga.biz` in the
+ * production environment is still worth doing, but is no longer load-bearing.
+ *
+ * If the apex is ever made primary instead, change this string and flip the
+ * host's redirect in the same commit. The one thing that must never happen again
+ * is the two disagreeing.
  */
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://omanga.biz";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.omanga.biz";
 
 export const SITE_LOCALE = "en" as const;
 

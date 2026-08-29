@@ -32,47 +32,43 @@ import {
   SOLUTIONS_HEADING_ID,
   solutionsContent,
 } from "@/content/solutions.content";
+import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import { TRUST_HEADING_ID, trustContent } from "@/content/trust.content";
 import {
   WHY_OMANGA_HEADING_ID,
   whyOmangaContent,
 } from "@/content/why-omanga.content";
-import { SITE_LOCALE, SITE_NAME } from "@/config/site";
+
 import { buildPageGraph } from "@/lib/schema";
 import type { PageMetaContent } from "@/types/content.types";
+import { buildPageMetadata } from "@/lib/seo";
 
 /**
- * Homepage metadata. Values from the redesign spec § 5.2, with the two
- * corrections project-context.md § Non-negotiable copy facts requires: the
- * country count is 43, not the spec's 52, and the spec's "Travel Money Card"
- * becomes "Travel Money Wallet" because Omanga issues no card.
+ * Homepage metadata. Values from the redesign spec § 5.2, with two corrections:
+ * the spec's "Travel Money Card" becomes "Travel Money Wallet" because Omanga
+ * issues no card, and the country count comes from the constant rather than the
+ * spec's 52.
+ *
+ * [CHANGED, 2026-08-29] The count is interpolated. It was typed as 43, which is
+ * how a meta description gets left behind when the figure moves — and it has now
+ * moved to 50+. Nothing on this page types the number.
  */
 const homeMeta: PageMetaContent = {
   title: "Travel Money Wallet & Holiday Insurance for Africa | Omanga",
-  description:
-    "Fund a multi-currency Omanga wallet in USD, GBP or CAD, spend across 43 African countries, and add short-term holiday health insurance in one account.",
+  description: `Fund a multi-currency Omanga wallet in USD, GBP or CAD, spend across ${COUNTRIES_SERVED_DISPLAY} African countries, and add short-term holiday health insurance in one account.`,
   path: "/",
 };
 
-export const metadata: Metadata = {
-  title: { absolute: homeMeta.title },
-  description: homeMeta.description,
-  alternates: { canonical: homeMeta.path },
-  robots: { index: true, follow: true },
-  openGraph: {
-    type: "website",
-    url: homeMeta.path,
-    siteName: SITE_NAME,
-    locale: SITE_LOCALE,
-    title: homeMeta.title,
-    description: homeMeta.description,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: homeMeta.title,
-    description: homeMeta.description,
-  },
-};
+/**
+ * Metadata comes from the shared builder in `lib/seo.ts`.
+ *
+ * [REPLACED] A hand-written ~20-line object, one of six near-identical copies.
+ * Five of those six shipped no `og:image` and no `twitter:image` at all — the
+ * pages shared as a bare link with no card. The builder sets the share image for
+ * every page, so that class of omission cannot recur. Its own comment records
+ * how the gap arose.
+ */
+export const metadata: Metadata = buildPageMetadata(homeMeta);
 
 export default function HomePage() {
   return (

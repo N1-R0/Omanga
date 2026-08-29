@@ -2,8 +2,6 @@ import { Section } from "@/components/layout/Section";
 import { Stack } from "@/components/layout/Stack";
 import { Badge } from "@/components/ui/Badge";
 import { Heading } from "@/components/ui/Heading";
-import { Reveal } from "@/components/ui/Reveal";
-import { Text } from "@/components/ui/Text";
 import type { ServicesContent } from "@/content/services.content";
 import type { Tone } from "@/types/ui.types";
 
@@ -69,15 +67,6 @@ export function Services({ content, headingId }: ServicesProps) {
         }
         services={services}
       />
-
-      {/* [ASSUMPTION] The copy document does not place the closing line. Confirm with design. */}
-      <div className="pt-fluid-7">
-        <Reveal>
-          <Text role="body" measure="narrow" isSecondary>
-            {content.closing}
-          </Text>
-        </Reveal>
-      </div>
     </Section>
   );
 }

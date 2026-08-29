@@ -1,0 +1,1 @@
+export { ConsentedAnalytics } from "./ConsentedAnalytics";

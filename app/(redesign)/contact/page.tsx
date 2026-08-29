@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { ContactHero } from "@/components/sections/ContactHero";
 import { ContactInformation } from "@/components/sections/ContactInformation";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { SITE_LOCALE, SITE_NAME } from "@/config/site";
+
 import {
   CONTACT_HERO_HEADING_ID,
   contactHeroContent,
@@ -19,6 +19,7 @@ import {
 } from "@/content/contact-options.content";
 import { buildPageGraph } from "@/lib/schema";
 import type { PageMetaContent } from "@/types/content.types";
+import { buildPageMetadata } from "@/lib/seo";
 
 /**
  * The Contact page — spec `Omanga-Contact-Page-Redesign.md`.
@@ -179,28 +180,16 @@ const contactMeta: PageMetaContent = {
   path: "/contact",
 };
 
-export const metadata: Metadata = {
-  title: { absolute: contactMeta.title },
-  description: contactMeta.description,
-  alternates: { canonical: contactMeta.path },
-  // Indexable now that this is the real route, per § Meta. It was `noindex` behind
-  // `/preview` so a crawler could not find a half-built duplicate of the page that
-  // was live at the time.
-  robots: { index: true, follow: true },
-  openGraph: {
-    type: "website",
-    url: contactMeta.path,
-    siteName: SITE_NAME,
-    locale: SITE_LOCALE,
-    title: contactMeta.title,
-    description: contactMeta.description,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: contactMeta.title,
-    description: contactMeta.description,
-  },
-};
+/**
+ * Metadata comes from the shared builder in `lib/seo.ts`.
+ *
+ * [REPLACED] A hand-written ~20-line object, one of six near-identical copies.
+ * Five of those six shipped no `og:image` and no `twitter:image` at all — the
+ * pages shared as a bare link with no card. The builder sets the share image for
+ * every page, so that class of omission cannot recur. Its own comment records
+ * how the gap arose.
+ */
+export const metadata: Metadata = buildPageMetadata(contactMeta);
 
 /** This route's own path. One owner, so the cards and `Go back` cannot drift. */
 const CONTACT_PATH = "/contact";
@@ -241,7 +230,7 @@ export default async function ContactPreviewPage({
         data. What § Schema asks for beyond that is recorded in the note above and
         is a stage of its own.
       */}
-      <JsonLd graph={buildPageGraph(contactMeta)} />
+      <JsonLd graph={buildPageGraph(contactMeta, { crumb: "Contact" })} />
 
       {/*
         Stage 2. The hero — spec §§ 2 and 3, from Figma node 2579:131893, and the

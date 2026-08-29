@@ -15,10 +15,15 @@ import { cx } from "@/lib/cx";
  * siblings comes from the parent's gap".
  *
  * Spacing is not a prop, and on the row it is not a gap either — it is
- * `--space-3` of padding-inline on each link, so two adjacent labels sit
- * 28 → 32 apart with all of that distance inside one target or the other. The
- * column keeps a real gap, because stacked full-width rows have no horizontal
- * padding to borrow. design.md § 9.
+ * padding-inline on each link, so the distance between two labels sits inside
+ * one target or the other and a pointer travelling between them never crosses
+ * dead ground. The column keeps a real gap, because stacked rows have no
+ * horizontal padding to borrow. design.md § 9.
+ *
+ * [CHANGED, 2026-08-29] That padding is `--space-2` rather than `--space-3`, on
+ * instruction: adjacent labels now sit 20 → 24 apart instead of 28 → 32. The
+ * 44px `hit-area` floor is untouched, so the targets did not shrink with the
+ * gap — a shorter label simply keeps more of its 44px as padding.
  */
 
 type Orientation = "row" | "column";
@@ -32,9 +37,23 @@ const ORIENTATION_CLASS: Readonly<Record<Orientation, string>> = {
     between two items never crosses dead ground.
   */
   row: "flex-row items-center gap-0",
-  // Stretched, so every item in the mobile panel spans the full width and gets
-  // the same generous target regardless of how short its label is.
-  column: "flex-col items-stretch gap-fluid-3",
+  /*
+    [CHANGED, 2026-08-29] Centred, not stretched.
+
+    It was `items-stretch`, which made every row span the panel's full width. At
+    that width the hover and current-page rule — `inset-inline: 0` on the link —
+    ran edge to edge under each label, and a full-bleed rule under a full-bleed
+    row reads as a boxed list item rather than as an underline. Two of them
+    stacked looked like table borders.
+
+    `items-center` shrinks each `li` to its label, so the same rule now underlines
+    the word and nothing else, and the stack centres in the panel. Nothing about
+    the rule itself changed — the box was the row, not the decoration.
+
+    Target size is unaffected: `hit-area` holds the 44px floor on the link, which
+    is where it always was rather than on the stretched row.
+  */
+  column: "flex-col items-center gap-fluid-3 text-center",
 } as const;
 
 export type NavigationGroupProps = {

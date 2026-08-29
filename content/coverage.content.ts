@@ -3,6 +3,8 @@ import type {
   Eyebrow,
   ImageAsset,
 } from "@/types/content.types";
+import { INSURANCE_COVERAGE_HREF } from "@/content/insurance.content";
+import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 
 /**
  * African Coverage content.
@@ -101,11 +103,31 @@ const COVERAGE_FLAGS: readonly ImageAsset[] = [
  * does now, and `PRIMARY_CTA` in `site.content.ts` points at it, so there is no
  * longer a missing stub behind the approved primary label.
  */
+/*
+  [FIXED] `href` was `/coverage`, which 404s. It was one of only two broken links
+  on the site not recorded in the footer's route register, so nothing was tracking
+  it — and it is the homepage's call to action on the country-count claim, which
+  is the positioning the whole site rests on.
+
+  It is repointed at the plan comparison table on `/plans`, which is the closest
+  thing to evidence that exists: a real anchor, on a real page, showing what each
+  tier covers. Confirmed 2026-08-29 as the intended destination: there is no
+  `/coverage` route and none is planned — `/plans` is that page now.
+
+  [BLOCKED] It is still not the page this link wants. "See all countries" should
+  reach the country list, and that list is not written down anywhere in this
+  project — `public/flags/` holds fourteen SVGs, eleven of them African, and
+  `COUNTRIES_SERVED` is a bare count. A coverage listing cannot be built without
+  inventing forty-odd country names, so it is not built.
+
+  Supply the list and this becomes a real page. Until then this link goes
+  somewhere true rather than somewhere broken, and the label is left alone
+  because it is approved copy.
+*/
 const COVERAGE_ACTION: CallToAction = {
   label: "See all countries",
-  href: "/coverage",
+  href: INSURANCE_COVERAGE_HREF,
   emphasis: "text",
-  isRoutePending: true,
 } as const;
 
 export type AfricanCoverageContent = {
@@ -129,35 +151,33 @@ export const coverageContent: AfricanCoverageContent = {
    * "ClarityGo" eyebrow `solutions.content.ts` caught.
    *
    * "Coverage" is what the section is, it is claim-free, and it is already the
-   * label the footer uses for the same subject ("Coverage — 43 countries").
+   * label the footer uses for the same subject ("Coverage — 50+ countries").
    */
   eyebrow: "Coverage",
 
   /**
-   * [CORRECTED] The frame reads "Works in 52 African countries".
-   *
-   * `project-context.md`: "**43 African countries.** Not 52. The spec's 52 is
-   * obsolete — reject it everywhere, including alt text, meta, and schema
-   * `areaServed`." Five sections already shipped with 43.
+   * [CORRECTED] The frame reads "Works in 52 African countries". The count is
+   * interpolated from `COUNTRIES_SERVED_DISPLAY` rather than typed, so this
+   * heading cannot be the one that gets missed the next time the figure moves —
+   * and it has now moved twice (52 → 43 → 50+).
    *
    * [DISCREPANCY] This is near-identical to the Coverage tab heading in
-   * `deep-dive.content.ts` — "Works across 43 African countries". Two headings
+   * `deep-dive.content.ts` — "Works across 50+ African countries". Two headings
    * this close on one page is a copy question, not an implementation one.
    * **Confirm which one changes.**
    */
-  heading: "Works in 43 African countries",
+  heading: `Works in ${COUNTRIES_SERVED_DISPLAY} African countries`,
 
   /**
    * [CORRECTED] The frame reads "Use your Omanga card and reach healthcare
-   * across 52 African countries". Both the card claim and the 52 are struck,
+   * across 52 African countries". Both the card claim and the count are struck,
    * per the two non-negotiables above.
    *
    * [DISCREPANCY] The closing clause repeats `services.content.ts` almost
    * exactly — "however many borders it crosses". The phrase is the frame's, so it
    * ships, but the repetition is worth a copy pass.
    */
-  intro:
-    "The question every traveller actually asks is whether it will work where they're going. Use your Omanga wallet and reach healthcare across 43 African countries — one account from arrival to departure, however many borders the trip crosses.",
+  intro: `The question every traveller actually asks is whether it will work where they're going. Use your Omanga wallet and reach healthcare across ${COUNTRIES_SERVED_DISPLAY} African countries — one account from arrival to departure, however many borders the trip crosses.`,
 
   flags: COVERAGE_FLAGS,
 

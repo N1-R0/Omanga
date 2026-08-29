@@ -26,14 +26,20 @@ import { INSURANCE_PLANS_HREF } from "@/content/insurance.content";
  * that matches where the visitor is. Someone who has read the plan grid and the
  * comparison table is choosing a tier, not opening an account.
  *
- * Nothing is lost from the page. `Open Free Account` is still the hero's
- * secondary and every plan card's button goes to the same sign-up.
+ * Nothing is lost from the page: every plan card's button goes to the same
+ * sign-up.
+ *
+ * [UPDATED, 2026-08-29] That last sentence used to also say `Open Free Account`
+ * was still the hero's secondary. It is not — the hero dropped its secondary
+ * outright in the same change that relabelled its primary, so the account
+ * sign-up now reaches this page only through the header and the plan cards.
  *
  * ---------------------------------------------------------------------------
  * [DRIFT] The label is a fourth variant of one destination. The page says
- * `Compare Insurance Plans` (hero), `See what each plan covers` (§ 4),
- * `View plans` (§ 6.3) and `Compare Plans` (here) — all pointing at `#plans`.
- * Three of the four are the spec's own wording. It wants one decision.
+ * `View Insurance Plans` (hero), `See what each plan covers` (§ 4),
+ * `View plans` (§ 6.3) and `Compare Plans` (here) — all pointing at `/plans`.
+ * The hero and § 6.3 now agree on the verb; this band and § 4 do not. It still
+ * wants one decision, but it is a three-way split rather than a four-way one.
  *
  * ---------------------------------------------------------------------------
  * The artwork is read from the homepage band rather than redeclared, so the

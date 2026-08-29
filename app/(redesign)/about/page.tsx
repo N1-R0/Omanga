@@ -6,7 +6,7 @@ import { AboutImpact } from "@/components/sections/AboutImpact";
 import { AboutMissionVision } from "@/components/sections/AboutMissionVision";
 import { AboutStory } from "@/components/sections/AboutStory";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { SITE_LOCALE, SITE_NAME } from "@/config/site";
+
 import {
   ABOUT_CTA_HEADING_ID,
   aboutCtaContent,
@@ -29,6 +29,7 @@ import {
 } from "@/content/about-story.content";
 import { buildPageGraph } from "@/lib/schema";
 import type { PageMetaContent } from "@/types/content.types";
+import { buildPageMetadata } from "@/lib/seo";
 
 /**
  * The About page — spec `Omanga-About-Page-Redesign-v1.md`.
@@ -124,28 +125,16 @@ const aboutMeta: PageMetaContent = {
   path: "/about",
 };
 
-export const metadata: Metadata = {
-  title: { absolute: aboutMeta.title },
-  description: aboutMeta.description,
-  alternates: { canonical: aboutMeta.path },
-  // Indexable now that this is the real route, per § 3.1. It was `noindex` behind
-  // `/preview` so a crawler could not find a half-built duplicate of the page
-  // that was live at the time.
-  robots: { index: true, follow: true },
-  openGraph: {
-    type: "website",
-    url: aboutMeta.path,
-    siteName: SITE_NAME,
-    locale: SITE_LOCALE,
-    title: aboutMeta.title,
-    description: aboutMeta.description,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: aboutMeta.title,
-    description: aboutMeta.description,
-  },
-};
+/**
+ * Metadata comes from the shared builder in `lib/seo.ts`.
+ *
+ * [REPLACED] A hand-written ~20-line object, one of six near-identical copies.
+ * Five of those six shipped no `og:image` and no `twitter:image` at all — the
+ * pages shared as a bare link with no card. The builder sets the share image for
+ * every page, so that class of omission cannot recur. Its own comment records
+ * how the gap arose.
+ */
+export const metadata: Metadata = buildPageMetadata(aboutMeta);
 
 export default function AboutPage() {
   /*
@@ -166,7 +155,7 @@ export default function AboutPage() {
   */
   return (
     <>
-      <JsonLd graph={buildPageGraph(aboutMeta)} />
+      <JsonLd graph={buildPageGraph(aboutMeta, { crumb: "About" })} />
 
       {/*
         Stage 2. The hero — spec § 2, and the page's only `h1`. Laid out from the

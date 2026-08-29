@@ -1,3 +1,4 @@
+import { ConsentPreferencesLink } from "@/components/consent/ConsentPreferencesLink";
 import { Container } from "@/components/layout/Container";
 import { FooterColumn } from "@/components/layout/FooterColumn";
 import { Logo } from "@/components/layout/Logo";
@@ -107,6 +108,22 @@ export function Footer({
           {columns.map((column) => (
             <FooterColumn key={column.heading} column={column} />
           ))}
+
+          {/*
+            The cookie preferences control, spanning the grid beneath the columns.
+
+            Not an item inside the Legal column: that column's links come from
+            approved copy and are all pages, and this is a control that opens a
+            dialog. Putting a button among them would also mean `FooterColumn`
+            learning to render something other than a link.
+
+            It has to be somewhere permanent, though. Once a visitor has answered
+            the banner it is the only route back to the choice, and consent that
+            cannot be withdrawn as easily as it was given is not valid consent.
+          */}
+          <div className="col-span-2 border-t border-border-hairline pt-fluid-4 desktop:col-span-5">
+            <ConsentPreferencesLink />
+          </div>
         </div>
       </Container>
     </footer>

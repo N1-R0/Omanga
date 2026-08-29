@@ -104,8 +104,18 @@ export type HeroSectionContent = {
    * would then be enforceable only by review.
    */
   readonly actions: readonly [CallToAction, CallToAction];
-  /** Risk-reducing line beneath the actions. */
-  readonly helperText: string;
+  /*
+    [REMOVED, 2026-08-29] `helperText`, which read "No monthly fee. Set up in
+    minutes."
+
+    Removed from the type as well as from the value. Leaving the field optional
+    would keep a slot that renders nothing, and the next person to open this
+    module would have no way to tell a deliberate removal from a missing string.
+
+    The claim itself is not retired — it is a product fact and belongs wherever
+    plans and pricing are described. It is gone from the hero only, where the
+    band is now the headline and its two actions.
+  */
   readonly image: ImageAsset;
 };
 
@@ -113,7 +123,6 @@ export const heroContent: HeroSectionContent = {
   heading:
     "Travel Africa with a customized payment solution and one insurance plan",
   actions: [HERO_PRIMARY_ACTION, SECONDARY_ACTION],
-  helperText: "No monthly fee. Set up in minutes.",
   image: IMAGE,
 } as const;
 

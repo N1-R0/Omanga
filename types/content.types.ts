@@ -44,6 +44,34 @@ export type LinkTarget = {
 };
 
 /**
+ * A labelled set of destinations that opens from one navigation entry.
+ *
+ * It has no `href` of its own, and that is the point rather than an omission.
+ * "Company" is a category, not a page: giving it a destination would mean
+ * inventing a route, and a nav entry that both navigates and opens a menu is
+ * the pattern that leaves keyboard users unable to reach the children and
+ * pointer users unsure which of the two a click will do.
+ */
+export type LinkGroup = {
+  readonly label: string;
+  readonly items: readonly LinkTarget[];
+};
+
+/** One entry in a navigation bar: a destination, or a group that opens one. */
+export type NavigationEntry = LinkTarget | LinkGroup;
+
+/**
+ * Narrows a navigation entry to a group.
+ *
+ * A predicate rather than a `kind` field on both shapes: `LinkTarget` is used
+ * in a dozen content modules that have nothing to do with navigation, and none
+ * of them should have to declare it is not a menu.
+ */
+export function isLinkGroup(entry: NavigationEntry): entry is LinkGroup {
+  return "items" in entry;
+}
+
+/**
  * A call to action.
  *
  * Separate from `LinkTarget` because a CTA carries hierarchy: exactly one

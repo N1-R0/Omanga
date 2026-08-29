@@ -7,7 +7,7 @@ import { GetStartedImageBand } from "@/components/sections/GetStartedImageBand";
 import { GetStartedSolutions } from "@/components/sections/GetStartedSolutions";
 import { TrustPartners } from "@/components/sections/TrustPartners";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { SITE_LOCALE, SITE_NAME } from "@/config/site";
+
 import {
   GET_STARTED_CTA_HEADING_ID,
   getStartedCtaContent,
@@ -26,9 +26,10 @@ import {
   getStartedSolutionsContent,
 } from "@/content/get-started-solutions.content";
 import { TRUST_HEADING_ID, trustContent } from "@/content/trust.content";
-import { COUNTRIES_SERVED } from "@/content/site.content";
+import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import { buildPageGraph } from "@/lib/schema";
 import type { PageMetaContent } from "@/types/content.types";
+import { buildPageMetadata } from "@/lib/seo";
 
 /**
  * The Get Started page — a router, not a landing page.
@@ -69,29 +70,20 @@ import type { PageMetaContent } from "@/types/content.types";
  */
 const getStartedMeta: PageMetaContent = {
   title: "Get Started | Travel Payments & Holiday Insurance for Africa",
-  description: `Choose Omanga Payment Solutions, Omanga Holiday Insurance, or both. One account for spending across ${COUNTRIES_SERVED} African countries and short-term travel medical cover.`,
+  description: `Choose Omanga Payment Solutions, Omanga Holiday Insurance, or both. One account for spending across ${COUNTRIES_SERVED_DISPLAY} African countries and short-term travel medical cover.`,
   path: "/get-started",
 };
 
-export const metadata: Metadata = {
-  title: { absolute: getStartedMeta.title },
-  description: getStartedMeta.description,
-  alternates: { canonical: getStartedMeta.path },
-  robots: { index: true, follow: true },
-  openGraph: {
-    type: "website",
-    url: getStartedMeta.path,
-    siteName: SITE_NAME,
-    locale: SITE_LOCALE,
-    title: getStartedMeta.title,
-    description: getStartedMeta.description,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: getStartedMeta.title,
-    description: getStartedMeta.description,
-  },
-};
+/**
+ * Metadata comes from the shared builder in `lib/seo.ts`.
+ *
+ * [REPLACED] A hand-written ~20-line object, one of six near-identical copies.
+ * Five of those six shipped no `og:image` and no `twitter:image` at all — the
+ * pages shared as a bare link with no card. The builder sets the share image for
+ * every page, so that class of omission cannot recur. Its own comment records
+ * how the gap arose.
+ */
+export const metadata: Metadata = buildPageMetadata(getStartedMeta);
 
 export default function GetStartedPage() {
   /*
@@ -104,7 +96,7 @@ export default function GetStartedPage() {
   */
   return (
     <>
-      <JsonLd graph={buildPageGraph(getStartedMeta)} />
+      <JsonLd graph={buildPageGraph(getStartedMeta, { crumb: "Get Started" })} />
 
       {/*
         Stage 3. The hero — section 2 of the approved copy document, and the

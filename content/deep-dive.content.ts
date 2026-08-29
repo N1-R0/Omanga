@@ -1,3 +1,4 @@
+import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { Eyebrow, ImageAsset } from "@/types/content.types";
 
 // Section 6 of Omanga-Homepage-Copy-Approval NJ edits.docx, tracked changes accepted.
@@ -47,12 +48,17 @@ const PAYMENTS_FEATURES: readonly DeepDiveFeature[] = [
     id: "the-wallet",
     label: "The Wallet",
     heading: "Your Omanga Wallet, ready to spend",
-    body: "Pay with ease from your wallet balance, wherever cards are accepted.",
+    /*
+      [CHANGED, 2026-08-29] "wherever cards are accepted" struck, for the reason
+      recorded at the same phrase in `services.content.ts`: it describes the
+      instrument by naming the one Omanga does not issue.
+    */
+    body: "Pay with ease, straight from your wallet balance, online or in person.",
   },
   {
     id: "coverage",
     label: "Coverage",
-    heading: "Works across 43 African countries",
+    heading: `Works across ${COUNTRIES_SERVED_DISPLAY} African countries`,
     // [CORRECTED] "One card for a multi-country trip" -> "One wallet". The last surviving
     // card claim in the document; NJ struck the rest and project-context.md forbids it.
     // Confirm the edited sentence with copy.
@@ -105,7 +111,19 @@ const INSURANCE_FEATURES: readonly DeepDiveFeature[] = [
   },
 ] as const;
 
-const OMANGA_PAYMENTS: DeepDiveProduct = {
+/**
+ * Exported because the payments page renders this same product untabbed.
+ *
+ * [CHANGED, 2026-08-29] Was the module-private `OMANGA_PAYMENTS`. Exported and
+ * renamed to match `holidayInsuranceProduct`, which had been exported for the
+ * insurance page for exactly the same reason. Both halves of this section now
+ * appear on a second URL, and both are shared rather than copied so the features
+ * cannot drift between the two pages that render them.
+ *
+ * That the content appears twice at all is a deliberate override of the spec —
+ * see `content/payments-deep-dive.content.ts`, where the objection is recorded.
+ */
+export const omangaPaymentsProduct: DeepDiveProduct = {
   id: "omanga-payments",
   tabLabel: "Omanga Payments",
   features: PAYMENTS_FEATURES,
@@ -130,7 +148,7 @@ export const deepDiveContent: DeepDiveContent = {
   // The Figma reads "the wallet, the card and the three insurance plans"; the approved
   // document drops "the card", and copy outranks the frame.
   intro: "Everything the wallet and the three insurance plans actually do.",
-  products: [OMANGA_PAYMENTS, holidayInsuranceProduct],
+  products: [omangaPaymentsProduct, holidayInsuranceProduct],
 } as const;
 
 /** Shared so the `h2` and the section's `aria-labelledby` cannot drift apart. */

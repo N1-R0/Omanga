@@ -141,6 +141,7 @@ export default function PlansPage() {
               price: plan.price,
               currency: insurancePlansContent.currency,
               url: plan.action.href,
+              billingPeriod: insurancePlansContent.billingPeriod,
             })),
           ),
         })}

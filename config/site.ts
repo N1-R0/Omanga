@@ -229,11 +229,15 @@ export const WHATSAPP_NUMBER_DISPLAY = "+234 809 944 1818" as const;
  * a renamed or added tier still fails the build. Any CTA using these must also
  * set `isExternal: true`.
  *
- * [VERIFY] Transcribed unchanged from the legacy file. Nothing in the source
- * documents states which Paystack page belongs to which tier, so the mapping is
- * the legacy page's — worth one pass in the Paystack dashboard confirming the
- * amounts behind these three links are $50, $85 and $120, because a swapped
- * pair here charges the wrong price and reads as correct.
+ * [RESOLVED, 2026-09-20] The mapping was transcribed unchanged from the legacy
+ * file with nothing in the source documents to confirm it, so all three pages
+ * were opened and read. The mapping is correct — each page names its own tier and
+ * amount: Silver USD 50, Gold USD 85, Diamond USD 120. No swapped pair.
+ *
+ * The same pass established that these are **recurring monthly subscriptions**
+ * ("You will be charged monthly payments of USD 50 each"), which the plan cards
+ * already state via `billingPeriod` but the `Offer` markup did not. Fixed in
+ * `lib/schema.ts`, which records it.
  */
 export const PLAN_CHECKOUT_URLS = {
   Silver: "https://paystack.shop/pay/c2xlmupefm",

@@ -239,6 +239,30 @@ export type PlanOffer = {
   readonly price: number;
   readonly currency: string;
   readonly url: string;
+  /**
+   * The billing period as the card renders it — "month".
+   *
+   * Passed in rather than hardcoded for the same reason every other field is:
+   * it comes from `insurancePlansContent`, so if the plans ever become one-time
+   * or annual, the markup follows the page instead of contradicting it.
+   */
+  readonly billingPeriod: string;
+};
+
+/**
+ * `billingPeriod` as a UN/CEFACT unit code, which is what schema.org's
+ * `unitCode` expects.
+ *
+ * Only the periods the content layer can currently express are mapped. An
+ * unrecognised value returns `undefined`, and the caller then omits
+ * `priceSpecification` entirely rather than guessing a period — an offer with no
+ * stated recurrence is incomplete, but one with the wrong recurrence is false.
+ */
+const UNIT_CODES: Readonly<Record<string, string>> = {
+  day: "DAY",
+  week: "WEE",
+  month: "MON",
+  year: "ANN",
 };
 
 /**
@@ -270,27 +294,72 @@ export type PlanOffer = {
  * `availability` is `InStock`, which is true — all three can be bought today, and
  * each `url` is that tier's own Paystack checkout page.
  *
- * [VERIFY] `priceCurrency` is USD because the plans page renders dollars. The
- * checkout is Paystack, which is Nigerian, so confirm the buyer is actually
- * charged in USD rather than a converted NGN amount. If the charge is in NGN, this
- * markup states a price the customer will not be charged and must be corrected.
+ * ---------------------------------------------------------------------------
+ * [RESOLVED, 2026-09-20] The currency `[VERIFY]`, and a defect it uncovered.
+ *
+ * All three Paystack pages were opened and read. Two facts came back.
+ *
+ * The first closes the question as asked: the buyer is charged in USD, not a
+ * converted NGN amount. Each page reads "You will be charged monthly payments of
+ * USD 50 / 85 / 120 each". The tier-to-URL mapping carried over from the legacy
+ * file — the other `[VERIFY]`, on `PLAN_CHECKOUT_URLS` in `config/site.ts` — is
+ * correct too: Silver $50, Gold $85, Diamond $120, no swapped pair.
+ *
+ * The second was not what the note went looking for. These are **recurring
+ * monthly subscriptions**, not one-time purchases. The visible page has always
+ * said so — `PlanCard` renders `/month` from `billingPeriod` and the footnote
+ * says "Cancel anytime" — but this markup did not. A bare `price: 50` on a
+ * `Product` describes a $50 thing you buy once, so the structured data and the
+ * card above it were making different claims about the same offer, which is the
+ * precise failure this comment block was written to prevent.
+ *
+ * `priceSpecification` fixes it. `UnitPriceSpecification` with `billingDuration:
+ * 1` and `unitCode: "MON"` is schema.org's way of saying "$50 per month", and
+ * `price`/`priceCurrency` stay on the `Offer` alongside it because consumers that
+ * ignore the specification still need a headline figure to read.
  */
 export function buildPlanProducts(
   plans: readonly PlanOffer[],
 ): readonly SchemaNode[] {
-  return plans.map((plan) => ({
-    "@type": "Product",
-    name: `Omanga ${plan.name} Holiday Insurance`,
-    description: plan.description,
-    brand: { "@id": ORGANIZATION_ID },
-    category: "Travel health insurance",
-    offers: {
-      "@type": "Offer",
-      price: plan.price,
-      priceCurrency: plan.currency,
-      availability: "https://schema.org/InStock",
-      url: plan.url,
-      seller: { "@id": ORGANIZATION_ID },
-    },
-  }));
+  return plans.map((plan) => {
+    const unitCode = UNIT_CODES[plan.billingPeriod.toLowerCase()];
+
+    return {
+      "@type": "Product",
+      name: `Omanga ${plan.name} Holiday Insurance`,
+      description: plan.description,
+      brand: { "@id": ORGANIZATION_ID },
+      category: "Travel health insurance",
+      offers: {
+        "@type": "Offer",
+        price: plan.price,
+        priceCurrency: plan.currency,
+        availability: "https://schema.org/InStock",
+        url: plan.url,
+        seller: { "@id": ORGANIZATION_ID },
+        ...(unitCode === undefined
+          ? {}
+          : {
+              priceSpecification: {
+                "@type": "UnitPriceSpecification",
+                price: plan.price,
+                priceCurrency: plan.currency,
+                /*
+                  `billingDuration` and `billingIncrement` are both 1: the buyer
+                  is charged once per one month. `referenceQuantity` carries the
+                  same fact in the form older consumers read.
+                */
+                billingDuration: 1,
+                billingIncrement: 1,
+                unitCode,
+                referenceQuantity: {
+                  "@type": "QuantitativeValue",
+                  value: 1,
+                  unitCode,
+                },
+              },
+            }),
+      },
+    };
+  });
 }

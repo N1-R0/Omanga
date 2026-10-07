@@ -83,7 +83,8 @@ import { buildPageMetadata } from "@/lib/seo";
  * becomes possible once the hero photograph exists.
  */
 const insuranceMeta: PageMetaContent = {
-  title: "Travel Health Insurance for Africa — Plans from $50 | Omanga",
+  // [CHANGED, 2026-10-07] Short form — plain label, no brand suffix, so the Google sitelink reads "Insurance".
+  title: "Insurance",
   description:
     "Short-term travel health insurance for Africa. Silver, Gold and Diamond plans from $50/month, delivered through established Nigerian health providers.",
   path: "/insurance",

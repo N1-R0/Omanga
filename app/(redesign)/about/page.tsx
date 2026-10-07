@@ -119,7 +119,8 @@ import { buildPageMetadata } from "@/lib/seo";
  * override when the photograph exists.
  */
 const aboutMeta: PageMetaContent = {
-  title: "About Omanga | Integrated Destination Services for Africa",
+  // [CHANGED, 2026-10-07] Short form — plain label, no brand suffix, so the Google sitelink reads "About".
+  title: "About",
   description:
     "Learn how Omanga combines local expertise and technology into one African travel platform — multi-currency travel payments and short-term health insurance.",
   path: "/about",

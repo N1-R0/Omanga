@@ -2,6 +2,7 @@ import {
   CONTACT_EMAIL,
   SITE_LOCALE,
   SITE_NAME,
+  SITE_TAGLINE,
   SITE_URL,
   absoluteUrl,
 } from "@/config/site";
@@ -66,7 +67,10 @@ const WEBSITE: SchemaNode = {
   "@type": "WebSite",
   "@id": WEBSITE_ID,
   url: SITE_URL,
-  name: SITE_NAME,
+  // Google's site-name system reads `name` first, then `alternateName`; without
+  // these the result header fell back to the bare domain "omanga.biz".
+  name: SITE_TAGLINE,
+  alternateName: SITE_NAME,
   inLanguage: SITE_LOCALE,
   publisher: { "@id": ORGANIZATION_ID },
 };

@@ -174,7 +174,8 @@ import { buildPageMetadata } from "@/lib/seo";
  * that becomes a per-route override once it exists.
  */
 const contactMeta: PageMetaContent = {
-  title: "Contact Omanga | Payments & Travel Insurance Support",
+  // [CHANGED, 2026-10-07] Short form — plain label, no brand suffix, so the Google sitelink reads "Contact Us".
+  title: "Contact Us",
   description:
     "Contact the Omanga team about payments, travel insurance, partnerships or support. Email us or start a WhatsApp chat — specialists available 24/7 across Africa.",
   path: "/contact",

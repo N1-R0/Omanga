@@ -20,6 +20,12 @@
 export const SITE_NAME = "Omanga" as const;
 
 /**
+ * The full brand line. Homepage `<title>` and the `WebSite.alternateName` Google
+ * uses for the site name in results.
+ */
+export const SITE_TAGLINE = "Omanga Integrated Destination Services" as const;
+
+/**
  * Contact address. Confirmed in project-context.md as a P0 defect to fix:
  * the current site's mailto is broken.
  */

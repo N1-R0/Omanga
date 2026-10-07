@@ -161,7 +161,8 @@ import type { PageMetaContent } from "@/types/content.types";
  * and the layout's `%s | Omanga` template does not append the brand twice.
  */
 const paymentsMeta: PageMetaContent = {
-  title: "Multi-Currency Wallet & Cross-Border Payments for Africa | Omanga",
+  // [CHANGED, 2026-10-07] Short form — plain label, no brand suffix, so the Google sitelink reads "Payment Solution".
+  title: "Payment Solution",
   description: `Hold and send six currencies in one Omanga wallet, fund from USD, GBP or CAD at mid-market rates, and spend from your balance across ${COUNTRIES_SERVED_DISPLAY} African countries.`,
   path: "/payments",
 };

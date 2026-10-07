@@ -69,7 +69,8 @@ import { buildPageMetadata } from "@/lib/seo";
  * the Hero stage, not this one.
  */
 const getStartedMeta: PageMetaContent = {
-  title: "Get Started | Travel Payments & Holiday Insurance for Africa",
+  // [CHANGED, 2026-10-07] Short form — plain label, no brand suffix, so the Google sitelink reads "Get Started".
+  title: "Get Started",
   description: `Choose Omanga Payment Solutions, Omanga Holiday Insurance, or both. One account for spending across ${COUNTRIES_SERVED_DISPLAY} African countries and short-term travel medical cover.`,
   path: "/get-started",
 };

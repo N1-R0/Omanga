@@ -512,3 +512,7 @@ which is dominated by an unrelated public figure.
   (`fit=crop&crop=faces`). Each cover is also the article's `og:image` and
   `BlogPosting.image`. Photos are free Unsplash images, credited in a caption
   under the cover; `images.unsplash.com` is the only allowed remote host.
+- **Mobile menu "Company"** (2026-10-09, on instruction): now a tap-to-expand
+  disclosure (`MobileNavGroup`) matching the desktop dropdown, replacing the
+  flattened heading + links. Opens by default on About/Contact. Collapsed links
+  are `inert`; height animates via grid-rows 0fr→1fr.

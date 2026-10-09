@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 
+import { MobileNavGroup } from "@/components/layout/MobileNavGroup";
 import { NavigationDropdown } from "@/components/layout/NavigationDropdown";
 import { NavigationGroup } from "@/components/layout/NavigationGroup";
 import { NavigationItem } from "@/components/layout/NavigationItem";
@@ -73,37 +74,14 @@ export function Navigation({
           }
 
           /*
-            The row gets a dropdown. The column does not.
-
-            A disclosure nested inside the mobile panel — itself a disclosure —
-            means two taps to reach Contact, and it puts a collapsed region
-            inside an animating one, where the panel's `clip-path` wipe would
-            clip a submenu that opened after it. The panel is six rows tall with
-            room to spare, so the group is simply flattened: its label becomes a
-            heading over its children and every destination is one tap away.
-
-            The heading is a real `h2`, not a styled span. It names the list
-            beneath it, which is the only thing that tells a screen-reader user
-            why two of these links are grouped.
+            [CHANGED, 2026-10-09] The column (mobile panel) now gets its own
+            tap-to-expand group instead of a flattened heading and list, on
+            instruction. Rationale and behaviour: `MobileNavGroup`.
           */
           if (orientation === "column") {
             return (
-              <li key={entry.label} className="flex flex-col items-center gap-fluid-2">
-                <h2 className="font-sans text-small text-ink-muted uppercase">
-                  {entry.label}
-                </h2>
-
-                <ul role="list" className="flex flex-col items-center gap-fluid-3">
-                  {entry.items.map((item) => (
-                    <li key={item.href}>
-                      <NavigationItem
-                        link={item}
-                        isCurrent={isCurrentPath(pathname, item.href)}
-                        tone={tone}
-                      />
-                    </li>
-                  ))}
-                </ul>
+              <li key={entry.label}>
+                <MobileNavGroup group={entry} pathname={pathname} tone={tone} />
               </li>
             );
           }

@@ -43,7 +43,7 @@ import type { Tone } from "@/types/ui.types";
  */
 
 /** The chevron. Inline SVG: one shape, no icon dependency, inherits colour. */
-function Chevron({ isOpen }: { isOpen: boolean }) {
+export function Chevron({ isOpen }: { isOpen: boolean }) {
   return (
     <svg
       aria-hidden

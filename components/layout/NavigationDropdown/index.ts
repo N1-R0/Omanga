@@ -1,2 +1,2 @@
-export { NavigationDropdown } from "./NavigationDropdown";
+export { Chevron, NavigationDropdown } from "./NavigationDropdown";
 export type { NavigationDropdownProps } from "./NavigationDropdown";

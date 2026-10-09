@@ -1,3 +1,5 @@
+import { BLOG_POSTS } from "@/content/blog";
+
 /**
  * The site's public routes, in one place.
  *
@@ -59,7 +61,17 @@ const LEGAL_ROUTES: readonly PublicRoute[] = [
   { path: "/cookie-policy", priority: 0.3 },
 ];
 
+/**
+ * [ADDED, 2026-10-09] The blog index and every article, read from the post
+ * list so a new article reaches the sitemap without a second registration.
+ */
+const BLOG_ROUTES: readonly PublicRoute[] = [
+  { path: "/blog", priority: 0.7 },
+  ...BLOG_POSTS.map((post) => ({ path: post.meta.path, priority: 0.7 as const })),
+];
+
 export const PUBLIC_ROUTES: readonly PublicRoute[] = [
   ...MARKETING_ROUTES,
+  ...BLOG_ROUTES,
   ...LEGAL_ROUTES,
 ];

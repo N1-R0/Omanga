@@ -1,3 +1,4 @@
+import { INSTAGRAM_URL } from "@/config/site";
 import { ABOUT_MISSION_VISION_HEADING_ID } from "@/content/about-mission-vision.content";
 import { INSURANCE_COVERAGE_HREF } from "@/content/insurance.content";
 import {
@@ -206,6 +207,7 @@ export const footerContent: {
   readonly brandParagraph: string;
   readonly columns: readonly FooterLinkColumn[];
   readonly contact: LinkTarget;
+  readonly socialLinks: readonly LinkTarget[];
   /** Accessible name for the footer's link navigation. Not marketing copy. */
   readonly landmarkLabel: string;
 } = {
@@ -213,22 +215,19 @@ export const footerContent: {
     "Your integrated destination services platform for seamless African travel. We combine local expertise with technology to showcase the very best of what the continent has to offer.",
   columns: [SERVICES, COMPANY, SUPPORT, LEGAL],
   contact: CONTACT_LINK,
+  socialLinks: [{ label: "Instagram", href: INSTAGRAM_URL, isExternal: true }],
   landmarkLabel: "Footer",
 } as const;
 
 /**
- * BLOCKER — social profiles are not shipping.
+ * [PARTIAL, 2026-10-09] Social profiles — Instagram only.
  *
  * The approved copy lists four platforms under SOCIAL: "LinkedIn · Instagram ·
- * X · Facebook". The handles and URLs are open blocker 6 in
- * project-context.md, and a social URL cannot be derived from a platform name
- * the way a slug can be derived from a page title — guessing one risks linking
- * to an account Omanga does not control.
- *
- * The brief is explicit that social profiles are never invented, so the block
- * is omitted entirely rather than rendered with dead links. There is no
- * `socialLinks` export by design: adding the four URLs here is the only change
- * needed to ship it, and the absence fails loudly rather than quietly.
+ * X · Facebook". The client supplied the Instagram URL (`INSTAGRAM_URL` in
+ * config/site.ts), so `socialLinks` ships with that one entry. LinkedIn, X and
+ * Facebook are still open blocker 6 in project-context.md and stay absent:
+ * a social URL cannot be derived from a platform name, and guessing one risks
+ * linking to an account Omanga does not control.
  *
  * BLOCKER — regulatory disclosure is not shipping.
  *

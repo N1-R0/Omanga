@@ -91,19 +91,8 @@ const PRIMARY_ITEMS: readonly NavigationEntry[] = [
       { label: "Contact", href: "/contact" },
     ],
   },
-  /*
-    [PENDING ROUTE] `/blog` does not exist and is not being stubbed. An
-    unmatched path resolves to `app/not-found.tsx`, which is the real 404 page
-    with the header, the footer and the recovery links — so the instruction to
-    "put the 404 UI there for now" is satisfied by routing rather than by a
-    placeholder page that would have to be found and deleted later.
-
-    `isRoutePending` is what keeps it auditable: the entry emits
-    `data-route-pending` in the DOM, so this outstanding stub is greppable in
-    the source and assertable in a crawl. It is also why `/blog` is absent from
-    `config/routes.ts` — a sitemap must not advertise a URL that 404s.
-  */
-  { label: "Blog", href: "/blog", isRoutePending: true },
+  // [RESOLVED, 2026-10-09] `/blog` is built; the pending flag and its note are gone.
+  { label: "Blog", href: "/blog" },
 ] as const;
 
 export const navigationContent: {

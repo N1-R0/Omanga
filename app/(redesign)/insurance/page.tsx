@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { CTA } from "@/components/sections/CTA";
+import { Faq } from "@/components/sections/Faq";
 import { GetStartedImageBand } from "@/components/sections/GetStartedImageBand";
 import { InsuranceCare } from "@/components/sections/InsuranceCare";
 import { InsuranceDeepDive } from "@/components/sections/InsuranceDeepDive";
@@ -36,7 +37,11 @@ import {
   insuranceWhyContent,
 } from "@/content/insurance-why.content";
 import { TRUST_HEADING_ID, trustContent } from "@/content/trust.content";
-import { buildPageGraph } from "@/lib/schema";
+import {
+  INSURANCE_FAQ_HEADING_ID,
+  insuranceFaqContent,
+} from "@/content/insurance-faq.content";
+import { buildFaqPage, buildPageGraph } from "@/lib/schema";
 import type { PageMetaContent } from "@/types/content.types";
 import { buildPageMetadata } from "@/lib/seo";
 
@@ -116,7 +121,10 @@ export default function InsurancePreviewPage() {
   */
   return (
     <>
-      <JsonLd graph={buildPageGraph(insuranceMeta, { crumb: "Holiday Insurance" })} />
+      <JsonLd graph={buildPageGraph(insuranceMeta, {
+        crumb: "Holiday Insurance",
+        nodes: [buildFaqPage(insuranceMeta, insuranceFaqContent.items)],
+      })} />
 
       {/*
         Stage 1. The hero — spec § 2, and the page's only `h1`. The outline
@@ -225,6 +233,14 @@ export default function InsurancePreviewPage() {
         Brand fill after two light bands, so the page closes on its one emphasis
         surface. Its `h2` completes the outline.
       */}
+      {/*
+        [ADDED, 2026-10-09] FAQ — not in the content spec. Added for search:
+        answers phrased the way people ask, each naming Omanga. Dark between
+        the light partners strip and the brand CTA. Its `FAQPage` node is in
+        the graph above.
+      */}
+      <Faq content={insuranceFaqContent} headingId={INSURANCE_FAQ_HEADING_ID} tone="dark" />
+
       <CTA
         content={insuranceCtaContent}
         headingId={INSURANCE_CTA_HEADING_ID}

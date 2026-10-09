@@ -479,3 +479,28 @@ their own surface. **No component overrides it.** A single brand ring on every
 surface fails the 3:1 non-text floor on dark (2.73:1) and is entirely invisible
 on the brand band (1.00:1) — which is where the primary conversion control
 lives.
+
+---
+
+## Blog, FAQ and brand signals (2026-10-09)
+
+Goal: rank for non-brand searches and strengthen the bare brand query "omanga",
+which is dominated by an unrelated public figure.
+
+- **Blog** at `/blog` and `/blog/[slug]`. Posts are typed modules in
+  `content/blog/posts/`, registered once in `content/blog/index.ts`; the index,
+  static params and sitemap all read that list. Article bodies reuse the legal
+  block model and renderer — one long-form prose system, not two.
+- **Titles end in "| Omanga"** on every article so the brand name is attached
+  to each result. Product-page titles stay short for sitelinks.
+- **FAQ** bands on Payments and Insurance, dark, between the light partners
+  strip and the brand CTA. Answers only restate approved copy. Native
+  `details`/`summary`; answers are plain strings so the visible text and the
+  `FAQPage` schema are identical.
+- **Schema**: `BlogPosting` (author and publisher are the organisation — no
+  invented authors), `FAQPage`, and a three-level breadcrumb for articles.
+  Organisation `sameAs` carries the client-supplied Instagram URL.
+- **Footer** shows Instagram only. LinkedIn, X and Facebook stay absent until
+  their URLs are supplied.
+- **Review before launch**: articles and FAQs are drafted, not from the approved
+  copy document. Each module carries a `[VERIFY]` note on what needs checking.

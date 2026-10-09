@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { CTA } from "@/components/sections/CTA";
+import { Faq } from "@/components/sections/Faq";
 import { GetStartedImageBand } from "@/components/sections/GetStartedImageBand";
 import { InsuranceDeepDive } from "@/components/sections/InsuranceDeepDive";
 import { InsuranceHero } from "@/components/sections/InsuranceHero";
@@ -37,7 +38,11 @@ import {
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import { TRUST_HEADING_ID, trustContent } from "@/content/trust.content";
 import { getExchangeRates } from "@/lib/rates";
-import { buildPageGraph } from "@/lib/schema";
+import {
+  PAYMENTS_FAQ_HEADING_ID,
+  paymentsFaqContent,
+} from "@/content/payments-faq.content";
+import { buildFaqPage, buildPageGraph } from "@/lib/schema";
 import { buildPageMetadata } from "@/lib/seo";
 import type { PageMetaContent } from "@/types/content.types";
 
@@ -202,7 +207,10 @@ export default async function PaymentsPage() {
   return (
     <>
       <JsonLd
-        graph={buildPageGraph(paymentsMeta, { crumb: "Omanga Payment Solutions" })}
+        graph={buildPageGraph(paymentsMeta, {
+          crumb: "Omanga Payment Solutions",
+          nodes: [buildFaqPage(paymentsMeta, paymentsFaqContent.items)],
+        })}
       />
 
       {/*
@@ -398,6 +406,14 @@ export default async function PaymentsPage() {
         three cards took that — but it is still the only one a conversion control
         sits on.
       */}
+      {/*
+        [ADDED, 2026-10-09] FAQ — not in the content spec. Added for search:
+        answers phrased the way people ask, each naming Omanga. Dark between
+        the light partners strip and the brand CTA. Its `FAQPage` node is in
+        the graph above.
+      */}
+      <Faq content={paymentsFaqContent} headingId={PAYMENTS_FAQ_HEADING_ID} tone="dark" />
+
       <CTA content={paymentsCtaContent} headingId={PAYMENTS_CTA_HEADING_ID} />
     </>
   );

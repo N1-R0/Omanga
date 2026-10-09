@@ -152,6 +152,7 @@ export default function NotFound() {
           columns={footerContent.columns}
           brandParagraph={footerContent.brandParagraph}
           contact={footerContent.contact}
+          socialLinks={footerContent.socialLinks}
           copyright={copyright}
           wordmark={SITE_NAME}
           homeLabel={navigationContent.homeLabel}

@@ -170,6 +170,7 @@ export default function RedesignRootLayout({
           columns={footerContent.columns}
           brandParagraph={footerContent.brandParagraph}
           contact={footerContent.contact}
+          socialLinks={footerContent.socialLinks}
           copyright={copyright}
           wordmark={SITE_NAME}
           homeLabel={navigationContent.homeLabel}

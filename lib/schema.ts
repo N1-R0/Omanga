@@ -1,5 +1,6 @@
 import {
   CONTACT_EMAIL,
+  INSTAGRAM_URL,
   SITE_LOCALE,
   SITE_NAME,
   SITE_TAGLINE,
@@ -11,6 +12,7 @@ import {
   WALLET_PROVIDER_NAME,
 } from "@/content/legal/legal-shared.content";
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
+import type { BlogPost, FaqItem } from "@/types/blog.types";
 import type { PageMetaContent } from "@/types/content.types";
 
 type SchemaNode = Readonly<Record<string, unknown>>;
@@ -49,12 +51,16 @@ const ORGANIZATION: SchemaNode = {
     alone got a name, a URL and a logo. Neither value is new or unverified: the
     address is deliberately still absent, for the reason `config/site.ts` records
     at `OFFICE_ADDRESS` (a trading address must not be marked up as the
-    registered one), and no `sameAs` appears because no social profile URL exists
-    in this project — `footer.content.ts` blocks the same claim for the same
-    reason.
+    registered one).
+
+    [ADDED, 2026-10-09] `sameAs` with the client-supplied Instagram profile.
+    "Omanga" alone is dominated in search by an unrelated public figure; linking
+    the organisation to its own profile is one of the signals Google uses to
+    tell the brand apart. Other platforms are added only once supplied.
   */
   email: CONTACT_EMAIL,
   areaServed: AREA_SERVED,
+  sameAs: [INSTAGRAM_URL],
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "customer support",
@@ -166,32 +172,48 @@ function buildWebPage(meta: PageMetaContent): SchemaNode {
  * Nothing is fabricated: the trail describes the site's actual, flat structure
  * rather than inventing a category level that does not exist in the URL.
  */
-function buildBreadcrumb(meta: PageMetaContent, crumb: string): SchemaNode {
+function buildBreadcrumb(
+  meta: PageMetaContent,
+  crumb: string,
+  parent?: BreadcrumbParent,
+): SchemaNode {
+  /*
+    [ADDED, 2026-10-09] `parent`. Blog articles live at `/blog/<slug>`, the
+    first two-level URLs on the site, so their trail is Home → Blog → article.
+    The parent is passed explicitly rather than derived from the path, for the
+    same reason the crumb label is.
+  */
+  const trail = [
+    { name: "Home", item: SITE_URL },
+    ...(parent === undefined
+      ? []
+      : [{ name: parent.name, item: absoluteUrl(parent.path) }]),
+    { name: crumb, item: absoluteUrl(meta.path) },
+  ];
+
   return {
     "@type": "BreadcrumbList",
     "@id": `${absoluteUrl(meta.path)}#breadcrumb`,
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: SITE_URL,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: crumb,
-        item: absoluteUrl(meta.path),
-      },
-    ],
+    itemListElement: trail.map((entry, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      ...entry,
+    })),
   };
 }
+
+export type BreadcrumbParent = {
+  readonly name: string;
+  readonly path: string;
+};
 
 export type PageGraphOptions = {
   /**
    * The breadcrumb label for this page. Omit on the homepage.
    */
   readonly crumb?: string;
+  /** A level between Home and this page. Blog articles only. */
+  readonly parent?: BreadcrumbParent;
   /**
    * Extra nodes for this page only — currently the three plan `Product`s.
    */
@@ -202,14 +224,14 @@ export type PageGraphOptions = {
  * Graph for a page: the organisation, the site, the page itself, the two
  * services, and optionally a breadcrumb trail and page-specific nodes.
  *
- * Fields blocked in project-context.md — `sameAs`, postal address, telephone,
+ * Fields blocked in project-context.md — postal address, telephone,
  * registration number, `AggregateRating` — remain omitted rather than filled.
  * `Product`/`Offer` has come off that list because the prices are published and
  * verifiable on the page; see `buildPlanProducts`.
  */
 export function buildPageGraph(
   meta: PageMetaContent,
-  { crumb, nodes = [] }: PageGraphOptions = {},
+  { crumb, parent, nodes = [] }: PageGraphOptions = {},
 ): JsonLdGraph {
   const webPage = buildWebPage(meta);
 
@@ -226,7 +248,7 @@ export function buildPageGraph(
              graph for Google to pair up by proximity.
            */
           { ...webPage, breadcrumb: { "@id": `${absoluteUrl(meta.path)}#breadcrumb` } },
-      ...(crumb === undefined ? [] : [buildBreadcrumb(meta, crumb)]),
+      ...(crumb === undefined ? [] : [buildBreadcrumb(meta, crumb, parent)]),
       ...SERVICES,
       ...nodes,
     ],
@@ -366,4 +388,58 @@ export function buildPlanProducts(
       },
     };
   });
+}
+
+/* -----------------------------------------------------------------------------
+   Blog and FAQ
+   -------------------------------------------------------------------------- */
+
+/**
+ * `FAQPage` for a block of questions rendered on the page.
+ *
+ * Google limits FAQ rich results to authoritative government and health sites,
+ * so this is not emitted for the dropdowns. It is emitted because it states the
+ * question-and-answer pairs unambiguously to every consumer that reads the
+ * graph — including the AI answer engines that now cite pages directly. The
+ * answers are the same strings the page renders; a mismatch is a violation.
+ */
+export function buildFaqPage(
+  meta: PageMetaContent,
+  items: readonly FaqItem[],
+): SchemaNode {
+  return {
+    "@type": "FAQPage",
+    "@id": `${absoluteUrl(meta.path)}#faq`,
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: { "@type": "Answer", text: item.answer },
+    })),
+  };
+}
+
+/**
+ * `BlogPosting` for an article. Author and publisher are the organisation:
+ * articles are written as Omanga, not by a named person, and a fabricated
+ * author is exactly the kind of claim this file refuses elsewhere.
+ */
+export function buildBlogPosting(post: BlogPost): SchemaNode {
+  const url = absoluteUrl(post.meta.path);
+
+  return {
+    "@type": "BlogPosting",
+    "@id": `${url}#article`,
+    headline: post.title,
+    description: post.meta.description,
+    url,
+    mainEntityOfPage: { "@id": `${url}#webpage` },
+    datePublished: post.publishedDate,
+    dateModified: post.updatedDate ?? post.publishedDate,
+    inLanguage: SITE_LOCALE,
+    articleSection: post.category,
+    image: absoluteUrl("/opengraph-image"),
+    author: { "@id": ORGANIZATION_ID },
+    publisher: { "@id": ORGANIZATION_ID },
+    about: { "@id": ORGANIZATION_ID },
+  };
 }

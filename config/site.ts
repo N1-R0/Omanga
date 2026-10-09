@@ -86,6 +86,15 @@ export const SITE_LOCALE = "en" as const;
 export const WALLET_URL = "https://omanga.useinclude.com/" as const;
 
 /**
+ * Omanga's Instagram profile, supplied by the client on 2026-10-09.
+ *
+ * The share link carried an `?obrf=` tracking parameter; it is stripped so the
+ * footer and the schema `sameAs` name the canonical profile URL. LinkedIn, X and
+ * Facebook remain open blockers — add them here when supplied, never guessed.
+ */
+export const INSTAGRAM_URL = "https://www.instagram.com/omanga_services/" as const;
+
+/**
  * The office address, as supplied.
  *
  * One owner, like every other contact route: the Contact page's § 5 renders it,

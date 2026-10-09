@@ -25,9 +25,9 @@ import type { FooterLinkColumn, LinkTarget } from "@/types/content.types";
  * (a leftover from the template, replaced by the approved notice with a live
  * year) and the oversized "OMANGA" watermark across the base.
  *
- * Three content blocks are absent because their content is not approved, not
- * because they were forgotten: the social profiles (handles are an open
- * blocker, and a social URL cannot be derived the way a page slug can), the
+ * Social profiles render only for client-supplied URLs (Instagram, as of
+ * 2026-10-09). Two content blocks are absent because their content is not
+ * approved, not because they were forgotten: the
  * regulatory disclosure (licensing entity and underwriter are open blockers),
  * and the registered-company trust block. Each is documented in
  * `content/footer.content.ts`. An absent element is the specified behaviour for
@@ -55,6 +55,7 @@ export type FooterProps = {
   columns: readonly FooterLinkColumn[];
   brandParagraph: string;
   contact: LinkTarget;
+  socialLinks: readonly LinkTarget[];
   copyright: string;
   wordmark: string;
   homeLabel: string;
@@ -64,6 +65,7 @@ export function Footer({
   columns,
   brandParagraph,
   contact,
+  socialLinks,
   copyright,
   wordmark,
   homeLabel,
@@ -94,6 +96,22 @@ export function Footer({
             <TextLink href={contact.href} tone="dark">
               {contact.label}
             </TextLink>
+
+            {/*
+              Social profiles sit with the contact route: both are ways to reach
+              Omanga. Only client-supplied URLs are listed (see footer.content.ts).
+            */}
+            {socialLinks.length > 0 && (
+              <ul className="flex flex-wrap gap-fluid-4">
+                {socialLinks.map((link) => (
+                  <li key={link.href}>
+                    <TextLink href={link.href} tone="dark" isExternal={link.isExternal}>
+                      {link.label}
+                    </TextLink>
+                  </li>
+                ))}
+              </ul>
+            )}
 
             {/*
               Caption role: Inter 12/20, which is the system's legal and metadata

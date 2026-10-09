@@ -94,8 +94,12 @@ function PostCard({ post, readLabel, titleLevel: Title, isFeatured }: CardProps)
 
         <p className="font-sans text-main text-secondary">{post.summary}</p>
 
-        <p className="mt-auto flex items-center justify-between gap-fluid-3 pt-fluid-2 font-sans text-small text-secondary">
-          <time dateTime={post.publishedDate}>
+        {/*
+          `text-secondary` sits on the date only: it fades by opacity, so on the
+          row it also faded the brand-coloured label below 4.5:1 (Lighthouse).
+        */}
+        <p className="mt-auto flex items-center justify-between gap-fluid-3 pt-fluid-2 font-sans text-small">
+          <time dateTime={post.publishedDate} className="text-secondary">
             {new Date(post.publishedDate).toLocaleDateString("en-GB", DATE_FORMAT)}
           </time>
           <span aria-hidden="true" className="text-brand">

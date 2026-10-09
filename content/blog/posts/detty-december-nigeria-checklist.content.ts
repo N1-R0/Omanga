@@ -22,12 +22,13 @@ import type { ImageAsset } from "@/types/content.types";
  */
 
 /**
- * Cover from Unsplash (free licence), cropped to 4:3 around faces by the CDN
- * so the card and cover crops never cut through a head.
+ * Cover from Unsplash (free licence): a night party in Abuja. Cropped to 4:3 by
+ * the CDN on `crop=entropy` (the busiest region — hands, confetti, lights), since
+ * the crowd faces away and a face crop has nothing to anchor on.
  */
 const dettyDecemberImage: ImageAsset = {
-  src: "https://images.unsplash.com/photo-1787779335456-d8a0952db24e?w=2000&h=1500&fit=crop&crop=faces",
-  alt: "Two women in traditional Nigerian attire and gele embracing and laughing on a street in Lagos.",
+  src: "https://images.unsplash.com/photo-1762237807370-41a599e6ab86?w=2000&h=1500&fit=crop&crop=entropy",
+  alt: "A crowd at a night party in Abuja with hands raised as confetti falls under bright stage lights.",
   width: 2000,
   height: 1500,
 };
@@ -54,8 +55,8 @@ export const dettyDecemberChecklistPost: BlogPost = {
   readingMinutes: 5,
   image: dettyDecemberImage,
   imageCredit: {
-    name: "Ben Iwara",
-    url: "https://unsplash.com/photos/two-women-embracing-in-lagos-mtxAknmiGBg",
+    name: "Ani Augustine",
+    url: "https://unsplash.com/photos/confetti-falling-on-a-crowd-at-a-concert-swnQTaOz0-o",
   },
   intro: [
     {

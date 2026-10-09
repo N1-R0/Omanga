@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 
 import { BlogArticle } from "@/components/blog/BlogArticle";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { BLOG_POSTS, getBlogPost } from "@/content/blog";
+import { BLOG_POSTS, blogIndexContent, getBlogPost } from "@/content/blog";
 import { buildBlogPosting, buildFaqPage, buildPageGraph } from "@/lib/schema";
 import { buildPageMetadata } from "@/lib/seo";
 
@@ -50,7 +50,11 @@ export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
         })}
       />
 
-      <BlogArticle post={post} />
+      <BlogArticle
+        post={post}
+        related={BLOG_POSTS.filter((other) => other.slug !== post.slug).slice(0, 3)}
+        readLabel={blogIndexContent.readLabel}
+      />
     </>
   );
 }

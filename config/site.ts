@@ -275,6 +275,12 @@ export const INK_COLOR = "#161717" as const;
  * nothing else should ever concatenate the origin by hand.
  */
 export function absoluteUrl(path: string): string {
+  // Already absolute (e.g. an Unsplash blog cover): return it untouched rather
+  // than resolving it as a path on this site.
+  if (/^https?:\/\//.test(path)) {
+    return path;
+  }
+
   const normalised = path.startsWith("/") ? path : `/${path}`;
   return new URL(normalised, SITE_URL).toString();
 }

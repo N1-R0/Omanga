@@ -45,6 +45,7 @@ export default function BlogIndexPage() {
             <BlogPostList
               posts={BLOG_POSTS}
               readLabel={blogIndexContent.readLabel}
+              isFeatured
             />
           </div>
         </Container>

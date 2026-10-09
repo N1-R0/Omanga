@@ -1,4 +1,8 @@
-import type { LinkTarget, PageMetaContent } from "@/types/content.types";
+import type {
+  ImageAsset,
+  LinkTarget,
+  PageMetaContent,
+} from "@/types/content.types";
 import type {
   LegalBlock,
   LegalRichText,
@@ -44,6 +48,13 @@ export type BlogPost = {
   readonly publishedDate: string;
   readonly updatedDate?: string;
   readonly readingMinutes: number;
+  /**
+   * Cover image: the index card, the article header and the share card. Set
+   * it as `meta.ogImage` too so WhatsApp and social previews show the photo.
+   */
+  readonly image: ImageAsset;
+  /** Photographer credit shown under the cover, e.g. for Unsplash photos. */
+  readonly imageCredit?: { readonly name: string; readonly url: string };
   readonly intro: readonly LegalBlock[];
   readonly sections: readonly LegalSection[];
   readonly faq?: FaqContent;

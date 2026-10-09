@@ -437,7 +437,7 @@ export function buildBlogPosting(post: BlogPost): SchemaNode {
     dateModified: post.updatedDate ?? post.publishedDate,
     inLanguage: SITE_LOCALE,
     articleSection: post.category,
-    image: absoluteUrl("/opengraph-image"),
+    image: absoluteUrl(post.image.src),
     author: { "@id": ORGANIZATION_ID },
     publisher: { "@id": ORGANIZATION_ID },
     about: { "@id": ORGANIZATION_ID },

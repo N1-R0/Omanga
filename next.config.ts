@@ -100,6 +100,14 @@ const SECURITY_HEADERS = [
 const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
+    /*
+      Blog cover photos come from Unsplash (free licence) and are served from
+      its CDN. `search` is left unset so the imgix crop parameters on each URL
+      (`w`, `h`, `fit=crop`, `crop=faces`) are allowed through.
+    */
+    remotePatterns: [
+      { protocol: "https", hostname: "images.unsplash.com", pathname: "/photo-*" },
+    ],
   },
 
   async headers() {

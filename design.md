@@ -504,3 +504,11 @@ which is dominated by an unrelated public figure.
   their URLs are supplied.
 - **Review before launch**: articles and FAQs are drafted, not from the approved
   copy document. Each module carries a `[VERIFY]` note on what needs checking.
+- **Blog images** (Mobbin refs: Assembly, Codecademy, Etsy, Uxcel, Revolut,
+  Hashnode): newest post as a featured card, image beside text from tablet;
+  the rest as image-on-top cards; cover image under each article's title block;
+  "More from the Omanga blog" row at the foot. Covers are 4:3 because the
+  covers are requested from the Unsplash CDN pre-cropped to 4:3 around faces
+  (`fit=crop&crop=faces`). Each cover is also the article's `og:image` and
+  `BlogPosting.image`. Photos are free Unsplash images, credited in a caption
+  under the cover; `images.unsplash.com` is the only allowed remote host.

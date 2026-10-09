@@ -516,3 +516,6 @@ which is dominated by an unrelated public figure.
   disclosure (`MobileNavGroup`) matching the desktop dropdown, replacing the
   flattened heading + links. Opens by default on About/Contact. Collapsed links
   are `inert`; height animates via grid-rows 0fr→1fr.
+- **Article layout** (2026-10-09, on instruction): title through closing action
+  sit in one centred 70ch column (`measure-body`, `mx-auto`); the related row
+  breaks out to the container width.

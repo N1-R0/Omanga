@@ -519,3 +519,45 @@ which is dominated by an unrelated public figure.
 - **Article layout** (2026-10-09, on instruction): title through closing action
   sit in one centred 70ch column (`measure-body`, `mx-auto`); the related row
   breaks out to the container width.
+
+## Home v2 preview (2026-10-09)
+
+A second home page, first built as a preview route beside the live one. The
+preview route was deleted on 2026-10-09; the v2 components and
+`content/home-v2.content.ts` remain so the work can continue. Sections not yet
+on `/` (hero, partners, products, features, statement, coverage, collage) are
+unused until they are placed.
+
+- **Layouts** are the picks from `design-lab/home-layouts.html`, each a Mobbin
+  reference: N1 header, H1 hero, T3 partners, P1 products, F2 features,
+  B3 statement, S4 steps, C3 coverage, W1 comparison, R5 collage, Q1 FAQ,
+  X1 closing panel, Z3 footer. Insurance plans skipped.
+- **Header and footer** are the site's existing ones. N1 and Z3 match what is
+  already shipped closely enough that rebuilding them would only fork the chrome.
+- **3D objects** load from `public/3d/web` (512px WebP, committed). The 2048px
+  PNG masters in `public/3d` are git-ignored (65 MB) and kept locally. Always `alt=""`: each one sits beside the text it stands for.
+  The `card.png` virtual card is not used anywhere, because of the no-card rule.
+- **New tokens**: `--color-blush`, `--color-blush-strong`, `--color-brand-deep`,
+  sampled from the 3D set. Crimson panels use a brand → brand-deep gradient so
+  they share the objects' shading.
+- **New motion**: `animate-float-3d`, a slow 6s bob, transform only, off under
+  reduced motion. A deliberate exception to "no continuous decoration", limited
+  to the 3D objects.
+- **Copy** reuses the approved content modules. Lines marked [NEW] in
+  `content/home-v2.content.ts` (hero headline, collage heading, FAQ help line)
+  need sign-off. The collage has no testimonials because none exist yet.
+- **Typography** is unchanged on purpose; it is the next decision.
+- **Going live**: place the remaining v2 sections in `app/(redesign)/page.tsx`
+  (keep its metadata and JSON-LD), then remove old home sections nothing imports.
+- **Partly live (2026-10-09)**: on request, four v2 sections now render on the
+  live home page `/`: How it works (S4), Why Omanga (W1), a new FAQ (Q1) and
+  the closing panel (X1). The rest of `/` is still the current design. The old
+  `HowItWorks`, `WhyOmanga` and `CTA` components are no longer used by `/` but
+  are kept until the other pages are checked for them.
+- **Hero, take 2 (2026-10-09)**: replaced H1 with a wise.com-style hero on
+  request. Blush band, huge uppercase headline (Kantumruy 700 until typography is
+  picked), one button, then a Payments card and an Insurance card overlapping the
+  band edge. Each card ends in a working widget: wallet accounts (the same sample
+  balances as the Payments page drawer) and a Silver/Gold/Diamond picker reading
+  prices from `insurance-plans.content.ts`. The headline "Pay and stay covered
+  across Africa" is [NEW] copy.

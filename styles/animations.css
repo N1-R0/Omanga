@@ -175,6 +175,32 @@
 }
 
 /* -----------------------------------------------------------------------------
+   3D object float (home v2 preview)
+   A slow vertical bob on the glossy 3D objects so they read as objects rather
+   than stickers. Transform only. `--float-delay` lets siblings drift out of
+   step without per-object keyframes. Reduced motion holds them still.
+   -------------------------------------------------------------------------- */
+@keyframes float-3d {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--float-rotate, 0deg));
+  }
+  50% {
+    transform: translateY(-4%) rotate(var(--float-rotate, 0deg));
+  }
+}
+
+@utility animate-float-3d {
+  animation: float-3d 6s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    transform: rotate(var(--float-rotate, 0deg));
+  }
+}
+
+/* -----------------------------------------------------------------------------
    Transitions
    Durations are tokens, not per-component values. Only the property groups the
    system actually changes are transitioned — colour/border for state, and

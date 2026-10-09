@@ -3,28 +3,24 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { SITE_TAGLINE } from "@/config/site";
 import { AfricanCoverage } from "@/components/sections/AfricanCoverage";
-import { CTA } from "@/components/sections/CTA";
+import { ClosingV2 } from "@/components/home-v2/ClosingV2";
+import { ComparisonV2 } from "@/components/home-v2/ComparisonV2";
+import { FaqV2 } from "@/components/home-v2/FaqV2";
+import { StepsV2 } from "@/components/home-v2/StepsV2";
 import { Hero } from "@/components/sections/Hero";
-import { HowItWorks } from "@/components/sections/HowItWorks";
 import { ProductDeepDive } from "@/components/sections/ProductDeepDive";
 import { Services } from "@/components/sections/Services";
 import { SolutionsOverview } from "@/components/sections/SolutionsOverview";
 import { TrustPartners } from "@/components/sections/TrustPartners";
-import { WhyOmanga } from "@/components/sections/WhyOmanga";
 import {
   COVERAGE_HEADING_ID,
   coverageContent,
 } from "@/content/coverage.content";
-import { CTA_HEADING_ID, ctaContent } from "@/content/cta.content";
 import {
   DEEP_DIVE_HEADING_ID,
   deepDiveContent,
 } from "@/content/deep-dive.content";
 import { HERO_HEADING_ID, heroContent } from "@/content/hero.content";
-import {
-  HOW_IT_WORKS_HEADING_ID,
-  howItWorksContent,
-} from "@/content/how-it-works.content";
 import {
   SERVICES_HEADING_ID,
   servicesContent,
@@ -35,10 +31,6 @@ import {
 } from "@/content/solutions.content";
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import { TRUST_HEADING_ID, trustContent } from "@/content/trust.content";
-import {
-  WHY_OMANGA_HEADING_ID,
-  whyOmangaContent,
-} from "@/content/why-omanga.content";
 
 import { buildPageGraph } from "@/lib/schema";
 import type { PageMetaContent } from "@/types/content.types";
@@ -101,11 +93,12 @@ export default function HomePage() {
       {/* Phase 3.3. Services — section 4 of the approved copy document. */}
       <Services content={servicesContent} headingId={SERVICES_HEADING_ID} />
 
-      {/* Phase 3.5. How Omanga Works — section 5 of the approved copy document. */}
-      <HowItWorks
-        content={howItWorksContent}
-        headingId={HOW_IT_WORKS_HEADING_ID}
-      />
+      {/*
+        [CHANGED, 2026-10-09] How it works is the v2 "connected circles" layout
+        (pick S4, see design.md § Home v2 preview). Same approved copy, read from
+        `how-it-works.content.ts` through `home-v2.content.ts`.
+      */}
+      <StepsV2 />
 
       {/* Phase 3.4. Product Deep Dive — section 6 of the approved copy document. */}
       <ProductDeepDive
@@ -125,22 +118,17 @@ export default function HomePage() {
         headingId={COVERAGE_HEADING_ID}
       />
 
-      {/*
-        Phase 3.7. Why Omanga. Appended after the sections already mounted, for the
-        same reason African Coverage was — re-ordering the calls above would be
-        modifying a previous section. Dark surface, so the page alternates here.
-        Its heading is an `h2` and its column headings are `h3`s, so the outline
-        below it still opens at `h2` without skipping a level.
-      */}
-      <WhyOmanga content={whyOmangaContent} headingId={WHY_OMANGA_HEADING_ID} />
+      {/* [CHANGED, 2026-10-09] v2 split card (pick W1), same approved copy. */}
+      <ComparisonV2 />
 
       {/*
-        Phase 3.8. The closing CTA band — the only brand-filled section on the
-        page. Appended after the sections already mounted, for the same reason the
-        two before it were. Its heading is an `h2`, so the outline below it still
-        opens at `h2` without skipping a level.
+        [ADDED, 2026-10-09] v2 FAQ (pick Q1). Six questions from the approved
+        Payments and Insurance FAQs, chosen as the ones a first-time visitor asks.
       */}
-      <CTA content={ctaContent} headingId={CTA_HEADING_ID} />
+      <FaqV2 />
+
+      {/* [CHANGED, 2026-10-09] v2 panel with 3D objects (pick X1), same approved copy. */}
+      <ClosingV2 />
     </>
   );
 }

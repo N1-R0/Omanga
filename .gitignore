@@ -42,3 +42,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local design work: the layout pick pages and the 2048px 3D masters.
+# The site only loads the 512px WebP copies in public/3d/web.
+/design-lab/
+/public/3d/*.png
+/public/3d/*.jpg

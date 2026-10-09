@@ -27,6 +27,15 @@
   --color-brand: #ae2448;
   --color-brand-hover: #a02142;
 
+  /* [ADDED, 2026-10-09] Home v2 preview (/preview/home). Sampled from the 3D
+     asset set in public/3d so surfaces sit in the same family as the objects:
+     the blush is the pink of the globe and passport pages, the deep crimson is
+     the shaded side of the crimson objects. Used only by components/home-v2
+     until the preview replaces the live home page. */
+  --color-blush: #fbe8ee;
+  --color-blush-strong: #f6d3dd;
+  --color-brand-deep: #7c1530;
+
   /* Ink / dark surfaces ---------------------------------------------------- */
   --color-ink: #161717;
   --color-ink-elevated: #2d2e2e;

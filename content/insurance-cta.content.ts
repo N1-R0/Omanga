@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import { ctaContent } from "@/content/cta.content";
 import type { CtaContent } from "@/content/cta.content";
 import { INSURANCE_PLANS_HREF } from "@/content/insurance.content";
@@ -48,9 +49,9 @@ import { INSURANCE_PLANS_HREF } from "@/content/insurance.content";
 export const insuranceCtaContent: CtaContent = {
   heading: "Choose your plan before you fly",
   intro:
-    "Cover starts from $50 a month, with no commitment and no long-term contract. Pick the plan that fits your trip and travel with your health cover already arranged.",
+    "Cover starts from $50 a month with no commitment or long-term contract, so you can fly with the plan that fits your trip.",
   action: {
-    label: "Compare Plans",
+    label: "Compare plans",
     href: INSURANCE_PLANS_HREF,
     emphasis: "primary",
   },

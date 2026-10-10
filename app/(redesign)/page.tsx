@@ -3,9 +3,10 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { SITE_TAGLINE } from "@/config/site";
 import { AfricanCoverage } from "@/components/sections/AfricanCoverage";
-import { ClosingV2 } from "@/components/home-v2/ClosingV2";
-import { ComparisonV2 } from "@/components/home-v2/ComparisonV2";
-import { FaqV2 } from "@/components/home-v2/FaqV2";
+import { CTA } from "@/components/sections/CTA";
+import { Faq } from "@/components/sections/Faq";
+import { WhyOmanga } from "@/components/sections/WhyOmanga";
+import { HOME_V2_IDS, homeV2Content } from "@/content/home-v2.content";
 import { StepsV2 } from "@/components/home-v2/StepsV2";
 import { Hero } from "@/components/sections/Hero";
 import { ProductDeepDive } from "@/components/sections/ProductDeepDive";
@@ -118,17 +119,20 @@ export default function HomePage() {
         headingId={COVERAGE_HEADING_ID}
       />
 
-      {/* [CHANGED, 2026-10-09] v2 split card (pick W1), same approved copy. */}
-      <ComparisonV2 />
+      {/*
+        [CHANGED, 2026-10-09] v2 split card (pick W1), same approved copy.
+        Since 2026-10-10 this design is the shared `WhyOmanga` on every page.
+      */}
+      <WhyOmanga content={homeV2Content.comparison} headingId={HOME_V2_IDS.comparison} />
 
       {/*
         [ADDED, 2026-10-09] v2 FAQ (pick Q1). Six questions from the approved
         Payments and Insurance FAQs, chosen as the ones a first-time visitor asks.
       */}
-      <FaqV2 />
+      <Faq content={homeV2Content.faq} headingId={HOME_V2_IDS.faq} />
 
-      {/* [CHANGED, 2026-10-09] v2 panel with 3D objects (pick X1), same approved copy. */}
-      <ClosingV2 />
+      {/* [CHANGED, 2026-10-09] v2 panel with 3D objects (pick X1), same approved copy. Shared `CTA` since 2026-10-10. */}
+      <CTA content={homeV2Content.closing} headingId={HOME_V2_IDS.closing} />
     </>
   );
 }

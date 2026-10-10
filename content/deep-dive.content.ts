@@ -25,35 +25,36 @@ export type DeepDiveContent = {
   readonly products: readonly [DeepDiveProduct, DeepDiveProduct];
 };
 
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged. (PAYMENTS_FEATURES only.)
 const PAYMENTS_FEATURES: readonly DeepDiveFeature[] = [
   {
     id: "multi-currency-wallet",
     label: "Multi-currency wallet",
     heading: "One wallet, several currencies",
-    body: "Hold, manage, send and receive multiple currencies on a single platform. No separate account per currency and no closing a position just to open another.",
+    body: "Hold, send and receive several currencies in one wallet. You don't need a separate account for each one.",
   },
   {
     id: "funding",
     label: "Funding",
     heading: "Top up in the currency you earn in",
-    body: "Fund directly from USD, GBP or CAD. Your home currency goes in, spendable balance comes out.",
+    body: "Fund your wallet from USD, GBP or CAD. Your home currency goes in and a spendable balance comes out.",
   },
   {
     id: "exchange-rates",
     label: "Exchange rates",
     heading: "See the rate before you commit",
-    body: "Transparent, real-time exchange rates shown at the moment of conversion — so the cost of a transaction is never a surprise on your statement.",
+    body: "See the exchange rate before you convert, so the cost is clear up front.",
   },
   {
     id: "the-wallet",
-    label: "The Wallet",
-    heading: "Your Omanga Wallet, ready to spend",
+    label: "The wallet",
+    heading: "Your Omanga wallet, ready to spend",
     /*
       [CHANGED, 2026-08-29] "wherever cards are accepted" struck, for the reason
       recorded at the same phrase in `services.content.ts`: it describes the
       instrument by naming the one Omanga does not issue.
     */
-    body: "Pay with ease, straight from your wallet balance, online or in person.",
+    body: "Pay straight from your wallet balance, online or in person.",
   },
   {
     id: "coverage",
@@ -62,52 +63,53 @@ const PAYMENTS_FEATURES: readonly DeepDiveFeature[] = [
     // [CORRECTED] "One card for a multi-country trip" -> "One wallet". The last surviving
     // card claim in the document; NJ struck the rest and project-context.md forbids it.
     // Confirm the edited sentence with copy.
-    body: "One wallet for a multi-country trip, instead of a new arrangement at every border.",
+    body: "One wallet for a trip through several countries, instead of a new arrangement at every border.",
   },
   {
     id: "control",
     label: "Control",
     heading: "Manage everything from one account",
-    body: "Balances, transactions and your insurance plan in a single view.",
+    body: "See your balances, transactions and insurance plan in one place.",
   },
 ] as const;
 
+// [CHANGED, 2026-10-10] INSURANCE_FEATURES only: copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 const INSURANCE_FEATURES: readonly DeepDiveFeature[] = [
   {
     id: "plan-tiers",
     label: "Plan tiers",
-    heading: "Silver, Gold and Diamond",
-    body: "Three levels of short-term health cover, so you can match protection to trip length and budget rather than buying more than you need.",
+    heading: "Three plans: Silver, Gold and Diamond",
+    body: "Three levels of short-term health cover, so you match the cover to your trip length and budget without paying for more than you need.",
   },
   {
     id: "providers",
     label: "Providers",
-    heading: "Cover from established Nigerian providers",
-    body: "Your plan is delivered through top Nigerian health providers with real local networks — not a distant policy that struggles on the ground.",
+    heading: "Care from established Nigerian health providers",
+    body: "Your plan comes from established Nigerian health providers with local networks, not a distant insurer.",
   },
   {
     id: "trip-length-cover",
     label: "Trip-length cover",
-    heading: "Short-term cover, built for trips",
-    body: "Cover for the duration of your travel, not an annual policy you keep paying for after you're home.",
+    heading: "Cover for your trip, not the whole year",
+    body: "You're covered for the length of your trip, not tied to an annual policy you keep paying for after you're home.",
   },
   {
     id: "renew-and-extend",
     label: "Renew and extend",
-    heading: "Extend without starting again",
-    body: "Trip running long? Renew or extend your plan from your account.",
+    heading: "Extend your cover if your trip runs long",
+    body: "Renew or extend your plan from your Omanga account, without starting again.",
   },
   {
     id: "care-access",
     label: "Care access",
     heading: "Reach healthcare while you travel",
-    body: "Access care when you need it during your trip, across the countries Omanga covers.",
+    body: "Get care when you need it during your trip, across the countries Omanga covers.",
   },
   {
     id: "one-account",
     label: "One account",
-    heading: "Bought and managed alongside your wallet",
-    body: "Select your plan on the same platform you use to pay — no second signup, no second login.",
+    heading: "Manage your cover alongside your wallet",
+    body: "Choose your plan in the same account you use to pay, with no second sign-up and no second login.",
   },
 ] as const;
 
@@ -144,10 +146,10 @@ export const holidayInsuranceProduct: DeepDiveProduct = {
 } as const;
 
 export const deepDiveContent: DeepDiveContent = {
-  heading: "A closer look at Omanga Payments and Holiday Insurance",
+  heading: "What's inside Omanga",
   // The Figma reads "the wallet, the card and the three insurance plans"; the approved
   // document drops "the card", and copy outranks the frame.
-  intro: "Everything the wallet and the three insurance plans actually do.",
+  intro: "The wallet and the three insurance plans, feature by feature.",
   products: [omangaPaymentsProduct, holidayInsuranceProduct],
 } as const;
 

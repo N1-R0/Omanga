@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import type { CallToAction, ImageAsset } from "@/types/content.types";
 
 /**
@@ -91,7 +92,7 @@ const STATS: readonly ProofStat[] = [
   { figure: "5 min", label: "to activate your cover" },
   { figure: "3", label: "plans to choose from" },
   { figure: "24/7", label: "emergency assistance" },
-  { figure: "$50", label: "entry price per month" },
+  { figure: "$50", label: "starting price per month" },
 ] as const;
 
 const PARTNERS: readonly ProofPartner[] = [
@@ -101,9 +102,9 @@ const PARTNERS: readonly ProofPartner[] = [
 ] as const;
 
 export const insuranceProofContent: InsuranceProofContent = {
-  heading: "Who stands behind your cover",
+  heading: "The Nigerian health providers behind your cover",
   intro:
-    "Omanga Insurance isn't underwritten from a distance. Your plan is delivered through established Nigerian health providers with real hospital networks, so the cover you buy before you fly is the cover that admits you when you arrive.",
+    "Your Omanga plan isn't run by a distant insurer. It comes through established Nigerian health providers with real hospital networks. The cover you buy before you fly is the cover that admits you when you arrive.",
   stats: STATS,
   partners: PARTNERS,
   action: {

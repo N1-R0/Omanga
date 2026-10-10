@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
 
+import { Faq } from "@/components/sections/Faq";
+import { WhyOmanga } from "@/components/sections/WhyOmanga";
+import { INSURANCE_FAQ_HEADING_ID, insuranceFaqContent } from "@/content/insurance-faq.content";
+import { INSURANCE_WHY_HEADING_ID, insuranceWhyContent } from "@/content/insurance-why.content";
+
 import { CTA } from "@/components/sections/CTA";
 import { InsuranceCoverage } from "@/components/sections/InsuranceCoverage";
 import { InsuranceInclusions } from "@/components/sections/InsuranceInclusions";
@@ -97,9 +102,10 @@ import { buildPageMetadata } from "@/lib/seo";
  * Replace when meta for this page is written.
  */
 const plansMeta: PageMetaContent = {
-  title: "Insurance Plans — Silver, Gold and Diamond | Omanga",
+  // [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
+  title: "Holiday Insurance Plans: Silver, Gold and Diamond | Omanga",
   description:
-    "Compare Omanga Holiday Insurance plans side by side. Silver, Gold and Diamond from $50 a month, with ward type, scan allowances and hospital access set out in full.",
+    "Compare Omanga holiday health insurance plans side by side. Silver, Gold and Diamond from $50 a month, with ward type, scans and hospital access. Choose yours.",
   path: "/plans",
 };
 
@@ -187,6 +193,14 @@ export default function PlansPage() {
         this page. Brand fill after three light bands, so the page closes on its
         one emphasis surface.
       */}
+      {/*
+        [ADDED, 2026-10-10] The shared "Why Omanga" and FAQ bands, on the
+        owner's instruction that every page closes the way the home page does.
+        The insurance page's copy: plans are an insurance decision.
+      */}
+      <WhyOmanga content={insuranceWhyContent} headingId={INSURANCE_WHY_HEADING_ID} />
+      <Faq content={insuranceFaqContent} headingId={INSURANCE_FAQ_HEADING_ID} />
+
       <CTA content={plansCtaContent} headingId={PLANS_CTA_HEADING_ID} />
     </>
   );

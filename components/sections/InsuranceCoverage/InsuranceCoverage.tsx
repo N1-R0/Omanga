@@ -8,6 +8,7 @@ import type { InsurancePlansContent } from "@/content/insurance-plans.content";
 import type { HeadingLevel, Tone } from "@/types/ui.types";
 
 import { ComparisonTable } from "./ComparisonTable";
+import { PlanSwitcher } from "./PlanSwitcher";
 
 /**
  * What each plan covers — spec § 6.1.
@@ -66,13 +67,22 @@ export function InsuranceCoverage({
           </Reveal>
 
           <Reveal index={1}>
-            <ComparisonTable
-              rows={content.rows}
-              plans={plans}
-              featureColumnLabel={content.featureColumnLabel}
-              tableLabel={content.tableLabel}
-              scrollHint={content.scrollHint}
-            />
+            {/*
+              [CHANGED, 2026-10-10] Phones get the plan switcher (pick P1); the
+              table is tablet and up, where it fits without sideways scrolling.
+            */}
+            <div className="tablet:hidden">
+              <PlanSwitcher rows={content.rows} plans={plans} label={content.tableLabel} />
+            </div>
+            <div className="hidden tablet:block">
+              <ComparisonTable
+                rows={content.rows}
+                plans={plans}
+                featureColumnLabel={content.featureColumnLabel}
+                tableLabel={content.tableLabel}
+                scrollHint={content.scrollHint}
+              />
+            </div>
           </Reveal>
         </Stack>
       </Section>

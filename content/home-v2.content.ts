@@ -39,7 +39,7 @@ export type Object3D =
   | "exchange" | "globe" | "heart-pulse" | "insurance-kit" | "location-pin"
   | "passport-pay" | "passport-stamped" | "phone-app" | "question-bubble"
   | "shield-check" | "sparkle-gold" | "sparkle-pink" | "speech-stars"
-  | "success-check" | "suitcase" | "wallet-closed";
+  | "success-check" | "suitcase" | "wallet-closed" | "wallet-open";
 
 export const HOME_V2_IDS = {
   hero: "v2-hero-heading",
@@ -69,7 +69,7 @@ export const homeV2Content = {
       // Facts from the approved Payments FAQ and features: six currencies,
       // three funding currencies, 50+ countries.
       body: `Hold six currencies, fund from USD, GBP or CAD, and spend in ${COUNTRIES_SERVED_DISPLAY} African countries.`,
-      link: { label: "Explore Payments", href: "/payments" },
+      link: { label: "Explore payments", href: "/payments" },
       widgetLabel: "Your wallet",
       // The same sample balances the Payments page's account drawer uses, so
       // the two pages never show different "example" numbers.
@@ -85,7 +85,7 @@ export const homeV2Content = {
     insurance: {
       title: "Omanga Holiday Insurance",
       body: "Short-term health cover for your trip from established Nigerian providers. Cover starts in about five minutes.",
-      link: { label: "Explore Insurance", href: "/insurance" },
+      link: { label: "Explore insurance", href: "/insurance" },
       widgetLabel: "Choose your plan",
       // Prices, hospital access and inclusions come straight from the plans
       // module, so the hero can't quote a stale price.
@@ -107,14 +107,14 @@ export const homeV2Content = {
       {
         name: "Omanga Payment Solutions",
         body: "A global multi-currency wallet that lets you hold, manage, send and receive multiple currencies on a single platform.",
-        link: { label: "Explore Payments", href: "/payments" },
+        link: { label: "Explore payments", href: "/payments" },
         object: "phone-app",
         tone: "brand",
       },
       {
         name: "Omanga Holiday Insurance",
         body: "Short-term health cover for your trip, underwritten by established Nigerian providers, in three plans.",
-        link: { label: "Explore Insurance", href: "/insurance" },
+        link: { label: "Explore insurance", href: "/insurance" },
         object: "insurance-kit",
         tone: "blush",
       },
@@ -185,9 +185,7 @@ export const homeV2Content = {
 
   faq: {
     heading: "Frequently asked questions",
-    // [NEW] Contact line; the address is the site's own CONTACT_EMAIL.
-    help: "Can't find your answer?",
-    helpLink: { label: "Contact us", href: "/contact" },
+    // The "Can't find your answer? Contact us" line is FAQ_HELP in site.content.
     // The top questions a first-time visitor has, from the two approved FAQs.
     items: [
       paymentsFaqContent.items[0],

@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import { ctaContent } from "@/content/cta.content";
 import type { CtaContent } from "@/content/cta.content";
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
@@ -89,7 +90,9 @@ import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
  * [NOTE] Every remaining product claim — the wallet, spending across Africa,
  * short-term cover, established local providers — is in approved homepage copy.
  */
-const INTRO = `Africa rewards the traveller who arrives ready. Omanga brings the essentials into one place — a multi-currency wallet that works across ${COUNTRIES_SERVED_DISPLAY} African countries, and short-term health cover from established local providers — so that the practical side of the trip is handled before you land and the continent gets your full attention. The spirit of Ubuntu lives in us all; through our collective unity, we achieve great things.`;
+// [CHANGED, 2026-10-10] One sentence, same product facts. The Ubuntu line moved
+// to the mission and vision intro (values), per the home-page CTA decision.
+const INTRO = `Set up a multi-currency wallet for ${COUNTRIES_SERVED_DISPLAY} African countries and short-term health cover from established local providers before you land.`;
 
 /**
  * The artwork is read from the homepage band rather than redeclared, so the
@@ -98,7 +101,8 @@ const INTRO = `Africa rewards the traveller who arrives ready. Omanga brings the
  */
 export const aboutCtaContent: CtaContent = {
   // ✏️ NEW. § 7 and § 3.2, transcribed unchanged. Sentence case per § 3.2.
-  heading: "Begin your African journey",
+  // [CHANGED, 2026-10-10] Was "Begin your African journey". Benefit first.
+  heading: "Travel Africa with your wallet and cover ready",
   intro: INTRO,
   /**
    * ✏️ NEW. § 7's primary, pointing at the homepage.

@@ -178,3 +178,16 @@
 @utility text-secondary {
   opacity: 0.8;
 }
+
+/* [ADDED, 2026-10-10] Headings in Manrope (typography pick F4).
+
+   Applied by role rather than per call site: the display–h3 roles, and any
+   bare h1/h2, take `--font-heading`. h4–h6 roles stay in Inter at 600, which is
+   how card and list titles should read. In the utilities layer with a :not()
+   so it outranks a `font-sans` class on the same element, and never touches
+   the wordmark. */
+@layer utilities {
+  :is(h1, h2, .text-display, .text-h1, .text-h2, .text-h3):not(.font-wordmark) {
+    font-family: var(--font-heading);
+  }
+}

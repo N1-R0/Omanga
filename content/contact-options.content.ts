@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 /**
  * Contact options — spec § 3.
  *
@@ -94,13 +95,13 @@ const OPTIONS: readonly ContactOption[] = [
     id: "talk",
     enquiry: "talk",
     heading: "Talk to us",
-    body: "Questions about payments, insurance plans, a partnership or your account? Tell us what you need and the right specialist will come back to you.",
+    body: "Ask about payments, insurance plans, a partnership or your account, and the right specialist will get back to you.",
   },
   {
     id: "notifications",
     enquiry: "notifications",
     heading: "Notifications",
-    body: "Get travel alerts and Omanga updates by email — coverage changes, plan updates and practical news for travelling across Africa.",
+    body: "Get travel alerts and Omanga updates by email, including coverage changes, plan updates and practical news for travel in Africa.",
   },
 ] as const;
 

@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import {
   CONTACT_EMAIL,
   OFFICE_ADDRESS,
@@ -99,7 +100,7 @@ const CARDS: readonly ContactInfoCard[] = [
   {
     id: "email",
     heading: "Email us",
-    body: "For enquiries about payments, insurance plans, partnerships or anything else — write to us and we'll reply within one business day.",
+    body: "Write to us about payments, insurance plans, partnerships or anything else. We reply within 1 business day.",
     /**
      * The address is the link and the label at once. § 5: "Address is the link;
      * display the address in full, never behind 'Email us here' — a visible
@@ -113,7 +114,8 @@ const CARDS: readonly ContactInfoCard[] = [
   },
   {
     id: "support",
-    heading: "Need support?",
+    // [CHANGED, 2026-10-10] Was "Need support?", the same text as the hero's h3.
+    heading: "Get help on WhatsApp",
     body: "Already using Omanga? Our contact centre is staffed 24/7 for payments and insurance. Start a WhatsApp chat and a specialist will pick it up wherever you are.",
     action: {
       label: "Chat on WhatsApp",
@@ -201,7 +203,8 @@ export const contactInformationContent: ContactInformationContent = {
    * reach Omanga and not three places to visit, and § SEO maps it to `Omanga
    * support` intent.
    */
-  heading: "How to reach us",
+  // [CHANGED, 2026-10-10] Descriptive H2 carrying "contact Omanga support".
+  heading: "How to contact Omanga support",
   cards: CARDS,
   map: {
     /*

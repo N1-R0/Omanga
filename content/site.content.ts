@@ -55,7 +55,7 @@ import type { CallToAction, LinkTarget } from "@/types/content.types";
  * imports it for "Open Your Free Wallet".
  */
 export const PRIMARY_CTA: CallToAction = {
-  label: "Get Started",
+  label: "Get started",
   href: "/get-started",
   emphasis: "primary",
 } as const;
@@ -158,3 +158,12 @@ export const FORBIDDEN_COPY_TERMS = ["card", "cards"] as const;
  * up pointing at a page with no coverage section on it.
  */
 export const PAYMENTS_RATES_ANCHOR = "rates" as const;
+
+/**
+ * The "Can't find your answer?" line under every FAQ heading (site-wide FAQ
+ * design, 2026-10-10). One copy, so every page says it the same way.
+ */
+export const FAQ_HELP = {
+  text: "Can't find your answer?",
+  link: { label: "Contact us", href: "/contact" },
+} as const;

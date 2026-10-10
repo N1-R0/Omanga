@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import { INSURANCE_PLANS_HREF } from "@/content/insurance.content";
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { CallToAction, Eyebrow } from "@/types/content.types";
@@ -51,10 +52,11 @@ export type InsuranceHeroContent = {
 export const insuranceHeroContent: InsuranceHeroContent = {
   eyebrow: "Omanga Holiday Insurance",
   heading: "Travel health insurance for Africa, sorted before you fly",
-  intro: `Short-term health cover for the length of your trip, delivered through established Nigerian health providers with real hospital networks on the ground. Choose Silver, Gold or Diamond, and travel across ${COUNTRIES_SERVED_DISPLAY} African countries knowing that care is arranged, not improvised.`,
-  helper: "Cover for your trip, not a year. Cancel anytime.",
+  intro: `Short-term holiday health cover for the length of your trip, from established Nigerian health providers with hospital networks on the ground. Choose Silver, Gold or Diamond and travel across ${COUNTRIES_SERVED_DISPLAY} African countries with your care already arranged.`,
+  helper: "Cover for your trip, not a year. Cancel any time.",
   action: {
-    label: "View Insurance Plans",
+    // [CHANGED, 2026-10-10] Sentence case, and the same label home uses for /plans, so one destination has one name.
+    label: "Compare plans",
     href: INSURANCE_PLANS_HREF,
     emphasis: "primary",
   },

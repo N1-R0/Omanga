@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import { WALLET_URL } from "@/config/site";
 import { ctaContent, type CtaContent } from "@/content/cta.content";
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
@@ -63,9 +64,9 @@ import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
  */
 export const paymentsCtaContent: CtaContent = {
   heading: "Start spending across Africa today",
-  intro: `Open your Omanga wallet in minutes, fund it from USD, GBP or CAD at mid-market rates, and pay your way across ${COUNTRIES_SERVED_DISPLAY} African countries. No minimums, no hidden fees, and 24/7 support from the moment you sign up.`,
+  intro: `Open your Omanga wallet in minutes, fund it from USD, GBP or CAD at mid-market rates, and spend in ${COUNTRIES_SERVED_DISPLAY} African countries. No minimums, no hidden fees and 24/7 support from the day you sign up.`,
   action: {
-    label: "Open Your Free Wallet",
+    label: "Open your free wallet",
     href: WALLET_URL,
     isExternal: true,
     emphasis: "primary",

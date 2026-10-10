@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { ComparisonGroup } from "@/content/why-omanga.content";
 
@@ -76,9 +77,9 @@ const WITHOUT_OMANGA: ComparisonGroup = {
   sentiment: "negative",
   items: [
     "A home bank card that gets blocked or declined the moment you cross a border",
-    "An exchange margin you only notice when the statement arrives",
+    "An exchange-rate markup you only see on your statement",
     "A separate account or app for every currency you touch",
-    "Transfer fees and minimums on money you've already earned",
+    "Transfer fees and minimums on money you have already earned",
     "A different payment arrangement for every country on the itinerary",
   ],
 } as const;
@@ -96,7 +97,7 @@ const WITH_OMANGA: ComparisonGroup = {
   title: "With Omanga",
   sentiment: "positive",
   items: [
-    "A wallet built for spending across the continent",
+    "A wallet built for spending across Africa",
     "Mid-market rates, sourced from public market data and refreshed hourly",
     "Six currencies held, sent and received from one wallet",
     "No hidden fees, no minimums, and free transfers between Omanga accounts",
@@ -113,7 +114,7 @@ export type PaymentsWhyContent = {
 export const paymentsWhyContent: PaymentsWhyContent = {
   heading: "Why travellers switch to Omanga",
   intro:
-    "Most people paying their way across Africa are improvising: a home bank card that may or may not work, a currency app that quietly marks up the rate, and cash for everything else. It works until it doesn't — usually at a checkout, in a country where sorting it out takes a day.",
+    "Most people paying their way across Africa juggle a home bank card that may fail, an app that marks up the rate, and cash.",
   groups: [WITHOUT_OMANGA, WITH_OMANGA],
 } as const;
 

@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { CallToAction, Eyebrow } from "@/types/content.types";
 
@@ -71,9 +72,10 @@ const PAYMENTS: GetStartedSolution = {
    * replacing 52 — but the site has one owner for it, and typing it again would
    * be a second place for it to go stale.
    */
-  body: `A multi-currency wallet built for spending across the continent. Fund in USD, GBP or CAD at transparent real-time rates, send and receive in six currencies, and pay directly from your balance in ${COUNTRIES_SERVED_DISPLAY} African countries — online or in person, with no FX surprises at checkout.`,
+  // [VERIFY] "6 currencies" is the open question in design-lab/type-and-copy-research.md; home says "several".
+  body: `A multi-currency wallet for spending across Africa. Fund it in USD, GBP or CAD at transparent real-time rates, and send and receive in 6 currencies. Pay from your balance in ${COUNTRIES_SERVED_DISPLAY} African countries, online or in person, with no surprise exchange-rate costs at checkout.`,
   action: {
-    label: "Explore Payment Solutions",
+    label: "Explore payments",
     href: "/payments",
     emphasis: "primary",
   },
@@ -81,9 +83,10 @@ const PAYMENTS: GetStartedSolution = {
 
 const INSURANCE: GetStartedSolution = {
   heading: "Omanga Holiday Insurance",
-  body: "Short-term travel medical cover for the length of your trip, delivered through established Nigerian health providers with real local networks. Choose Silver, Gold or Diamond, activate in under five minutes with no paperwork, and reach care in any of the countries Omanga covers.",
+  // [VERIFY] "under 5 minutes" and "no paperwork" are claims that need evidence.
+  body: "Short-term travel medical cover for the length of your trip, from established Nigerian health providers with local care networks. Choose Silver, Gold or Diamond and activate it in under 5 minutes, with no paperwork. Get care in any country Omanga covers.",
   action: {
-    label: "Explore Holiday Insurance",
+    label: "Explore holiday insurance",
     href: "/insurance",
     emphasis: "primary",
   },
@@ -120,9 +123,10 @@ export type GetStartedSolutionsContent = {
  */
 export const getStartedSolutionsContent: GetStartedSolutionsContent = {
   eyebrow: "Two solutions, one account",
-  heading: "Payments, protection, or both",
+  // [CHANGED, 2026-10-10] Descriptive H2 carrying the primary keyword.
+  heading: "Choose your travel wallet, health insurance or both",
   intro:
-    "Omanga Payment Solutions and Omanga Holiday Insurance work on their own or together in a single account. Start with the one your trip needs most — you can add the other at any time, without a second signup.",
+    "Use Omanga Payment Solutions and Omanga Holiday Insurance alone or together in one account, and add the other later without signing up again.",
   solutions: [PAYMENTS, INSURANCE],
 } as const;
 

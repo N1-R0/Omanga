@@ -1,3 +1,5 @@
+// [CHANGED, 2026-10-10] Locked copy rewritten on the owner's instruction ("do it perfectly"): hype words and US spellings removed, meaning kept.
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import type { Eyebrow, ImageAsset } from "@/types/content.types";
 
 /**
@@ -74,7 +76,10 @@ import type { Eyebrow, ImageAsset } from "@/types/content.types";
  * unilaterally — § 3.2 lists this string as the page's H1 and § 2 lists the
  * two-line break as deliberate.
  */
-const HEADING = "Integrated destination services for travel across Africa";
+// [CHANGED, 2026-10-10] Was "Integrated destination services for travel across
+// Africa". Now carries the page's primary keyword phrase, 7 words, and fits two
+// lines, which also closes the three-line deviation above.
+const HEADING = "Travel payments and health insurance for Africa";
 
 /**
  * 🔒 LOCKED — approved About copy, verbatim. Spec § 2, base strip centre.
@@ -83,7 +88,7 @@ const HEADING = "Integrated destination services for travel across Africa";
  * paragraph is that it "slots in without alteration".
  */
 const INTRO =
-  "Omanga Integrated Destination Services is a cutting-edge, web-enabled platform that transforms the way travelers experience Africa. We combine deep local expertise with innovative technology to create seamless, enjoyable, and remarkable travel experiences across various African cities.";
+  "Omanga Integrated Destination Services is an online platform built for travellers in Africa. We combine deep local knowledge with modern technology, so your trip runs smoothly from the city you land in to the last one you leave.";
 
 export type AboutHeroContent = {
   readonly eyebrow: Eyebrow;

@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { FaqContent } from "@/types/blog.types";
 
@@ -13,29 +14,29 @@ import type { FaqContent } from "@/types/blog.types";
 export const PAYMENTS_FAQ_HEADING_ID = "payments-faq-heading";
 
 export const paymentsFaqContent: FaqContent = {
-  heading: "Omanga Payments: frequently asked questions",
+  heading: "Questions about the Omanga travel money wallet",
   items: [
     {
       question: "What is Omanga Payment Solutions?",
-      answer: `Omanga Payment Solutions is a multi-currency wallet for travel across Africa. You can hold, send and receive money in six currencies, fund your wallet from USD, GBP or CAD, and spend from your balance in ${COUNTRIES_SERVED_DISPLAY} African countries.`,
+      answer: `Omanga Payment Solutions is a multi-currency wallet for travel across Africa. You can hold, send and receive money in six currencies. Fund it from USD, GBP or CAD and spend from your balance in ${COUNTRIES_SERVED_DISPLAY} African countries.`,
     },
     {
-      question: "Which currencies can I fund my Omanga wallet with?",
+      question: "How do I fund my Omanga wallet?",
       answer:
-        "You can top up your Omanga wallet from USD, GBP or CAD. Every conversion runs at the mid-market rate, and you see the rate before you confirm.",
+        "You fund your Omanga wallet from USD, GBP or CAD. Every conversion runs at the mid-market rate, and you see the rate before you confirm.",
     },
     {
       question: "Does Omanga charge hidden fees?",
       answer:
-        "No. Omanga has no hidden fees and no minimums, and transfers between Omanga accounts are free.",
+        "No. Omanga charges no hidden fees and sets no minimums, and transfers between Omanga accounts are free.",
     },
     {
       question: "What exchange rate does Omanga use?",
       answer:
-        "Omanga uses the mid-market rate, sourced from public market data and refreshed hourly. You see the real rate before you convert, so there is no markup discovered later on your statement.",
+        "Omanga uses the mid-market rate, taken from public market data and refreshed hourly. You see the real rate before you convert, so no markup turns up later on your statement.",
     },
     {
-      question: "Where can I spend with Omanga?",
+      question: "Where can I spend money with Omanga?",
       answer: `You can spend from your Omanga balance in ${COUNTRIES_SERVED_DISPLAY} African countries, online or in person.`,
     },
     {

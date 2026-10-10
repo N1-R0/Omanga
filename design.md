@@ -561,3 +561,70 @@ unused until they are placed.
   balances as the Payments page drawer) and a Silver/Gold/Diamond picker reading
   prices from `insurance-plans.content.ts`. The headline "Pay and stay covered
   across Africa" is [NEW] copy.
+
+---
+
+## Addendum · 2026-10-10 · Display face for flood heroes
+
+The payments hero moved to Wise's flood layout (Y1), then the same day to Wise's
+"phone over traveller photo" (Y6, white band, normal header).
+Its headline needs a face as heavy as Wise Sans, and Kantumruy Pro tops out at 700.
+
+- **`--font-display`** = Archivo (variable, `wght` 100–900, `wdth` 62–125), vendored
+  at `config/fonts/archivo-latin-wdth-variable.woff2`. Used at 900, `font-stretch: 88%`,
+  uppercase, `-0.02em` tracking, line height 0.9.
+- Headlines only. Body, UI and every other heading stay on Kantumruy Pro, so § 1's
+  "one heading weight" rule now has this one exception.
+- The phone in that hero is the app's real home screen rebuilt in HTML
+  (`components/payments-v2/AppHomeMockup.tsx`) from the mobile app's source, not a screenshot.
+
+## Addendum · 2026-10-10 · Shared closing sections, static 3D
+
+- `WhyOmanga`, `Faq` and `CTA` (components/sections) now render the home page's
+  W1 / Q1 / X1 designs on every page; pages pass only their own copy. Home, About,
+  Get Started, Contact, Plans, Payments and Insurance all close Why → FAQ → CTA.
+  Pages without their own copy use home's (Plans uses Insurance's).
+- The FAQ "Can't find your answer? Contact us" line is `FAQ_HELP` in `site.content.ts`.
+- 3D objects never animate. `Object3D` has no `float`/`delay`; the `float-3d`
+  keyframes are deleted.
+
+## Addendum · 2026-10-10 · Typography F4 (supersedes § 2's family and weights)
+
+Picked from `design-lab/typography.html`; research in `design-lab/type-and-copy-research.md`.
+
+- **Inter** (`--font-sans`): body, UI, navigation, buttons, forms, footer, figures.
+- **Manrope** (`--font-heading`, also `--font-display`): display, h1, h2, h3 roles
+  and any bare h1/h2, at **800**. Applied by a role rule in `typography.css`, so
+  call sites still write `font-sans text-h2`.
+- h4–h6 roles: Inter **600**. Buttons: Inter **600**. Body: Inter 400.
+- Kantumruy Pro and Archivo are removed. Fraunces stays for the wordmark only.
+- Both faces are vendored variable woff2 in `config/fonts/` (no build-time fetch).
+
+## Addendum · 2026-10-10 · Home services as a tilted deck (K5)
+
+`components/sections/Services` is now a sticky "hand of cards": three light,
+brand-tinted cards (blush `#FBE8EE`, apricot `#FDEBDD`, pale gold `#FBF1DA`),
+each tilted 1–2.5°, with a large free-standing 3D object (wallet, exchange,
+medical kit) instead of a photo. Cards are `sticky` under the header and stack
+as you scroll — CSS only. Heading shortened to "From funding before you fly to
+care mid-trip".
+
+## Addendum · 2026-10-10 · Home copy and type scale review
+
+Approved in `design-lab/home-copy.html`. Type scale now: display 48→88 (lh 0.98,
+−0.035em), h1 40→64 (1.05), h2 30→44 (1.1, −0.025em), h3 24→30 (1.2, −0.02em),
+h4 20→22 (1.3, −0.01em), h5 18→20, h6 16→17, large 18→20 (1.55), main 16→18 (1.6),
+small 14 (1.45, +0.005em), button 16. Home copy rewritten to the rules in
+`design-lab/type-and-copy-research.md` (≤ 8-word headings, ≤ 25-word sentences,
+verb + noun sentence-case buttons, no unproven absolutes). Hero headline unchanged
+(left undecided). The Ubuntu line is removed from the shared closing CTA.
+
+## Addendum · 2026-10-10 · Site-wide copy pass
+
+All marketing pages (Payments, Insurance, Plans, About, Get Started, Contact,
+footer) rewritten to the same rules as the home review, without per-line picks,
+on the owner's instruction. Facts, prices and plan data unchanged. SEO: keyword-
+bearing H1/H2s and meta descriptions (140–160 chars, with a call to action), FAQ
+questions phrased as searches. Page titles kept as the short sitelink labels set
+on 2026-10-07, except Plans, which already carried a long title. Nav order is now
+Home, Payment, Insurance, Plans.

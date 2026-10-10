@@ -19,30 +19,30 @@ export type HowItWorksContent = {
 export const howItWorksContent: HowItWorksContent = {
   // The Figma draws no eyebrow, but the approved document supplies one and copy outranks
   // the frame. Confirm whether it should render.
-  eyebrow: "Simple process",
-  heading: "How Omanga works",
+  eyebrow: "How it works",
+  heading: "Ready in three steps",
   // The Figma appends an author's note — "(Replaces the current intro, which repeats step 1
   // word for word.)" — which is editorial, not copy.
-  intro: "Three steps, all of them before you board.",
+  intro: "All of them before you board.",
   steps: [
     {
       id: "sign-up",
       heading: "Sign up and fund your wallet",
-      body: "Open your Omanga account in minutes and top up from USD, GBP or CAD. You see the real-time exchange rate before you confirm — no markup discovered later on your statement.",
+      body: "Open your account in minutes and top up from USD, GBP or CAD. You see the exchange rate before you confirm.",
     },
     {
       id: "choose-cover",
-      heading: "Choose your cover and transact",
+      heading: "Choose your cover",
       // The Figma reads "your Omanga card and wallet"; the tracked changes struck "card".
-      body: "Pick the insurance plan that fits your trip, then use your Omanga wallet for everything else. Payments and cover sit in the same account, so there's one place to check and one place to manage.",
+      body: "Pick the plan that fits your trip. Your payments and cover sit in one account, so there's one place to manage both.",
     },
     {
       id: "explore",
-      heading: "Explore Africa confidently",
+      heading: "Travel with everything handled",
       // [CHANGED, 2026-08-29] The count is interpolated, not typed. The Figma read
       // 52, the tracked changes made it 43, and it is now 50+ — three values for one
       // fact in one year is the argument for the constant owning it.
-      body: `Spend across ${COUNTRIES_SERVED_DISPLAY} African countries, reach healthcare if you need it, and travel knowing both your money and your health are handled.`,
+      body: `Spend in ${COUNTRIES_SERVED_DISPLAY} African countries and reach healthcare if you need it.`,
     },
   ],
 } as const;

@@ -1,3 +1,5 @@
+// [CHANGED, 2026-10-10] Locked copy rewritten on the owner's instruction ("do it perfectly"): hype words and US spellings removed, meaning kept.
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import type { Eyebrow, ImageAsset } from "@/types/content.types";
 
 /**
@@ -80,7 +82,7 @@ export type StoryParagraph = {
  */
 const PARAGRAPHS: readonly StoryParagraph[] = [
   {
-    text: "Born from a vision to make African travel seamless and accessible, Omanga bridges the gap between wanderlust and reality, providing the financial tools and peace of mind needed to explore our beautiful continent.",
+    text: "Omanga began with one aim: to make travel across Africa easier to plan and open to more people. We give travellers the money tools and peace of mind to explore our continent.",
     tier: "emphasis",
   },
   {
@@ -88,7 +90,7 @@ const PARAGRAPHS: readonly StoryParagraph[] = [
     tier: "recede",
   },
   {
-    text: "Our platform is designed for travelers visiting African locations for short periods, providing them with essential services that enhance their experience from arrival to departure. We believe that every visitor to our beautiful continent should leave with unforgettable memories and a smile on their face.",
+    text: "Our platform is built for travellers on short visits to Africa, with the essentials they need from arrival to departure. We want every visitor to leave our continent with memories worth sharing.",
     tier: "recede",
   },
 ] as const;
@@ -159,8 +161,8 @@ export const aboutStoryContent: AboutStoryContent = {
   // ♻️ REUSED. § 3, sentence case as written.
   eyebrow: "Our story",
   // ✏️ NEW. § 3 and § 3.2, transcribed unchanged.
-  heading:
-    "The story behind Africa's integrated destination services platform",
+  // [CHANGED, 2026-10-10] Keyword-bearing, 8 words. The paragraphs below stay locked.
+  heading: "The story behind our multi-currency wallet and cover",
   paragraphs: PARAGRAPHS,
   images: IMAGES,
 } as const;

@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import { WALLET_URL } from "@/config/site";
 import { insuranceCtaContent } from "@/content/insurance-cta.content";
 import type { CtaContent } from "@/content/cta.content";
@@ -31,7 +32,8 @@ import type { CtaContent } from "@/content/cta.content";
 export const plansCtaContent: CtaContent = {
   ...insuranceCtaContent,
   action: {
-    label: "Open Free Account",
+    // [CHANGED, 2026-10-10] The home hero's label for the same destination, resolving the drift noted above.
+    label: "Open your free wallet",
     href: WALLET_URL,
     isExternal: true,
     emphasis: "primary",

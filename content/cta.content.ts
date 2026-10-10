@@ -40,7 +40,7 @@ export type CtaContent = {
 export const ctaContent: CtaContent = {
   heading: "Ready to experience Africa?",
   intro:
-    "Open your Omanga account and travel with your payments and your health cover already handled. The spirit of Ubuntu lives in us all — through our collective unity, we achieve great things.",
+    "Open your account and travel with your payments and health cover already sorted.",
   action: PRIMARY_CTA,
   graphic: GRAPHIC,
 } as const;

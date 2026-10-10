@@ -32,7 +32,7 @@ export function ProductsV2() {
         </h2>
 
         <ul className="grid gap-fluid-4 tablet:grid-cols-2">
-          {items.map((item, index) => (
+          {items.map((item) => (
             <li key={item.name}>
               <Link
                 href={item.link.href}
@@ -47,8 +47,6 @@ export function ProductsV2() {
                   <Object3D
                     name={item.object}
                     size={320}
-                    float
-                    delay={index * 1.5}
                     className="w-[46%] transition-emphasis group-hover:scale-105"
                   />
                 </div>

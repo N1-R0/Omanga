@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import { PLAN_CHECKOUT_URLS } from "@/config/site";
 import {
   INSURANCE_COVERAGE_ANCHOR,
@@ -200,19 +201,19 @@ const DIAMOND: InsurancePlan = {
 } as const;
 
 export const insurancePlansContent: InsurancePlansContent = {
-  heading: "Choose your plan",
+  heading: "Choose your travel health insurance plan",
   intro:
-    "Every plan covers hospital admission, diagnostics, emergency assistance and evacuation. The difference is how much room you have — ward type, scan allowances and which hospitals you can walk into.",
+    "Silver, Gold and Diamond all cover hospital admission, diagnostics, emergency assistance and evacuation. They differ in ward type, scan allowances and which hospitals you can use.",
   currency: "USD",
   billingPeriod: "month",
   accessLabel: "Hospital access",
   includedHeading: "What's included",
-  cardFootnote: "No commitment · Cancel anytime",
+  cardFootnote: "No commitment · Cancel any time",
   plans: [SILVER, GOLD, DIAMOND],
   footnote:
-    "No commitment. Cancel anytime. Every plan includes telemedicine, roaming, 24/7 support, the mobile app and our health-tips newsletter.",
+    "No commitment. Cancel any time. Every plan includes telemedicine, roaming cover, 24/7 support, the mobile app and a health-tips newsletter.",
   action: {
-    label: "See the full comparison",
+    label: "Compare all benefits",
     // A bare fragment: the comparison table is the next section on this same
     // page, so this scrolls rather than navigates. The prefixed
     // `INSURANCE_COVERAGE_HREF` is for links arriving from `/insurance`.

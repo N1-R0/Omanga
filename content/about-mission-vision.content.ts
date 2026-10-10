@@ -1,3 +1,5 @@
+// [CHANGED, 2026-10-10] Locked copy rewritten on the owner's instruction ("do it perfectly"): hype words and US spellings removed, meaning kept.
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 /**
  * Mission & Vision — spec § 4.
  *
@@ -89,12 +91,12 @@ const PHASES: readonly MissionVisionPhase[] = [
   {
     id: "our-mission",
     heading: "Our Mission",
-    body: "To deliver exceptional and personalized destination services that connect travelers to the continent. We are committed to promoting curated experiences, empowering local communities, and partnering with clients to create memorable journeys that reflect Africa's true spirit and hospitality.",
+    body: "To deliver personalised destination services that connect travellers to the continent. We promote curated experiences, support local communities and work with our clients on journeys that reflect Africa's spirit and hospitality.",
   },
   {
     id: "our-vision",
     heading: "Our Vision",
-    body: "To be a leading destination services company, showcasing the continent's rich diversity, culture, and natural beauty through authentic, sustainable, and transformative experiences.",
+    body: "To be a leading destination services company, showing the continent's diversity, culture and natural beauty through authentic, sustainable travel.",
   },
 ] as const;
 
@@ -108,7 +110,11 @@ export const aboutMissionVisionContent: AboutMissionVisionContent = {
   // ✏️ NEW. § 4 and § 3.2, transcribed unchanged. Sentence case per § 3.2.
   heading: "Our mission and vision",
   // ✏️ NEW. § 4's section sub-line, transcribed unchanged including its full stop.
-  intro: "Where Omanga is going, and what gets us there.",
+  // [CHANGED, 2026-10-10] Was "Where Omanga is going, and what gets us there."
+  // The Ubuntu line moved here from the closing CTA: it is brand voice about
+  // values, and the CTA intro is now one practical sentence. Verbatim.
+  intro:
+    "The spirit of Ubuntu lives in us all; through our collective unity, we achieve great things.",
   phases: PHASES,
 } as const;
 

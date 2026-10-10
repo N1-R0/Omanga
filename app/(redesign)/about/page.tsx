@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 
+import { Faq } from "@/components/sections/Faq";
+import { WhyOmanga } from "@/components/sections/WhyOmanga";
+import { HOME_V2_IDS, homeV2Content } from "@/content/home-v2.content";
+
 import { CTA } from "@/components/sections/CTA";
 import { AboutHero } from "@/components/sections/AboutHero";
 import { AboutImpact } from "@/components/sections/AboutImpact";
@@ -28,6 +32,7 @@ import {
   aboutStoryContent,
 } from "@/content/about-story.content";
 import { buildPageGraph } from "@/lib/schema";
+import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { PageMetaContent } from "@/types/content.types";
 import { buildPageMetadata } from "@/lib/seo";
 
@@ -121,8 +126,9 @@ import { buildPageMetadata } from "@/lib/seo";
 const aboutMeta: PageMetaContent = {
   // [CHANGED, 2026-10-07] Short form — plain label, no brand suffix, so the Google sitelink reads "About".
   title: "About",
-  description:
-    "Learn how Omanga combines local expertise and technology into one African travel platform — multi-currency travel payments and short-term health insurance.",
+  // [CHANGED, 2026-10-10] Copy pass: plain words, all four primary keywords, count interpolated.
+  // Title left as "About" (2026-10-07 sitelink instruction).
+  description: `Meet Omanga: travel payments and health insurance for Africa. Spend in ${COUNTRIES_SERVED_DISPLAY} African countries from one multi-currency wallet and add travel health insurance.`,
   path: "/about",
 };
 
@@ -231,6 +237,14 @@ export default function AboutPage() {
         band has no slot for either and adding one would change three shipped
         pages; the content module records what that costs.
       */}
+      {/*
+        [ADDED, 2026-10-10] The shared "Why Omanga" and FAQ bands, on the
+        owner's instruction that every page closes the way the home page does.
+        Home's copy, since this page has none of its own for either.
+      */}
+      <WhyOmanga content={homeV2Content.comparison} headingId={HOME_V2_IDS.comparison} />
+      <Faq content={homeV2Content.faq} headingId={HOME_V2_IDS.faq} />
+
       <CTA content={aboutCtaContent} headingId={ABOUT_CTA_HEADING_ID} />
     </>
   );

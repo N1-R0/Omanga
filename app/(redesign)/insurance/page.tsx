@@ -90,8 +90,9 @@ import { buildPageMetadata } from "@/lib/seo";
 const insuranceMeta: PageMetaContent = {
   // [CHANGED, 2026-10-07] Short form — plain label, no brand suffix, so the Google sitelink reads "Insurance".
   title: "Insurance",
+  // [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged. Title left short per the 2026-10-07 sitelink decision.
   description:
-    "Short-term travel health insurance for Africa. Silver, Gold and Diamond plans from $50/month, delivered through established Nigerian health providers.",
+    "Short-term travel health insurance for Africa from established Nigerian health providers. Silver, Gold and Diamond plans from $50 a month. Compare plans today.",
   path: "/insurance",
 };
 
@@ -239,7 +240,7 @@ export default function InsurancePreviewPage() {
         the light partners strip and the brand CTA. Its `FAQPage` node is in
         the graph above.
       */}
-      <Faq content={insuranceFaqContent} headingId={INSURANCE_FAQ_HEADING_ID} tone="dark" />
+      <Faq content={insuranceFaqContent} headingId={INSURANCE_FAQ_HEADING_ID} />
 
       <CTA
         content={insuranceCtaContent}

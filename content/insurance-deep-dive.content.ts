@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import {
   holidayInsuranceProduct,
   type DeepDiveProduct,
@@ -47,8 +48,8 @@ export type InsuranceDeepDiveContent = {
 };
 
 export const insuranceDeepDiveContent: InsuranceDeepDiveContent = {
-  heading: "A closer look at Holiday Insurance",
-  intro: "Everything the three insurance plans actually do.",
+  heading: "What you get with Omanga Holiday Insurance",
+  intro: "What the Silver, Gold and Diamond plans do, feature by feature.",
   product: holidayInsuranceProduct,
 } as const;
 

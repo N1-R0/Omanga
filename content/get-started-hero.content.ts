@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { Eyebrow } from "@/types/content.types";
 
@@ -51,7 +52,7 @@ import type { Eyebrow } from "@/types/content.types";
  * approved version of it: "Start with the one your trip needs most — you can add
  * the other at any time, without a second signup."
  */
-const INTRO = `Omanga is an integrated destination services platform: a multi-currency wallet for spending across ${COUNTRIES_SERVED_DISPLAY} African countries, and short-term holiday insurance from established Nigerian health providers — set up in one account, before you fly.`;
+const INTRO = `Get started with Omanga before you fly: one account for a multi-currency wallet in ${COUNTRIES_SERVED_DISPLAY} African countries and holiday health insurance from established Nigerian providers.`;
 
 export type GetStartedHeroContent = {
   readonly eyebrow: Eyebrow;
@@ -69,8 +70,8 @@ export type GetStartedHeroContent = {
  */
 export const getStartedHeroContent: GetStartedHeroContent = {
   eyebrow: "Get started",
-  heading:
-    "One platform for travel payments and holiday insurance in Africa",
+  // [CHANGED, 2026-10-10] ≤ 8 words and carries the page's primary keyword.
+  heading: "Your travel wallet and health insurance for Africa",
   intro: INTRO,
 } as const;
 

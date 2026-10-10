@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import { WHATSAPP_URL } from "@/config/site";
 import type { CallToAction, Eyebrow } from "@/types/content.types";
 
@@ -69,10 +70,10 @@ import type { CallToAction, Eyebrow } from "@/types/content.types";
  * reaches them; it costs two of the spec's 12–15 target internal links.
  */
 const INTRO =
-  "Whether you're choosing an insurance plan, setting up your multi-currency wallet, sorting out a transaction, exploring a partnership, or just want to know how Omanga works before you commit — we'd like to hear from you. Our Africa travel specialists are available 24/7, and you're a few clicks from a real person.";
+  "Our Africa travel specialists are available 24/7 to help with insurance plans, your multi-currency wallet, a transaction, a partnership or how Omanga works.";
 
 const SUPPORT_BODY =
-  "Already using Omanga and need help with a payment, your wallet or an insurance claim? Start a WhatsApp chat and one of our specialists will pick it up — no ticket number, no hold music.";
+  "Already using Omanga? Start a WhatsApp chat about a payment, your wallet or an insurance claim. A specialist will pick it up, with no ticket number and no hold music.";
 
 /**
  * The `Need support?` block.
@@ -106,7 +107,8 @@ export const contactHeroContent: ContactHeroContent = {
    * it "keeps Clarity's warmth and its *team* noun — the implicit promise of a
    * human — but front-loads the brand for `Contact Omanga` queries."
    */
-  heading: "Talk to the Omanga team",
+  // [CHANGED, 2026-10-10] Carries "contact Omanga support"; keeps the "team" noun.
+  heading: "Contact Omanga's support team",
   intro: INTRO,
   support: {
     heading: "Need support?",

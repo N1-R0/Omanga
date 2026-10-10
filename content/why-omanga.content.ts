@@ -91,7 +91,7 @@ const WITH_OMANGA: ComparisonGroup = {
     // physical-card language in copy, image alt text, or component names." This
     // is Omanga's own product, so "and card" is struck.
     "A wallet built for spending across the continent",
-    "Transparent, real-time rates shown before you confirm",
+    "Exchange rates shown before you confirm",
     // [UNVERIFIED] Clipped in the frame at "…health provide". Reconstructed.
     "Short-term cover from established Nigerian health providers",
     // [CHANGED, 2026-08-29] Interpolated rather than typed. The frame read 52, the
@@ -103,9 +103,9 @@ const WITH_OMANGA: ComparisonGroup = {
 } as const;
 
 export const whyOmangaContent: WhyOmangaContent = {
-  heading: "Why Omanga",
+  heading: "Why travellers switch to Omanga",
   intro:
-    "Most travellers to Africa end up assembling this themselves: a bank card that may or may not work, a separate insurance policy, and no clear view of what either is costing them.",
+    "Most travellers patch this together: a bank card that may not work, separate insurance, and no clear view of the cost.",
   groups: [WITHOUT_OMANGA, WITH_OMANGA],
 } as const;
 

@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import { CONTACT_EMAIL, WHATSAPP_URL } from "@/config/site";
 import {
   CONTACT_FIELDS,
@@ -68,7 +69,7 @@ export type FormOption = {
 const TOPIC_LABELS: Readonly<Record<TopicValue, string>> = {
   general: "General enquiry",
   payments: "Omanga Payment Solutions",
-  insurance: "Travel & holiday insurance",
+  insurance: "Travel and holiday insurance",
   claim: "Insurance claim or existing policy",
   partnership: "Partnership enquiry",
   business: "Business or corporate enquiry",
@@ -84,7 +85,7 @@ const TOPIC_LABELS: Readonly<Record<TopicValue, string>> = {
  * rejects it. The text is the caller's to provide, per `Select`: "its text is
  * user-facing copy and nothing here may compose a string."
  */
-const TOPIC_PROMPT: FormOption = { value: "", label: "Select an option" };
+const TOPIC_PROMPT: FormOption = { value: "", label: "Select a topic" };
 
 const TOPIC_OPTIONS: readonly FormOption[] = [
   TOPIC_PROMPT,
@@ -203,7 +204,7 @@ export const contactFormContent: ContactFormContent = {
    * figure cannot be met.
    */
   intro:
-    "Tell us a little about what you need and we'll route your message to the right specialist. We reply within one business day.",
+    "Tell us what you need and we'll send your message to the right specialist, who will reply within 1 business day.",
   // ✏️ § 4's `← Go back`. The arrow is drawn by the control, not typed here.
   backLabel: "Go back",
   fields: {
@@ -236,33 +237,33 @@ export const contactFormContent: ContactFormContent = {
     },
     topic: {
       id: CONTACT_FIELDS.topic,
-      label: "What's your enquiry about?",
+      label: "Topic",
       requirementNote: CONTACT_FORM_CHROME.requiredNote,
       // ✏️ § 4A's field error copy for a required select, transcribed unchanged.
       errorWhenEmpty:
-        "Choose the option that best fits so we can route your message.",
+        "Choose a topic so we can send your message to the right team.",
       options: TOPIC_OPTIONS,
     },
     country: {
       id: CONTACT_FIELDS.country,
       // ✏️ § 4 field 5's label, transcribed unchanged.
-      label: "Which country are you travelling to or from?",
+      label: "Country you're travelling to or from",
       requirementNote: CONTACT_FORM_CHROME.optionalNote,
     },
     customer: {
       id: CONTACT_FIELDS.customer,
       label: "Are you already an Omanga customer?",
       requirementNote: CONTACT_FORM_CHROME.requiredNote,
-      errorWhenEmpty: "Let us know so we can send you to the right team.",
+      errorWhenEmpty: "Choose yes, no or not sure so we can send you to the right team.",
       options: CUSTOMER_OPTIONS,
     },
     message: {
       id: CONTACT_FIELDS.message,
-      label: "Your message",
+      label: "Message",
       requirementNote: CONTACT_FORM_CHROME.requiredNote,
       // ✏️ § 4's placeholder for field 7, transcribed unchanged.
       placeholder: "Tell us what you need help with.",
-      errorWhenEmpty: "Tell us what you need so we can help.",
+      errorWhenEmpty: "Enter a message so we know how to help.",
     },
     consent: {
       id: CONTACT_FIELDS.consent,
@@ -270,18 +271,18 @@ export const contactFormContent: ContactFormContent = {
       label: "I'm happy for Omanga to contact me about this enquiry.",
       requirementNote: CONTACT_FORM_CHROME.requiredNote,
       // ✏️ § 4A's consent error copy, transcribed unchanged.
-      errorWhenEmpty: "Tick this so we're allowed to reply to you.",
+      errorWhenEmpty: "Tick the box so we can reply to you.",
     },
     company: {
       id: CONTACT_FIELDS.company,
       // ✏️ § 4's conditional field, transcribed unchanged.
-      label: "Company or organisation name",
+      label: "Company or organisation",
       requirementNote: CONTACT_FORM_CHROME.requiredNote,
-      errorWhenEmpty: "Add the company or organisation this is about.",
+      errorWhenEmpty: "Enter the name of your company or organisation.",
     },
     role: {
       id: CONTACT_FIELDS.role,
-      label: "Your role",
+      label: "Role",
       requirementNote: CONTACT_FORM_CHROME.optionalNote,
     },
   },
@@ -307,7 +308,7 @@ export const contactFormContent: ContactFormContent = {
    * management and an announcement without wording either, and the summary is a
    * required accessibility affordance rather than marketing copy.
    */
-  errorSummaryLabel: "There's a problem with a few fields:",
+  errorSummaryLabel: "There is a problem with this form",
   /**
    * ✏️ § 4A's success state. § 4 note 6: rendered "in place of the fields, inside
    * the same container. Do not redirect to a thank-you page."
@@ -320,7 +321,7 @@ export const contactFormContent: ContactFormContent = {
    * still recoverable, because the form's values are retained.
    */
   successMessage: {
-    lead: "Message received. Thanks — we've got your enquiry and a specialist will reply to the address you gave us within one business day. Need an answer sooner? ",
+    lead: "Message received. A specialist will reply to the email address you gave us within 1 business day. Need an answer sooner? ",
     link: { label: "Start a WhatsApp chat", href: WHATSAPP_URL, isExternal: true },
     trail: ".",
   },
@@ -330,8 +331,8 @@ export const contactFormContent: ContactFormContent = {
    * `config/site.ts` owning `CONTACT_EMAIL` matters here.
    */
   failureMessage: {
-    lead: "That didn't send. Something went wrong on our end, not yours. Try again, or reach us directly at ",
+    lead: "Your message didn't send because of a problem on our side. Try again, or email us at ",
     link: { label: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
-    trail: " or on WhatsApp.",
+    trail: " or message us on WhatsApp.",
   },
 } as const;

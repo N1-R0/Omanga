@@ -1,4 +1,5 @@
-import type { Eyebrow, ImageAsset, LinkTarget } from "@/types/content.types";
+import type { Object3D } from "@/content/home-v2.content";
+import type { Eyebrow, LinkTarget } from "@/types/content.types";
 import {
   COUNTRIES_SERVED_DISPLAY,
   PAYMENTS_RATES_ANCHOR,
@@ -6,31 +7,14 @@ import {
 
 // Section 4 of Omanga-Homepage-Copy-Approval NJ edits.docx, tracked changes accepted.
 
-const SPEND_IMAGE: ImageAsset = {
-  src: "/service-spend.jpg",
-  alt: "A traveller using the Omanga app on her phone on a city street.",
-  width: 1600,
-  height: 1600,
-} as const;
-
-// [ASSUMPTION] Matched by elimination — the source file was named "explore africa", which
-// names no service here. Confirm the pairing.
-const CURRENCY_IMAGE: ImageAsset = {
-  src: "/service-currency.jpg",
-  alt: "Musicians and neighbours celebrating in a bunting-strung street.",
-  width: 1600,
-  height: 1600,
-} as const;
-
-const INSURANCE_IMAGE: ImageAsset = {
-  src: "/service-insurance.jpg",
-  alt: "A couple in conversation with an adviser.",
-  width: 1600,
-  height: 1600,
-} as const;
+/*
+  [CHANGED, 2026-10-10] The three service photos are replaced by 3D objects
+  from the app's set, on the owner's instruction (pick K5, "tilted deck",
+  from `design-lab/services-stack.html`). The objects are decorative.
+*/
 
 const SPEND_ACTION: LinkTarget = {
-  label: "Go to payments",
+  label: "Explore payments",
   href: "/payments",
 } as const;
 
@@ -51,12 +35,12 @@ const SPEND_ACTION: LinkTarget = {
   anchor comes with it.
 */
 const CURRENCY_ACTION: LinkTarget = {
-  label: "Go to currency and rates",
+  label: "See today's rates",
   href: `/payments#${PAYMENTS_RATES_ANCHOR}`,
 } as const;
 
 const INSURANCE_ACTION: LinkTarget = {
-  label: "Go to insurance plans",
+  label: "Compare plans",
   href: "/plans",
 } as const;
 
@@ -65,7 +49,8 @@ export type ServiceContentItem = {
   readonly heading: string;
   readonly body: string;
   readonly action: LinkTarget;
-  readonly image: ImageAsset;
+  /** The 3D object that carries the card. */
+  readonly object: Object3D;
 };
 
 /** A fixed three-tuple, so a fourth service or a missing one fails the build. */
@@ -95,8 +80,10 @@ export type ServicesContent = {
 
 export const servicesContent: ServicesContent = {
   eyebrow: "What you can do with Omanga",
-  heading:
-    "From funding your wallet before you fly to reaching a clinic mid-trip, here's what your Omanga account actually does.",
+  // [CHANGED, 2026-10-10] Shortened on instruction. Was "From funding your
+  // wallet before you fly to reaching a clinic mid-trip, here's what your
+  // Omanga account actually does."
+  heading: "From funding before you fly to care mid-trip",
   services: [
     {
       heading: "Spend across the continent",
@@ -114,21 +101,21 @@ export const servicesContent: ServicesContent = {
         say nothing about form factor: what a traveller does is spend from the
         wallet, and where they can do it is the country list.
       */
-      body: `Spend straight from your wallet balance in ${COUNTRIES_SERVED_DISPLAY} African countries, online or in person. One arrangement for the whole itinerary, however many borders it crosses.`,
+      body: `Pay from your wallet balance in ${COUNTRIES_SERVED_DISPLAY} African countries, online or in person, however many borders your trip crosses.`,
       action: SPEND_ACTION,
-      image: SPEND_IMAGE,
+      object: "africa-continent",
     },
     {
       heading: "Move money between currencies",
-      body: "Hold, send and receive several currencies in one place, and top up from USD, GBP or CAD. You see the real-time rate at the moment of conversion, so a transaction never costs more than you agreed to.",
+      body: "Hold, send and receive several currencies, and top up from USD, GBP or CAD. You see the rate before you convert, so there are no surprises.",
       action: CURRENCY_ACTION,
-      image: CURRENCY_IMAGE,
+      object: "exchange",
     },
     {
       heading: "Stay covered while you travel",
-      body: "Choose Silver, Gold or Diamond short-term health cover for the length of your trip, reach care through established Nigerian health providers, and extend from your account if the trip runs long.",
+      body: "Choose Silver, Gold or Diamond cover for the length of your trip, get care through established Nigerian providers, and extend if the trip runs long.",
       action: INSURANCE_ACTION,
-      image: INSURANCE_IMAGE,
+      object: "insurance-kit",
     },
   ],
 } as const;

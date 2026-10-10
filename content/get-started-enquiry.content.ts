@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import { CONTACT_EMAIL } from "@/config/site";
 import { ENQUIRY_FIELDS } from "@/lib/enquiry";
 import type { SelectOption } from "@/components/ui/Select";
@@ -160,41 +161,45 @@ export type GetStartedEnquiryContent = {
  * of problem from an unapproved sentence.
  */
 export const getStartedEnquiryContent: GetStartedEnquiryContent = {
-  heading: "Ready to experience Africa?",
+  /* [CHANGED, 2026-10-10] Was "Ready to experience Africa?", the same text as the
+     closing CTA band's h2 below it. A distinct, descriptive heading resolves the
+     duplicate-heading defect recorded in get-started-cta.content.ts (way out 1). */
+  heading: "Get help choosing the right Omanga solution",
   intro:
-    "Not sure which solution fits your trip? Tell us where you’re going and we’ll point you to the right one.",
+    "Tell us where you’re travelling and what you need, and we’ll point you to the right one.",
   fields: {
     name: {
       id: ENQUIRY_FIELDS.name,
-      label: "Your name",
+      label: "Name",
       errorWhenEmpty: "Enter your name so we know who to reply to.",
     },
     email: {
       id: ENQUIRY_FIELDS.email,
       label: "Email address",
-      errorWhenEmpty: "Enter an email address we can reply to.",
+      errorWhenEmpty: "Enter an email address like name@example.com",
     },
     destination: {
       id: ENQUIRY_FIELDS.destination,
-      label: "Where are you travelling?",
+      label: "Destination",
     },
     needs: {
       id: ENQUIRY_FIELDS.needs,
-      label: "What do you need?",
+      label: "What you need",
     },
   },
   needsOptions: NEEDS_OPTIONS,
-  submitLabel: "Get Started",
+  submitLabel: "Send enquiry",
   submitPendingLabel: "Sending",
   helperText:
-    "Takes a minute. No obligation, and no monthly fee to hold a wallet.",
+    // [VERIFY] "no monthly fee" is a fee claim that needs to stay true.
+    "It takes a minute and there’s no obligation. Holding a wallet has no monthly fee.",
   successMessage: {
-    lead: "Thanks — we’ve got it. Check your inbox for the next step; if you’d rather not wait, ",
+    lead: "Thanks, we’ve got your enquiry. Check your inbox for the next step, or ",
     link: { label: "open your free wallet", href: "/payments" },
     trail: " now.",
   },
   failureMessage: {
-    lead: "That didn’t send. Check your email address and try again, or email us at ",
+    lead: "Your enquiry didn’t send. Check your email address and try again, or email us at ",
     link: { label: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
     trail: ".",
   },

@@ -81,8 +81,10 @@ import type { CallToAction, NavigationEntry } from "@/types/content.types";
  */
 const PRIMARY_ITEMS: readonly NavigationEntry[] = [
   { label: "Home", href: "/" },
-  { label: "Insurance", href: "/insurance" },
+  // [CHANGED, 2026-10-10] Payment before Insurance, so Insurance sits beside
+  // Plans — the two are one decision.
   { label: "Payment", href: "/payments" },
+  { label: "Insurance", href: "/insurance" },
   { label: "Plans", href: "/plans" },
   {
     label: "Company",

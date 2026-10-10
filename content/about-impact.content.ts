@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import type { ImageAsset } from "@/types/content.types";
 
 /**
@@ -172,7 +173,9 @@ export const aboutImpactContent: AboutImpactContent = {
   // ✏️ NEW. § 6 and § 3.2, transcribed unchanged. Sentence case per § 3.2.
   // The reference's own heading — "Our impact goes beyond business" — is
   // Clarity's copy and is not used.
-  heading: "Our impact across Africa",
+  // [CHANGED, 2026-10-10] Was "Our impact across Africa". The cards are values,
+  // not measured impact, so the heading says so and claims nothing unproven.
+  heading: "The values behind our work in Africa",
   pillars: PILLARS,
 } as const;
 

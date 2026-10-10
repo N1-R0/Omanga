@@ -1,44 +1,51 @@
-import { Section } from "@/components/layout/Section";
-import { Stack } from "@/components/layout/Stack";
-import { Heading } from "@/components/ui/Heading";
-import { Text } from "@/components/ui/Text";
+import Link from "next/link";
+
+import { Object3D } from "@/components/home-v2/Object3D";
+import { V2Section } from "@/components/home-v2/V2Section";
+import { FAQ_HELP } from "@/content/site.content";
 import type { FaqContent } from "@/types/blog.types";
 
 import { FaqList } from "./FaqList";
 
 /**
- * FAQ band for the product pages.
+ * FAQ band, site-wide.
  *
- * Dark on the product pages: it sits between the light partners strip and the
- * brand CTA, so a light FAQ would have made three light bands in a row.
- * Structured data
- * is emitted by the page (`buildFaqPage`), not here, so the page graph stays in
- * one `JsonLd` block.
+ * [CHANGED, 2026-10-10] Every page now uses the home page's design (Q1, built
+ * as `FaqV2`), on the owner's instruction: a light band, two columns at
+ * desktop — the question-bubble object, heading, optional intro and a "Contact
+ * us" line on the left, the accordion on the right. The old dark/light `tone`
+ * prop is gone: one look everywhere.
+ *
+ * Structured data is still emitted by the page (`buildFaqPage`), not here.
  */
 export type FaqProps = {
   content: FaqContent;
   headingId: string;
-  tone: "light" | "dark";
 };
 
-export function Faq({ content, headingId, tone }: FaqProps) {
+export function Faq({ content, headingId }: FaqProps) {
   return (
-    <Section labelledBy={headingId} tone={tone}>
-      <Stack gap="2xl">
-        <Stack gap="lg">
-          <Heading id={headingId} level="h2" role="section">
+    <V2Section labelledBy={headingId} className="bg-surface-light text-ink">
+      <div className="grid gap-fluid-7 desktop:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
+        <div className="flex flex-col items-start gap-fluid-3">
+          <Object3D name="question-bubble" size={120} className="w-[clamp(4.5rem,8vw,7rem)]" />
+          <h2 id={headingId} className="font-sans text-h2 text-balance">
             {content.heading}
-          </Heading>
-
+          </h2>
           {content.intro !== undefined && (
-            <Text role="body" measure="narrow" isSecondary>
-              {content.intro}
-            </Text>
+            <p className="font-sans text-main text-secondary">{content.intro}</p>
           )}
-        </Stack>
-
-        <FaqList items={content.items} tone={tone} />
-      </Stack>
-    </Section>
+          <p className="font-sans text-main text-secondary">
+            {FAQ_HELP.text}{" "}
+            <Link href={FAQ_HELP.link.href} className="text-brand underline underline-offset-4 focus-ring">
+              {FAQ_HELP.link.label}
+            </Link>
+          </p>
+        </div>
+        <div className="min-w-0">
+          <FaqList items={content.items} />
+        </div>
+      </div>
+    </V2Section>
   );
 }

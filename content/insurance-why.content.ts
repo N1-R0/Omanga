@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { ComparisonGroup } from "@/content/why-omanga.content";
 
@@ -41,9 +42,9 @@ const WITH_OMANGA: ComparisonGroup = {
   sentiment: "positive",
   items: [
     "Cover delivered through established Nigerian health providers",
-    "Admission through a provider relationship, not a reimbursement form",
-    "Short-term cover for the length of your trip, cancel anytime",
-    "Three plans from $50 a month — match the cover to the trip",
+    "Hospital admission through your provider, not a refund form",
+    "Short-term cover for the length of your trip; cancel any time",
+    "Three plans from $50 a month, so the cover matches your trip",
     `One plan across ${COUNTRIES_SERVED_DISPLAY} African countries, roaming included`,
     "Insurance and your Omanga wallet in the same account",
   ],
@@ -56,9 +57,9 @@ export type InsuranceWhyContent = {
 };
 
 export const insuranceWhyContent: InsuranceWhyContent = {
-  heading: "Why choose Omanga Insurance",
+  heading: "Why choose Omanga Holiday Insurance",
   intro:
-    "Most travellers to Africa buy a policy at home from an insurer with no presence on the ground, then find out what it's worth at the worst possible moment.",
+    "Many travellers to Africa buy cover at home from an insurer with no local presence, and learn what it's worth when they need it.",
   groups: [WITHOUT_OMANGA, WITH_OMANGA],
 } as const;
 

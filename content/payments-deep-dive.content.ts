@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import {
   omangaPaymentsProduct,
   type DeepDiveProduct,
@@ -73,8 +74,8 @@ export type PaymentsDeepDiveContent = {
 };
 
 export const paymentsDeepDiveContent: PaymentsDeepDiveContent = {
-  heading: "A closer look at Omanga Payments",
-  intro: "Everything the wallet actually does.",
+  heading: "Inside the Omanga multi-currency wallet",
+  intro: "Every wallet feature, from funding before you fly to spending when you land.",
   product: omangaPaymentsProduct,
 } as const;
 

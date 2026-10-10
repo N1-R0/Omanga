@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { Eyebrow } from "@/types/content.types";
 
@@ -120,7 +121,7 @@ export type PaymentsFeaturesContent = {
 const FEATURES: readonly [PaymentsFeature, PaymentsFeature, PaymentsFeature] = [
   {
     id: "wallet",
-    heading: "Hold and move money in the currency you need",
+    heading: "Hold and send the currency you need",
   },
   {
     id: "rates",
@@ -145,13 +146,13 @@ const METRICS: readonly PaymentsMetric[] = [
     id: "coverage",
     term: `${COUNTRIES_SERVED_DISPLAY} African countries`,
     description:
-      "One account and one set of rates, from Algiers to Cape Town — however many borders the trip crosses.",
+      "One account and one set of rates, from Algiers to Cape Town, however many borders you cross.",
   },
   {
     id: "currencies",
     term: "Six currencies, one wallet",
     description:
-      "Hold, send and receive across all six without opening a separate account for each one.",
+      "Hold, send and receive all six without a separate account for each.",
   },
   {
     id: "funding",
@@ -163,7 +164,7 @@ const METRICS: readonly PaymentsMetric[] = [
     id: "support",
     term: "24/7 travel support",
     description:
-      "Emergency assistance whenever you need it, in every country Omanga covers.",
+      "Emergency help, day or night, in every country Omanga covers.",
   },
 ] as const;
 
@@ -171,7 +172,7 @@ export const paymentsFeaturesContent: PaymentsFeaturesContent = {
   eyebrow: "What Omanga Payment Solutions does",
   heading: "Cross-border payments built for how Africa travels",
   intro:
-    "From funding your wallet before you fly to paying at a market stall in Accra, three capabilities cover the whole journey — and they all live in one account.",
+    "Three features cover the whole trip, from funding before you fly to paying at a market stall in Accra, all in one account.",
   features: FEATURES,
   metricsLabel: "Omanga by the numbers",
   metrics: METRICS,

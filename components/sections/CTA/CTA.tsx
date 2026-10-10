@@ -1,93 +1,47 @@
-import { Section } from "@/components/layout/Section";
+import { Object3D } from "@/components/home-v2/Object3D";
+import { V2Section } from "@/components/home-v2/V2Section";
+import { Button } from "@/components/ui/Button";
 import type { CtaContent } from "@/content/cta.content";
 
-import { CTAContent } from "./CTAContent";
-import { CTAGraphics } from "./CTAGraphics";
-
 /**
- * The homepage's closing CTA band — the last conversion point before the footer.
+ * Closing call to action, site-wide.
  *
- * A Server Component. One heading and two links, so nothing hydrates beyond the
- * two entrance wrappers and every string is in the server HTML.
+ * [CHANGED, 2026-10-10] Every page now uses the home page's closing panel (X1,
+ * built as `ClosingV2`), on the owner's instruction: a rounded crimson
+ * gradient panel inset in a white band, centred heading, intro and one white
+ * button, with static 3D objects (Omanga coin, passport, two sparkles)
+ * breaking the panel's corners. The full-bleed brand band with line art it
+ * replaces is gone, so `CtaContent.graphic` is no longer rendered.
  *
- * ---------------------------------------------------------------------------
- * [BLOCKER] Not built from the Figma MCP frame.
- *
- * The brief names node 1265:13151 as the source of truth. The Figma Dev Mode MCP
- * server is still unreachable in this environment — every tool returns the same
- * setup instruction — and the Figma connector is unauthorised. Built instead from
- * the supplied vector, the section screenshot and `design.md`.
- * **Re-verify against the frame once the MCP server is available.**
- *
- * ---------------------------------------------------------------------------
- * SURFACE. `tone="brand"`, which `design.md` reserves for exactly this
- * element: "the CTA band is the only brand-filled section". It is also the only
- * place the `secondary-on-brand` button treatment is permitted, and the reason
- * that variant exists at all.
- *
- * The band is full-bleed because `Section` paints the surface on the `section`
- * element and the gutter on the `Container` inside it, so the colour reaches the
- * viewport edge while the copy stays on the content column — which is what the
- * frame draws.
- *
- * [DISCREPANCY] The frame's band is about 80 tall above and below the copy. The
- * `Section` primitive gives the brand tone the dark rhythm, 130 at desktop, on an
- * explicit [DECISION] in that file that is already marked "pending design
- * confirmation". This section does not override it — rhythm belongs to `Section`
- * and changing it there would move every brand band on the site. The measurement
- * is offered as input to that open decision: **the frame wants roughly 80, which
- * is neither of the two values the system currently allows.** The band therefore
- * ships taller and more generous than drawn, which the brief's "generous
- * whitespace" asks for in any case.
- *
- * ---------------------------------------------------------------------------
- * COMPOSITION. Two layers in one positioned box: the artwork out of flow behind,
- * the copy in flow in front. DOM order carries the layering, so no z-index rung is
- * spent and `--z-raised` stays available for the cases that genuinely need it.
- *
- * The artwork comes first in the DOM and the copy second. That is the reverse of
- * the reading order a screen reader needs, which is why the artwork is
- * `aria-hidden` with an empty `alt` — it is removed from the accessibility tree
- * entirely, so the first thing announced in the region is the heading.
- *
- * [NOTE] The section above this one is Why Omanga, which is dark. Light, dark,
- * brand across the last three sections satisfies § Component consistency rules'
- * alternation, and the brand band is the page's single permitted use of it.
- *
- * The band carries no eyebrow, no intro and no third action. `CtaContent` has no
- * field for any of them, so none can be added without a copy decision.
+ * Each page still passes its own copy and action.
  */
-
 export type CTAProps = {
-  content: CtaContent;
-  /**
-   * The id of the heading that names this section.
-   *
-   * Passed in rather than defined here so the value has one owner — the content
-   * module — and the heading and the `aria-labelledby` cannot drift apart.
-   */
+  /** `graphic` is not rendered by this design, so it is not required. */
+  content: Pick<CtaContent, "heading" | "intro" | "action">;
   headingId: string;
 };
 
 export function CTA({ content, headingId }: CTAProps) {
-  /*
-    `rhythm="loose"` — the page's one full-bleed emphasis band. Rhythm is no
-    longer inferred from the brand surface (see `Section`), so the band that
-    needs the most air now asks for it. The benchmark reserves its
-    `section-space--large` step for exactly this case.
-  */
-  return (
-    <Section labelledBy={headingId} tone="brand" rhythm="loose">
-      <div className="relative isolate">
-        <CTAGraphics graphic={content.graphic} />
+  const { heading, intro, action } = content;
 
-        <CTAContent
-          heading={content.heading}
-          headingId={headingId}
-          intro={content.intro}
-          action={content.action}
-        />
+  return (
+    <V2Section labelledBy={headingId}>
+      <div className="relative">
+        <div className="relative isolate flex flex-col items-center gap-fluid-4 overflow-hidden rounded-md bg-[linear-gradient(150deg,var(--color-brand)_0%,var(--color-brand-deep)_100%)] px-fluid-6 py-fluid-8 text-center text-on-dark">
+          <h2 id={headingId} className="font-sans text-h1 text-balance measure-heading">
+            {heading}
+          </h2>
+          <p className="font-sans text-large text-on-dark-muted measure-narrow">{intro}</p>
+          <Button as="link" href={action.href} isExternal={action.isExternal} variant="primary" tone="brand">
+            {action.label}
+          </Button>
+        </div>
+
+        <Object3D name="coin-omanga" size={200} rotate={16} className="absolute -right-[2%] -top-[12%] w-[clamp(5rem,13vw,12rem)]" />
+        <Object3D name="passport-pay" size={220} rotate={-12} className="absolute -left-[3%] bottom-[-10%] w-[clamp(5.5rem,14vw,13rem)]" />
+        <Object3D name="sparkle-gold" size={80} className="absolute right-[12%] bottom-[8%] w-[clamp(2rem,4vw,3.5rem)]" />
+        <Object3D name="sparkle-pink" size={80} className="absolute left-[14%] top-[10%] w-[clamp(1.75rem,3vw,3rem)]" />
       </div>
-    </Section>
+    </V2Section>
   );
 }

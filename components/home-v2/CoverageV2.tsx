@@ -23,7 +23,6 @@ export function CoverageV2() {
           <Object3D
             name="africa-continent"
             size={360}
-            float
             className="absolute left-1/2 top-1/2 w-[56%] -translate-x-1/2 -translate-y-1/2"
           />
           <ul aria-label="A selection of countries Omanga works in">

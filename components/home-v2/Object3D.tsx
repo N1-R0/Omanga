@@ -9,9 +9,6 @@ export type Object3DProps = {
   /** Rendered width hint for `sizes`, in px at desktop. */
   size: number;
   className?: string;
-  float?: boolean;
-  /** Seconds. Staggers sibling objects so they don't bob in step. */
-  delay?: number;
   rotate?: number;
   preload?: boolean;
 };
@@ -29,16 +26,12 @@ export function Object3D({
   name,
   size,
   className,
-  float = false,
-  delay = 0,
   rotate = 0,
   preload = false,
 }: Object3DProps) {
-  const style = {
-    "--float-delay": `${delay}s`,
-    "--float-rotate": `${rotate}deg`,
-    transform: float ? undefined : `rotate(${rotate}deg)`,
-  } as CSSProperties;
+  // [CHANGED, 2026-10-10] Static, on the owner's instruction: the objects
+  // used to bob on a 6s loop (`animate-float-3d`); they now stay put.
+  const style: CSSProperties = { transform: `rotate(${rotate}deg)` };
 
   return (
     <Image
@@ -51,7 +44,6 @@ export function Object3D({
       draggable={false}
       className={cx(
         "pointer-events-none h-auto select-none",
-        float && "animate-float-3d",
         className,
       )}
       style={style}

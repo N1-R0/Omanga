@@ -177,7 +177,7 @@ export const coverageContent: AfricanCoverageContent = {
    * exactly — "however many borders it crosses". The phrase is the frame's, so it
    * ships, but the repetition is worth a copy pass.
    */
-  intro: `The question every traveller actually asks is whether it will work where they're going. Use your Omanga wallet and reach healthcare across ${COUNTRIES_SERVED_DISPLAY} African countries — one account from arrival to departure, however many borders the trip crosses.`,
+  intro: `Use your wallet and reach healthcare in ${COUNTRIES_SERVED_DISPLAY} African countries, with one account from arrival to departure.`,
 
   flags: COVERAGE_FLAGS,
 

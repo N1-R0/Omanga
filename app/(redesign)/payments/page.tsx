@@ -2,18 +2,12 @@ import type { Metadata } from "next";
 
 import { CTA } from "@/components/sections/CTA";
 import { Faq } from "@/components/sections/Faq";
-import { GetStartedImageBand } from "@/components/sections/GetStartedImageBand";
 import { InsuranceDeepDive } from "@/components/sections/InsuranceDeepDive";
-import { InsuranceHero } from "@/components/sections/InsuranceHero";
-import { PaymentsApp } from "@/components/sections/PaymentsApp";
+import { PaymentsHeroV2 } from "@/components/payments-v2/PaymentsHeroV2";
 import { PaymentsFeatures } from "@/components/sections/PaymentsFeatures";
 import { TrustPartners } from "@/components/sections/TrustPartners";
 import { WhyOmanga } from "@/components/sections/WhyOmanga";
 import { JsonLd } from "@/components/seo/JsonLd";
-import {
-  PAYMENTS_APP_HEADING_ID,
-  paymentsAppContent,
-} from "@/content/payments-app.content";
 import {
   PAYMENTS_CTA_HEADING_ID,
   paymentsCtaContent,
@@ -30,7 +24,6 @@ import {
   PAYMENTS_HERO_HEADING_ID,
   paymentsHeroContent,
 } from "@/content/payments-hero.content";
-import { paymentsImageContent } from "@/content/payments-image.content";
 import {
   PAYMENTS_WHY_HEADING_ID,
   paymentsWhyContent,
@@ -168,7 +161,8 @@ import type { PageMetaContent } from "@/types/content.types";
 const paymentsMeta: PageMetaContent = {
   // [CHANGED, 2026-10-07] Short form — plain label, no brand suffix, so the Google sitelink reads "Payment Solution".
   title: "Payment Solution",
-  description: `Hold and send six currencies in one Omanga wallet, fund from USD, GBP or CAD at mid-market rates, and spend from your balance across ${COUNTRIES_SERVED_DISPLAY} African countries.`,
+  // [CHANGED, 2026-10-10] Copy pass: keyword-first, ends on a call to action, 158 characters with "50+". Same facts.
+  description: `A multi-currency travel wallet for Africa: hold and send six currencies, fund in USD, GBP or CAD at mid-market rates, spend in ${COUNTRIES_SERVED_DISPLAY} countries. Open yours free.`,
   path: "/payments",
 };
 
@@ -217,49 +211,19 @@ export default async function PaymentsPage() {
         § 2. The hero, and the page's only `h1`. The outline below it opens at
         `h2` without skipping a level.
 
-        [NAMING] `InsuranceHero` is reused rather than rebuilt, on instruction:
-        this band is the insurance page's UI with this page's copy. It takes its
-        content and its heading id as props and knows nothing about which page
-        renders it — the same arrangement `GetStartedImageBand`, `TrustPartners`,
-        `WhyOmanga` and `CTA` already have.
-
-        Its name is now wrong, in exactly the way `GetStartedImageBand`'s is: it
-        is the site's centred hero band and belongs at
-        `components/sections/CenteredHero`. Its own docblock predicted this —
-        "worth extracting before a third page wants one" — and this is the third
-        page. Not extracted here, because renaming it means editing two shipped
-        pages, which is outside this section's scope. It is a rename and two
-        import lines whenever that scope opens.
-
-        `PaymentsHeroContent` is a separate type from `InsuranceHeroContent`
-        rather than an import of it. The shapes are identical, so it satisfies
-        the prop structurally, and keeping them separate is what stops a future
-        insurance-only field — a policy disclaimer, an underwriter line —
-        silently becoming a required field on this page.
+        [CHANGED, 2026-10-10] The centred `InsuranceHero` band is replaced by
+        `PaymentsHeroV2`, Wise's phone-over-photo layout the owner picked (Y6). Same
+        content object and heading id, so the outline and SEO are unchanged.
       */}
-      <InsuranceHero
+      <PaymentsHeroV2
         content={paymentsHeroContent}
         headingId={PAYMENTS_HERO_HEADING_ID}
       />
 
       {/*
-        The full-bleed band. It carries no heading, so it contributes nothing to
-        the outline — which is also why it renders a `div` rather than a
-        `section`: a region with no accessible name is an unlabelled landmark a
-        screen-reader user has to enter to discover is empty.
-
-        [NAMING] `GetStartedImageBand` is reused rather than rebuilt, the same
-        call `/insurance` already makes. It takes an asset and knows nothing
-        about which page renders it. Its name is now wrong on all three counts —
-        it is the site's full-bleed parallax band and belongs at
-        `components/sections/ImageBand`, as its own docblock says. Left alone
-        because renaming it means editing three shipped pages.
-
-        It is the site's third caller, so the height token it reads is now shared
-        three ways — see `--spacing-image-band` for what raising it to 600 moved
-        on the other two pages.
+        [REMOVED, 2026-10-10] The full-bleed phone-on-rocks image band that sat
+        here, on instruction: the new hero already shows the app.
       */}
-      <GetStartedImageBand image={paymentsImageContent} />
 
       {/*
         The untabbed deep dive. Its heading is an `h2` and its six feature
@@ -325,30 +289,9 @@ export default async function PaymentsPage() {
       />
 
       {/*
-        § 6. The mobile app, announced rather than sold. Its `h2` continues the
-        outline.
-
-        Copy on the content column, photograph to the viewport edge — the
-        reference's app band, which is the instructed layout. It renders its own
-        `section` rather than using the `Section` primitive; see the component
-        for why that layout is not expressible through its props.
-
-        [CONSTRAINT] The heading states outright that the app is not out yet, and
-        it is now the only element that does — the eyebrow and the two inert store
-        slots were removed with the copy cut. Spec § 6 requires the band to be
-        unambiguous rather than requiring any particular element to carry it, so
-        the heading must not be softened into something that merely implies it.
-
-        This is load-bearing: the live site's FAQ currently says the app exists,
-        which the spec flags as a P0 credibility failure. That FAQ is not in this
-        repository — correct it in the same release.
-
-        Light, after the dark comparison, so the page alternates.
+        [REMOVED, 2026-10-10] § 6, the "The Omanga app is coming soon" band,
+        on instruction. The hero's store badges now carry "Coming soon".
       */}
-      <PaymentsApp
-        content={paymentsAppContent}
-        headingId={PAYMENTS_APP_HEADING_ID}
-      />
 
       {/*
         § 8. The partner strip. Its label is an `h2`, so the outline continues
@@ -412,7 +355,7 @@ export default async function PaymentsPage() {
         the light partners strip and the brand CTA. Its `FAQPage` node is in
         the graph above.
       */}
-      <Faq content={paymentsFaqContent} headingId={PAYMENTS_FAQ_HEADING_ID} tone="dark" />
+      <Faq content={paymentsFaqContent} headingId={PAYMENTS_FAQ_HEADING_ID} />
 
       <CTA content={paymentsCtaContent} headingId={PAYMENTS_CTA_HEADING_ID} />
     </>

@@ -30,7 +30,7 @@ export function FeaturesV2() {
         </div>
 
         <ul className="grid w-full gap-fluid-4 desktop:grid-cols-3">
-          {items.map((item, index) => (
+          {items.map((item) => (
             <li
               key={item.heading}
               className="flex flex-col gap-fluid-3 rounded-md border border-dashed border-blush-strong bg-[#fdf6f8] p-fluid-5"
@@ -48,8 +48,6 @@ export function FeaturesV2() {
                 <Object3D
                   name={item.object}
                   size={200}
-                  float
-                  delay={index * 1.1}
                   className="w-[clamp(8rem,40%,11rem)]"
                 />
               </div>

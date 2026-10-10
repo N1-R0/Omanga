@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import { INSURANCE_PLANS_HREF } from "@/content/insurance.content";
 import type { CallToAction, ImageAsset } from "@/types/content.types";
 
@@ -79,10 +80,11 @@ export type InsuranceCareContent = {
 };
 
 export const insuranceCareContent: InsuranceCareContent = {
-  heading: "How care works",
-  body: "Your plan is delivered through established Nigerian health providers with real hospital networks, so care is reached through a local relationship rather than a reimbursement claim filed from abroad. Hospital categories determine which facilities you can access: Silver and Gold open Category A and B, Diamond adds Category C.",
+  // [CHANGED, 2026-10-10] Takes the spec's "while you travel" wording noted above.
+  heading: "How you reach care while you travel",
+  body: "Your plan comes through established Nigerian health providers with real hospital networks. You reach care through a local relationship, not a refund claim you file from abroad. Hospital categories set which facilities you can use: Silver and Gold open Category A and B, Diamond adds Category C.",
   action: {
-    label: "View plans",
+    label: "Compare plans",
     href: INSURANCE_PLANS_HREF,
     emphasis: "primary",
   },

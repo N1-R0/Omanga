@@ -109,7 +109,7 @@ const SERVICES: FooterLinkColumn = {
       "Get Started" means here. It uses the approved label rather than a
       keyword-stuffed alternative.
     */
-    { label: "Get Started", href: PRIMARY_CTA.href },
+    { label: "Get started", href: PRIMARY_CTA.href },
   ],
 } as const;
 
@@ -212,7 +212,8 @@ export const footerContent: {
   readonly landmarkLabel: string;
 } = {
   brandParagraph:
-    "Your integrated destination services platform for seamless African travel. We combine local expertise with technology to showcase the very best of what the continent has to offer.",
+    // [CHANGED, 2026-10-10] Copy pass: "seamless" and "the very best" cut; keywords kept.
+    "Your integrated destination services platform for travel across Africa: a multi-currency wallet and travel health insurance, built on local knowledge.",
   columns: [SERVICES, COMPANY, SUPPORT, LEGAL],
   contact: CONTACT_LINK,
   socialLinks: [{ label: "Instagram", href: INSTAGRAM_URL, isExternal: true }],

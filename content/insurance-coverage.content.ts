@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import { INSURANCE_COVERAGE_ANCHOR } from "@/content/insurance.content";
 
 /**
@@ -134,30 +135,31 @@ const ROWS: readonly CoverageRow[] = [
     diamond: "Category A + B + C",
   },
   {
-    label: "Admission",
+    label: "Ward type",
     silver: "Semi-private",
     gold: "Private ward",
     diamond: "Private ward",
   },
   {
     // Gold and Diamond unstated at source. Spec § 12 question 1.
-    label: "Admission days per trip",
+    label: "Hospital admission days per trip",
     silver: "15 days",
   },
   {
-    label: "Inpatient psychiatric care",
+    // "Inpatient" replaced with the plain meaning: care while admitted.
+    label: "Psychiatric care in hospital",
     silver: "First 2 days",
     gold: "First 3 days",
     diamond: "First 5 days",
   },
   {
-    label: "CT, MRI & Doppler ultrasound",
+    label: "CT, MRI and Doppler ultrasound",
     silver: "One per trip",
     gold: "Two per trip",
     diamond: "Unlimited",
   },
   {
-    label: "Echocardiography, EEG & spirometry",
+    label: "Echocardiography, EEG and spirometry",
     silver: "One session",
     gold: "Two sessions",
     diamond: "Unlimited",
@@ -204,9 +206,9 @@ export const insuranceCoverageContent: InsuranceCoverageContent = {
   featureColumnLabel: "Benefit",
   tableLabel: "Plan comparison",
   scrollHint: "Scroll sideways to see every plan.",
-  heading: "What each plan covers",
+  heading: "What Silver, Gold and Diamond plans cover",
   intro:
-    "The full detail, side by side. If you're deciding between two plans, the differences are in the ward type, the scan allowances and the hospital categories you can access.",
+    "Every benefit side by side: the plans differ most in ward type, scan allowances and the hospital categories you can use.",
   rows: ROWS,
 } as const;
 

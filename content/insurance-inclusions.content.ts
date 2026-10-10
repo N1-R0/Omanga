@@ -1,3 +1,4 @@
+// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 /**
  * Included on every plan — spec § 6.2, as a section of its own.
  *
@@ -41,13 +42,13 @@ export type InsuranceInclusionsContent = {
 };
 
 export const insuranceInclusionsContent: InsuranceInclusionsContent = {
-  heading: "Included on every plan, whichever you choose",
+  heading: "What every Omanga health plan includes",
   inclusions: [
     {
       id: "telemedicine",
       term: "Telemedicine",
       description:
-        "Virtual consultations with licensed doctors, wherever you are.",
+        "Talk to licensed doctors remotely, wherever you are.",
     },
     {
       id: "roaming",
@@ -68,7 +69,7 @@ export const insuranceInclusionsContent: InsuranceInclusionsContent = {
     {
       id: "mobile-app",
       term: "Mobile app",
-      description: "Manage your policy and claims on the go.",
+      description: "Manage your plan and claims from your phone.",
     },
   ],
 } as const;

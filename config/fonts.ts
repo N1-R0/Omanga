@@ -1,82 +1,38 @@
 import localFont from "next/font/local";
 
 /**
- * The site's typefaces.
+ * [CHANGED, 2026-10-10] Typography pick F4 (`design-lab/typography.html`):
+ * Manrope for headings, Inter for everything else. Replaces Kantumruy Pro, a
+ * face drawn mainly for Khmer whose Latin was the weakest part of the old
+ * system, and the Archivo display face the payments hero briefly used.
+ * Research: `design-lab/type-and-copy-research.md`.
  *
- * Kantumruy Pro — headings, body, navigation, buttons, form fields and footer.
- * Fraunces — the wordmark, and nothing else. See `fraunces` below for why that
- * restriction is enforced by the font file itself rather than by convention.
- *
- * ---------------------------------------------------------------------------
- * Kantumruy Pro
- *
- * A variable font on the weight axis, so one file covers 400, 500 and 600 —
- * the three weights § 2 defines — in 33KB.
- *
- * ---------------------------------------------------------------------------
- * [CHANGED, 2026-08-29] `next/font/local`, from a file in the repository.
- *
- * It was `next/font/google`, which downloads the font from Google at BUILD time
- * and self-hosts the result. The runtime behaviour was already correct — no
- * request reaches Google from a visitor's browser either way — but the build
- * itself needed to reach `fonts.googleapis.com`, and that turned a font into a
- * build-time network dependency on a third party.
- *
- * It failed:
- *
- *   next/font: error: Failed to fetch `Kantumruy Pro` from Google Fonts.
- *
- * Any build environment that cannot reach Google cannot build this site at all —
- * an offline machine, a locked-down CI runner, a corporate proxy, or Google
- * simply being slow at the wrong moment. The failure is total rather than
- * graceful: the build aborts, so there is no fallback and nothing ships.
- *
- * The file now lives beside this module. The build reads it from disk, so it
- * cannot fail for a network reason, and the bytes are pinned — a font that
- * changes upstream can no longer change this site's metrics without a commit.
- *
- * The asset is the `latin` `wght` variable cut from `@fontsource-variable/
- * kantumruy-pro@5.3.0`, which is the same upstream font Google serves. Only the
- * `latin` subset is vendored: the previous configuration requested exactly that
- * subset, and the family's other cut is Khmer, which this site does not set.
- *
- * To update: take `files/kantumruy-pro-latin-wght-normal.woff2` from a newer
- * release of that package and replace the file. Do not add the italic or Khmer
- * cuts unless something actually renders them — each is another file the browser
- * may be told to preload.
+ * Both are vendored variable `wght` cuts from `@fontsource-variable/*@5.2.8`
+ * (latin subset), loaded with `next/font/local` so the build never fetches
+ * from Google — see the 2026-08-29 note on why that matters.
  */
 
-const kantumruyPro = localFont({
-  src: "./fonts/kantumruy-pro-latin-variable.woff2",
-
-  /*
-    The variable font's full `wght` axis, as a range. This is the same span
-    Google's own stylesheet requests for this family (`wght@100..700`), so the
-    three weights `design.md` § 2 names — 400 body, 500 headings, 600 inline
-    `strong` — all resolve from the one file rather than snapping to a static
-    instance.
-  */
-  weight: "100 700",
+/** Inter — body, UI, navigation, buttons, forms, figures. */
+const inter = localFont({
+  src: "./fonts/inter-latin-wght-variable.woff2",
+  weight: "100 900",
   style: "normal",
-
-  /*
-    Render immediately in the fallback and swap when the font arrives. The
-    alternative blocks first paint on a font, which is a worse trade on a page
-    whose LCP is a heading.
-  */
   display: "swap",
-  variable: "--font-kantumruy",
+  variable: "--font-inter",
   preload: true,
+  // Arial override metrics keep layout shift near zero while the font swaps.
+  adjustFontFallback: "Arial",
+});
 
-  /*
-    Computes an Arial override — ascent, descent and width — matched to
-    Kantumruy Pro's metrics, which is what keeps layout shift near zero while the
-    font swaps. Arial is also the explicit fallback in `--font-sans` for the same
-    reason: it is metrically closer than the system sans on any platform.
-
-    `next/font/local` takes the family name here, where the Google loader took a
-    boolean. Same mechanism, and it must stay Arial to match the token.
-  */
+/** Manrope — headings (display, h1–h3 roles). Geometric, at 700–800. */
+const manrope = localFont({
+  src: "./fonts/manrope-latin-wght-variable.woff2",
+  weight: "200 800",
+  style: "normal",
+  display: "swap",
+  variable: "--font-manrope",
+  // The hero heading is the LCP element on most pages.
+  preload: true,
   adjustFontFallback: "Arial",
 });
 
@@ -148,4 +104,4 @@ const fraunces = localFont({
  * Feed `--font-sans` and `--font-wordmark` in `styles/tokens.css`. Components
  * reference `font-sans` and `font-wordmark` and never touch the variables.
  */
-export const fontVariables = `${kantumruyPro.variable} ${fraunces.variable}`;
+export const fontVariables = `${inter.variable} ${manrope.variable} ${fraunces.variable}`;

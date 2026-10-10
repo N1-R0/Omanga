@@ -114,12 +114,12 @@ const PAYMENTS_IMAGE: ImageAsset = {
  * more" and "click here" are forbidden by the SEO expectations.
  */
 const INSURANCE_ACTION: LinkTarget = {
-  label: "Explore Insurance",
+  label: "Explore insurance",
   href: "/insurance",
 } as const;
 
 const PAYMENTS_ACTION: LinkTarget = {
-  label: "Explore Payments",
+  label: "Explore payments",
   href: "/payments",
 } as const;
 
@@ -166,20 +166,20 @@ export type SolutionsOverviewContent = {
 };
 
 export const solutionsContent: SolutionsOverviewContent = {
-  heading: "Local expertise, built into the technology",
+  heading: "Built for how Africa really works",
   intro: [
-    "Two things make travel across Africa harder than it should be: moving money without losing it to hidden markups, and finding health cover that actually works when you arrive.",
-    "Omanga solves both in one account — combining ground-level knowledge of how the continent really works with technology that keeps up.",
+    "Travel across Africa gets hard in two places: moving money without hidden markups, and finding health cover that works when you land.",
+    "Omanga handles both in one account, built on local knowledge of how each country works.",
   ],
   insurance: {
     heading: "Omanga Holiday Insurance",
-    body: "Short-term health cover for your trip, underwritten by established Nigerian providers, in three plans.",
+    body: "Short-term health cover for your trip, in three plans, from established Nigerian health providers.",
     action: INSURANCE_ACTION,
     image: INSURANCE_IMAGE,
   },
   payments: {
     heading: "Omanga Payment Solutions",
-    body: "A global multi-currency wallet that lets you hold, manage, send and receive multiple currencies on a single platform.",
+    body: "One wallet to hold, send and receive several currencies.",
     action: PAYMENTS_ACTION,
     image: PAYMENTS_IMAGE,
   },

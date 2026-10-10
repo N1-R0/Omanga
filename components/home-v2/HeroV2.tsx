@@ -19,9 +19,7 @@ import { Object3D } from "./Object3D";
  * value cards do, and each card ends in a working widget that rises from its
  * foot: the wallet's accounts for Payments, the plan picker for Insurance.
  *
- * The headline is Kantumruy Pro at 700, its heaviest weight. Wise sets theirs at
- * 900 in a custom face; matching that weight is part of the typography decision
- * still to come, so the size and tracking do the work here for now.
+ * The headline is Manrope at 800 (typography pick F4, 2026-10-10).
  *
  * The band ends partway down the cards: `BAND_OVERLAP` is subtracted from the
  * band's bottom padding and from the card row's top margin in one place.
@@ -34,11 +32,10 @@ type CardProps = {
   body: string;
   link: { label: string; href: string };
   object: ObjectName;
-  objectDelay: number;
   children: ReactNode;
 };
 
-function HeroCard({ surface, title, body, link, object, objectDelay, children }: CardProps) {
+function HeroCard({ surface, title, body, link, object, children }: CardProps) {
   return (
     <article
       className={cx(
@@ -49,8 +46,6 @@ function HeroCard({ surface, title, body, link, object, objectDelay, children }:
       <Object3D
         name={object}
         size={180}
-        float
-        delay={objectDelay}
         rotate={10}
         className="absolute right-[4%] top-[3%] w-[clamp(5rem,9vw,8.5rem)]"
       />
@@ -82,7 +77,7 @@ export function HeroV2() {
         <div className="page-gutter mx-auto flex max-w-content flex-col items-center gap-fluid-5 pt-fluid-8 pb-fluid-7 text-center">
           <h1
             id={HOME_V2_IDS.hero}
-            className="max-w-[14ch] font-sans text-[clamp(3rem,1.6rem+6.4vw,8rem)] font-bold uppercase leading-[0.88] tracking-[-0.035em] text-brand-deep text-balance"
+            className="max-w-[14ch] font-sans text-[clamp(3rem,1.6rem+6.4vw,8rem)] font-extrabold uppercase leading-[0.88] tracking-[-0.035em] text-brand-deep text-balance"
           >
             {heading}
           </h1>
@@ -103,7 +98,6 @@ export function HeroV2() {
           body={payments.body}
           link={payments.link}
           object="coin-stack"
-          objectDelay={0}
         >
           <HeroWallet content={payments} />
         </HeroCard>
@@ -114,7 +108,6 @@ export function HeroV2() {
           body={insurance.body}
           link={insurance.link}
           object="insurance-kit"
-          objectDelay={1.4}
         >
           <HeroPlanPicker content={insurance} />
         </HeroCard>

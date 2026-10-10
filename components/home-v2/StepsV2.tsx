@@ -34,8 +34,6 @@ export function StepsV2() {
                 <Object3D
                   name={step.object}
                   size={160}
-                  float
-                  delay={index * 1.3}
                   className="w-[72%]"
                 />
               </div>

@@ -51,14 +51,14 @@ import type { CallToAction, ImageAsset } from "@/types/content.types";
  * and the destination, so the two cannot drift.
  */
 export const HERO_PRIMARY_ACTION: CallToAction = {
-  label: "Open Your Free Wallet",
+  label: "Open your free wallet",
   href: WALLET_URL,
   isExternal: true,
   emphasis: "primary",
 } as const;
 
 const SECONDARY_ACTION: CallToAction = {
-  label: "Insurance Plans",
+  label: "See insurance plans",
   href: "/insurance",
   emphasis: "secondary",
 } as const;

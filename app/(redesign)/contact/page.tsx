@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
 
+import { CTA } from "@/components/sections/CTA";
+import { Faq } from "@/components/sections/Faq";
+import { WhyOmanga } from "@/components/sections/WhyOmanga";
+import { HOME_V2_IDS, homeV2Content } from "@/content/home-v2.content";
+
 import { ContactHero } from "@/components/sections/ContactHero";
 import { ContactInformation } from "@/components/sections/ContactInformation";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -175,9 +180,10 @@ import { buildPageMetadata } from "@/lib/seo";
  */
 const contactMeta: PageMetaContent = {
   // [CHANGED, 2026-10-07] Short form — plain label, no brand suffix, so the Google sitelink reads "Contact Us".
+  // Short sitelink label kept (2026-10-07 rule). Keyword option if that changes: "Contact Omanga support".
   title: "Contact Us",
   description:
-    "Contact the Omanga team about payments, travel insurance, partnerships or support. Email us or start a WhatsApp chat — specialists available 24/7 across Africa.",
+    "Contact Omanga support about payments, travel insurance or partnerships. Email us or chat on WhatsApp with specialists available 24/7 across Africa.",
   path: "/contact",
 };
 
@@ -277,6 +283,15 @@ export default async function ContactPreviewPage({
         content={contactInformationContent}
         headingId={CONTACT_INFORMATION_HEADING_ID}
       />
+      {/*
+        [ADDED, 2026-10-10] The shared "Why Omanga" and FAQ bands, on the
+        owner's instruction that every page closes the way the home page does.
+        Home's copy, since this page has none of its own; the closing panel too.
+      */}
+      <WhyOmanga content={homeV2Content.comparison} headingId={HOME_V2_IDS.comparison} />
+      <Faq content={homeV2Content.faq} headingId={HOME_V2_IDS.faq} />
+
+      <CTA content={homeV2Content.closing} headingId={HOME_V2_IDS.closing} />
     </>
   );
 }

@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 
+import { Faq } from "@/components/sections/Faq";
+import { WhyOmanga } from "@/components/sections/WhyOmanga";
+import { HOME_V2_IDS, homeV2Content } from "@/content/home-v2.content";
+
 import { CTA } from "@/components/sections/CTA";
 import { GetStartedEnquiry } from "@/components/sections/GetStartedEnquiry";
 import { GetStartedHero } from "@/components/sections/GetStartedHero";
@@ -70,8 +74,9 @@ import { buildPageMetadata } from "@/lib/seo";
  */
 const getStartedMeta: PageMetaContent = {
   // [CHANGED, 2026-10-07] Short form — plain label, no brand suffix, so the Google sitelink reads "Get Started".
+  // Short sitelink label kept (2026-10-07 rule). Keyword option if that changes: "Get started with Omanga".
   title: "Get Started",
-  description: `Choose Omanga Payment Solutions, Omanga Holiday Insurance, or both. One account for spending across ${COUNTRIES_SERVED_DISPLAY} African countries and short-term travel medical cover.`,
+  description: `Get started with Omanga: a travel wallet and health insurance for Africa in one account. Spend in ${COUNTRIES_SERVED_DISPLAY} African countries. Choose payments, insurance or both.`,
   path: "/get-started",
 };
 
@@ -177,6 +182,14 @@ export default function GetStartedPage() {
         one closing section rather than two. Recorded in the content module with
         the three ways out; it needs a copy decision, not a code change.
       */}
+      {/*
+        [ADDED, 2026-10-10] The shared "Why Omanga" and FAQ bands, on the
+        owner's instruction that every page closes the way the home page does.
+        Home's copy, since this page has none of its own for either.
+      */}
+      <WhyOmanga content={homeV2Content.comparison} headingId={HOME_V2_IDS.comparison} />
+      <Faq content={homeV2Content.faq} headingId={HOME_V2_IDS.faq} />
+
       <CTA
         content={getStartedCtaContent}
         headingId={GET_STARTED_CTA_HEADING_ID}

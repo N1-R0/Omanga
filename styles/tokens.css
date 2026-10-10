@@ -114,15 +114,14 @@
      TYPOGRAPHY — family
      design.md § 2
 
-     ONE family for the entire site. Headings, body, navigation, buttons, form
-     fields and footer. There is no second family and no separate UI face —
-     the reference has one and splitting it was Omanga's own decision.
+     [CHANGED, 2026-10-10] Two families (typography pick F4): Inter for body,
+     UI, navigation, buttons, forms and footer; Manrope for headings. Headings
+     pick up Manrope through `--font-heading` — see the heading rule in
+     `typography.css` — so call sites keep writing `font-sans text-h2`.
      ========================================================================= */
-  --font-sans: var(--font-kantumruy), Arial, sans-serif;
+  --font-sans: var(--font-inter), Arial, sans-serif;
 
-  /* Aliases, so the migration does not have to touch every call site at once.
-     Both resolve to the same stack; new code should use `font-sans`. */
-  --font-heading: var(--font-sans);
+  --font-heading: var(--font-manrope), Arial, sans-serif;
   --font-ui: var(--font-sans);
 
   /* The one exception to "one family": the wordmark.
@@ -137,10 +136,18 @@
      Only `components/layout/Logo` may use it. */
   --font-wordmark: var(--font-fraunces), "Times New Roman", Times, serif;
 
+  /* `font-display` utility: the heading face, for headlines set outside the
+     `text-*` heading roles (e.g. the payments hero). */
+  --font-display: var(--font-heading);
+
   /* Three weights. 300 is gone — it was the previous display weight and is the
      main reason the old hero read as thin rather than confident. */
   --font-weight-regular: 400;
-  --font-weight-medium: 500; /* every heading */
+  --font-weight-medium: 500;
+  /* [ADDED, 2026-10-10] Manrope headings (display–h3) at 800; h4–h6 stay 600
+     in Inter. Manrope at 500 read thin and soft at heading sizes. */
+  --font-weight-heading: 800;
+  --font-weight-subheading: 600;
   --font-weight-bold: 600; /* inline <strong> only */
 
   /* ===========================================================================
@@ -154,7 +161,12 @@
      (0, -0.03em) across the whole scale. Every heading is weight 500.
      ========================================================================= */
 
-  /* Display — 56 → 96. An emphasis role, not a size the page reaches for.
+  /* [CHANGED, 2026-10-10] Scale review (design-lab/home-copy.html), approved:
+     display 48→88 at 0.98, h1 40→64 at 1.05, h2 30→44, h3 24→30 (was 30→40,
+     almost the size of h2), h4–h6 smaller with near-zero tracking, body at
+     1.6, small fixed at 14. Older notes below describe the previous values.
+
+     Display — 56 → 96. An emphasis role, not a size the page reaches for.
      Belongs to the closing conversion band and nowhere else.
 
      [CHANGED] Down from 64 → 112, the reference's own display size. At 112 the
@@ -167,10 +179,10 @@
      The token is the only place it is set. `Heading role="display"` is used by
      `CTAContent` and nowhere else, by rule, so this line changes the closing
      band on every page and nothing else. */
-  --text-display: clamp(3.5rem, 2.7857rem + 3.5714vw, 6rem);
-  --text-display--line-height: 1.1;
-  --text-display--letter-spacing: -0.03em;
-  --text-display--font-weight: var(--font-weight-medium);
+  --text-display: clamp(3rem, 2.2857rem + 3.5714vw, 5.5rem);
+  --text-display--line-height: 0.98;
+  --text-display--letter-spacing: -0.035em;
+  --text-display--font-weight: var(--font-weight-heading);
 
   /* H1 — 40 → 64. The hero headline. One per page.
      The reference's exact scale. The headline is set to break to three lines at
@@ -186,10 +198,10 @@
      this one — are both already at 1.1. Splitting the difference at 1.15 would
      buy a barely visible 3px and cost the set its sixth value, which is how a
      type scale stops being a scale. */
-  --text-h1: clamp(2.5rem, 2rem + 2.2vw, 4rem);
-  --text-h1--line-height: 1.1;
+  --text-h1: clamp(2.5rem, 2.0714rem + 2.1429vw, 4rem);
+  --text-h1--line-height: 1.05;
   --text-h1--letter-spacing: -0.03em;
-  --text-h1--font-weight: var(--font-weight-medium);
+  --text-h1--font-weight: var(--font-weight-heading);
 
   /* H2 — 32 → 42. The section-level heading.
      [DEVIATES from the reference's 32 → 48.] Its section headings are short —
@@ -197,34 +209,34 @@
      three and five lines in a column, where 48 stopped reading as a heading and
      started reading as a wall. Taken down one notch; the hierarchy against the
      hero's 64 and the body's 18 is unchanged. */
-  --text-h2: clamp(2rem, 1.8214rem + 0.8929vw, 2.625rem);
+  --text-h2: clamp(1.875rem, 1.6250rem + 1.2500vw, 2.75rem);
   --text-h2--line-height: 1.1;
-  --text-h2--letter-spacing: -0.03em;
-  --text-h2--font-weight: var(--font-weight-medium);
+  --text-h2--letter-spacing: -0.025em;
+  --text-h2--font-weight: var(--font-weight-heading);
 
   /* H3 — 30 → 40. */
-  --text-h3: clamp(1.875rem, 1.68rem + 0.85vw, 2.5rem);
-  --text-h3--line-height: 1.3;
-  --text-h3--letter-spacing: -0.03em;
-  --text-h3--font-weight: var(--font-weight-medium);
+  --text-h3: clamp(1.5rem, 1.3929rem + 0.5357vw, 1.875rem);
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.02em;
+  --text-h3--font-weight: var(--font-weight-heading);
 
   /* H4 — 24 → 28. */
-  --text-h4: clamp(1.5rem, 1.4rem + 0.35vw, 1.75rem);
+  --text-h4: clamp(1.25rem, 1.2143rem + 0.1786vw, 1.375rem);
   --text-h4--line-height: 1.3;
-  --text-h4--letter-spacing: -0.03em;
-  --text-h4--font-weight: var(--font-weight-medium);
+  --text-h4--letter-spacing: -0.01em;
+  --text-h4--font-weight: var(--font-weight-subheading);
 
   /* H5 — 22 → 26. */
-  --text-h5: clamp(1.375rem, 1.3rem + 0.2vw, 1.625rem);
-  --text-h5--line-height: 1.3;
+  --text-h5: clamp(1.125rem, 1.0893rem + 0.1786vw, 1.25rem);
+  --text-h5--line-height: 1.35;
   --text-h5--letter-spacing: 0em;
-  --text-h5--font-weight: var(--font-weight-medium);
+  --text-h5--font-weight: var(--font-weight-subheading);
 
   /* H6 / eyebrow / tab label — 16 → 20. */
-  --text-h6: clamp(1rem, 0.95rem + 0.2vw, 1.25rem);
-  --text-h6--line-height: 1.3;
+  --text-h6: clamp(1rem, 0.9821rem + 0.0893vw, 1.0625rem);
+  --text-h6--line-height: 1.4;
   --text-h6--letter-spacing: 0em;
-  --text-h6--font-weight: var(--font-weight-medium);
+  --text-h6--font-weight: var(--font-weight-subheading);
 
   /* Wordmark — 22 → 26. The same size as H5, which is what the wordmark used
      before it got its own family, so the header lockup keeps its proportions.
@@ -275,31 +287,31 @@
 
   /* Body large — 18 → 20. Section intros. */
   --text-large: clamp(1.125rem, 1.0893rem + 0.1786vw, 1.25rem);
-  --text-large--line-height: 1.5;
+  --text-large--line-height: 1.55;
   --text-large--letter-spacing: 0em;
   --text-large--font-weight: var(--font-weight-regular);
 
   /* Body — 16 → 18. The document default, and the button label size. */
   --text-main: clamp(1rem, 0.9643rem + 0.1786vw, 1.125rem);
-  --text-main--line-height: 1.5;
+  --text-main--line-height: 1.6;
   --text-main--letter-spacing: 0em;
   --text-main--font-weight: var(--font-weight-regular);
 
   /* Body small — 14 → 16. Helper lines, footer links, captions.
      Fluid, not fixed: the reference scales its smallest role too, and a fixed
      14 is disproportionately large on a 320 screen beside a fluid body. */
-  --text-small: clamp(0.875rem, 0.8393rem + 0.1786vw, 1rem);
-  --text-small--line-height: 1.5;
-  --text-small--letter-spacing: 0em;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.45;
+  --text-small--letter-spacing: 0.005em;
   --text-small--font-weight: var(--font-weight-regular);
 
   /* Button label. Body size at line-height 1 — the reference sets a button's
      line box to exactly the cap height so the pill's padding is the only thing
      controlling its height. */
-  --text-button: var(--text-main);
+  --text-button: 1rem; /* 16 at every width (scale review, 2026-10-10) */
   --text-button--line-height: 1;
   --text-button--letter-spacing: 0em;
-  --text-button--font-weight: var(--font-weight-regular);
+  --text-button--font-weight: var(--font-weight-subheading); /* Inter 600 (F4, 2026-10-10) */
 
   /* No role here for the product visuals' type. Their sizes are authored against
      a fixed 491-wide canvas and scale with the card's art box rather than with

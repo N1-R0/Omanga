@@ -42,7 +42,6 @@ export function CollageV2() {
           <Object3D
             name="speech-stars"
             size={120}
-            float
             className="absolute -top-[70%] right-[-14%] hidden w-[clamp(4rem,7vw,6.5rem)] tablet:block"
           />
           <h2 id={HOME_V2_IDS.collage} className="font-sans text-h2 text-balance measure-heading">

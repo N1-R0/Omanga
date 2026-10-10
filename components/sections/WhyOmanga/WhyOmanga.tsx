@@ -1,115 +1,79 @@
-import { Section } from "@/components/layout/Section";
-import { Stack } from "@/components/layout/Stack";
-import { Heading } from "@/components/ui/Heading";
-import { Reveal } from "@/components/ui/Reveal";
-import { Text } from "@/components/ui/Text";
+import { Object3D } from "@/components/home-v2/Object3D";
+import { V2Section } from "@/components/home-v2/V2Section";
 import type { WhyOmangaContent } from "@/content/why-omanga.content";
-
-import { ComparisonGrid } from "./ComparisonGrid";
+import { cx } from "@/lib/cx";
 
 /**
- * The homepage's Why Omanga section — the before-and-after comparison.
+ * "Why Omanga" — the site-wide comparison band.
  *
- * A Server Component with nothing interactive in it: two headings, a paragraph and
- * ten statements. No links, no state, so every string is in the server HTML, which
- * the SEO plan requires of all copy.
+ * [CHANGED, 2026-10-10] Every page now uses the home page's design (W1, built
+ * as `ComparisonV2`), on the owner's instruction: a centred heading and intro,
+ * then one bordered panel split in two — the problem side on white, the Omanga
+ * side as a crimson gradient — with a static 3D object tucked into each
+ * panel's outer corner. The dark band with cards it replaces is gone.
  *
- * ---------------------------------------------------------------------------
- * [BLOCKER] Not built from the Figma MCP frame.
- *
- * The brief ranks the frame first. The Figma Dev Mode MCP server is still
- * unreachable in this environment — all four tools return the same setup
- * instruction — and the Figma connector is unauthorised, so the section is built
- * from the screenshot, the Clarity reference and `design.md`.
- * **Re-verify against the frame once the MCP server is available.**
- *
- * The screenshot was measured before any code was written. Taking the frame as
- * 1440 wide (the render is 1142, so scale 0.793), the two panels come to 608 each
- * with a 10 seam — 1226 against the 1240 content column § Grid system specifies,
- * which confirms the reading. Every vertical gap the screenshot shows then lands
- * on a step the spacing table already names, so none of them is invented here:
- *
- *   heading -> intro      35 measured  ->  32  `xl`   "section heading to intro"
- *   intro   -> columns    86 measured  ->  64  `4xl`  "intro to content in dark
- *                                                      sections"
- *   title   -> panel      48 measured  ->  40  `2xl`  "heading block to content
- *                                                      block"
- *   row     -> row        41 measured  ->  16 + 27 line box, the step § Card
- *                                          variants names for comparison rows
- *
- * ---------------------------------------------------------------------------
- * CLARITY REFERENCE. The 6th section of claritybusinesstravel.com is the same
- * pattern: a centred heading, a short paragraph, then "Without Clarity" and "With
- * Clarity" as two labelled five-item columns entering on scroll. The structure and
- * the item count match, so nothing had to be adapted — what is taken from it is
- * the entrance behaviour, which is expressed here through the system's own motion
- * tokens rather than by copying its timings.
- *
- * ---------------------------------------------------------------------------
- * [DECISION] No eyebrow.
- *
- * The frame draws none, and § Section rules makes the eyebrow optional — "a
- * section with unverified content renders without that element rather than with a
- * placeholder". `WhyOmangaContent` therefore has no `eyebrow` field at all, so one
- * cannot be added without a copy decision.
- *
- * The section is CTA-free and stays that way. The frame draws no action and §
- * Section rules asks that "sections that the specification defines as CTA-free
- * stay CTA-free".
- *
- * [NOTE] This section is dark and the African Coverage section above it is light,
- * so the page alternates surface here as § Component consistency rules asks.
+ * Each page still passes its own copy; only the UI is shared.
  */
-
 export type WhyOmangaProps = {
   content: WhyOmangaContent;
-  /**
-   * The id of the heading that names this section.
-   *
-   * Passed in rather than defined here so the value has one owner — the content
-   * module — and the heading and the `aria-labelledby` cannot drift apart.
-   */
   headingId: string;
 };
 
-/**
- * Where the comparison columns continue the entrance sequence: after the heading
- * (0) and the intro (1).
- */
-const COLUMNS_REVEAL_FROM = 2;
-
 export function WhyOmanga({ content, headingId }: WhyOmangaProps) {
-  return (
-    <Section labelledBy={headingId} tone="dark">
-      <Stack gap="4xl">
-        <div className="text-center">
-          <Stack gap="lg" align="center">
-            <Reveal index={0}>
-              {/*
-                [MEASURED] Capped at `--container-heading` (800) — the benchmark's
-                `u-max-width-30ch` solved at Omanga's 48 h2. Short enough today
-                that the cap is inert, and applied anyway so the four centred
-                section headings share one measure and a copy edit cannot make one
-                of them the exception.
-              */}
-                <Heading id={headingId} level="h2" role="section">
-                  {content.heading}
-                </Heading>
-            </Reveal>
+  const { heading, intro, groups } = content;
 
-            <Reveal index={1}>
-              <Text role="body" measure="narrow" isSecondary>
-                {content.intro}
-              </Text>
-            </Reveal>
-          </Stack>
+  return (
+    <V2Section labelledBy={headingId}>
+      <div className="flex flex-col items-center gap-fluid-7">
+        <div className="flex flex-col items-center gap-fluid-3 text-center">
+          <h2 id={headingId} className="font-sans text-h2 text-balance measure-heading">
+            {heading}
+          </h2>
+          <p className="font-sans text-large text-secondary measure-narrow">{intro}</p>
         </div>
 
-        <ComparisonGrid
-          groups={content.groups}
-          revealFrom={COLUMNS_REVEAL_FROM}
-        />
-      </Stack>
-    </Section>
+        <div className="relative grid w-full max-w-[64rem] overflow-visible rounded-md border border-border-hairline tablet:grid-cols-2">
+          {groups.map((group) => {
+            const isPositive = group.sentiment === "positive";
+            return (
+              <div
+                key={group.id}
+                className={cx(
+                  "relative flex flex-col gap-fluid-4 p-fluid-6",
+                  isPositive
+                    ? "rounded-b-md bg-[linear-gradient(150deg,var(--color-brand)_0%,var(--color-brand-deep)_100%)] text-on-dark tablet:rounded-r-md tablet:rounded-bl-none"
+                    : "bg-surface-page",
+                )}
+              >
+                <h3 className="font-sans text-h4">{group.title}</h3>
+                <ul className="flex flex-col gap-fluid-3">
+                  {group.items.map((item) => (
+                    <li key={item} className="flex items-start gap-fluid-2 font-sans text-main">
+                      <span
+                        aria-hidden="true"
+                        className={cx(
+                          "mt-[0.55em] size-2 shrink-0 rounded-full",
+                          isPositive ? "bg-on-dark" : "bg-ink",
+                        )}
+                      />
+                      <span className={isPositive ? "" : "text-secondary"}>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Object3D
+                  name={isPositive ? "success-check" : "card-declined"}
+                  size={140}
+                  rotate={isPositive ? 10 : -10}
+                  className={cx(
+                    "absolute w-[clamp(4.5rem,9vw,8rem)]",
+                    isPositive ? "-right-[4%] -bottom-[8%]" : "-left-[4%] -bottom-[8%]",
+                  )}
+                />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </V2Section>
   );
 }

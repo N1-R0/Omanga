@@ -67,8 +67,9 @@ export function HeroImage({ image }: HeroImageProps) {
         /*
           The one eager image on the site. "Hero image only: priority" — it is
           the LCP element, so it is preloaded and must not wait on lazy loading.
+          `preload` replaces `priority`, deprecated in Next 16 (same behaviour).
         */
-        priority
+        preload
         className="animate-hero-pan object-cover"
       />
       {/*

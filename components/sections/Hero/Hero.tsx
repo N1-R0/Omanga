@@ -28,7 +28,7 @@ import { HeroImage } from "./HeroImage";
  *
  * That has a measured consequence, recorded here so it is a known position
  * rather than a regression nobody noticed. White text was re-measured against
- * `public/hero.png`, cropped as `object-cover` renders it at 1512 × 612, in the
+ * `public/hero.jpg`, cropped as `object-cover` renders it at 1512 × 612, in the
  * three boxes the copy actually occupies:
  *
  *                        median      worst    under its threshold

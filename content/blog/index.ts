@@ -1,8 +1,8 @@
 import type { BlogPost } from "@/types/blog.types";
 
 import { dettyDecemberChecklistPost } from "./posts/detty-december-nigeria-checklist.content";
+import { howFarDoes100DollarsGoPost } from "./posts/how-far-does-100-dollars-go-in-nigeria.content";
 import { healthInsuranceVisitingNigeriaPost } from "./posts/health-insurance-for-visiting-nigeria.content";
-import { howToPayInNigeriaPost } from "./posts/how-to-pay-in-nigeria-as-a-visitor.content";
 
 /**
  * Every published article. Adding a post: create a module in `./posts`, then
@@ -12,7 +12,7 @@ import { howToPayInNigeriaPost } from "./posts/how-to-pay-in-nigeria-as-a-visito
  * Newest first by `publishedDate`; ties keep the order written here.
  */
 const POSTS: readonly BlogPost[] = [
-  howToPayInNigeriaPost,
+  howFarDoes100DollarsGoPost,
   healthInsuranceVisitingNigeriaPost,
   dettyDecemberChecklistPost,
 ];

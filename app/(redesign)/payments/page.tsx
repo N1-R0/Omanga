@@ -159,8 +159,11 @@ import type { PageMetaContent } from "@/types/content.types";
  * and the layout's `%s | Omanga` template does not append the brand twice.
  */
 const paymentsMeta: PageMetaContent = {
-  // [CHANGED, 2026-10-07] Short form — plain label, no brand suffix, so the Google sitelink reads "Payment Solution".
-  title: "Payment Solution",
+  // [CHANGED, 2026-10-11] Keyword title, replacing the 2026-10-07 short sitelink
+  // label "Payment Solution". The site has no rankings yet, so sitelinks don't
+  // apply; the title now names the searches this page should win ("travel
+  // wallet" ~4,400/mo, "multi currency wallet"). See design.md § SEO audit.
+  title: "Multi-Currency Travel Wallet for Africa | Omanga",
   // [CHANGED, 2026-10-10] Copy pass: keyword-first, ends on a call to action, 158 characters with "50+". Same facts.
   description: `A multi-currency travel wallet for Africa: hold and send six currencies, fund in USD, GBP or CAD at mid-market rates, spend in ${COUNTRIES_SERVED_DISPLAY} countries. Open yours free.`,
   path: "/payments",

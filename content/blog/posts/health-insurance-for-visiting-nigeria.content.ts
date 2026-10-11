@@ -19,6 +19,10 @@ import type { ImageAsset } from "@/types/content.types";
  *   - medicare.gov "Travel outside the U.S.": Medicare usually doesn't pay.
  *   - Canadian provincial plans: limited, varying out-of-country cover —
  *     phrased generally because rules differ by province and have changed.
+ * [SEO, 2026-10-11] FAQ adds "Is it safe to visit Nigeria as a tourist?", a
+ *   People Also Ask question from AnswerThePublic ("travel to nigeria", UK).
+ *   Answer points to live FCDO / State Department advice instead of judging
+ *   safety, because the advice changes by state and over time.
  * Plan facts restate `insurance-plans.content.ts`, `insurance-care.content.ts`,
  * `insurance-proof.content.ts` and the legal provider names.
  */
@@ -52,6 +56,7 @@ export const healthInsuranceVisitingNigeriaPost: BlogPost = {
   summary:
     "Your cover at home almost certainly stops at the airport. Here's what happens if you need a doctor in Nigeria, and what good travel health cover should include.",
   publishedDate: "2026-10-09",
+  updatedDate: "2026-10-11",
   readingMinutes: 6,
   image: healthInsuranceImage,
   imageCredit: {
@@ -191,12 +196,12 @@ export const healthInsuranceVisitingNigeriaPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "Your money is the other half of a smooth trip. Our guide on ",
+            "Your money is the other half of a smooth trip. Our guide to ",
             {
-              text: "how to pay for things in Nigeria as a visitor",
-              href: "/blog/how-to-pay-in-nigeria-as-a-visitor",
+              text: "how far $100 really goes in Nigeria",
+              href: "/blog/how-far-does-100-dollars-go-in-nigeria",
             },
-            " covers cards, cash and exchange rates.",
+            " covers real Lagos prices, cards, cash and exchange rates.",
           ],
         },
       ],
@@ -219,6 +224,11 @@ export const healthInsuranceVisitingNigeriaPost: BlogPost = {
         question: "Does Medicare cover me in Nigeria?",
         answer:
           "Generally, no. Medicare usually doesn't pay for health care you get outside the United States, so US visitors should arrange separate travel health cover.",
+      },
+      {
+        question: "Is it safe to visit Nigeria as a tourist?",
+        answer:
+          "Many visitors travel to Nigeria without problems, but the UK Foreign Office and the US State Department advise against travel to parts of the country, and that advice changes. Check the current advice for every state you plan to visit before you book, and make sure your insurance covers you there.",
       },
       {
         question: "How much does Omanga Holiday Insurance cost?",

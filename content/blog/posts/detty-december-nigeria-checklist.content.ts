@@ -19,6 +19,11 @@ import type { ImageAsset } from "@/types/content.types";
  * fraud, cash); Nigerian NCDC and travel-health sources (yellow fever
  * certificate, year-round malaria). No event names, dates or prices are stated:
  * they change every year and are not Omanga's to confirm.
+ *
+ * [SEO, 2026-10-11] FAQ adds the visa question ("Can a UK citizen come to
+ * Nigeria without a visa?" in People Also Ask, via AnswerThePublic, "travel to
+ * nigeria", UK). Answer restates GOV.UK entry requirements: visitors need a
+ * visa, obtained before travel.
  */
 
 /**
@@ -52,6 +57,7 @@ export const dettyDecemberChecklistPost: BlogPost = {
   summary:
     "Flights booked, outfits planned. Now the unglamorous part: how to pay for everything, keep your money safe, and make sure a bad week doesn't become an expensive one.",
   publishedDate: "2026-10-09",
+  updatedDate: "2026-10-11",
   readingMinutes: 5,
   image: dettyDecemberImage,
   imageCredit: {
@@ -94,12 +100,12 @@ export const dettyDecemberChecklistPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "Then plan for how Lagos actually takes payment. Cash still matters for small spending, many vendors will ask you to pay by bank transfer, and your home card works in some places and not others. Have at least two ways to pay at all times. Our guide on ",
+            "Then plan for how Lagos actually takes payment. Cash still matters for small spending, many vendors will ask you to pay by bank transfer, and your home card works in some places and not others. Have at least two ways to pay at all times. Our guide to ",
             {
-              text: "how to pay for things in Nigeria as a visitor",
-              href: "/blog/how-to-pay-in-nigeria-as-a-visitor",
+              text: "how far $100 really goes in Nigeria",
+              href: "/blog/how-far-does-100-dollars-go-in-nigeria",
             },
-            " goes through each option.",
+            " goes through each option, with real Lagos prices.",
           ],
         },
       ],
@@ -184,6 +190,11 @@ export const dettyDecemberChecklistPost: BlogPost = {
         question: "What does IJGB mean?",
         answer:
           "IJGB stands for \"I just got back\", the nickname for Nigerians from the diaspora who have returned home, usually for the December season.",
+      },
+      {
+        question: "Do I need a visa to visit Nigeria from the UK?",
+        answer:
+          "If you are travelling on a British passport, yes. UK government travel advice says visitors must have a visa to enter Nigeria and should get it before travelling. If you hold a Nigerian passport, you can travel on that instead.",
       },
       {
         question: "How should I take money to Nigeria for December?",

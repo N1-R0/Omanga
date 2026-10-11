@@ -110,6 +110,21 @@ const nextConfig: NextConfig = {
     ],
   },
 
+  /*
+    Retired blog posts. Each one points at the post that replaced it, so links
+    and rankings the old URL earned pass to the new one. See design.md § Blog
+    SEO workflow.
+  */
+  async redirects() {
+    return [
+      {
+        source: "/blog/how-to-pay-in-nigeria-as-a-visitor",
+        destination: "/blog/how-far-does-100-dollars-go-in-nigeria",
+        permanent: true,
+      },
+    ];
+  },
+
   async headers() {
     return [{ source: "/:path*", headers: SECURITY_HEADERS }];
   },

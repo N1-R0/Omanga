@@ -628,3 +628,64 @@ bearing H1/H2s and meta descriptions (140–160 chars, with a call to action), F
 questions phrased as searches. Page titles kept as the short sitelink labels set
 on 2026-10-07, except Plans, which already carried a long title. Nav order is now
 Home, Payment, Insurance, Plans.
+
+## Addendum · 2026-10-11 · Blog SEO workflow (question-led posts)
+
+Process, on the owner's instruction: find a real question on AnswerThePublic,
+answer the questions Claude asks about Omanga's own experience (by voice is
+fine), then write the post from those answers. Aim for two posts a week.
+
+- Research: "travel to nigeria" on AnswerThePublic in four markets: UK, US,
+  Canada, Ireland (2026-10-11). Monthly volume: US 720, Canada 110, UK 140 for
+  "travel to nigeria from uk". Topics, ranked by how many markets ask them:
+
+  | Topic | UK | US | CA | IE | Example questions |
+  | --- | --- | --- | --- | --- | --- |
+  | What dollars are worth | ✓ | ✓ | ✓ | ✓ | Is $20 / $100 / $200 / $500 a lot in Nigeria? How far does $100 go? Is Nigeria expensive for tourists? How much does a meal cost? |
+  | Safety | ✓ | ✓ | ✓ | ✓ | Is it safe to travel to Nigeria now? Which part of Nigeria is the safest? |
+  | Entry requirements | ✓ | ✓ | ✓ | – | Do I need a visa? Can I enter without the yellow fever vaccine? What do I need to travel from Canada / the USA? |
+  | Expired Nigerian passport | ✓ | ✓ | ✓ | – | Can I travel to Nigeria with an expired passport? (UK 90, US 50, CA 40/mo) |
+  | Travel ban 2026 | – | – | ✓ | ✓ | Will Nigeria have a travel ban in 2026? |
+  | Insurance for Nigeria | – | ✓ | ✓ | – | Which travel insurance providers cover trips to Nigeria? (AI prompts) |
+
+- Published 2026-10-11: "How far does $100 go in Nigeria?"
+  (`/blog/how-far-does-100-dollars-go-in-nigeria`). On instruction, it
+  *replaces* "How to pay in Nigeria as a visitor" rather than adding a fourth
+  post. That post was chosen because it covered the same ground: two pages on
+  one topic would compete with each other in search. Its cards/cash/rate
+  advice is folded into the new post, and the old URL 301s to it
+  (`next.config.ts` `redirects`). Prices are researched from dated 2026 Lagos
+  sources (listed in the module header), since the owner asked for local
+  research instead of interview answers.
+- Voice for question-led posts: one person talking to another. Second person,
+  scenes the reader recognises, honest about trade-offs. No invented anecdotes.
+- Post queue: 2) "What do you need to travel to Nigeria?": visa, yellow fever,
+  insurance and money (Insurance). Safety stays an FAQ that links to live
+  government advice and is not given its own post, because Omanga can't vouch
+  for it.
+- Existing posts: each FAQ now answers one of these questions, and each post
+  has `updatedDate` 2026-10-11 so `dateModified` updates in the schema.
+- Prices and rates in posts come from the owner's interview answers, never
+  estimated.
+
+## Addendum · 2026-10-11 · SEO audit response (Veritas scan)
+
+- **Not indexed** was the root cause of the "not scored" result, not a site
+  defect: robots, sitemap, `index, follow` and canonicals were all correct. The
+  owner has since submitted the site to Google.
+- **Page titles**: Payments → "Multi-Currency Travel Wallet for Africa | Omanga",
+  Insurance → "Travel Health Insurance for Africa | Omanga". This reverses the
+  2026-10-07 short sitelink labels: with no rankings there are no sitelinks, and
+  the audit's top gaps were "travel wallet" (~4,400/mo), "multi currency wallet"
+  and "travel insurance africa". Home keeps the brand line.
+- **Alt text (37 missing)**: not changed. These are the decorative 3D objects,
+  which have `alt=""` on purpose (§ Home v2). The scanner counts empty alt as
+  missing.
+- **/contact?enquiry=talk duplicate title**: not changed. That URL already has a
+  canonical tag pointing to /contact.
+- **Mobile LCP 2.9s**: the lab figure is Lighthouse's simulated estimate. With
+  real devtools throttling, the production build measured LCP 1.7s. Two real
+  fixes anyway: the hero source was re-exported from a 5.4MB 4096px file to a
+  395KB 2560px JPEG (`/hero.jpg`), which removes a ~3s cold encode after each
+  deploy, and Lenis now loads on idle and is skipped on touch-only devices.
+  Field data (Vercel Speed Insights, later CrUX) is the measure to watch.

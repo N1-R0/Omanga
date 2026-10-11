@@ -1,6 +1,5 @@
 "use client";
 
-import Lenis from "lenis";
 import { useEffect } from "react";
 
 /**
@@ -49,6 +48,15 @@ import { useEffect } from "react";
  * Renders nothing. It is mounted once in the root layout, alongside the other
  * document-wide concerns, and it holds no state React needs to know about.
  *
+ * ---------------------------------------------------------------------------
+ * [PERFORMANCE, 2026-10-11] Lenis is imported dynamically, after the browser is
+ * idle, and never on touch-only devices. A site audit measured mobile LCP at
+ * 2.9–3.2s against Google's 2.5s bar. The hero image arrived quickly, but it
+ * painted ~2s late behind main-thread JavaScript, and the Lenis chunk was part
+ * of that work. Lenis leaves touch scrolling native by default (`syncTouch` is
+ * off), so phones were paying for a library that did nothing for them. Desktop
+ * still gets smooth scrolling, a moment after the first paint instead of before it.
+ *
  * NOTE: `styles/globals.css` keeps `scroll-behavior: smooth` for in-page anchors.
  * Lenis handles anchors itself while it is active, and the CSS rule is what makes
  * them smooth for the reduced-motion path — where Lenis is absent — so both stay.
@@ -59,21 +67,50 @@ export function SmoothScroll() {
       "(prefers-reduced-motion: reduce)",
     );
 
-    if (prefersReducedMotion.matches) {
+    const isTouchOnly = window.matchMedia(
+      "(hover: none) and (pointer: coarse)",
+    ).matches;
+
+    if (prefersReducedMotion.matches || isTouchOnly) {
       return;
     }
 
-    const lenis = new Lenis({
-      duration: 0.9,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      anchors: true,
-      allowNestedScroll: true,
-      autoRaf: true,
-    });
+    let lenis: { destroy: () => void } | undefined;
+    let isCancelled = false;
+
+    const start = async () => {
+      const { default: Lenis } = await import("lenis");
+
+      if (isCancelled) {
+        return;
+      }
+
+      lenis = new Lenis({
+        duration: 0.9,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        anchors: true,
+        allowNestedScroll: true,
+        autoRaf: true,
+      });
+    };
+
+    // Safari has no requestIdleCallback; a short timeout is the fallback.
+    const hasIdleCallback = typeof window.requestIdleCallback === "function";
+    const idleHandle = hasIdleCallback
+      ? window.requestIdleCallback(() => void start(), { timeout: 2000 })
+      : setTimeout(() => void start(), 1200);
 
     return () => {
-      lenis.destroy();
+      isCancelled = true;
+
+      if (hasIdleCallback) {
+        window.cancelIdleCallback(idleHandle as number);
+      } else {
+        clearTimeout(idleHandle);
+      }
+
+      lenis?.destroy();
     };
   }, []);
 

@@ -88,9 +88,11 @@ import { buildPageMetadata } from "@/lib/seo";
  * becomes possible once the hero photograph exists.
  */
 const insuranceMeta: PageMetaContent = {
-  // [CHANGED, 2026-10-07] Short form — plain label, no brand suffix, so the Google sitelink reads "Insurance".
-  title: "Insurance",
-  // [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged. Title left short per the 2026-10-07 sitelink decision.
+  // [CHANGED, 2026-10-11] Keyword title, replacing the 2026-10-07 short sitelink
+  // label "Insurance", for the same reason as Payments ("travel insurance
+  // africa"). See design.md § SEO audit.
+  title: "Travel Health Insurance for Africa | Omanga",
+  // [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
   description:
     "Short-term travel health insurance for Africa from established Nigerian health providers. Silver, Gold and Diamond plans from $50 a month. Compare plans today.",
   path: "/insurance",

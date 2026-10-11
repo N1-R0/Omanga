@@ -82,15 +82,16 @@ const SECONDARY_ACTION: CallToAction = {
  * If the photograph is replaced, `--color-scrim` must be re-measured — the
  * current 55% was derived from this specific image's brightest pixels.
  *
- * [NOTE] The file is named `.png` but is a 4096x2305 JPEG, and at 5.4MB it is
- * far larger than needed. `next/image` re-encodes and resizes it, so it does not
- * reach the browser at that weight, but the source should be re-exported.
+ * [CHANGED, 2026-10-11] Re-exported as `/hero.jpg`: 2560px wide, quality 82,
+ * 395KB, down from a 5.4MB 4096px file misnamed `.png`. 2560 still covers the
+ * largest `next/image` size this band requests. The smaller source cuts the
+ * optimiser's cold encode after each deploy, which took ~3s in a lab run.
  */
 const IMAGE: ImageAsset = {
-  src: "/hero.png",
+  src: "/hero.jpg",
   alt: "",
-  width: 4096,
-  height: 2305,
+  width: 2560,
+  height: 1440,
 } as const;
 
 export type HeroSectionContent = {

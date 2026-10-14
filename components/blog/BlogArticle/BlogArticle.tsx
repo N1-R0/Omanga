@@ -8,6 +8,7 @@ import { LegalRichText } from "@/components/legal/LegalRichText";
 import { FaqList } from "@/components/sections/Faq";
 import { Button } from "@/components/ui/Button";
 import { Media } from "@/components/ui/Media";
+import { BLOG_CATEGORY_LABELS } from "@/content/blog";
 import type { BlogPost } from "@/types/blog.types";
 
 /**
@@ -15,8 +16,8 @@ import type { BlogPost } from "@/types/blog.types";
  *
  * Built on the legal documents' long-form layout — same header rhythm,
  * contents list and block renderer — rather than a parallel prose system. The
- * differences are the article's own: a visible Home › Blog trail matching the
- * `BreadcrumbList`, a category and reading time, a cover image, the FAQ, a
+ * differences are the article's own: a visible Home › Blog trail, a category
+ * label and reading time, a cover image, the FAQ, a
  * closing action to the product page the article supports, and a row of
  * related articles (Mobbin refs: Uxcel and Revolut for the cover under the
  * title block; Hashnode for the related row).
@@ -26,6 +27,8 @@ export type BlogArticleProps = {
   /** Other articles to suggest at the foot of the page. */
   related: readonly BlogPost[];
   readLabel: string;
+  /** Heading over the related row. */
+  relatedHeading: string;
 };
 
 const DATE_FORMAT: Intl.DateTimeFormatOptions = {
@@ -35,10 +38,15 @@ const DATE_FORMAT: Intl.DateTimeFormatOptions = {
 };
 
 const FAQ_HEADING_ID = "article-faq-heading";
-const CTA_HEADING_ID = "article-cta-heading";
+const CTA_PROMPT_ID = "article-cta-prompt";
 const RELATED_HEADING_ID = "article-related-heading";
 
-export function BlogArticle({ post, related, readLabel }: BlogArticleProps) {
+export function BlogArticle({
+  post,
+  related,
+  readLabel,
+  relatedHeading,
+}: BlogArticleProps) {
   const published = new Date(post.publishedDate);
 
   return (
@@ -54,6 +62,11 @@ export function BlogArticle({ post, related, readLabel }: BlogArticleProps) {
         <div className="flex flex-col gap-fluid-8">
           <div className="mx-auto flex w-full flex-col gap-fluid-8 measure-body">
             <header className="flex flex-col gap-fluid-3">
+              {/*
+                [CHANGED, 2026-10-14] UX copy pass: the trail ends at "Blog".
+                It used to end at the category marked aria-current="page",
+                which told screen readers the category was this page.
+              */}
               <nav aria-label="Breadcrumb">
                 <ol className="flex flex-wrap gap-fluid-2 font-sans text-small text-secondary">
                   <li>
@@ -66,11 +79,13 @@ export function BlogArticle({ post, related, readLabel }: BlogArticleProps) {
                     <Link href="/blog" className="focus-ring hover:text-brand">
                       Blog
                     </Link>
-                    <span aria-hidden="true"> ›</span>
                   </li>
-                  <li aria-current="page">{post.category}</li>
                 </ol>
               </nav>
+
+              <p className="font-sans text-small text-brand">
+                {BLOG_CATEGORY_LABELS[post.category]}
+              </p>
 
               <h1 className="font-sans text-h1 measure-heading">
                 {post.title}
@@ -167,18 +182,16 @@ export function BlogArticle({ post, related, readLabel }: BlogArticleProps) {
               </section>
             )}
 
+            {/*
+              [CHANGED, 2026-10-14] UX copy pass: the box had a heading and a
+              button with the same text (`cta.label`). The prompt now names the
+              section and the button carries the action once.
+            */}
             <section
-              aria-labelledby={CTA_HEADING_ID}
+              aria-labelledby={CTA_PROMPT_ID}
               className="flex flex-col items-start gap-fluid-4 rounded-sm bg-surface-light p-fluid-5"
             >
-              <h2
-                id={CTA_HEADING_ID}
-                className="font-sans text-h5 measure-heading"
-              >
-                {post.cta.label}
-              </h2>
-
-              <p className="font-sans text-main measure-body">
+              <p id={CTA_PROMPT_ID} className="font-sans text-h5 measure-heading">
                 <LegalRichText content={post.cta.prompt} />
               </p>
 
@@ -202,7 +215,7 @@ export function BlogArticle({ post, related, readLabel }: BlogArticleProps) {
                 id={RELATED_HEADING_ID}
                 className="font-sans text-h3 measure-heading"
               >
-                More from the Omanga blog
+                {relatedHeading}
               </h2>
 
               <BlogPostList

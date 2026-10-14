@@ -40,6 +40,9 @@ import type { ImageAsset } from "@/types/content.types";
  *     short-let price rises.
  *   - Card fraud, ATMs, carrying cash: GOV.UK Nigeria travel advice (linked).
  * Omanga claims restate the approved Payments copy only.
+ * [CHANGED, 2026-10-14] UX copy pass (design.md § Home UX copy pass): names the
+ *   ₦20 transfer fee instead of "no hidden fees", drops unconfirmed 24/7 wallet
+ *   support, shorter sentences.
  *
  * [VERIFY] Prices move with fuel and the naira. Refresh the figures and the
  * rate every quarter, and before November for the December section.
@@ -70,6 +73,7 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
   summary:
     "Further than at home, and not as far as people say. Here's what $20, $50, $100 and $200 really buy in Lagos right now, and the quiet ways visitors lose a chunk of it.",
   publishedDate: "2026-10-11",
+  updatedDate: "2026-10-14",
   readingMinutes: 8,
   image: hundredDollarsImage,
   imageCredit: {
@@ -80,13 +84,13 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
     {
       kind: "paragraph",
       content: [
-        "If you've asked someone whether $100 is a lot of money in Nigeria, you've probably had two answers. One cousin says you'll live like royalty. A friend who went last December says Lagos emptied her account in a week. They're both telling the truth. It depends on what you spend it on, where, and when.",
+        "Ask whether $100 is a lot of money in Nigeria and you'll get two answers. One cousin says you'll live like royalty. A friend who went last December says Lagos emptied her account in a week. Both are true. It depends on what you buy, where and when.",
       ],
     },
     {
       kind: "paragraph",
       content: [
-        "So here's the honest version, using real 2026 prices. No \"you'll be rich over there\" and no horror stories. Just what your money buys, so you can plan a trip that feels generous without coming home to a scary bank statement.",
+        "Here's the honest version, with real 2026 prices. No \"you'll be rich over there\" and no horror stories. Just what your money buys, so you can plan a generous trip without a scary bank statement afterwards.",
       ],
     },
     {
@@ -105,7 +109,7 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "In early October 2026, the official rate sat around ₦1,330 to the dollar, and street rates were a little higher, around ₦1,375 to ₦1,390. The gap between the two is much smaller than it was a couple of years ago, which is good news for visitors. For the rest of this guide, we'll use a round ₦1,350.",
+            "In early October 2026, the official rate was around ₦1,330 to the dollar. Street rates were a little higher, around ₦1,375 to ₦1,390. The gap is much smaller than it was 2 years ago, which is good news for visitors. This guide uses a round ₦1,350.",
           ],
         },
         {
@@ -122,7 +126,7 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "Those are the numbers you'd get at a fair rate. The number you actually get depends on how you convert, and that's where a lot of visitors quietly lose money. More on that below.",
+            "Those are the numbers at a fair rate. What you actually get depends on how you convert, and that's where many visitors quietly lose money. More on that below.",
           ],
         },
       ],
@@ -134,7 +138,7 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "Prices vary between the Mainland and the Island (Lekki, Victoria Island, Ikoyi), and the Island is noticeably more expensive. These are typical 2026 prices for everyday things a visitor actually buys.",
+            "Prices differ between the Mainland and the Island (Lekki, Victoria Island, Ikoyi). The Island costs noticeably more. These are typical 2026 prices for the everyday things visitors buy.",
           ],
         },
         {
@@ -169,7 +173,7 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "So is $100 a lot in Nigeria? For everyday living, yes, it goes a long way. For the things visitors tend to splurge on, like Island accommodation, nights out and events, it goes about as far as it would in London or Toronto. Sometimes less.",
+            "So is $100 a lot in Nigeria? For everyday living, yes. It goes a long way. For the things visitors splurge on, like Island accommodation, nights out and events, it goes about as far as in London or Toronto. Sometimes less.",
           ],
         },
       ],
@@ -181,13 +185,13 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "If you're flying in for Detty December, double-check everything above. Demand spikes when the diaspora comes home, and prices follow. A ride from Lekki to Victoria Island that normally costs about ₦3,000 can jump to ₦12,000 to ₦15,000 when a concert lets out at midnight and everyone opens the app at once. Shortlets on the Island climbed sharply during the 2025 season, enough that many visitors switched to hotels in protest.",
+            "Flying in for Detty December? Double-check everything above. Demand spikes when the diaspora comes home, and prices follow. A Lekki to Victoria Island ride that normally costs about ₦3,000 can jump to ₦12,000 to ₦15,000 when a concert ends at midnight and everyone opens the app at once. Island shortlets climbed sharply in the 2025 season, enough that many visitors switched to hotels.",
           ],
         },
         {
           kind: "paragraph",
           content: [
-            "None of this means December isn't worth it. It's the best time of year to be there. It just means the \"$100 goes so far\" maths stops working, and it's worth budgeting as if you were in a big Western city for the bits that are in demand: where you stay, how you get home late, and the events you've been seeing on Instagram since October. Our ",
+            "December is still worth it. It's the best time of year to be there. But the \"$100 goes so far\" maths stops working. For the things in demand, budget as if you were in a big Western city: where you stay, how you get home late, and the events you've seen on Instagram since October. Our ",
             { text: "Detty December checklist", href: "/blog/detty-december-nigeria-checklist" },
             " goes through the rest.",
           ],
@@ -251,25 +255,25 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
             {
               term: "A bad exchange rate",
               description: [
-                "This is the big one. The mid-market rate is the real rate you see on Google. Most providers convert at a worse rate and keep the difference, so a service can honestly say \"no fees\" and still cost you. If £1,000 or $1,000 is converted at 3% below the mid-market rate, you've lost 30 without seeing a single fee. Over a few weeks, that quietly adds up to more than any charge on a receipt.",
+                "This is the big one. The mid-market rate is the rate you see on Google. Many providers convert at a worse rate and keep the difference, so a service can say \"no fees\" and still cost you. Convert $1,000 at 3% below the mid-market rate and you lose $30 without seeing a single fee. Over a few weeks, that adds up to more than any charge on a receipt.",
               ],
             },
             {
               term: "Changing cash at the airport or hotel",
               description: [
-                "When you've just landed, you're tired and you want naira in your hand, an airport desk feels like the easy option. It's usually one of the worst rates you'll be offered. Use a bank or a licensed operator, and never change money on the street.",
+                "You've just landed, you're tired and you want naira in your hand. An airport desk feels easy, but it's usually one of the worst rates you'll be offered. Use a bank or a licensed operator, and never change money on the street.",
               ],
             },
             {
               term: "\"Visitor prices\"",
               description: [
-                "If you sound or look like you just got back, some sellers and drivers will quote you more. Visitor prices for things like a plate of jollof can easily be double what a local pays. It's rarely worth an argument over a few hundred naira, but on bigger purchases, ask a local friend what something should cost, or let them do the talking.",
+                "If you look or sound like you just got back, some sellers and drivers will quote you more. A visitor's plate of jollof can easily cost double what a local pays. A few hundred naira is rarely worth an argument. On bigger purchases, ask a local friend what something should cost, or let them do the talking.",
               ],
             },
             {
               term: "Your home bank's card fees",
               description: [
-                "Every card payment and ATM withdrawal abroad can carry a foreign transaction fee on top of the bank's own exchange rate. One swipe doesn't hurt. Three weeks of swiping does.",
+                "Every card payment and ATM withdrawal abroad can carry a foreign transaction fee, on top of the bank's own exchange rate. One swipe doesn't hurt. 3 weeks of swiping does.",
               ],
             },
           ],
@@ -283,13 +287,13 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "Nigerians pay with a mix of cash, instant bank transfers and card terminals (called POS). Lots of sellers will simply give you an account number and wait for the alert on their phone. That's easy if you have a Nigerian bank account and awkward if you don't.",
+            "Nigerians pay with a mix of cash, instant bank transfers and card terminals (called POS). Many sellers simply give you an account number and wait for the alert on their phone. That's easy with a Nigerian bank account and awkward without one.",
           ],
         },
         {
           kind: "paragraph",
           content: [
-            "Your UK, US or Canadian card will often work at hotels, malls and bigger restaurants, but not everywhere, and your bank may freeze it the first time it sees a Nigerian payment. Tell your bank before you travel, and keep a second card in a different bag. The UK Foreign Office also warns that card fraud is common, so keep your card where you can see it when you pay (",
+            "Your UK, US or Canadian card often works at hotels, malls and bigger restaurants, but not everywhere. Your bank may freeze it the first time it sees a Nigerian payment. Tell your bank before you travel, and keep a second card in a different bag. The UK Foreign Office warns that card fraud is common, so keep your card in sight when you pay (",
             { text: "GOV.UK travel advice", href: FCDO_SAFETY_URL, isExternal: true },
             ").",
           ],
@@ -297,13 +301,13 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "Carry some naira for small things like tips, market stalls and danfo fares, but not your whole budget. The same Foreign Office advice warns against carrying large amounts of cash and recommends extra care around ATMs, especially at night. Withdraw little and often, from ATMs inside banks, malls or hotels during the day.",
+            "Carry some naira for small things like tips, market stalls and danfo fares, but not your whole budget. The same advice warns against carrying large amounts of cash and urges care around ATMs, especially at night. Withdraw little and often, from ATMs inside banks, malls or hotels, during the day.",
           ],
         },
         {
           kind: "paragraph",
           content: [
-            "The visitors who have the easiest time aren't the ones with the most money. They're the ones who never rely on one way to pay.",
+            "The visitors with the easiest time aren't the ones with the most money. They're the ones who never rely on one way to pay.",
           ],
         },
       ],
@@ -315,23 +319,25 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "Most of the money visitors lose, they lose at the conversion. ",
-            { text: "Omanga Payment Solutions", href: "/payments" },
-            " is built to fix that part. You fund your wallet in USD, GBP or CAD at the mid-market rate, see the rate before you confirm, and spend from your balance across ",
+            "Most of the money visitors lose, they lose at the conversion. The Omanga wallet is built to fix that part. You fund it from USD, GBP or CAD at the mid-market rate, based on public market data and refreshed hourly. You see the rate before you confirm. Then you spend from your balance online or in person across ",
             COUNTRIES_SERVED_DISPLAY,
-            " African countries, Nigeria included, online or in person.",
+            " African countries, Nigeria included.",
           ],
         },
         {
           kind: "paragraph",
           content: [
-            "The wallet holds six currencies, there are no minimums or hidden fees, and transfers between Omanga accounts are free, which helps when family members use it too. It's operated by Fuspay Technologies, a microfinance bank licensed by the Central Bank of Nigeria, and support is available 24/7.",
+            // [CHANGED, 2026-10-14] UX copy pass: named the ₦20 fee instead of "no
+            // hidden fees"; removed 24/7 wallet support (not owner-confirmed).
+            "The wallet is free to open and holds six currencies, with no minimums. Transfers cost ₦20, and transfers between Omanga wallets are free, which helps when family use it too. It's operated by Fuspay Technologies, a microfinance bank licensed by the Central Bank of Nigeria. ",
+            { text: "Explore the wallet", href: "/payments" },
+            ".",
           ],
         },
         {
           kind: "paragraph",
           content: [
-            "It won't replace a few notes for the roadside suya man, and it isn't meant to. Treat it as the main account for your trip, with a little cash for small things and your home card as a backup. While you're planning, sort out your health cover too. Our guide to ",
+            "It won't replace a few notes for the roadside suya man, and it isn't meant to. Use it as the main account for your trip, with a little cash for small things and your home card as a backup. While you're planning, sort out your health cover too. Our guide to ",
             {
               text: "health insurance for visiting Nigeria",
               href: "/blog/health-insurance-for-visiting-nigeria",
@@ -373,22 +379,22 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
       {
         question: "Can I use my UK or US bank card in Nigeria?",
         answer:
-          "Often, at hotels, malls and larger businesses in big cities, but not everywhere. Your bank may block the card until you confirm the payment, foreign transaction fees and exchange margins can add up, and card fraud is common, so keep your card in sight and carry a backup.",
+          "Often, at hotels, malls and larger businesses in big cities, but not everywhere. Your bank may block the card until you confirm the payment. Foreign transaction fees and exchange margins add up. Card fraud is common, so keep your card in sight and carry a backup.",
       },
       {
         question: "What is the mid-market exchange rate?",
         answer:
-          "It is the midpoint between the buy and sell prices of a currency, the rate you see on Google or in financial news. Omanga converts at the mid-market rate and shows you the rate before you confirm.",
+          "It is the midpoint between the buy and sell prices of a currency: the rate you see on Google or in financial news. The Omanga wallet converts at the mid-market rate, refreshed hourly, and shows you the rate before you confirm.",
       },
     ],
   },
   cta: {
-    label: "Explore Omanga Payments",
+    label: "Explore the wallet",
     href: "/payments",
     prompt: [
-      "Fund in USD, GBP or CAD at the mid-market rate and spend across ",
+      "Fund your wallet from USD, GBP or CAD at the mid-market rate. Spend online or in person across ",
       COUNTRIES_SERVED_DISPLAY,
-      " African countries from one Omanga wallet.",
+      " African countries. Free to open.",
     ],
   },
 };

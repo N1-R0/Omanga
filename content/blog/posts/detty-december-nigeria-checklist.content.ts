@@ -24,6 +24,9 @@ import type { ImageAsset } from "@/types/content.types";
  * Nigeria without a visa?" in People Also Ask, via AnswerThePublic, "travel to
  * nigeria", UK). Answer restates GOV.UK entry requirements: visitors need a
  * visa, obtained before travel.
+ * [CHANGED, 2026-10-14] UX copy pass (design.md § Home UX copy pass): health
+ *   cover names Phillips HMO and Nigeria only (was "Nigerian health providers"
+ *   with a no-upfront-payment claim); shorter sentences; plain link text.
  */
 
 /**
@@ -57,7 +60,7 @@ export const dettyDecemberChecklistPost: BlogPost = {
   summary:
     "Flights booked, outfits planned. Now the unglamorous part: how to pay for everything, keep your money safe, and make sure a bad week doesn't become an expensive one.",
   publishedDate: "2026-10-09",
-  updatedDate: "2026-10-11",
+  updatedDate: "2026-10-14",
   readingMinutes: 5,
   image: dettyDecemberImage,
   imageCredit: {
@@ -68,13 +71,13 @@ export const dettyDecemberChecklistPost: BlogPost = {
     {
       kind: "paragraph",
       content: [
-        "Detty December is the stretch from roughly late November into early January when Lagos, and increasingly Abuja and other cities, fills with concerts, weddings, beach days and long family lunches. A large part of the crowd is Nigerians living abroad, mostly from the UK, the US and Canada, flying home for the season. If you're one of them, you already know the nickname: IJGB, \"I just got back\".",
+        "Detty December runs from roughly late November into early January. Lagos, and more and more Abuja and other cities, fills with concerts, weddings, beach days and long family lunches. Much of the crowd is Nigerians living abroad, mostly in the UK, the US and Canada, flying home for the season. If that's you, you know the nickname: IJGB, \"I just got back\".",
       ],
     },
     {
       kind: "paragraph",
       content: [
-        "It's also the most expensive time of year to be in Lagos. Flights climb months ahead, and prices for transport, food and events rise with demand. That makes the boring preparation, sorting your money and your health cover, worth more in December than at any other time. Here's what to get done before you fly.",
+        "It's also the most expensive time of year in Lagos. Flights climb months ahead, and transport, food and events cost more as demand rises. So the boring preparation, your money and your health cover, matters more in December than at any other time. Here's what to get done before you fly.",
       ],
     },
   ],
@@ -86,21 +89,21 @@ export const dettyDecemberChecklistPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "The easiest mistake is converting money in a hurry: at the airport, at a hotel desk, or through a card that applies its own rate to every payment. Each one quietly costs you a few per cent, and over a month of December spending that becomes real money. Move the bulk of your budget before you travel, at a rate you can see and compare with the mid-market rate.",
+            "The easiest mistake is converting money in a hurry: at the airport, at a hotel desk, or with a card that applies its own rate to every payment. Each one quietly costs you a few per cent. Over a month of December spending, that's real money. Move most of your budget before you travel, at a rate you can see and compare with the mid-market rate.",
           ],
         },
         {
           kind: "paragraph",
           content: [
-            "A wallet like ",
-            { text: "Omanga Payment Solutions", href: "/payments" },
-            " is built for exactly this. You fund it from USD, GBP or CAD at the mid-market rate, see the rate before you confirm, and spend from your balance once you're there.",
+            "The Omanga wallet is built for this. You fund it from USD, GBP or CAD at the mid-market rate and see the rate before you confirm. Once you're there, you spend from your balance online or in person. ",
+            { text: "Explore the wallet", href: "/payments" },
+            ".",
           ],
         },
         {
           kind: "paragraph",
           content: [
-            "Then plan for how Lagos actually takes payment. Cash still matters for small spending, many vendors will ask you to pay by bank transfer, and your home card works in some places and not others. Have at least two ways to pay at all times. Our guide to ",
+            "Then plan for how Lagos takes payment. Cash still matters for small spending. Many vendors ask you to pay by bank transfer. Your home card works in some places and not others. Have at least 2 ways to pay at all times. Our guide to ",
             {
               text: "how far $100 really goes in Nigeria",
               href: "/blog/how-far-does-100-dollars-go-in-nigeria",
@@ -117,9 +120,9 @@ export const dettyDecemberChecklistPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "December brings crowds, and the UK Foreign Office's advice is worth taking seriously (",
+            "December brings crowds, so take the UK Foreign Office's advice seriously (",
             { text: "GOV.UK travel advice", href: FCDO_SAFETY_URL, isExternal: true },
-            "). It warns that visitors perceived as wealthy have been targeted, that card fraud is common, and that crime around banks and ATMs has risen. Don't carry large amounts of cash, keep your card in sight when you pay, and use ATMs inside banks, malls or hotels during the day. Leave the expensive watch at home.",
+            "). It warns that visitors who seem wealthy have been targeted, that card fraud is common, and that crime around banks and ATMs has risen. Don't carry large amounts of cash. Keep your card in sight when you pay. Use ATMs inside banks, malls or hotels, during the day. Leave the expensive watch at home.",
           ],
         },
       ],
@@ -131,15 +134,18 @@ export const dettyDecemberChecklistPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "Late nights, street food, heat and heavy traffic are all part of the season, and so, occasionally, is a trip to a clinic. The NHS, Medicare and Canadian provincial plans won't pay for treatment in Nigeria, and hospitals there commonly expect payment before they treat you. Short-term cover for the length of your trip, such as ",
-            { text: "Omanga Holiday Insurance", href: "/insurance" },
-            ", is arranged in minutes and works through Nigerian health providers, so care doesn't depend on paying upfront.",
+            "Late nights, street food, heat and heavy traffic are all part of the season. So, now and then, is a trip to a clinic. The NHS, Medicare and Canadian provincial plans won't pay for treatment in Nigeria, and hospitals there often expect payment before they treat you. ",
+            // [CHANGED, 2026-10-14] UX copy pass: was "works through Nigerian health
+            // providers, so care doesn't depend on paying upfront" (unconfirmed).
+            "Omanga's short-term health cover comes from Phillips HMO, which has its own hospital network in Nigeria. It applies in Nigeria only, and you can activate a plan in about five minutes. ",
+            { text: "Explore health cover", href: "/insurance" },
+            ".",
           ],
         },
         {
           kind: "paragraph",
           content: [
-            "Nigeria requires proof of yellow fever vaccination on arrival, and malaria is a risk all year round, so book a travel clinic appointment several weeks before you fly rather than the week before. Check current entry requirements, including visas, for your nationality (",
+            "Nigeria requires proof of yellow fever vaccination on arrival, and malaria is a risk all year. Book a travel clinic appointment several weeks before you fly, not the week before. Check current entry requirements, including visas, for your passport (",
             { text: "GOV.UK entry requirements", href: FCDO_ENTRY_URL, isExternal: true },
             "). Our guide to ",
             {
@@ -199,18 +205,20 @@ export const dettyDecemberChecklistPost: BlogPost = {
       {
         question: "How should I take money to Nigeria for December?",
         answer:
-          "Use more than one method: move most of your budget before you fly at a rate you can compare with the mid-market rate, keep your home card as a backup, and carry only small amounts of naira cash. Avoid converting at airports and hotel desks.",
+          "Use more than one way to pay. Move most of your budget before you fly, at a rate you can compare with the mid-market rate. Keep your home card as a backup and carry only small amounts of naira. Avoid converting at airports and hotel desks.",
       },
       {
         question: "Do I need travel health insurance for Detty December?",
         answer:
-          "Yes, it is strongly recommended. Health cover from the UK, US and Canada pays little or nothing for treatment in Nigeria. Omanga Holiday Insurance gives short-term cover for the length of your trip, from $50 a month.",
+          "Yes, it is strongly recommended. Health cover from the UK, US and Canada pays little or nothing for treatment in Nigeria. Omanga offers short-term health cover in Nigeria from Phillips HMO, from $50 a month.",
       },
     ],
   },
   cta: {
-    label: "Get started with Omanga",
+    // [CHANGED, 2026-10-14] UX copy pass: says what happens on /get-started.
+    label: "Choose what to set up",
     href: "/get-started",
-    prompt: ["Payments and health cover for your trip, in one Omanga account."],
+    // [CHANGED, 2026-10-14] UX copy pass: "in one Omanga account" not confirmed.
+    prompt: ["A wallet for your spending and health cover for your time in Nigeria."],
   },
 };

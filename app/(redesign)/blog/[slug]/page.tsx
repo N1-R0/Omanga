@@ -54,6 +54,7 @@ export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
         post={post}
         related={BLOG_POSTS.filter((other) => other.slug !== post.slug).slice(0, 3)}
         readLabel={blogIndexContent.readLabel}
+        relatedHeading={blogIndexContent.relatedHeading}
       />
     </>
   );

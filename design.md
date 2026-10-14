@@ -759,7 +759,7 @@ footer paragraph.
 - [ ] Hospital categories per plan: plan data says Silver = Category A,
       Gold = A+B, Diamond = A+B+C; the old FAQ and blog post say Silver and
       Gold both get A+B. Confirm which is right.
-- [ ] 24/7 support / contact centre is published but not owner-confirmed.
+- [x] 24/7 contact centre confirmed by the owner (2026-10-14).
 - [ ] "No commitment, cancel any time" for health cover is published but not
       owner-confirmed.
 - [ ] Claims: "not a refund claim" wording kept on /insurance; confirm how
@@ -772,10 +772,14 @@ footer paragraph.
 - [ ] /plans comparison table has blank cells: admission days (Gold,
       Diamond), eye care (Silver, Diamond), surgical limits (Silver).
 - [ ] Hospital categories A/B/C are never defined for visitors.
-- [ ] About vision keeps "a leading travel services company in Africa".
-      Confirm the owner still wants that stated.
-- [ ] Contact: WhatsApp number, Victoria Island address and "contact centre
-      staffed 24/7" come from config; confirm all three. Email-updates option
+- [x] Blog index, article layout and all 3 posts rewritten (2026-10-14).
+      Posts no longer state per-plan hospital categories (link to /plans).
+- [ ] Blog health post suggests asking about cover for a flight home.
+      Confirm whether any plan includes repatriation.
+- [x] About vision "a leading travel services company in Africa" confirmed
+      by the owner (2026-10-14).
+- [x] Contact: WhatsApp number, Victoria Island address and 24/7 contact
+      centre confirmed by the owner (2026-10-14). Email-updates option
       has no mailing-list provider (people email info@omanga.biz).
 - [ ] About page, privacy policy and blog posts still say "for Africa"/"across
       Africa" about insurance in places. Legal copy needs owner sign-off.

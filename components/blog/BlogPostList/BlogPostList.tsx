@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { Media } from "@/components/ui/Media";
+import { BLOG_CATEGORY_LABELS } from "@/content/blog";
 import { cx } from "@/lib/cx";
 import type { BlogPost } from "@/types/blog.types";
 
@@ -14,7 +15,7 @@ import type { BlogPost } from "@/types/blog.types";
  * the grid only, for the related row.
  *
  * Each card is one link with the title as its text, so the accessible name is
- * the article title rather than a repeated "Read article". The link's
+ * the article title rather than a repeated "Read guide". The link's
  * `::after` stretches over the card so the whole card is clickable.
  */
 export type BlogPostListProps = {
@@ -79,8 +80,9 @@ function PostCard({ post, readLabel, titleLevel: Title, isFeatured }: CardProps)
           isFeatured && "tablet:justify-center tablet:p-fluid-6",
         )}
       >
+        {/* [CHANGED, 2026-10-14] UX copy pass: category shown with the site's nouns. */}
         <p className="font-sans text-small text-brand">
-          {post.category} · {post.readingMinutes} min read
+          {BLOG_CATEGORY_LABELS[post.category]} · {post.readingMinutes} min read
         </p>
 
         <Title className={cx("font-sans", isFeatured ? "text-h3" : "text-h5")}>

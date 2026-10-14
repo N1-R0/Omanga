@@ -26,9 +26,12 @@ export const paymentsFaqContent: FaqContent = {
         "You fund your Omanga wallet from USD, GBP or CAD. Every conversion runs at the mid-market rate, and you see the rate before you confirm.",
     },
     {
-      question: "Does Omanga charge hidden fees?",
+      // [CHANGED, 2026-10-14] Was "Does Omanga charge hidden fees?" answered
+      // without naming a fee. ₦20 is confirmed; whether conversion is free is
+      // not yet (design.md § Copy to-do).
+      question: "What fees does Omanga charge?",
       answer:
-        "No. Omanga charges no hidden fees and sets no minimums, and transfers between Omanga accounts are free.",
+        "Opening an Omanga wallet is free. Each transfer costs ₦20, transfers between Omanga accounts are free, and there are no minimums.",
     },
     {
       question: "What exchange rate does Omanga use?",

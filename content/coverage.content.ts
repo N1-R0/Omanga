@@ -66,9 +66,8 @@ const flag = (src: string, alt: string): ImageAsset => ({
 });
 
 const COVERAGE_FLAGS: readonly ImageAsset[] = [
-  flag("canada", "Canada"),
-  flag("united-states", "United States"),
-  flag("united-kingdom", "United Kingdom"),
+  // [CHANGED, 2026-10-14] Canada, the US and the UK removed: the strip sits
+  // under "African countries", and those three are funding currencies.
   flag("benin", "Benin"),
   flag("cameroon", "Cameroon"),
   flag("ghana", "Ghana"),
@@ -125,7 +124,9 @@ const COVERAGE_FLAGS: readonly ImageAsset[] = [
   because it is approved copy.
 */
 const COVERAGE_ACTION: CallToAction = {
-  label: "See all countries",
+  // [CHANGED, 2026-10-14] Was "See all countries", which this link never
+  // delivered. The label now says where it goes.
+  label: "Compare health plans",
   href: INSURANCE_COVERAGE_HREF,
   emphasis: "text",
 } as const;
@@ -166,7 +167,9 @@ export const coverageContent: AfricanCoverageContent = {
    * this close on one page is a copy question, not an implementation one.
    * **Confirm which one changes.**
    */
-  heading: `Works in ${COUNTRIES_SERVED_DISPLAY} African countries`,
+  // [CHANGED, 2026-10-14] The wallet works in 50+ countries; health cover
+  // applies in Nigeria only. The old intro claimed healthcare in all of them.
+  heading: `Your wallet works in ${COUNTRIES_SERVED_DISPLAY} African countries`,
 
   /**
    * [CORRECTED] The frame reads "Use your Omanga card and reach healthcare
@@ -177,7 +180,7 @@ export const coverageContent: AfricanCoverageContent = {
    * exactly — "however many borders it crosses". The phrase is the frame's, so it
    * ships, but the repetition is worth a copy pass.
    */
-  intro: `Use your wallet and reach healthcare in ${COUNTRIES_SERVED_DISPLAY} African countries, with one account from arrival to departure.`,
+  intro: "Spend online or in person wherever you go. Health cover applies in Nigeria.",
 
   flags: COVERAGE_FLAGS,
 
@@ -194,7 +197,7 @@ export const coverageContent: AfricanCoverageContent = {
    * African at all, so any wording that framed the group as *the* covered
    * countries would be inaccurate. **Needs copy approval like every string here.**
    */
-  flagsLabel: "A selection of country flags",
+  flagsLabel: "Some of the countries where the wallet works",
 
   action: COVERAGE_ACTION,
 } as const;

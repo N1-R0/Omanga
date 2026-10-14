@@ -30,25 +30,25 @@ const PAYMENTS_FEATURES: readonly DeepDiveFeature[] = [
   {
     id: "multi-currency-wallet",
     label: "Multi-currency wallet",
-    heading: "One wallet, several currencies",
-    body: "Hold, send and receive several currencies in one wallet. You don't need a separate account for each one.",
+    heading: "Six currencies, one wallet",
+    body: "Hold, send and receive six currencies without opening a separate account for each.",
   },
   {
     id: "funding",
     label: "Funding",
     heading: "Top up in the currency you earn in",
-    body: "Fund your wallet from USD, GBP or CAD. Your home currency goes in and a spendable balance comes out.",
+    body: "Fund your wallet from USD, GBP or CAD, and spend from one balance.",
   },
   {
     id: "exchange-rates",
     label: "Exchange rates",
-    heading: "See the rate before you commit",
-    body: "See the exchange rate before you convert, so the cost is clear up front.",
+    heading: "The real rate, before you convert",
+    body: "Every conversion uses the mid-market rate, refreshed hourly. You see it before you confirm.",
   },
   {
     id: "the-wallet",
-    label: "The wallet",
-    heading: "Your Omanga wallet, ready to spend",
+    label: "Spending",
+    heading: "Ready to spend",
     /*
       [CHANGED, 2026-08-29] "wherever cards are accepted" struck, for the reason
       recorded at the same phrase in `services.content.ts`: it describes the
@@ -58,18 +58,18 @@ const PAYMENTS_FEATURES: readonly DeepDiveFeature[] = [
   },
   {
     id: "coverage",
-    label: "Coverage",
+    label: "Where it works",
     heading: `Works across ${COUNTRIES_SERVED_DISPLAY} African countries`,
     // [CORRECTED] "One card for a multi-country trip" -> "One wallet". The last surviving
     // card claim in the document; NJ struck the rest and project-context.md forbids it.
     // Confirm the edited sentence with copy.
-    body: "One wallet for a trip through several countries, instead of a new arrangement at every border.",
+    body: "One wallet for every country on your trip, instead of a new arrangement at each border.",
   },
   {
     id: "control",
-    label: "Control",
-    heading: "Manage everything from one account",
-    body: "See your balances, transactions and insurance plan in one place.",
+    label: "One view",
+    heading: "See it all in one place",
+    body: "Your balances, transactions and health plan, in one account.",
   },
 ] as const;
 
@@ -79,19 +79,19 @@ const INSURANCE_FEATURES: readonly DeepDiveFeature[] = [
     id: "plan-tiers",
     label: "Plan tiers",
     heading: "Three plans: Silver, Gold and Diamond",
-    body: "Three levels of short-term health cover, so you match the cover to your trip length and budget without paying for more than you need.",
+    body: "Three levels of short-term health cover, from $50 a month, so you pay only for what your trip needs.",
   },
   {
     id: "providers",
-    label: "Providers",
-    heading: "Care from established Nigerian health providers",
-    body: "Your plan comes from established Nigerian health providers with local networks, not a distant insurer.",
+    label: "Provider",
+    heading: "Care from Phillips HMO",
+    body: "Your plan comes from Phillips HMO, a Nigerian health provider regulated by NAICOM, with its own hospital network.",
   },
   {
     id: "trip-length-cover",
     label: "Trip-length cover",
     heading: "Cover for your trip, not the whole year",
-    body: "You're covered for the length of your trip, not tied to an annual policy you keep paying for after you're home.",
+    body: "Cover lasts as long as your trip. No annual policy to keep paying for once you're home.",
   },
   {
     id: "renew-and-extend",
@@ -102,14 +102,14 @@ const INSURANCE_FEATURES: readonly DeepDiveFeature[] = [
   {
     id: "care-access",
     label: "Care access",
-    heading: "Reach healthcare while you travel",
-    body: "Get care when you need it during your trip, across the countries Omanga covers.",
+    heading: "Get care across Nigeria",
+    body: "See a doctor or go to hospital in Phillips HMO's network, wherever you are in Nigeria.",
   },
   {
     id: "one-account",
     label: "One account",
     heading: "Manage your cover alongside your wallet",
-    body: "Choose your plan in the same account you use to pay, with no second sign-up and no second login.",
+    body: "Your plan and your wallet live in one account: one sign-up, one login.",
   },
 ] as const;
 
@@ -127,7 +127,7 @@ const INSURANCE_FEATURES: readonly DeepDiveFeature[] = [
  */
 export const omangaPaymentsProduct: DeepDiveProduct = {
   id: "omanga-payments",
-  tabLabel: "Omanga Payments",
+  tabLabel: "Wallet",
   features: PAYMENTS_FEATURES,
 } as const;
 
@@ -141,15 +141,15 @@ export const omangaPaymentsProduct: DeepDiveProduct = {
  */
 export const holidayInsuranceProduct: DeepDiveProduct = {
   id: "holiday-insurance",
-  tabLabel: "Holiday Insurance",
+  tabLabel: "Health cover",
   features: INSURANCE_FEATURES,
 } as const;
 
 export const deepDiveContent: DeepDiveContent = {
-  heading: "What's inside Omanga",
+  heading: "Everything in your Omanga account",
   // The Figma reads "the wallet, the card and the three insurance plans"; the approved
   // document drops "the card", and copy outranks the frame.
-  intro: "The wallet and the three insurance plans, feature by feature.",
+  intro: "The wallet and the three health plans, feature by feature.",
   products: [omangaPaymentsProduct, holidayInsuranceProduct],
 } as const;
 

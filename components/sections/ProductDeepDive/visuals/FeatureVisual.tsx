@@ -75,24 +75,26 @@ function MultiCurrencyWallet() {
     <div className="dd-stack">
       <div className="dd-surface dd-stack-item dd-stack-behind">
         <div className="dd-row">
-          <span className="dd-title">CAD</span>
-          <span className="dd-value">1,240.00</span>
+          <span className="dd-title">NGN</span>
+          <span className="dd-value">₦1,240,500</span>
         </div>
       </div>
 
       <div className="dd-surface dd-stack-item dd-stack-mid">
         <div className="dd-row">
           <span className="dd-title">GBP</span>
-          <span className="dd-value">860.50</span>
+          <span className="dd-value">£745.20</span>
         </div>
       </div>
 
       <div className="dd-surface dd-stack-item dd-stack-front">
         <div className="dd-row">
-          <span className="dd-label">Total balance</span>
+          {/* [CHANGED, 2026-10-14] Was "Total balance $4,120.75" over CAD and GBP
+              cards that did not add up to it. Each card is now one currency. */}
+          <span className="dd-label">USD</span>
         </div>
         <div className="dd-row">
-          <span className="dd-figure">$4,120.75</span>
+          <span className="dd-figure">$3,180.42</span>
         </div>
       </div>
     </div>

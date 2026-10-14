@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
 import { JsonLd } from "@/components/seo/JsonLd";
-import { SITE_TAGLINE } from "@/config/site";
 import { AfricanCoverage } from "@/components/sections/AfricanCoverage";
 import { CTA } from "@/components/sections/CTA";
 import { Faq } from "@/components/sections/Faq";
@@ -50,8 +49,13 @@ import { buildPageMetadata } from "@/lib/seo";
 const homeMeta: PageMetaContent = {
   // [CHANGED, 2026-10-07] Shortened on instruction so Google shows the brand
   // line, not a keyword string. Sitelink titles come from these, so short wins.
-  title: SITE_TAGLINE,
-  description: `Fund a multi-currency Omanga wallet in USD, GBP or CAD, spend across ${COUNTRIES_SERVED_DISPLAY} African countries, and add short-term holiday health insurance in one account.`,
+  // [CHANGED, 2026-10-14] Was SITE_TAGLINE ("Omanga Integrated Destination
+  // Services"), which nobody searches. US volumes (OpenSEO): "health insurance
+  // nigeria" 90/mo, "travel insurance nigeria" 30, "health cover nigeria" 0, so
+  // "Insurance" not "Cover". The tagline stays as the schema.org site name.
+  title: "Omanga: Travel Money and Health Insurance for Nigeria",
+  // [CHANGED, 2026-10-14] Cover is Nigeria only, so the description says so.
+  description: `Open a free Omanga wallet, top up in USD, GBP or CAD and spend in ${COUNTRIES_SERVED_DISPLAY} African countries. Add short-term health cover for your trip to Nigeria.`,
   path: "/",
 };
 

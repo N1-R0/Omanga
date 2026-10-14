@@ -70,19 +70,19 @@ import type { ImageAsset } from "@/types/content.types";
 const PARTNER_LOGOS: readonly ImageAsset[] = [
   {
     src: "/philip-hmo-logo.png",
-    alt: "phillips.hmo",
+    alt: "Phillips HMO",
     width: 1412,
     height: 496,
   },
   {
     src: "/fusepay-logo.png",
-    alt: "fuspay",
+    alt: "Fuspay",
     width: 960,
     height: 456,
   },
   {
     src: "/zira-logo.png",
-    alt: "zira",
+    alt: "Zira",
     width: 850,
     height: 286,
   },

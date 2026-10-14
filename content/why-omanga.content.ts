@@ -90,22 +90,21 @@ const WITH_OMANGA: ComparisonGroup = {
     // the continent". project-context.md: "Wallet, not card... Never reintroduce
     // physical-card language in copy, image alt text, or component names." This
     // is Omanga's own product, so "and card" is struck.
-    "A wallet built for spending across the continent",
-    "Exchange rates shown before you confirm",
-    // [UNVERIFIED] Clipped in the frame at "…health provide". Reconstructed.
-    "Short-term cover from established Nigerian health providers",
-    // [CHANGED, 2026-08-29] Interpolated rather than typed. The frame read 52, the
-    // tracked changes made it 43, and it is now 50+ — the constant owns it so the
-    // next move is one line rather than eleven.
-    `One account across ${COUNTRIES_SERVED_DISPLAY} African countries`,
-    "Payments and insurance managed in the same place",
+    // [CHANGED, 2026-10-14] UX copy pass: named provider, the ₦20 fee
+    // (confirmed by the owner), cover limited to Nigeria.
+    `A wallet that works in ${COUNTRIES_SERVED_DISPLAY} African countries`,
+    "The mid-market rate, shown before you confirm",
+    "Health cover in Nigeria from Phillips HMO's hospital network",
+    "₦20 per transfer, with no markup hidden in the rate",
+    "Your wallet and health cover in one account",
   ],
 } as const;
 
 export const whyOmangaContent: WhyOmangaContent = {
-  heading: "Why travellers switch to Omanga",
+  // "switch" claimed a behaviour with no evidence behind it.
+  heading: "What changes with Omanga",
   intro:
-    "Most travellers patch this together: a bank card that may not work, separate insurance, and no clear view of the cost.",
+    "Most trips get patched together: a bank card that might be declined, insurance bought separately, and costs you only see later.",
   groups: [WITHOUT_OMANGA, WITH_OMANGA],
 } as const;
 

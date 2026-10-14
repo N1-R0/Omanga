@@ -213,7 +213,8 @@ export const footerContent: {
 } = {
   brandParagraph:
     // [CHANGED, 2026-10-10] Copy pass: "seamless" and "the very best" cut; keywords kept.
-    "Your integrated destination services platform for travel across Africa: a multi-currency wallet and travel health insurance, built on local knowledge.",
+    // [CHANGED, 2026-10-14] "Integrated destination services platform" was jargon.
+    `A multi-currency wallet that works in ${COUNTRIES_SERVED_DISPLAY} African countries, and short-term health cover for your trip to Nigeria.`,
   columns: [SERVICES, COMPANY, SUPPORT, LEGAL],
   contact: CONTACT_LINK,
   socialLinks: [{ label: "Instagram", href: INSTAGRAM_URL, isExternal: true }],

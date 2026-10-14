@@ -1,5 +1,4 @@
 // [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
-import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { FaqContent } from "@/types/blog.types";
 
 /**
@@ -16,7 +15,9 @@ export const insuranceFaqContent: FaqContent = {
   items: [
     {
       question: "What is Omanga Holiday Insurance?",
-      answer: `Omanga Holiday Insurance is short-term travel health insurance for the length of your trip, from established Nigerian health providers with real hospital networks. Your cover travels with you across ${COUNTRIES_SERVED_DISPLAY} African countries.`,
+      // [CHANGED, 2026-10-14] Cover applies in Nigeria only; the old answer
+      // claimed it travelled across every country the wallet works in.
+      answer: "Omanga Holiday Insurance is short-term health insurance for the length of your trip to Nigeria. It comes from Phillips HMO, a Nigerian health provider with its own hospital network.",
     },
     {
       question: "How much does Omanga Holiday Insurance cost?",
@@ -35,7 +36,7 @@ export const insuranceFaqContent: FaqContent = {
     {
       question: "What's included on every Omanga plan?",
       answer:
-        "Every Omanga plan includes telemedicine with licensed doctors, roaming cover across the countries Omanga serves, a 24/7 contact centre, the mobile app and a health-tips newsletter.",
+        "Every Omanga plan includes telemedicine with licensed doctors, roaming cover across Nigeria, a 24/7 contact centre, the mobile app and a health-tips newsletter.",
     },
     {
       question: "Who provides Omanga Holiday Insurance?",

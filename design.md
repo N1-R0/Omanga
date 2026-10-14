@@ -714,3 +714,45 @@ fine), then write the post from those answers. Aim for two posts a week.
   395KB 2560px JPEG (`/hero.jpg`), which removes a ~3s cold encode after each
   deploy, and Lenis now loads on idle and is skipped on touch-only devices.
   Field data (Vercel Speed Insights, later CrUX) is the measure to watch.
+
+## Addendum · 2026-10-14 · Home UX copy pass
+
+Audit of the home page against the UX writing skill (Material guidance).
+Facts confirmed by the owner: **health cover applies in Nigeria only**; the
+wallet works in 50+ African countries; audience is anyone visiting Nigeria
+(tourists, Nigerians abroad); **transfers cost ₦20**; the wallet is free to open.
+
+Rules applied:
+- "50+ countries" describes the wallet only. Never pair it with health cover.
+- Name the provider (Phillips HMO), not "established Nigerian providers".
+- Name the fee (₦20) and the rate (mid-market) instead of "no hidden fees".
+- One noun per thing in body copy: **wallet**, **health cover**, **plan**.
+  Product names (Omanga Payment Solutions, Omanga Holiday Insurance) stay as
+  titles only.
+- Home has one primary action: "Open your free wallet". Insurance links read
+  "Compare health plans" (/plans) or "Explore health cover" (/insurance).
+- British spelling throughout.
+
+Shared modules changed, so these pages pick up the fixes too: Why Omanga
+(every page), the insurance and payments FAQs, the nav label "Payments", the
+footer paragraph.
+
+### Copy to-do (blocked on facts)
+
+- [ ] Is ₦20 the only wallet fee? Is converting USD/GBP/CAD to naira free?
+      Then update the payments FAQ "What fees does Omanga charge?" and Why Omanga.
+- [ ] Does ₦20 apply to all transfers, or only to bank accounts? The FAQ
+      currently says Omanga-to-Omanga transfers are free (older approved claim).
+- [ ] Health cover waiting period: "activate in about five minutes" is not the
+      same as cover starting. Confirm, then restore that FAQ to the home page.
+- [ ] Which six currencies does the wallet hold? The rate card mock shows KES
+      and GHS.
+- [ ] "Open your free wallet" will change when the native app launches (the
+      PWA is being replaced). Update `HERO_PRIMARY_ACTION` and `WALLET_URL`.
+- [x] Home title is now "Omanga: Travel Money and Health Insurance for
+      Nigeria" (owner approved). `SITE_TAGLINE` stays as the schema.org name.
+- [ ] Re-check UK volumes for "travel money nigeria" when OpenSEO credits are
+      topped up. US volume is 0; it is kept as a UK term for UK visitors.
+- [ ] Zira's role in the partner strip is unexplained.
+- [ ] Other pages still carry the 50+ health-cover claim and "Ready to
+      experience Africa?" (shared `ctaContent`). Fix in their own passes.

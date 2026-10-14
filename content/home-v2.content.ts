@@ -7,10 +7,9 @@ import { servicesContent } from "@/content/services.content";
 import { howItWorksContent } from "@/content/how-it-works.content";
 import { whyOmangaContent } from "@/content/why-omanga.content";
 import { coverageContent } from "@/content/coverage.content";
-import { ctaContent } from "@/content/cta.content";
 import { solutionsContent } from "@/content/solutions.content";
 import { trustContent } from "@/content/trust.content";
-import { COUNTRIES_SERVED_DISPLAY, PRIMARY_CTA } from "@/content/site.content";
+import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 
 /**
  * Home v2 — content for the redesigned home sections. Some are live on `/`
@@ -84,7 +83,7 @@ export const homeV2Content = {
     },
     insurance: {
       title: "Omanga Holiday Insurance",
-      body: "Short-term health cover for your trip from established Nigerian providers. Cover starts in about five minutes.",
+      body: "Short-term health cover in Nigeria from Phillips HMO.",
       link: { label: "Explore insurance", href: "/insurance" },
       widgetLabel: "Choose your plan",
       // Prices, hospital access and inclusions come straight from the plans
@@ -113,7 +112,7 @@ export const homeV2Content = {
       },
       {
         name: "Omanga Holiday Insurance",
-        body: "Short-term health cover for your trip, underwritten by established Nigerian providers, in three plans.",
+        body: "Short-term health cover in Nigeria from Phillips HMO, in three plans.",
         link: { label: "Explore insurance", href: "/insurance" },
         object: "insurance-kit",
         tone: "blush",
@@ -148,7 +147,9 @@ export const homeV2Content = {
       body: step.body,
       object: (["coin-stack", "shield-check", "location-pin"] as const)[index],
     })),
-    action: PRIMARY_CTA,
+    // [CHANGED, 2026-10-14] The home page has one primary action, the wallet.
+    // "Get started" went to an enquiry page instead.
+    action: HERO_PRIMARY_ACTION,
   },
 
   coverage: {
@@ -170,7 +171,7 @@ export const homeV2Content = {
     // the business can stand behind, not invented quotes. Swap in real reviews
     // when the team has them.
     heading: "Made for travellers moving across Africa",
-    intro: `One account for spending and health cover in ${COUNTRIES_SERVED_DISPLAY} African countries.`,
+    intro: `Spend in ${COUNTRIES_SERVED_DISPLAY} African countries, with health cover in Nigeria.`,
     photos: [
       { src: "/service-spend.jpg", alt: "A traveller using the Omanga app on a city street." },
       { src: "/explore africa.jpg", alt: "" },
@@ -192,14 +193,18 @@ export const homeV2Content = {
       insuranceFaqContent.items[0],
       paymentsFaqContent.items[1],
       paymentsFaqContent.items[2],
-      insuranceFaqContent.items[3],
+      // [CHANGED, 2026-10-14] Price replaces "How quickly does cover start?"
+      // until the waiting period is confirmed (design.md § Copy to-do).
+      insuranceFaqContent.items[1],
       insuranceFaqContent.items[2],
     ],
   },
 
   closing: {
-    heading: ctaContent.heading,
-    intro: ctaContent.intro,
+    // [CHANGED, 2026-10-14] Home-only copy; the shared ctaContent still reads
+    // "Ready to experience Africa?" on other pages until their pass.
+    heading: "Land with everything sorted",
+    intro: "Open your free wallet, add health cover, and arrive in Nigeria with both ready.",
     action: { ...HERO_PRIMARY_ACTION, href: WALLET_URL, isExternal: true },
   },
 } as const;

@@ -20,7 +20,7 @@ import {
 */
 
 const SPEND_ACTION: LinkTarget = {
-  label: "Explore payments",
+  label: "Explore the wallet",
   href: "/payments",
 } as const;
 
@@ -46,7 +46,7 @@ const CURRENCY_ACTION: LinkTarget = {
 } as const;
 
 const INSURANCE_ACTION: LinkTarget = {
-  label: "Compare plans",
+  label: "Compare health plans",
   href: "/plans",
 } as const;
 
@@ -96,10 +96,11 @@ export const servicesContent: ServicesContent = {
   // [CHANGED, 2026-10-10] Shortened on instruction. Was "From funding your
   // wallet before you fly to reaching a clinic mid-trip, here's what your
   // Omanga account actually does."
-  heading: "From funding before you fly to care mid-trip",
+  // [CHANGED, 2026-10-14] UX copy pass (home audit): care is Nigeria only.
+  heading: "From topping up at home to care in Nigeria",
   services: [
     {
-      heading: "Spend across the continent",
+      heading: `Spend in ${COUNTRIES_SERVED_DISPLAY} African countries`,
       /*
         [CORRECTED] "Pay with your Omanga card" -> "Pay with Omanga". NJ's tracked
         changes strike card language in eight other places and the vocabulary guard
@@ -114,7 +115,7 @@ export const servicesContent: ServicesContent = {
         say nothing about form factor: what a traveller does is spend from the
         wallet, and where they can do it is the country list.
       */
-      body: `Pay from your wallet balance in ${COUNTRIES_SERVED_DISPLAY} African countries, online or in person, however many borders your trip crosses.`,
+      body: "Pay from your wallet balance, online or in person, however many borders your trip crosses.",
       action: SPEND_ACTION,
       image: {
         src: "/service-spend.jpg",
@@ -124,8 +125,8 @@ export const servicesContent: ServicesContent = {
       },
     },
     {
-      heading: "Move money between currencies",
-      body: "Hold, send and receive several currencies, and top up from USD, GBP or CAD. You see the rate before you convert, so there are no surprises.",
+      heading: "Convert at the real rate",
+      body: "Top up from USD, GBP or CAD and hold six currencies. Every conversion uses the mid-market rate, shown before you confirm.",
       action: CURRENCY_ACTION,
       // Unsplash (free licence). Portrait crop from the CDN.
       image: {
@@ -140,8 +141,8 @@ export const servicesContent: ServicesContent = {
       },
     },
     {
-      heading: "Stay covered while you travel",
-      body: "Choose Silver, Gold or Diamond cover for the length of your trip, get care through established Nigerian providers, and extend if the trip runs long.",
+      heading: "Get care in Nigeria",
+      body: "Choose Silver, Gold or Diamond for the length of your trip. Care comes through Phillips HMO's hospital network, and you can extend if you stay longer.",
       action: INSURANCE_ACTION,
       image: {
         src: "/service-insurance.jpg",

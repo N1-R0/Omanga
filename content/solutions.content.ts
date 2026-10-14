@@ -114,12 +114,12 @@ const PAYMENTS_IMAGE: ImageAsset = {
  * more" and "click here" are forbidden by the SEO expectations.
  */
 const INSURANCE_ACTION: LinkTarget = {
-  label: "Explore insurance",
+  label: "Explore health cover",
   href: "/insurance",
 } as const;
 
 const PAYMENTS_ACTION: LinkTarget = {
-  label: "Explore payments",
+  label: "Explore the wallet",
   href: "/payments",
 } as const;
 
@@ -166,20 +166,22 @@ export type SolutionsOverviewContent = {
 };
 
 export const solutionsContent: SolutionsOverviewContent = {
-  heading: "Built for how Africa really works",
+  // [CHANGED, 2026-10-14] UX copy pass (home audit): concrete problem, named provider, a price.
+  heading: "Pay like a local. Get care if you need it.",
   intro: [
-    "Travel across Africa gets hard in two places: moving money without hidden markups, and finding health cover that works when you land.",
-    "Omanga handles both in one account, built on local knowledge of how each country works.",
+    "Two things make a trip to Nigeria harder than it should be: paying without losing money on the exchange rate, and finding a hospital you can trust if you get sick.",
+    "Omanga puts a wallet and health cover in one account, so both are ready before you land.",
   ],
   insurance: {
     heading: "Omanga Holiday Insurance",
-    body: "Short-term health cover for your trip, in three plans, from established Nigerian health providers.",
+    // One provider, not "providers"; cover applies in Nigeria only.
+    body: "Short-term health cover in Nigeria from Phillips HMO. Three plans, from $50 a month.",
     action: INSURANCE_ACTION,
     image: INSURANCE_IMAGE,
   },
   payments: {
     heading: "Omanga Payment Solutions",
-    body: "One wallet to hold, send and receive several currencies.",
+    body: "Hold six currencies, top up from USD, GBP or CAD, and convert at the mid-market rate.",
     action: PAYMENTS_ACTION,
     image: PAYMENTS_IMAGE,
   },

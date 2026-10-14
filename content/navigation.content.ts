@@ -83,7 +83,7 @@ const PRIMARY_ITEMS: readonly NavigationEntry[] = [
   { label: "Home", href: "/" },
   // [CHANGED, 2026-10-10] Payment before Insurance, so Insurance sits beside
   // Plans — the two are one decision.
-  { label: "Payment", href: "/payments" },
+  { label: "Payments", href: "/payments" },
   { label: "Insurance", href: "/insurance" },
   { label: "Plans", href: "/plans" },
   {

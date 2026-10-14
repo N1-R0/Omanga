@@ -58,8 +58,8 @@ export const HERO_PRIMARY_ACTION: CallToAction = {
 } as const;
 
 const SECONDARY_ACTION: CallToAction = {
-  label: "See insurance plans",
-  href: "/insurance",
+  label: "Compare health plans",
+  href: "/plans",
   emphasis: "secondary",
 } as const;
 
@@ -121,8 +121,10 @@ export type HeroSectionContent = {
 };
 
 export const heroContent: HeroSectionContent = {
-  heading:
-    "Travel Africa with a customized payment solution and one insurance plan",
+  // [CHANGED, 2026-10-14] UX copy pass. The old h1 said "one insurance plan"
+  // (there are three) and "customized" (nothing is). Cover is Nigeria only, so
+  // the promise names Nigeria; the wallet's wider reach is said further down.
+  heading: "Travel money and health cover for your trip to Nigeria",
   actions: [HERO_PRIMARY_ACTION, SECONDARY_ACTION],
   image: IMAGE,
 } as const;

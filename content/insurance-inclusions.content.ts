@@ -42,35 +42,36 @@ export type InsuranceInclusionsContent = {
 };
 
 export const insuranceInclusionsContent: InsuranceInclusionsContent = {
-  heading: "What every Omanga health plan includes",
+  // [CHANGED, 2026-10-14] UX copy pass: shorter heading; descriptions say
+  // only what is confirmed, and nothing implies cover outside Nigeria.
+  heading: "Included in every plan",
   inclusions: [
     {
       id: "telemedicine",
       term: "Telemedicine",
       description:
-        "Talk to licensed doctors remotely, wherever you are.",
+        "Get advice from a licensed doctor without going to a hospital.",
     },
     {
       id: "roaming",
-      term: "Roaming",
-      description:
-        // [CHANGED, 2026-10-14] Cover applies in Nigeria only.
-        "Your cover goes with you wherever you travel in Nigeria.",
+      term: "Roaming across Nigeria",
+      description: "Your health cover applies wherever you go in Nigeria.",
     },
     {
       id: "contact-centre",
-      term: "24/7 dedicated contact centre",
-      description: "Round-the-clock support when you need it.",
+      term: "24/7 contact centre",
+      description: "Call for help at any hour, day or night.",
     },
     {
       id: "newsletter",
       term: "Health-tips newsletter",
-      description: "Weekly wellness tips and health insights.",
+      description: "Weekly tips to help you stay well.",
     },
     {
       id: "mobile-app",
       term: "Mobile app",
-      description: "Manage your plan and claims from your phone.",
+      // Claims dropped: how claims work is unconfirmed (design.md Copy to-do).
+      description: "Manage, renew or extend your plan from your phone.",
     },
   ],
 } as const;

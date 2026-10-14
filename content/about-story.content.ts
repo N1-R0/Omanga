@@ -1,5 +1,6 @@
 // [CHANGED, 2026-10-10] Locked copy rewritten on the owner's instruction ("do it perfectly"): hype words and US spellings removed, meaning kept.
 // [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
+import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { Eyebrow, ImageAsset } from "@/types/content.types";
 
 /**
@@ -18,9 +19,7 @@ import type { Eyebrow, ImageAsset } from "@/types/content.types";
  * the layout. The geometry read off that node is recorded in the section
  * component.
  *
- * What does not change: the copy, its order, and the two-tone fade. § 3 is
- * explicit that the fade is "a rendering decision only — no words change, no
- * order changes", and that holds whether the block is left-aligned or centred.
+ * What does not change: the two-tone fade, which is a rendering decision only.
  *
  * ---------------------------------------------------------------------------
  * [NOT MOUNTED] The reference's CTA.
@@ -60,37 +59,24 @@ export type StoryParagraph = {
 };
 
 /**
- * 🔒 LOCKED — approved Omanga copy, verbatim. § 3: "Do not rewrite, improve,
- * shorten or expand."
+ * Three paragraphs, faded emphasis → recede (a rendering decision; see § 3).
  *
- * 119 words across three paragraphs at 33 / 41 / 45. § 3 states the count and
- * instructs that "the layout adapts, not the copy" — so nothing here is cut to
- * fit a panel, and nothing is padded to fill the reference's slot.
- *
- * [FLAGGED — needs approval] § 5 item 3: the "Born from a vision…" sentence
- * currently sits in the About hero as a sub-line, and § 3 moves it to the head
- * of the story so the fade has an emphasis tier. No words change. § 5 asks for
- * the move to be confirmed and it has not been — shipped because § 3 specifies
- * it and the hero built at the previous stage does not carry the sentence, so
- * holding it would leave the line on no section at all.
- *
- * [NOTE] § 3 gives the recede tier as one quoted block containing two
- * paragraphs. They are two in the approved source and are kept as two: joining
- * them would run "…nothing short of extraordinary." into "Our platform is
- * designed…" as 86 unbroken words, which changes how the copy reads even though
- * no word moves.
+ * [CHANGED, 2026-10-14] UX copy pass: was a "gateway to affordable,
+ * high-quality services … nothing short of extraordinary" story. Now says why
+ * Omanga exists (a concrete problem), what it does, and where each product
+ * applies: wallet in 50+ countries, health cover in Nigeria only.
  */
 const PARAGRAPHS: readonly StoryParagraph[] = [
   {
-    text: "Omanga began with one aim: to make travel across Africa easier to plan and open to more people. We give travellers the money tools and peace of mind to explore our continent.",
+    text: "Omanga started with one aim: make it easier to visit Nigeria and travel across Africa. Two things often get in the way: paying for things, and getting medical care if you fall ill.",
     tier: "emphasis",
   },
   {
-    text: "At Omanga, we serve as your accessible gateway to affordable, high-quality services that make navigating different African destinations effortless. Whether you're visiting for business, leisure, or cultural exploration, we're committed to ensuring your journey is nothing short of extraordinary.",
+    text: `So we put both in one account. Fund your wallet from USD, GBP or CAD, hold six currencies and see the mid-market rate before you confirm. Spend in ${COUNTRIES_SERVED_DISPLAY} African countries. The wallet is free to open and transfers cost ₦20.`,
     tier: "recede",
   },
   {
-    text: "Our platform is built for travellers on short visits to Africa, with the essentials they need from arrival to departure. We want every visitor to leave our continent with memories worth sharing.",
+    text: "Then add short-term health cover from Phillips HMO for your time in Nigeria, with plans from $50 a month. Whether you're a tourist, a Nigerian living abroad or here for work, you land with money and cover sorted.",
     tier: "recede",
   },
 ] as const;
@@ -161,8 +147,8 @@ export const aboutStoryContent: AboutStoryContent = {
   // ♻️ REUSED. § 3, sentence case as written.
   eyebrow: "Our story",
   // ✏️ NEW. § 3 and § 3.2, transcribed unchanged.
-  // [CHANGED, 2026-10-10] Keyword-bearing, 8 words. The paragraphs below stay locked.
-  heading: "The story behind our multi-currency wallet and cover",
+  // [CHANGED, 2026-10-14] UX copy pass: plain question the section answers.
+  heading: "Why we built Omanga",
   paragraphs: PARAGRAPHS,
   images: IMAGES,
 } as const;

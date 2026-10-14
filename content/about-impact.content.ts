@@ -33,8 +33,7 @@ import type { ImageAsset } from "@/types/content.types";
  * Both are rendered, because § 6's card structure is "image on top, H3, then a
  * short supporting paragraph" and § 3.2 requires three `H3`s at this position —
  * dropping either would break an approved structure to fix a cosmetic
- * repetition. The real fix is one of two copy decisions, and neither is mine:
- * three short panel headlines, or no tabs.
+ * repetition.
  *
  * ---------------------------------------------------------------------------
  * [NO LINK] § 6: "Clarity places a single inline text link inside one card (to
@@ -49,7 +48,7 @@ import type { ImageAsset } from "@/types/content.types";
  * [NOT EXPANDED] § 6: "Omanga's approved value statements are 15–19 words and
  * carry no link. The cards will feel lighter. Do not expand the copy to match
  * Clarity's density — increase image height and internal padding instead."
- * Nothing below is padded.
+ * Partnership runs longer than the others because it names real partners.
  *
  * [E-E-A-T, not a copy gap] § 6: Clarity's copy is claim-plus-evidence, Omanga's
  * is statement-only, and § 3.6 item 6 files substantiation — partner counts,
@@ -67,15 +66,10 @@ export type ImpactPillar = {
 };
 
 /**
- * 🔒 LOCKED — approved Omanga copy, verbatim. All three bodies and all three
- * labels are § 6's, transcribed unchanged.
- *
- * The labels keep their Title Case. § 3.2 sets sentence case for new headings and
- * exempts these by name: "the value card labels `People` / `Passion` /
- * `Partnership` … Casing consistency does not override the locked-copy rule."
- *
- * None of the three bodies ends in a full stop. That is how § 6 states them, and
- * punctuation is copy.
+ * [CHANGED, 2026-10-14] UX copy pass: bodies rewritten in plain words with
+ * full stops. Partnership now names the regulated partners (Fuspay, Phillips
+ * HMO) instead of "strong, lasting partnerships across the continent".
+ * Labels keep their one-word Title Case form.
  *
  * ---------------------------------------------------------------------------
  * [SUBSTITUTED ×3] None of these is the asset § 6 names, and § 6 names only two.
@@ -123,7 +117,7 @@ const PILLARS: readonly ImpactPillar[] = [
     id: "people",
     tabLabel: "People",
     heading: "People",
-    body: "We put people at the heart of everything we do, from our travellers to our local communities and partners",
+    body: "We put people first: the visitors we serve, the communities they visit and the partners we work with.",
     image: {
       src: "/get-started-friends.jpg",
       alt: "",
@@ -135,7 +129,7 @@ const PILLARS: readonly ImpactPillar[] = [
     id: "passion",
     tabLabel: "Passion",
     heading: "Passion",
-    body: "We are driven by an unwavering passion for showcasing the very best of what Africa has to offer",
+    body: "We want every visitor to see the best of what Nigeria and the rest of Africa have to offer.",
     image: {
       src: "/insurance (2).jpg",
       alt: "",
@@ -147,7 +141,7 @@ const PILLARS: readonly ImpactPillar[] = [
     id: "partnership",
     tabLabel: "Partnership",
     heading: "Partnership",
-    body: "We believe in the power of collaboration and building strong, lasting partnerships across the continent",
+    body: "We work with regulated partners. Fuspay Technologies, licensed by the Central Bank of Nigeria, runs the wallet. Phillips HMO, regulated by NAICOM, provides health cover.",
     image: {
       src: "/insurance-care-handshake.jpg",
       alt: "",
@@ -174,8 +168,9 @@ export const aboutImpactContent: AboutImpactContent = {
   // The reference's own heading — "Our impact goes beyond business" — is
   // Clarity's copy and is not used.
   // [CHANGED, 2026-10-10] Was "Our impact across Africa". The cards are values,
-  // not measured impact, so the heading says so and claims nothing unproven.
-  heading: "The values behind our work in Africa",
+  // not measured impact, so the heading claims nothing unproven.
+  // [CHANGED, 2026-10-14] UX copy pass: shorter, plain.
+  heading: "What we value",
   pillars: PILLARS,
 } as const;
 

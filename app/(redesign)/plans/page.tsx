@@ -76,7 +76,8 @@ import { buildPageMetadata } from "@/lib/seo";
  * `insurance-` prefix because they are insurance plans wherever they render.
  *
  * ---------------------------------------------------------------------------
- * [PROVISIONAL] "Choose your plan" is the page's `h1`.
+ * [PROVISIONAL] The plans heading ("Health insurance plans for your trip to
+ * Nigeria") is the page's `h1`.
  *
  * § 5's heading is an `h2` in the spec, under the insurance page's `h1`. On its
  * own page something has to take the top level and there is no hero, so it is
@@ -91,21 +92,15 @@ import { buildPageMetadata } from "@/lib/seo";
  */
 
 /**
- * [PENDING COPY] Title and description are provisional.
- *
- * § 11.1 supplies meta for `/insurance` only. Rather than leave the page
- * untitled, both strings are assembled from § 5's own approved copy — the three
- * tier names and the $50 entry price — and deliberately avoid repeating the
- * insurance page's title, which would put two near-identical titles on two URLs
- * targeting the same intent.
- *
- * Replace when meta for this page is written.
+ * Title and description avoid repeating the insurance page's title, which
+ * would put two near-identical titles on two URLs targeting the same intent.
  */
 const plansMeta: PageMetaContent = {
-  // [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
-  title: "Holiday Insurance Plans: Silver, Gold and Diamond | Omanga",
+  // [CHANGED, 2026-10-14] UX copy pass: "Omanga: …" pattern, searchable terms
+  // (health insurance plans, Nigeria), provider named, all three prices.
+  title: "Omanga: Health Insurance Plans for Nigeria from $50",
   description:
-    "Compare Omanga holiday health insurance plans side by side. Silver, Gold and Diamond from $50 a month, with ward type, scans and hospital access. Choose yours.",
+    "Compare Silver, Gold and Diamond health insurance for your trip to Nigeria, from Phillips HMO. $50, $85 or $120 a month. Choose your plan.",
   path: "/plans",
 };
 
@@ -139,7 +134,7 @@ export default function PlansPage() {
     <>
       <JsonLd
         graph={buildPageGraph(plansMeta, {
-          crumb: "Insurance Plans",
+          crumb: "Health Insurance Plans",
           nodes: buildPlanProducts(
             insurancePlansContent.plans.map((plan) => ({
               name: plan.name,
@@ -154,7 +149,7 @@ export default function PlansPage() {
       />
 
       {/*
-        Stage 1. Choose your plan — spec § 5. Carries the page's `h1`; see the
+        Stage 1. The plan cards — spec § 5. Carries the page's `h1`; see the
         section component for why it is promoted from the spec's `h2`.
       */}
       <InsurancePlans

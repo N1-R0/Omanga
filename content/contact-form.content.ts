@@ -1,4 +1,5 @@
-// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
+// [CHANGED, 2026-10-14] UX copy pass (design.md § Home UX copy pass): Material form copy, matching
+// get-started-enquiry.content.ts. No reply time is promised (none is confirmed).
 import { CONTACT_EMAIL, WHATSAPP_URL } from "@/config/site";
 import {
   CONTACT_FIELDS,
@@ -66,13 +67,15 @@ export type FormOption = {
  * without a label, or leaving a label behind after a value is renamed, is a build
  * error rather than a select that renders an empty option.
  */
+// [CHANGED, 2026-10-14] UX copy pass: body nouns (wallet, health cover, plan), not brand names.
+// Values unchanged. These labels also appear in the internal notification email.
 const TOPIC_LABELS: Readonly<Record<TopicValue, string>> = {
-  general: "General enquiry",
-  payments: "Omanga Payment Solutions",
-  insurance: "Travel and holiday insurance",
-  claim: "Insurance claim or existing policy",
-  partnership: "Partnership enquiry",
-  business: "Business or corporate enquiry",
+  general: "General question",
+  payments: "Wallet",
+  insurance: "Health cover",
+  claim: "Health cover claim or existing plan",
+  partnership: "Partnership",
+  business: "Business enquiry",
   other: "Something else",
 } as const;
 
@@ -85,7 +88,8 @@ const TOPIC_LABELS: Readonly<Record<TopicValue, string>> = {
  * rejects it. The text is the caller's to provide, per `Select`: "its text is
  * user-facing copy and nothing here may compose a string."
  */
-const TOPIC_PROMPT: FormOption = { value: "", label: "Select a topic" };
+// [CHANGED, 2026-10-14] UX copy pass: "Choose" matches the error message and the Get Started form.
+const TOPIC_PROMPT: FormOption = { value: "", label: "Choose a topic" };
 
 const TOPIC_OPTIONS: readonly FormOption[] = [
   TOPIC_PROMPT,
@@ -192,35 +196,30 @@ export type ContactFormContent = {
 };
 
 export const contactFormContent: ContactFormContent = {
-  // ✏️ § 4A and § SEO's hierarchy — an `h2` repeating the option name.
-  heading: "Talk to us",
-  /**
-   * ✏️ § 4A, transcribed with its `[VERIFY response time]` claim intact.
-   *
-   * [VERIFY] "We reply within one business day" is a promise, and § E-E-A-T item
-   * 6 gates it: "Real, evidenced response times replacing every
-   * `[VERIFY response time]` token. Publish it only once it is kept." It ships
-   * because it is § 4A's approved copy; it is the first thing to cut if the
-   * figure cannot be met.
-   */
+  // ✏️ An `h2` repeating the option name.
+  // [CHANGED, 2026-10-14] UX copy pass: verb-first, says what the form does. Matches the option card.
+  heading: "Send us a message",
+  // [CHANGED, 2026-10-14] UX copy pass: cut "within 1 business day" (unconfirmed reply time).
+  // The reply goes by email: the route sets the visitor's address as `replyTo`.
   intro:
-    "Tell us what you need and we'll send your message to the right specialist, who will reply within 1 business day.",
-  // ✏️ § 4's `← Go back`. The arrow is drawn by the control, not typed here.
-  backLabel: "Go back",
+    "Tell us what you need and we’ll pass it to the right person. We’ll reply by email.",
+  // ✏️ The arrow is drawn by the control, not typed here.
+  // [CHANGED, 2026-10-14] UX copy pass: says where the link goes.
+  backLabel: "Back to options",
   fields: {
     name: {
       id: CONTACT_FIELDS.name,
-      label: "Full name",
+      // [CHANGED, 2026-10-14] UX copy pass: short labels and errors, as on the Get Started form.
+      label: "Name",
       requirementNote: CONTACT_FORM_CHROME.requiredNote,
-      errorWhenEmpty: "Enter your name so we know who we're replying to.",
+      errorWhenEmpty: "Enter your name",
     },
     email: {
       id: CONTACT_FIELDS.email,
       label: "Email address",
       requirementNote: CONTACT_FORM_CHROME.requiredNote,
-      // ✏️ § 4A's field error copy, transcribed unchanged.
-      errorWhenEmpty:
-        "Enter an email address we can reply to, like name@example.com",
+      // [CHANGED, 2026-10-14] UX copy pass: shown for empty and malformed addresses, so it covers both.
+      errorWhenEmpty: "Enter your email address, like name@example.com",
     },
     whatsapp: {
       id: CONTACT_FIELDS.whatsapp,
@@ -233,56 +232,59 @@ export const contactFormContent: ContactFormContent = {
        * not vanish the moment they start. § 4's own field 9 asks for
        * `inputmode` and `autocomplete` per field, which the control sets.
        */
-      description: "Include your country code.",
+      // [CHANGED, 2026-10-14] UX copy pass: an example makes the format clear.
+      description: "Include the country code, like +44 or +234.",
     },
     topic: {
       id: CONTACT_FIELDS.topic,
       label: "Topic",
       requirementNote: CONTACT_FORM_CHROME.requiredNote,
-      // ✏️ § 4A's field error copy for a required select, transcribed unchanged.
-      errorWhenEmpty:
-        "Choose a topic so we can send your message to the right team.",
+      // [CHANGED, 2026-10-14] UX copy pass: the instruction is the whole message.
+      errorWhenEmpty: "Choose a topic",
       options: TOPIC_OPTIONS,
     },
     country: {
       id: CONTACT_FIELDS.country,
-      // ✏️ § 4 field 5's label, transcribed unchanged.
-      label: "Country you're travelling to or from",
+      // [CHANGED, 2026-10-14] UX copy pass: plain phrasing, curly apostrophe as on Get Started.
+      label: "Where you’re travelling to or from",
       requirementNote: CONTACT_FORM_CHROME.optionalNote,
     },
     customer: {
       id: CONTACT_FIELDS.customer,
-      label: "Are you already an Omanga customer?",
+      // [CHANGED, 2026-10-14] UX copy pass: plainer question; shorter error.
+      label: "Do you already use Omanga?",
       requirementNote: CONTACT_FORM_CHROME.requiredNote,
-      errorWhenEmpty: "Choose yes, no or not sure so we can send you to the right team.",
+      errorWhenEmpty: "Choose yes, no or not sure",
       options: CUSTOMER_OPTIONS,
     },
     message: {
       id: CONTACT_FIELDS.message,
       label: "Message",
       requirementNote: CONTACT_FORM_CHROME.requiredNote,
-      // ✏️ § 4's placeholder for field 7, transcribed unchanged.
-      placeholder: "Tell us what you need help with.",
-      errorWhenEmpty: "Enter a message so we know how to help.",
+      // [CHANGED, 2026-10-14] UX copy pass: the placeholder only repeated the intro, and vanished on
+      // typing. Removed.
+      errorWhenEmpty: "Enter your message",
     },
     consent: {
       id: CONTACT_FIELDS.consent,
-      // ✏️ § 4 field 8, transcribed unchanged. Single, specific, unticked.
-      label: "I'm happy for Omanga to contact me about this enquiry.",
+      // ✏️ Single, specific, unticked.
+      // [CHANGED, 2026-10-14] UX copy pass: "message" matches the form's own noun.
+      label: "Omanga can contact me about this message",
       requirementNote: CONTACT_FORM_CHROME.requiredNote,
-      // ✏️ § 4A's consent error copy, transcribed unchanged.
-      errorWhenEmpty: "Tick the box so we can reply to you.",
+      errorWhenEmpty: "Tick the box so we can reply",
     },
     company: {
       id: CONTACT_FIELDS.company,
-      // ✏️ § 4's conditional field, transcribed unchanged.
+      // ✏️ The conditional field: shown for partnership and business topics.
       label: "Company or organisation",
       requirementNote: CONTACT_FORM_CHROME.requiredNote,
-      errorWhenEmpty: "Enter the name of your company or organisation.",
+      // [CHANGED, 2026-10-14] UX copy pass: shorter, no full stop, as the other errors.
+      errorWhenEmpty: "Enter your company or organisation",
     },
     role: {
       id: CONTACT_FIELDS.role,
-      label: "Role",
+      // [CHANGED, 2026-10-14] UX copy pass: "Role" alone read as a choice, not a free-text field.
+      label: "Job title",
       requirementNote: CONTACT_FORM_CHROME.optionalNote,
     },
   },
@@ -294,21 +296,22 @@ export const contactFormContent: ContactFormContent = {
    */
   submitPendingLabel: "Sending…",
   /**
-   * ✏️ § 4A's helper text beneath Submit: "Or start a WhatsApp chat if it's
-   * urgent." § Conversion notes: "Catches the visitor who reaches the button and
-   * hesitates. Costs nothing, recovers otherwise-lost intent."
+   * ✏️ The helper beneath Submit. § Conversion notes: "Catches the visitor who
+   * reaches the button and hesitates."
    */
+  // [CHANGED, 2026-10-14] UX copy pass: leads with the situation, link says what it does.
   helper: {
-    lead: "Or ",
-    link: { label: "start a WhatsApp chat", href: WHATSAPP_URL, isExternal: true },
-    trail: " if it's urgent.",
+    lead: "Need help now? ",
+    link: { label: "Chat with us on WhatsApp", href: WHATSAPP_URL, isExternal: true },
+    trail: ".",
   },
   /**
    * The error summary's own line. Not § 4's copy — § 4 note 4 asks for focus
    * management and an announcement without wording either, and the summary is a
    * required accessibility affordance rather than marketing copy.
    */
-  errorSummaryLabel: "There is a problem with this form",
+  // [CHANGED, 2026-10-14] UX copy pass: says what happened and what to do, as on Get Started.
+  errorSummaryLabel: "Your message wasn’t sent. Fix the fields below.",
   /**
    * ✏️ § 4A's success state. § 4 note 6: rendered "in place of the fields, inside
    * the same container. Do not redirect to a thank-you page."
@@ -320,9 +323,11 @@ export const contactFormContent: ContactFormContent = {
    * cross-site scripting bug would make dangerous. Nothing is lost — a typo is
    * still recoverable, because the form's values are retained.
    */
+  // [CHANGED, 2026-10-14] UX copy pass: cut "within 1 business day" (unconfirmed). No email is sent
+  // to the visitor, so none is promised; the reply comes from the team.
   successMessage: {
-    lead: "Message received. A specialist will reply to the email address you gave us within 1 business day. Need an answer sooner? ",
-    link: { label: "Start a WhatsApp chat", href: WHATSAPP_URL, isExternal: true },
+    lead: "Message sent. We’ll reply to the email address you gave us. Need help sooner? ",
+    link: { label: "Chat with us on WhatsApp", href: WHATSAPP_URL, isExternal: true },
     trail: ".",
   },
   /**
@@ -330,9 +335,10 @@ export const contactFormContent: ContactFormContent = {
    * a failed submission is never a dead end — which is also why
    * `config/site.ts` owning `CONTACT_EMAIL` matters here.
    */
+  // [CHANGED, 2026-10-14] UX copy pass: matches the Get Started failure; one alternative, linked.
   failureMessage: {
-    lead: "Your message didn't send because of a problem on our side. Try again, or email us at ",
+    lead: "Your message didn’t send. Try again, or email us at ",
     link: { label: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
-    trail: " or message us on WhatsApp.",
+    trail: ".",
   },
 } as const;

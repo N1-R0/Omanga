@@ -133,17 +133,20 @@ export type InsurancePlansContent = {
 const SILVER: InsurancePlan = {
   name: "Silver",
   price: 50,
-  description: "Essential cover for a straightforward trip.",
+  // [CHANGED, 2026-10-14] UX copy pass: says who the plan suits; list items
+  // shortened to plain nouns. Facts unchanged.
+  description: "The essentials, for a short, straightforward trip.",
   hospitalAccess: "Category A",
   included: [
     "24/7 emergency assistance",
-    "15 days admission per trip",
-    "Basic diagnostic services",
+    "15 days in hospital per trip",
+    "Basic diagnostics",
     "Emergency evacuation",
-    "Prescription essential drugs",
+    "Essential prescription drugs",
   ],
   action: {
-    label: "Select Silver",
+    // [CHANGED, 2026-10-14] UX copy pass: "Buy" says the button opens checkout.
+    label: "Buy Silver",
     href: CHECKOUT_URLS.Silver,
     isExternal: true,
     emphasis: "primary",
@@ -161,17 +164,17 @@ const GOLD: InsurancePlan = {
   name: "Gold",
   price: 85,
   description:
-    "Private ward and wider diagnostics, for longer or less predictable trips.",
+    "A private ward and more scans, for longer or less predictable trips.",
   hospitalAccess: "Category A + B",
   included: [
-    "Everything in Silver +",
+    "Everything in Silver, plus:",
     "Private ward admission",
-    "Enhanced diagnostic coverage",
-    "Extended eye care coverage",
+    "Enhanced diagnostics",
+    "Extended eye care",
     "Higher surgical limits",
   ],
   action: {
-    label: "Select Gold",
+    label: "Buy Gold",
     href: CHECKOUT_URLS.Gold,
     isExternal: true,
     emphasis: "primary",
@@ -182,18 +185,20 @@ const GOLD: InsurancePlan = {
 const DIAMOND: InsurancePlan = {
   name: "Diamond",
   price: 120,
+  // [CHANGED, 2026-10-14] UX copy pass: "widest hospital access" matches the
+  // card's access line; "premium" and "network" were vaguer than the data.
   description:
-    "Maximum limits and unlimited scans, with the widest hospital network.",
+    "The highest limits and unlimited scans, with the widest hospital access.",
   hospitalAccess: "Category A + B + C",
   included: [
-    "Everything in Gold +",
-    "Premium hospital access",
+    "Everything in Gold, plus:",
+    "Widest hospital access",
     "Unlimited CT scans",
-    "Maximum coverage limits",
+    "Highest cover limits",
     "Comprehensive care",
   ],
   action: {
-    label: "Select Diamond",
+    label: "Buy Diamond",
     href: CHECKOUT_URLS.Diamond,
     isExternal: true,
     emphasis: "primary",
@@ -201,21 +206,24 @@ const DIAMOND: InsurancePlan = {
 } as const;
 
 export const insurancePlansContent: InsurancePlansContent = {
-  heading: "Choose your travel health insurance plan",
+  // [CHANGED, 2026-10-14] UX copy pass: keyword h1 names Nigeria; intro names
+  // the provider and regulator, and says the plans apply in Nigeria only.
+  heading: "Health insurance plans for your trip to Nigeria",
   intro:
-    "Silver, Gold and Diamond all cover hospital admission, diagnostics, emergency assistance and evacuation. They differ in ward type, scan allowances and which hospitals you can use.",
+    "Short-term health cover in Nigeria from Phillips HMO, regulated by NAICOM. Every plan covers hospital admission, diagnostics, emergency assistance and evacuation. Plans differ in ward type, scans and hospital access.",
   currency: "USD",
   billingPeriod: "month",
   accessLabel: "Hospital access",
   includedHeading: "What's included",
-  cardFootnote: "No commitment · Cancel any time",
+  // Published, not owner-confirmed (design.md Copy to-do). Kept, not strengthened.
+  cardFootnote: "No commitment. Cancel any time.",
   plans: [SILVER, GOLD, DIAMOND],
-  // [CHANGED, 2026-10-14] UX copy pass: "roaming cover across Nigeria", so it
-  // can't be read as cover in other countries.
+  // [CHANGED, 2026-10-14] UX copy pass: drops the cancel line the cards
+  // already carry; adds renew/extend (owner-confirmed). Roaming is Nigeria only.
   footnote:
-    "No commitment. Cancel any time. Every plan includes telemedicine, roaming cover across Nigeria, 24/7 support, the mobile app and a health-tips newsletter.",
+    "Every plan also includes telemedicine, roaming across Nigeria, 24/7 support, the mobile app and a health-tips newsletter. Renew or extend your plan from your account.",
   action: {
-    label: "Compare all benefits",
+    label: "Compare every benefit",
     // A bare fragment: the comparison table is the next section on this same
     // page, so this scrolls rather than navigates. The prefixed
     // `INSURANCE_COVERAGE_HREF` is for links arriving from `/insurance`.

@@ -1,5 +1,6 @@
 // [CHANGED, 2026-10-10] Locked copy rewritten on the owner's instruction ("do it perfectly"): hype words and US spellings removed, meaning kept.
 // [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
+import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { Eyebrow, ImageAsset } from "@/types/content.types";
 
 /**
@@ -25,11 +26,8 @@ import type { Eyebrow, ImageAsset } from "@/types/content.types";
  *     one ships. `About` is Clarity's own label in that slot, it is the approved
  *     nav label, and it is the heading the live page already runs under the
  *     headline as "About US" — so no string is invented to fill it.
- *   - The base strip's centre paragraph — the LOCKED "Omanga Integrated
- *     Destination Services…" copy. Promoted to the hero's sub-paragraph, which
- *     is the same job in the new layout: company-description copy at body scale
- *     directly beneath the headline. Verbatim, and the only place on the page
- *     this paragraph appears.
+ *   - The base strip's centre paragraph. Promoted to the hero's sub-paragraph:
+ *     company-description copy at body scale directly beneath the headline.
  *   - The base strip's left metric (`52 African countries`) and right provenance
  *     (`SINCE [VERIFY founding year]`). Not rendered — the layout they belonged
  *     to is gone. This also retires, for now, the founding-year blocker: § 5's
@@ -51,44 +49,21 @@ import type { Eyebrow, ImageAsset } from "@/types/content.types";
  * lists this link as Committed. Without it the page has one, in § 7. Raised for
  * a decision at the § 4 stage, when the anchor it needs finally exists.
  *
- * [NOTE] The country count does not arise here. The locked paragraph carries no
- * figure — "across various African cities" — so the 52-vs-43 conflict recorded
- * on the page module reaches § 7, not this section.
+ * [NOTE] The country count is interpolated from `COUNTRIES_SERVED_DISPLAY`,
+ * never typed.
  */
 
 /**
- * The page's single `h1` — spec § 2 and § 3.2, ✏️ NEW, transcribed unchanged.
- *
- * [DEVIATION] § 2 sets this on "two deliberate lines" and asks for that break
- * to be preserved. It renders on three in this layout, and the copy is not
- * being edited to force two.
- *
- * design.md § 2 gives the reason and the remedy: "The hero cap also owns the
- * line count." A two-line split needs the longest line — "Integrated
- * destination services", 31 characters — to fit the column, which at the `h1`
- * scale wants roughly 990px. The screenshot's copy column is about 44% of a
- * 1424 content column, so about 620px, and no cap can widen it. The three-line
- * break that produces is "Integrated destination / services for travel /
- * across Africa", which splits the primary keyword phrase across a line end.
- *
- * Two ways out, both a decision rather than a fix: shorten the headline, or
- * widen the copy column past the screenshot's proportion. Neither is taken
- * unilaterally — § 3.2 lists this string as the page's H1 and § 2 lists the
- * two-line break as deliberate.
+ * The page's single `h1`.
  */
-// [CHANGED, 2026-10-10] Was "Integrated destination services for travel across
-// Africa". Now carries the page's primary keyword phrase, 7 words, and fits two
-// lines, which also closes the three-line deviation above.
-const HEADING = "Travel payments and health insurance for Africa";
+// [CHANGED, 2026-10-14] UX copy pass: was "Travel payments and health insurance
+// for Africa". Health cover applies in Nigeria only, so the h1 names Nigeria.
+const HEADING = "Money and health cover for your trip to Nigeria";
 
-/**
- * 🔒 LOCKED — approved About copy, verbatim. Spec § 2, base strip centre.
- *
- * Not rewritten, not shortened, not split. § 2's own instruction on this
- * paragraph is that it "slots in without alteration".
- */
-const INTRO =
-  "Omanga Integrated Destination Services is an online platform built for travellers in Africa. We combine deep local knowledge with modern technology, so your trip runs smoothly from the city you land in to the last one you leave.";
+// [CHANGED, 2026-10-14] UX copy pass: was "Omanga Integrated Destination
+// Services is an online platform…". Says who we are, what we do and where each
+// product applies (wallet = 50+ countries, health cover = Nigeria).
+const INTRO = `Omanga is a Lagos company for anyone visiting Nigeria. One account gives you a wallet you can spend in ${COUNTRIES_SERVED_DISPLAY} African countries and short-term health cover for your time in Nigeria.`;
 
 export type AboutHeroContent = {
   readonly eyebrow: Eyebrow;
@@ -133,10 +108,8 @@ export const aboutHeroContent: AboutHeroContent = {
     /**
      * `alt` is not empty, unlike the homepage hero's. That image is a full-bleed
      * background behind copy that already says everything it says; this one is a
-     * distinct element beside prose that describes a platform rather than a
-     * place. Without a description a screen-reader user gets the company
-     * paragraph and no sense that the page is about a continent and its people,
-     * which is the whole reason the photograph is in the band.
+     * distinct element beside prose that describes a company rather than a
+     * place, so it gets a short description.
      *
      * It describes what is visible and claims no location: nothing in the source
      * documents identifies the city, and naming one would be an invented fact in

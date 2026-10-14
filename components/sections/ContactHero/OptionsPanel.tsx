@@ -173,33 +173,31 @@ function NotificationsInterim({ path }: { path: string }) {
         role="feature"
         measure="none"
       >
-        Notifications
+        {/* [CHANGED, 2026-10-14] UX copy pass: matches the option card's heading. */}
+        Get updates by email
       </Heading>
 
       {/*
-        ✏️ § 4B's intro, transcribed unchanged, minus its `[VERIFY frequency]`
-        sentence — "Two or three emails a month, and one click to stop" is a
-        publishable claim only once § Open question 7 is answered, and this is the
-        interim precisely because it is not.
+        No send frequency ("two or three emails a month") until § Open question 7
+        is answered.
+        [CHANGED, 2026-10-14] UX copy pass: body nouns; dropped "across Africa"
+        (health cover is Nigeria only). Same line as the option card.
       */}
       <Text role="small" measure="none">
-        Practical updates for travelling across Africa, plus news about Omanga
-        payments and insurance.
+        News about the wallet and health cover, plus practical tips for your trip
+        to Nigeria.
       </Text>
 
       {/*
-        [FLAGGED — needs approval] Four words of new copy: "To subscribe today,".
-        Everything after it is § 4B's own error-state clause — "email
-        info@omanga.biz and we'll add you manually" — which is approved copy for
-        exactly this situation. The alternative was inventing a sentence about
-        product state, which would be a claim rather than a route.
+        There is no sign-up form yet (no mailing list provider), so the route is
+        email. [CHANGED, 2026-10-14] UX copy pass: plainer verb, no "manually".
       */}
       <Text role="small" measure="none">
-        To subscribe today,{" "}
+        To sign up,{" "}
         <TextLink href={`mailto:${CONTACT_EMAIL}`} tone="light">
           email {CONTACT_EMAIL}
         </TextLink>{" "}
-        and we&apos;ll add you manually.
+        and we&apos;ll add you to the list.
       </Text>
     </Stack>
   );

@@ -1,6 +1,7 @@
 // [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import { ctaContent } from "@/content/cta.content";
 import type { CtaContent } from "@/content/cta.content";
+import { HERO_PRIMARY_ACTION } from "@/content/hero.content";
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 
 /**
@@ -37,62 +38,22 @@ import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
  *     footer still carries both destinations, so the links exist on the page —
  *     just not as the closer's own exits.
  *
- * The two products are still named in the paragraph below, which is § 7's copy
- * and is unchanged.
+ * The two products are still named in the paragraph below.
  *
- * [NOT MOUNTED] § 3.4's two inline body links — `52 African countries` →
- * `/coverage` and `short-term health cover` → `/insurance/plans`. `intro` is a
+ * [NOT MOUNTED] Inline body links ("Explore the wallet" → /payments, "Compare
+ * health plans" → /plans). `intro` is a
  * plain string, and coding-guidelines.md is explicit that "copy is data, never
- * markup", so a content module cannot carry an anchor. Neither route exists
- * either: `/coverage` is not in the application and `/insurance/plans` is not the
- * path — the tiers live at `/plans`. Both would need a route and a typed
- * rich-text shape before they could ship.
+ * markup", so a content module cannot carry an anchor, and `CTA` takes one
+ * action only.
  *
  * [NOT ADDED] A form. § 7: "No form on this page. The approved Homepage owns the
  * capture form; duplicating it here creates two competing closers across the site
  * and dilutes the About page's comprehension job."
  */
 
-/**
- * ✏️ NEW. § 7's body paragraph, with one correction.
- *
- * [CORRECTED] § 7 says "52 African countries". project-context.md § Non-negotiable
- * copy facts puts the figure at 43 — the approved copy document's tracked changes
- * replace every 52 with 43, and copy outranks a spec. `COUNTRIES_SERVED` is
- * interpolated rather than typed so the number has one owner across the site.
- *
- * This is the same correction the Insurance page and the Get Started page already
- * carry, and it is the conflict raised at the hero stage now landing: § 2's base
- * strip claimed 52 too, and that strip is gone.
- *
- * Everything else is transcribed unchanged, including the Ubuntu sentence. § 7:
- * "It is the most distinctive line Omanga owns and it belongs at the emotional
- * close of the About page." Its inclusion here is what allows § 5 item 1 — the
- * standalone *Why We Do What We Do* panel — to be retired, which is § 7's own
- * recommendation and is what this page does.
- *
- * [CORRECTED] § 7's paragraph reads "a multi-currency wallet and card". The
- * card claim is struck: `FORBIDDEN_COPY_TERMS` in `content/site.content.ts`
- * records that "tracked changes removed every 'card' claim from the approved
- * copy; 'one card' became 'a customized payment solution'. Physical-card
- * language must not reappear in copy, image alt text, or component names."
- *
- * § 7 asserts that "every product claim in the paragraph (52 countries,
- * multi-currency wallet and card, short-term cover, established local
- * providers) already appears in approved Homepage copy" — and for the card it
- * does not, because the tracked changes removed it. project-context.md outranks
- * a page spec, the same precedence that resolves 52 to 43.
- *
- * Two words are dropped rather than substituted: "a multi-currency wallet"
- * stands on its own, and replacing the claim with "a customized payment
- * solution" would put procurement language in the page's emotional close.
- *
- * [NOTE] Every remaining product claim — the wallet, spending across Africa,
- * short-term cover, established local providers — is in approved homepage copy.
- */
-// [CHANGED, 2026-10-10] One sentence, same product facts. The Ubuntu line moved
-// to the mission and vision intro (values), per the home-page CTA decision.
-const INTRO = `Set up a multi-currency wallet for ${COUNTRIES_SERVED_DISPLAY} African countries and short-term health cover from established local providers before you land.`;
+// [CHANGED, 2026-10-14] UX copy pass: wallet scope (50+ countries) and health
+// cover scope (Nigeria) stated separately; names the starting price.
+const INTRO = `Open a free wallet you can spend in ${COUNTRIES_SERVED_DISPLAY} African countries, then add health cover for your time in Nigeria. Plans start at $50 a month.`;
 
 /**
  * The artwork is read from the homepage band rather than redeclared, so the
@@ -100,32 +61,13 @@ const INTRO = `Set up a multi-currency wallet for ${COUNTRIES_SERVED_DISPLAY} Af
  * arrangement the Insurance and Plans bands already use.
  */
 export const aboutCtaContent: CtaContent = {
-  // ✏️ NEW. § 7 and § 3.2, transcribed unchanged. Sentence case per § 3.2.
-  // [CHANGED, 2026-10-10] Was "Begin your African journey". Benefit first.
-  heading: "Travel Africa with your wallet and cover ready",
+  // [CHANGED, 2026-10-14] UX copy pass: was "Travel Africa with your wallet and
+  // cover ready", which implied cover outside Nigeria.
+  heading: "Land in Nigeria with money and cover sorted",
   intro: INTRO,
-  /**
-   * ✏️ NEW. § 7's primary, pointing at the homepage.
-   *
-   * Not `PRIMARY_CTA` (`Get Started` → `/get-started`), which is what the
-   * homepage's own band uses. § 7 is explicit about the label and the
-   * destination, and about why: the four intents this page serves are "explore
-   * Omanga, discover Payments, discover Insurance, begin the journey", and § 7's
-   * tone calibration asks for inspiring over sales-heavy. `Explore Omanga` is an
-   * invitation to look; `Get Started` is an instruction to convert, and an About
-   * page's job is comprehension.
-   *
-   * [NOTE] This is the same label § 2 gives the hero CTA, which is not mounted —
-   * so the page has one `Explore Omanga` rather than two, and no ambiguity about
-   * which one a visitor means. If the hero's is restored it needs a different
-   * label or a different destination; § 2 sends it to `#mission-vision`, so the
-   * two are the same words pointing at different places.
-   */
-  action: {
-    label: "Explore Omanga",
-    href: "/",
-    emphasis: "primary",
-  },
+  // [CHANGED, 2026-10-14] UX copy pass: was "Explore Omanga" → "/". The site's
+  // one primary action, shared with the home hero so label and URL cannot drift.
+  action: HERO_PRIMARY_ACTION,
   graphic: ctaContent.graphic,
 } as const;
 

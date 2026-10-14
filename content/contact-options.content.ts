@@ -1,4 +1,4 @@
-// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
+// [CHANGED, 2026-10-14] UX copy pass (design.md § Home UX copy pass): verb-first card headings.
 /**
  * Contact options — spec § 3.
  *
@@ -94,14 +94,16 @@ const OPTIONS: readonly ContactOption[] = [
   {
     id: "talk",
     enquiry: "talk",
-    heading: "Talk to us",
-    body: "Ask about payments, insurance plans, a partnership or your account, and the right specialist will get back to you.",
+    // [CHANGED, 2026-10-14] UX copy pass: verb-first; matches the form heading it opens.
+    heading: "Send us a message",
+    body: "Ask about the wallet, health cover, a claim, a partnership or your account. We’ll reply by email.",
   },
   {
     id: "notifications",
     enquiry: "notifications",
-    heading: "Notifications",
-    body: "Get travel alerts and Omanga updates by email, including coverage changes, plan updates and practical news for travel in Africa.",
+    // [CHANGED, 2026-10-14] UX copy pass: says what you get; dropped "across Africa" (cover is Nigeria only).
+    heading: "Get updates by email",
+    body: "News about the wallet and health cover, plus practical tips for your trip to Nigeria.",
   },
 ] as const;
 

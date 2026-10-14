@@ -94,7 +94,7 @@ import { buildPageMetadata } from "@/lib/seo";
  * § 2's hero pill is not mounted — the screenshot governing that layout has no
  * button, and § 3.4 sends it to `#mission-vision`, an anchor no element carries.
  * § 7's tiles are not mounted either; `CTA` has no slot for them. So the closer's
- * single `Explore Omanga` is the whole of the page's conversion surface, against
+ * single `Open your free wallet` is the page's own conversion surface, against
  * § 2's "two CTA moments … the closing moment resolves into three clickable
  * exits". Three of § 3.4's six Committed internal links are unfulfilled as a
  * result. Recorded in the two content modules, and it wants one decision rather
@@ -111,24 +111,17 @@ import { buildPageMetadata } from "@/lib/seo";
  */
 
 /**
- * Title and description are verbatim from spec § 3.1, which states them as 57
- * and 155 characters.
- *
- * The title already carries the brand, so it is set `absolute` — the layout's
- * `%s | Omanga` template would otherwise append it twice.
- *
- * `og:image` is not set. The `(redesign)` segment's `opengraph-image.tsx` applies
- * to every route beneath it, so this page inherits a real 1200×630 image today.
- * § 3.1 asks for the Lagos skyline asset instead; there is no skyline asset in
- * `public/`, which is the same gap § 2's hero records. It becomes a per-route
- * override when the photograph exists.
+ * `og:image` is not set: the `(redesign)` segment's `opengraph-image.tsx`
+ * applies to every route beneath it. § 3.1's Lagos skyline asset does not exist
+ * in `public/`; it becomes a per-route override when it does.
  */
 const aboutMeta: PageMetaContent = {
-  // [CHANGED, 2026-10-07] Short form — plain label, no brand suffix, so the Google sitelink reads "About".
-  title: "About",
-  // [CHANGED, 2026-10-10] Copy pass: plain words, all four primary keywords, count interpolated.
-  // Title left as "About" (2026-10-07 sitelink instruction).
-  description: `Meet Omanga: travel payments and health insurance for Africa. Spend in ${COUNTRIES_SERVED_DISPLAY} African countries from one multi-currency wallet and add travel health insurance.`,
+  // [CHANGED, 2026-10-14] UX copy pass: was "About". Brand + keywords, 47 chars,
+  // matching the home title's "Health Insurance" (the searched term).
+  title: "About Omanga: Travel Money and Health Insurance",
+  // [CHANGED, 2026-10-14] UX copy pass: was "…health insurance for Africa".
+  // Wallet = 50+ African countries; health cover = Nigeria only.
+  description: `Omanga is a Lagos company for visitors to Nigeria: a free wallet you can spend in ${COUNTRIES_SERVED_DISPLAY} African countries and short-term health cover from Phillips HMO.`,
   path: "/about",
 };
 

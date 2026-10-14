@@ -1,4 +1,5 @@
-// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
+// [CHANGED, 2026-10-14] UX copy pass (design.md § Home UX copy pass): no reply time; "50+" describes
+// the wallet only; health cover is Nigeria only.
 import {
   CONTACT_EMAIL,
   OFFICE_ADDRESS,
@@ -52,19 +53,15 @@ import type { LinkTarget } from "@/types/content.types";
  * schema `areaServed`". `COUNTRIES_SERVED` is interpolated rather than typed, so
  * the figure has one owner and the label cannot drift from the sentence above it.
  *
- * [VERIFY] Card 1's "within one business day" is § 5's own
- * `[VERIFY response time]`, and § E-E-A-T item 6 gates it: "publish it only once
- * it is kept." It ships because it is § 5's approved copy and it already appears
- * in § 4A's form intro; both come out together if the figure cannot be met.
- *
- * [VERIFY] Card 2's "staffed 24/7" is § E-E-A-T open question 3 — "Is the 24/7
- * contact centre claim accurate today, and in which timezone is the team based?"
- * Transcribed because it is Omanga's published claim on the live Contact page,
- * which the spec names as its only source of fact.
+ * [VERIFY] Card 2's "staffed 24/7" is published but not owner-confirmed (design.md
+ * copy to-do). Kept as it was, not strengthened; cut it if it is not true.
  */
-const COVERAGE_BODY = `Omanga serves travellers across ${COUNTRIES_SERVED_DISPLAY} African countries, with payments and health cover in one account.`;
+// [CHANGED, 2026-10-14] UX copy pass: was "serves travellers across 50+ countries, with payments
+// and health cover" — read as cover in 50+ countries. Split into the two true facts.
+const COVERAGE_BODY = `Spend from your wallet in ${COUNTRIES_SERVED_DISPLAY} African countries. Health cover applies in Nigeria only.`;
 
-const COVERAGE_LINK_LABEL = `See all ${COUNTRIES_SERVED_DISPLAY} countries`;
+// [CHANGED, 2026-10-14] UX copy pass: the linked list is the wallet's countries, so the label says so.
+const COVERAGE_LINK_LABEL = "See where the wallet works";
 
 /**
  * [BLOCKER → CHANGED] The coverage link's destination.
@@ -100,7 +97,8 @@ const CARDS: readonly ContactInfoCard[] = [
   {
     id: "email",
     heading: "Email us",
-    body: "Write to us about payments, insurance plans, partnerships or anything else. We reply within 1 business day.",
+    // [CHANGED, 2026-10-14] UX copy pass: cut "We reply within 1 business day" (unconfirmed).
+    body: "Write to us about the wallet, health cover, a partnership or anything else.",
     /**
      * The address is the link and the label at once. § 5: "Address is the link;
      * display the address in full, never behind 'Email us here' — a visible
@@ -116,7 +114,8 @@ const CARDS: readonly ContactInfoCard[] = [
     id: "support",
     // [CHANGED, 2026-10-10] Was "Need support?", the same text as the hero's h3.
     heading: "Get help on WhatsApp",
-    body: "Already using Omanga? Our contact centre is staffed 24/7 for payments and insurance. Start a WhatsApp chat and a specialist will pick it up wherever you are.",
+    // [CHANGED, 2026-10-14] UX copy pass: body nouns; 24/7 kept as published, not strengthened.
+    body: "Chat with us about a payment, your wallet or your health cover. Our contact centre is staffed 24/7.",
     action: {
       label: "Chat on WhatsApp",
       href: WHATSAPP_URL,
@@ -126,7 +125,8 @@ const CARDS: readonly ContactInfoCard[] = [
   },
   {
     id: "coverage",
-    heading: "Where we operate",
+    // [CHANGED, 2026-10-14] UX copy pass: the card now covers both products, each with its own reach.
+    heading: "Where Omanga works",
     body: COVERAGE_BODY,
     action: { label: COVERAGE_LINK_LABEL, href: COVERAGE_HREF },
   },
@@ -203,8 +203,9 @@ export const contactInformationContent: ContactInformationContent = {
    * reach Omanga and not three places to visit, and § SEO maps it to `Omanga
    * support` intent.
    */
-  // [CHANGED, 2026-10-10] Descriptive H2 carrying "contact Omanga support".
-  heading: "How to contact Omanga support",
+  // [CHANGED, 2026-10-14] UX copy pass: sits below the form, so these are the other ways in.
+  // Keeps "contact Omanga" for search.
+  heading: "Other ways to contact Omanga",
   cards: CARDS,
   map: {
     /*

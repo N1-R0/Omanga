@@ -42,8 +42,7 @@
  * § 4: "The live page shows Vision on the left and Mission on the right… The
  * brief specifies Phase One = Mission, Phase Two = Vision. In a timeline, phase
  * order implies sequence, and mission → vision reads correctly: what we do now,
- * leading to what we become." Both statements remain verbatim; only their order
- * changes, and it changes on the brief's instruction.
+ * leading to what we become."
  *
  * The rail alternates sides starting on the end side, so Mission renders right of
  * the rail and Vision left of it above desktop. Below desktop both read left to
@@ -77,26 +76,21 @@ export type MissionVisionPhase = {
 };
 
 /**
- * 🔒 LOCKED — approved Omanga copy, verbatim. § 4: "Do not rewrite or optimise."
- *
- * Mission is 38 words, Vision 22. § 4 states both counts against Clarity's
- * 20–60 word range and concludes "No padding required and none should be added."
- *
- * The two labels are ♻️ REUSED and keep their Title Case. § 3.2 sets sentence
- * case for new headings and exempts these by name: "the timeline phase labels
- * `Our Mission` and `Our Vision` … Casing consistency does not override the
- * locked-copy rule."
+ * [CHANGED, 2026-10-14] UX copy pass: both statements rewritten in plain
+ * language, meaning kept ("personalised destination services", "curated
+ * experiences" out). Labels now sentence case, like every other heading.
+ * Mission no longer implies health cover outside Nigeria.
  */
 const PHASES: readonly MissionVisionPhase[] = [
   {
     id: "our-mission",
-    heading: "Our Mission",
-    body: "To deliver personalised destination services that connect travellers to the continent. We promote curated experiences, support local communities and work with our clients on journeys that reflect Africa's spirit and hospitality.",
+    heading: "Our mission",
+    body: "Make it simpler for anyone to visit Nigeria and travel across Africa. We give visitors the money tools and health cover they need, support local communities and help every trip reflect the continent's hospitality.",
   },
   {
     id: "our-vision",
-    heading: "Our Vision",
-    body: "To be a leading destination services company, showing the continent's diversity, culture and natural beauty through authentic, sustainable travel.",
+    heading: "Our vision",
+    body: "Become a leading travel services company in Africa, helping visitors see the continent's diversity, culture and natural beauty through authentic, sustainable travel.",
   },
 ] as const;
 
@@ -109,12 +103,9 @@ export type AboutMissionVisionContent = {
 export const aboutMissionVisionContent: AboutMissionVisionContent = {
   // ✏️ NEW. § 4 and § 3.2, transcribed unchanged. Sentence case per § 3.2.
   heading: "Our mission and vision",
-  // ✏️ NEW. § 4's section sub-line, transcribed unchanged including its full stop.
-  // [CHANGED, 2026-10-10] Was "Where Omanga is going, and what gets us there."
-  // The Ubuntu line moved here from the closing CTA: it is brand voice about
-  // values, and the CTA intro is now one practical sentence. Verbatim.
-  intro:
-    "The spirit of Ubuntu lives in us all; through our collective unity, we achieve great things.",
+  // [CHANGED, 2026-10-14] UX copy pass: the Ubuntu line in plain words, same
+  // meaning. Was "The spirit of Ubuntu lives in us all; through our collective unity…".
+  intro: "We live by Ubuntu: together, we achieve more than we can alone.",
   phases: PHASES,
 } as const;
 

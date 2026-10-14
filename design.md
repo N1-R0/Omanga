@@ -767,5 +767,15 @@ footer paragraph.
 - [ ] Payments hero mockup (`AppHomeMockup.tsx`) shows a "Cards" tab, which
       conflicts with the no-card rule. Confirm whether the app has cards.
 - [ ] Enquiry form on /get-started still has no privacy notice.
+- [x] Plans, About, Contact rewritten (2026-10-14). Plan buttons now read
+      "Buy Silver/Gold/Diamond" (they open Paystack).
+- [ ] /plans comparison table has blank cells: admission days (Gold,
+      Diamond), eye care (Silver, Diamond), surgical limits (Silver).
+- [ ] Hospital categories A/B/C are never defined for visitors.
+- [ ] About vision keeps "a leading travel services company in Africa".
+      Confirm the owner still wants that stated.
+- [ ] Contact: WhatsApp number, Victoria Island address and "contact centre
+      staffed 24/7" come from config; confirm all three. Email-updates option
+      has no mailing-list provider (people email info@omanga.biz).
 - [ ] About page, privacy policy and blog posts still say "for Africa"/"across
       Africa" about insurance in places. Legal copy needs owner sign-off.

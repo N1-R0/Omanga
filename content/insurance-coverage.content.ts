@@ -165,7 +165,7 @@ const ROWS: readonly CoverageRow[] = [
     diamond: "Unlimited",
   },
   {
-    label: "Diagnostic services",
+    label: "Diagnostics",
     silver: "Basic",
     gold: "Enhanced",
     diamond: "Enhanced + unlimited CT",
@@ -194,7 +194,7 @@ const ROWS: readonly CoverageRow[] = [
     diamond: INCLUDED,
   },
   {
-    label: "Prescription essential drugs",
+    label: "Essential prescription drugs",
     silver: INCLUDED,
     gold: INCLUDED,
     diamond: INCLUDED,
@@ -204,11 +204,13 @@ const ROWS: readonly CoverageRow[] = [
 export const insuranceCoverageContent: InsuranceCoverageContent = {
   anchorId: INSURANCE_COVERAGE_ANCHOR,
   featureColumnLabel: "Benefit",
-  tableLabel: "Plan comparison",
+  // [CHANGED, 2026-10-14] UX copy pass: shorter h2 and intro; row labels match
+  // the plan cards' wording ("Diagnostics", "Essential prescription drugs").
+  tableLabel: "Health plan comparison",
   scrollHint: "Scroll sideways to see every plan.",
-  heading: "What Silver, Gold and Diamond plans cover",
+  heading: "What each health plan covers",
   intro:
-    "Every benefit side by side: the plans differ most in ward type, scan allowances and the hospital categories you can use.",
+    "Every benefit, side by side. Plans differ most in ward type, scans and hospital access.",
   rows: ROWS,
 } as const;
 

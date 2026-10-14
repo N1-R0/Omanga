@@ -1,15 +1,15 @@
 // [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import { WALLET_URL } from "@/config/site";
 import { insuranceCtaContent } from "@/content/insurance-cta.content";
+import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { CtaContent } from "@/content/cta.content";
 
 /**
  * The Plans page's closing CTA band.
  *
- * The `CTA` section component is reused unchanged, and so is the insurance
- * page's content — spread rather than retyped, so the heading, the paragraph
- * and the artwork keep exactly one owner and nothing here is a copy of a
- * string.
+ * The `CTA` section component is reused unchanged, and the insurance page's
+ * content is spread for its artwork. Heading, intro and action are this
+ * page's own (see below).
  *
  * ---------------------------------------------------------------------------
  * [CHANGED] The action, and only the action.
@@ -31,6 +31,11 @@ import type { CtaContent } from "@/content/cta.content";
  */
 export const plansCtaContent: CtaContent = {
   ...insuranceCtaContent,
+  // [CHANGED, 2026-10-14] UX copy pass: own heading and intro, because the
+  // shared ones ask the reader to choose a plan while this button opens the
+  // wallet. Wallet facts only (owner-confirmed); no cancel claim.
+  heading: "Keep your plan and your money in one account",
+  intro: `Open a free wallet, fund it from USD, GBP or CAD and spend in ${COUNTRIES_SERVED_DISPLAY} African countries. Transfers cost ₦20.`,
   action: {
     // [CHANGED, 2026-10-10] The home hero's label for the same destination, resolving the drift noted above.
     label: "Open your free wallet",

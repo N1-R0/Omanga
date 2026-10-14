@@ -1,4 +1,5 @@
-// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
+// [CHANGED, 2026-10-14] UX copy pass (design.md § Home UX copy pass): body nouns, no unconfirmed
+// claims, routes existing users to WhatsApp and everyone else to the form.
 import { WHATSAPP_URL } from "@/config/site";
 import type { CallToAction, Eyebrow } from "@/types/content.types";
 
@@ -55,10 +56,8 @@ import type { CallToAction, Eyebrow } from "@/types/content.types";
  * **This is a copy change and needs approval.** Flagged rather than silent
  * because a substitution is more invasive than a corrected numeral.
  *
- * [NOTE] The paragraph's "available 24/7" is § 2's own, and § E-E-A-T open
- * question 3 asks whether the claim is accurate today and in which timezone.
- * Transcribed because it is Omanga's published claim on the live Contact page,
- * which the spec names as its only source of fact.
+ * [CHANGED, 2026-10-14] UX copy pass: "available 24/7" is no longer repeated here.
+ * It is unconfirmed (design.md copy to-do); the support card keeps the one mention.
  *
  * [NOT LINKED] § Internal linking wants `choosing an insurance plan` →
  * `/insurance/plans` and `setting up your multi-currency wallet` → `/payments`
@@ -69,11 +68,13 @@ import type { CallToAction, Eyebrow } from "@/types/content.types";
  * `/plans`. Both destinations are in the header and the footer, so the page
  * reaches them; it costs two of the spec's 12–15 target internal links.
  */
+// [CHANGED, 2026-10-14] UX copy pass: was "Africa travel specialists"; health cover is Nigeria only.
 const INTRO =
-  "Our Africa travel specialists are available 24/7 to help with insurance plans, your multi-currency wallet, a transaction, a partnership or how Omanga works.";
+  "Ask about the wallet, health cover in Nigeria, a partnership or anything else, and we’ll pass your message to the right person.";
 
+// [CHANGED, 2026-10-14] UX copy pass: names the three support topics; cut the filler.
 const SUPPORT_BODY =
-  "Already using Omanga? Start a WhatsApp chat about a payment, your wallet or an insurance claim. A specialist will pick it up, with no ticket number and no hold music.";
+  "Chat with us on WhatsApp about a payment, your wallet or a health cover claim.";
 
 /**
  * The `Need support?` block.
@@ -111,7 +112,8 @@ export const contactHeroContent: ContactHeroContent = {
   heading: "Contact Omanga's support team",
   intro: INTRO,
   support: {
-    heading: "Need support?",
+    // [CHANGED, 2026-10-14] UX copy pass: the heading says who this block is for.
+    heading: "Already using Omanga?",
     body: SUPPORT_BODY,
     /**
      * ✏️ § 2's one CTA. `emphasis: "primary"` because § 2 specifies a solid

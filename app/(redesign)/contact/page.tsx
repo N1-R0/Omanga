@@ -158,16 +158,7 @@ import { buildPageMetadata } from "@/lib/seo";
  */
 
 /**
- * Title and description are verbatim from § SEO SPECIFICATION § Meta, which
- * states them as 58 and 154 characters.
- *
- * [NOTE] The description says "specialists available 24/7 across Africa", which
- * is § E-E-A-T open question 3 — "Is the 24/7 contact centre claim accurate
- * today, and in which timezone is the team based?" It is transcribed rather than
- * softened because it is Omanga's own published claim on the live Contact page,
- * which is the spec's stated source for every fact on it.
- *
- * The title already carries the brand, so it is set `absolute` — the layout's
+ * The title carries the brand, so the builder sets it `absolute` — the layout's
  * `%s | Omanga` template would otherwise append it twice.
  *
  * `path` is `/contact`, which § Meta specifies as the canonical and which this
@@ -179,11 +170,11 @@ import { buildPageMetadata } from "@/lib/seo";
  * that becomes a per-route override once it exists.
  */
 const contactMeta: PageMetaContent = {
-  // [CHANGED, 2026-10-07] Short form — plain label, no brand suffix, so the Google sitelink reads "Contact Us".
-  // Short sitelink label kept (2026-10-07 rule). Keyword option if that changes: "Contact Omanga support".
-  title: "Contact Us",
+  // [CHANGED, 2026-10-14] UX copy pass: "Contact Omanga: …" pattern (44 chars). The description
+  // drops "24/7 across Africa" (unconfirmed, and health cover is Nigeria only).
+  title: "Contact Omanga: Wallet and Health Cover Help",
   description:
-    "Contact Omanga support about payments, travel insurance or partnerships. Email us or chat on WhatsApp with specialists available 24/7 across Africa.",
+    "Contact Omanga about your wallet, health cover in Nigeria, a claim or a partnership. Email info@omanga.biz or chat with us on WhatsApp.",
   path: "/contact",
 };
 

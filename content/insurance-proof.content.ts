@@ -29,18 +29,8 @@ import type { CallToAction, ImageAsset } from "@/types/content.types";
  * paragraph says a plan is activated "in under five minutes with no paperwork".
  * "5 min" states that conservatively — it claims no faster than the source does.
  *
- * [BLOCKER] Three other places on this page still make the country claim *for
- * insurance*, and this change contradicts them:
- *
- *   - the hero — "travel across 43 African countries knowing that care is
- *     arranged"
- *   - § 4 card 1 — "Coverage across 43 African countries"
- *   - § 7 row 5 — "One plan across 43 African countries, roaming included"
- *
- * All three are the spec's own copy with the count corrected from 52. If the
- * cover does not reach 43 countries, all three are wrong and need rewriting to
- * whatever the real coverage is. Changing one stat and leaving three sentences
- * standing is the worse outcome of the two.
+ * [RESOLVED, 2026-10-14] Cover applies in Nigeria only (owner-confirmed). The
+ * hero and § 7 row 5 no longer claim a country count for health cover.
  *
  * [BLOCKER ×3] Partner roles. The spec labels the three logos "Health cover
  * partner", "Payments partner" and "Technology partner" and marks all three
@@ -55,7 +45,7 @@ import type { CallToAction, ImageAsset } from "@/types/content.types";
  * quotes. No field is declared for one; add it with the consented quotes.
  *
  * [BLOCKER, launch] Spec § 8 § E-E-A-T: this page sells a health product in
- * YMYL territory and needs the named underwriter or HMO stated explicitly, a
+ * YMYL territory. The HMO (Phillips HMO) is now named in the copy; it still needs a
  * working `info@omanga.biz`, policy terms and a claims procedure before launch.
  * `config/site.ts` deliberately holds no underwriter constant.
  */
@@ -89,7 +79,9 @@ export type InsuranceProofContent = {
 };
 
 const STATS: readonly ProofStat[] = [
-  { figure: "5 min", label: "to activate your cover" },
+  // [CHANGED, 2026-10-14] UX copy pass: "activate your plan", since the time
+  // cover starts after activation is unconfirmed.
+  { figure: "5 min", label: "to activate your plan" },
   { figure: "3", label: "plans to choose from" },
   { figure: "24/7", label: "emergency assistance" },
   { figure: "$50", label: "starting price per month" },
@@ -102,9 +94,11 @@ const PARTNERS: readonly ProofPartner[] = [
 ] as const;
 
 export const insuranceProofContent: InsuranceProofContent = {
-  heading: "The Nigerian health providers behind your cover",
+  // [CHANGED, 2026-10-14] UX copy pass: one named provider, not "established
+  // Nigerian health providers".
+  heading: "Who provides your health cover",
   intro:
-    "Your Omanga plan isn't run by a distant insurer. It comes through established Nigerian health providers with real hospital networks. The cover you buy before you fly is the cover that admits you when you arrive.",
+    "Every Omanga plan comes from Phillips HMO, a Nigerian health provider regulated by NAICOM. It runs its own hospital network in Nigeria, so you buy your plan before you travel and use it when you arrive.",
   stats: STATS,
   partners: PARTNERS,
   action: {

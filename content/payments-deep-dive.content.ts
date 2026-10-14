@@ -74,8 +74,9 @@ export type PaymentsDeepDiveContent = {
 };
 
 export const paymentsDeepDiveContent: PaymentsDeepDiveContent = {
-  heading: "Inside the Omanga multi-currency wallet",
-  intro: "Every wallet feature, from funding before you fly to spending when you land.",
+  // [CHANGED, 2026-10-14] UX copy pass: verb-led, plain; the "fly/land" line moves to § 4.
+  heading: "What you can do with the wallet",
+  intro: "Six features, from adding money to paying when you arrive.",
   product: omangaPaymentsProduct,
 } as const;
 

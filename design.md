@@ -754,5 +754,18 @@ footer paragraph.
 - [ ] Re-check UK volumes for "travel money nigeria" when OpenSEO credits are
       topped up. US volume is 0; it is kept as a UK term for UK visitors.
 - [ ] Zira's role in the partner strip is unexplained.
-- [ ] Other pages still carry the 50+ health-cover claim and "Ready to
-      experience Africa?" (shared `ctaContent`). Fix in their own passes.
+- [x] Payments, Insurance, Get Started pages rewritten to the same rules
+      (2026-10-14). Shared `ctaContent` is now "Land with everything sorted".
+- [ ] Hospital categories per plan: plan data says Silver = Category A,
+      Gold = A+B, Diamond = A+B+C; the old FAQ and blog post say Silver and
+      Gold both get A+B. Confirm which is right.
+- [ ] 24/7 support / contact centre is published but not owner-confirmed.
+- [ ] "No commitment, cancel any time" for health cover is published but not
+      owner-confirmed.
+- [ ] Claims: "not a refund claim" wording kept on /insurance; confirm how
+      claims actually work.
+- [ ] Payments hero mockup (`AppHomeMockup.tsx`) shows a "Cards" tab, which
+      conflicts with the no-card rule. Confirm whether the app has cards.
+- [ ] Enquiry form on /get-started still has no privacy notice.
+- [ ] About page, privacy policy and blog posts still say "for Africa"/"across
+      Africa" about insurance in places. Legal copy needs owner sign-off.

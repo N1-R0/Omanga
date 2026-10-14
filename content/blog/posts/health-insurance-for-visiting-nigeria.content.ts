@@ -1,4 +1,3 @@
-import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { BlogPost } from "@/types/blog.types";
 import type { ImageAsset } from "@/types/content.types";
 
@@ -174,9 +173,7 @@ export const healthInsuranceVisitingNigeriaPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "Hospital categories set which facilities you can walk into: Silver and Gold open Category A and B hospitals, and Diamond adds Category C. Every plan includes telemedicine with licensed doctors, a 24/7 contact centre, and cover that travels with you across ",
-            COUNTRIES_SERVED_DISPLAY,
-            " African countries. ",
+            "Hospital categories set which facilities you can walk into: Silver and Gold open Category A and B hospitals, and Diamond adds Category C. Every plan includes telemedicine with licensed doctors, a 24/7 contact centre, and roaming cover across Nigeria. ",
             { text: "Compare the plans side by side", href: "/plans" },
             ", and ask the team about anything your trip needs that you don't see listed, such as cover for a flight home.",
           ],

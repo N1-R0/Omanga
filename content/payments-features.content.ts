@@ -121,15 +121,18 @@ export type PaymentsFeaturesContent = {
 const FEATURES: readonly [PaymentsFeature, PaymentsFeature, PaymentsFeature] = [
   {
     id: "wallet",
-    heading: "Hold and send the currency you need",
+    // [CHANGED, 2026-10-14] UX copy pass: specific (6 currencies) and numerals.
+    heading: "Hold 6 currencies in one wallet",
   },
   {
     id: "rates",
-    heading: "See the real rate before you convert",
+    // [CHANGED, 2026-10-14] UX copy pass: names the rate; "see the rate before
+    // you confirm" is left to the shared deep dive to cut repetition.
+    heading: "Convert at the mid-market rate",
   },
   {
     id: "coverage",
-    heading: `Spend across ${COUNTRIES_SERVED_DISPLAY} African countries`,
+    heading: `Spend in ${COUNTRIES_SERVED_DISPLAY} African countries`,
   },
 ] as const;
 
@@ -145,36 +148,43 @@ const METRICS: readonly PaymentsMetric[] = [
   {
     id: "coverage",
     term: `${COUNTRIES_SERVED_DISPLAY} African countries`,
+    // [CHANGED, 2026-10-14] UX copy pass: says how you spend instead of a slogan.
     description:
-      "One account and one set of rates, from Algiers to Cape Town, however many borders you cross.",
+      "Pay online or in person from one wallet, from Algiers to Cape Town.",
   },
   {
     id: "currencies",
-    term: "Six currencies, one wallet",
+    // [CHANGED, 2026-10-14] UX copy pass: numerals.
+    term: "6 currencies, one wallet",
     description:
-      "Hold, send and receive all six without a separate account for each.",
+      "Hold, send and receive each one without opening a separate account.",
   },
   {
     id: "funding",
-    term: "Three funding currencies",
+    // [CHANGED, 2026-10-14] UX copy pass: numerals; the rate is already the card above.
+    term: "3 funding currencies",
     description:
-      "Top up from USD, GBP or CAD. Every conversion runs at the mid-market rate, with no minimum.",
+      "Add money from USD, GBP or CAD. There is no minimum amount.",
   },
   {
     id: "support",
-    term: "24/7 travel support",
-    description:
-      "Emergency help, day or night, in every country Omanga covers.",
+    // [CHANGED, 2026-10-14] UX copy pass: "emergency help in every country"
+    // read as an insurance claim and health cover is Nigeria-only. Plain support claim.
+    term: "24/7 support",
+    description: "Reach the Omanga team any time, day or night.",
   },
 ] as const;
 
 export const paymentsFeaturesContent: PaymentsFeaturesContent = {
-  eyebrow: "What Omanga Payment Solutions does",
-  heading: "Cross-border payments built for how Africa travels",
+  // [CHANGED, 2026-10-14] UX copy pass: concrete promise instead of a slogan;
+  // body noun is "wallet", not "account".
+  eyebrow: "Multi-currency wallet",
+  heading: "Hold, convert and spend in one place",
   intro:
-    "Three features cover the whole trip, from funding before you fly to paying at a market stall in Accra, all in one account.",
+    "Add money before you fly, convert it at the mid-market rate, then pay at a market stall in Accra or online at home.",
   features: FEATURES,
-  metricsLabel: "Omanga by the numbers",
+  // [CHANGED, 2026-10-14] UX copy pass: names the product the figures describe.
+  metricsLabel: "The wallet in numbers",
   metrics: METRICS,
 } as const;
 

@@ -1,4 +1,5 @@
 // [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
+import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { FaqContent } from "@/types/blog.types";
 
 /**
@@ -10,38 +11,54 @@ import type { FaqContent } from "@/types/blog.types";
  */
 export const INSURANCE_FAQ_HEADING_ID = "insurance-faq-heading";
 
+// [CHANGED, 2026-10-14] UX copy pass: answers name Phillips HMO and Nigeria.
+// Order is load-bearing: home shows items[0], [1] and [2] by index. Two items
+// added at the end (where cover applies, extending a plan).
 export const insuranceFaqContent: FaqContent = {
   heading: "Common questions about Omanga Holiday Insurance",
   items: [
     {
       question: "What is Omanga Holiday Insurance?",
-      // [CHANGED, 2026-10-14] Cover applies in Nigeria only; the old answer
-      // claimed it travelled across every country the wallet works in.
-      answer: "Omanga Holiday Insurance is short-term health insurance for the length of your trip to Nigeria. It comes from Phillips HMO, a Nigerian health provider with its own hospital network.",
+      answer:
+        "Omanga Holiday Insurance is short-term health insurance for your trip to Nigeria. It comes from Phillips HMO, a Nigerian health provider with its own hospital network. Cover applies in Nigeria only.",
     },
     {
       question: "How much does Omanga Holiday Insurance cost?",
       answer:
-        "Omanga Holiday Insurance starts from $50 a month for Silver, $85 a month for Gold and $120 a month for Diamond. There's no commitment, and you can cancel any time.",
+        "Silver costs $50 a month, Gold $85 and Diamond $120. There's no commitment, and you can cancel any time.",
     },
     {
       question: "What does each Omanga plan cover: Silver, Gold or Diamond?",
+      // [CHANGED, 2026-10-14] Per-tier categories cut: the old "Silver and Gold
+      // open A and B" disagreed with the /plans cards (Silver: Category A).
       answer:
-        "Every Omanga plan covers hospital admission, diagnostics, emergency assistance and evacuation. The plans differ in ward type, scan allowances and which hospitals you can use. Silver and Gold open Category A and B hospitals; Diamond adds Category C.",
+        "Every plan covers hospital admission, diagnostics, emergency assistance and evacuation. The plans differ in ward type, scan allowances and which hospital categories you can use. Diamond opens the most hospitals, including Category C.",
     },
     {
-      question: "How quickly does Omanga travel health cover start?",
-      answer: "You can activate your Omanga cover in about five minutes.",
+      // [CHANGED, 2026-10-14] Asks what is known (activation time). When cover
+      // starts after activation is unconfirmed; see design.md copy to-do.
+      question: "How quickly can I get Omanga health cover?",
+      answer:
+        "You can activate a plan from your Omanga account in about five minutes. Buy your plan before you travel to Nigeria.",
     },
     {
       question: "What's included on every Omanga plan?",
       answer:
-        "Every Omanga plan includes telemedicine with licensed doctors, roaming cover across Nigeria, a 24/7 contact centre, the mobile app and a health-tips newsletter.",
+        "Every plan includes telemedicine with licensed doctors, roaming cover across Nigeria, a 24/7 contact centre, the mobile app and a health-tips newsletter.",
     },
     {
       question: "Who provides Omanga Holiday Insurance?",
       answer:
-        "Omanga Holiday Insurance is provided by Phillips HMO, a registered insurance provider regulated by the National Insurance Commission (NAICOM).",
+        "Phillips HMO provides Omanga Holiday Insurance. It's a Nigerian health provider regulated by the National Insurance Commission (NAICOM), with its own hospital network.",
+    },
+    {
+      question: "Does Omanga health cover work outside Nigeria?",
+      answer: `No. Omanga health cover applies in Nigeria only. Your Omanga wallet works in ${COUNTRIES_SERVED_DISPLAY} African countries, but your health cover doesn't.`,
+    },
+    {
+      question: "Can I extend my Omanga plan if my trip runs long?",
+      answer:
+        "Yes. Renew or extend your plan from your Omanga account. There's no commitment, so you can also cancel any time.",
     },
   ],
 };

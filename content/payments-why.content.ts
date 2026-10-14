@@ -76,11 +76,12 @@ const WITHOUT_OMANGA: ComparisonGroup = {
   title: "Without Omanga",
   sentiment: "negative",
   items: [
-    "A home bank card that gets blocked or declined the moment you cross a border",
-    "An exchange-rate markup you only see on your statement",
-    "A separate account or app for every currency you touch",
-    "Transfer fees and minimums on money you have already earned",
-    "A different payment arrangement for every country on the itinerary",
+    // [CHANGED, 2026-10-14] UX copy pass: shorter, plainer rows.
+    "A bank card from home that gets declined abroad",
+    "An exchange-rate markup you only find on your statement",
+    "A separate account or app for each currency",
+    "Transfer fees and minimum amounts",
+    "A different way to pay in each country on your trip",
   ],
 } as const;
 
@@ -97,11 +98,13 @@ const WITH_OMANGA: ComparisonGroup = {
   title: "With Omanga",
   sentiment: "positive",
   items: [
-    "A wallet built for spending across Africa",
-    "Mid-market rates, sourced from public market data and refreshed hourly",
-    "Six currencies held, sent and received from one wallet",
-    "No hidden fees, no minimums, and free transfers between Omanga accounts",
-    `One account, spendable in ${COUNTRIES_SERVED_DISPLAY} African countries, with 24/7 support behind it`,
+    // [CHANGED, 2026-10-14] UX copy pass: names the ₦20 fee instead of "no
+    // hidden fees"; numerals; "wallet" as the one body noun.
+    "One wallet for spending across Africa",
+    "The mid-market rate, from public market data, refreshed hourly",
+    "6 currencies held, sent and received in one wallet",
+    "₦20 per transfer, free transfers between Omanga accounts and no minimums",
+    `Spend in ${COUNTRIES_SERVED_DISPLAY} African countries, with 24/7 support`,
   ],
 } as const;
 
@@ -113,8 +116,9 @@ export type PaymentsWhyContent = {
 
 export const paymentsWhyContent: PaymentsWhyContent = {
   heading: "Why travellers switch to Omanga",
+  // [CHANGED, 2026-10-14] UX copy pass: plainer, shorter.
   intro:
-    "Most people paying their way across Africa juggle a home bank card that may fail, an app that marks up the rate, and cash.",
+    "Paying your way across Africa often means a bank card that gets declined, a rate with a hidden markup, and cash.",
   groups: [WITHOUT_OMANGA, WITH_OMANGA],
 } as const;
 

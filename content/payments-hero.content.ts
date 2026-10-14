@@ -45,8 +45,10 @@ export const paymentsHeroContent: PaymentsHeroContent = {
     into the intro. The helper line ("No minimums. No hidden fees…") is
     removed on instruction.
   */
-  heading: "One wallet for all your travel money across Africa",
-  intro: `Hold, send and convert six currencies at mid-market rates, and spend in ${COUNTRIES_SERVED_DISPLAY} African countries, all in one account.`,
+  // [CHANGED, 2026-10-14] UX copy pass: shorter headline; the intro now leads
+  // with the funding currencies and shows the ₦20 fee (Wise model).
+  heading: "One wallet for your travel money across Africa",
+  intro: `Fund it from USD, GBP or CAD, convert at the mid-market rate and spend in ${COUNTRIES_SERVED_DISPLAY} African countries. Transfers cost ₦20.`,
 
   /*
     [DRIFT, narrowed] The site had three labels in circulation for one action:
@@ -104,7 +106,8 @@ export const paymentsHeroStoreLabel = "Coming soon";
 
 export const paymentsHeroPhoto = {
   src: "/person-wearing-colorful-fashion.jpg",
-  alt: "A smiling traveller in a straw hat and a peach suit, relaxing by a pool.",
+  // [CHANGED, 2026-10-14] UX copy pass: shorter alt text.
+  alt: "A smiling traveller in a straw hat and peach suit by a pool.",
 } as const;
 
 export type AppHomeTransaction = {

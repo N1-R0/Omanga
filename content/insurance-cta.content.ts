@@ -36,22 +36,20 @@ import { INSURANCE_PLANS_HREF } from "@/content/insurance.content";
  * sign-up now reaches this page only through the header and the plan cards.
  *
  * ---------------------------------------------------------------------------
- * [DRIFT] The label is a fourth variant of one destination. The page says
- * `View Insurance Plans` (hero), `See what each plan covers` (§ 4),
- * `View plans` (§ 6.3) and `Compare Plans` (here) — all pointing at `/plans`.
- * The hero and § 6.3 now agree on the verb; this band and § 4 do not. It still
- * wants one decision, but it is a three-way split rather than a four-way one.
+ * [RESOLVED, 2026-10-14] Every /plans link on this page reads `Compare health
+ * plans`.
  *
  * ---------------------------------------------------------------------------
  * The artwork is read from the homepage band rather than redeclared, so the
  * decorative asset has exactly one owner and no `src` is typed twice.
  */
 export const insuranceCtaContent: CtaContent = {
-  heading: "Choose your plan before you fly",
-  intro:
-    "Cover starts from $50 a month with no commitment or long-term contract, so you can fly with the plan that fits your trip.",
+  // [CHANGED, 2026-10-14] UX copy pass: shorter, and "Plans start at" so it
+  // doesn't read as a claim about when cover starts.
+  heading: "Choose your plan before you travel",
+  intro: "Plans start at $50 a month. No commitment, and you can cancel any time.",
   action: {
-    label: "Compare plans",
+    label: "Compare health plans",
     href: INSURANCE_PLANS_HREF,
     emphasis: "primary",
   },

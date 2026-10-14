@@ -49,34 +49,15 @@ import { buildPageMetadata } from "@/lib/seo";
  * placeholder would be exactly the invented content project-context.md forbids.
  *
  * ---------------------------------------------------------------------------
- * Metadata source
+ * Metadata. [CHANGED, 2026-10-14] UX copy pass: a searchable "Omanga: …" title
+ * replaces the short "Get Started" sitelink label. The country figure is
+ * interpolated so it has one owner, and describes the wallet only.
  *
- * Values are from `get-started-seo.md` § Meta, with one correction that
- * project-context.md § Non-negotiable copy facts requires: the country count is
- * **43, not 52**. The SEO document's description says 52; the CEO-approved copy
- * document's tracked changes replace every 52 with 43, and copy outranks the
- * spec. `COUNTRIES_SERVED` is interpolated rather than typed so the number
- * cannot drift from the rest of the site.
- *
- * [QUESTION] Title choice. The SEO document's primary recommendation omits the
- * brand, and that is what ships here. It also offers
- * `Get Started with Omanga | Payments & Travel Insurance, Africa` "if
- * brand-in-title is a house rule" — and the homepage's title does end in
- * "| Omanga", which reads like one. Raised rather than resolved: it is a
- * one-line change and it should be a deliberate decision, not an inference
- * drawn from a single sibling page.
- *
- * `og:image` is not set here. The `(redesign)` segment's `opengraph-image.tsx`
- * already applies to every route beneath it, so this page inherits a real
- * 1200×630 image today. The SEO document asks for the new hero photograph
- * instead; that becomes a per-route override once the asset exists, which is
- * the Hero stage, not this one.
+ * `og:image` is inherited from the `(redesign)` segment's `opengraph-image.tsx`.
  */
 const getStartedMeta: PageMetaContent = {
-  // [CHANGED, 2026-10-07] Short form — plain label, no brand suffix, so the Google sitelink reads "Get Started".
-  // Short sitelink label kept (2026-10-07 rule). Keyword option if that changes: "Get started with Omanga".
-  title: "Get Started",
-  description: `Get started with Omanga: a travel wallet and health insurance for Africa in one account. Spend in ${COUNTRIES_SERVED_DISPLAY} African countries. Choose payments, insurance or both.`,
+  title: "Omanga: Get Started with a Travel Wallet and Health Cover",
+  description: `Open a free Omanga wallet to spend in ${COUNTRIES_SERVED_DISPLAY} African countries, add health cover for Nigeria from Phillips HMO, or set up both in a single account.`,
   path: "/get-started",
 };
 
@@ -173,14 +154,9 @@ export default function GetStartedPage() {
         content and heading id as props and knows nothing about which page mounts
         it. Brand fill after the dark enquiry section, so the page still alternates.
 
-        Its action is the homepage hero's "Open Your Free Wallet" rather than the
-        site's `Get Started` primary, which now resolves to this page. See
+        Its action is the homepage hero's "Open your free wallet" rather than the
+        site's `Get Started` primary, which resolves to this page. See
         `content/get-started-cta.content.ts`.
-
-        [DEFECT] Its heading duplicates the enquiry section's above it — both are
-        § Section 4's approved heading, and the approved document gives this page
-        one closing section rather than two. Recorded in the content module with
-        the three ways out; it needs a copy decision, not a code change.
       */}
       {/*
         [ADDED, 2026-10-10] The shared "Why Omanga" and FAQ bands, on the

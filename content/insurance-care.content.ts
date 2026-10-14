@@ -33,9 +33,8 @@ import type { CallToAction, ImageAsset } from "@/types/content.types";
  * homepage document applies the same rule to its deep dive and Without/With
  * sections." `View plans` added on instruction.
  *
- * [DRIFT] Its label is a third variant. The page now says `Compare Insurance
- * Plans` (hero), `See what each plan covers` (§ 4), `View plans` (here) and
- * `Compare Plans` (§ 9) — four labels for one destination.
+ * [RESOLVED, 2026-10-14] Every /plans link on this page reads `Compare health
+ * plans`.
  *
  * ---------------------------------------------------------------------------
  * [BLOCKER] Hospital categories are still undefined.
@@ -80,11 +79,13 @@ export type InsuranceCareContent = {
 };
 
 export const insuranceCareContent: InsuranceCareContent = {
-  // [CHANGED, 2026-10-10] Takes the spec's "while you travel" wording noted above.
-  heading: "How you reach care while you travel",
-  body: "Your plan comes through established Nigerian health providers with real hospital networks. You reach care through a local relationship, not a refund claim you file from abroad. Hospital categories set which facilities you can use: Silver and Gold open Category A and B, Diamond adds Category C.",
+  // [CHANGED, 2026-10-14] UX copy pass: names Phillips HMO and Nigeria (cover
+  // applies in Nigeria only). Per-tier categories left to the /plans cards,
+  // which disagree with the old "Silver and Gold open A and B" line.
+  heading: "How you get care in Nigeria",
+  body: "Your plan comes from Phillips HMO, which runs its own hospital network in Nigeria. You get care through that network, not through a refund claim. Your plan sets which hospital categories you can use, and Diamond adds Category C.",
   action: {
-    label: "Compare plans",
+    label: "Compare health plans",
     href: INSURANCE_PLANS_HREF,
     emphasis: "primary",
   },

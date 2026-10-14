@@ -1,4 +1,5 @@
-// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
+// [CHANGED, 2026-10-14] UX copy pass (design.md § Home UX copy pass): Material form copy —
+// verb-first actions, errors that say what happened and what to do, product nouns in the options.
 import { CONTACT_EMAIL } from "@/config/site";
 import { ENQUIRY_FIELDS } from "@/lib/enquiry";
 import type { SelectOption } from "@/components/ui/Select";
@@ -6,10 +7,8 @@ import type { SelectOption } from "@/components/ui/Select";
 /**
  * The Get Started page's closing enquiry section.
  *
- * Verbatim from `Omanga-Get-Started-Copy - NJ reviewed.docx`, § Section 4 —
- * Closing section, with NJ's tracked changes accepted. The heading is
- * corroborated by `get-started-seo.md` § Heading hierarchy, which lists "Ready to
- * experience Africa?" as this section's H2.
+ * Structure from `Omanga-Get-Started-Copy - NJ reviewed.docx`, § Section 4. The
+ * strings are the 2026-10-14 UX copy pass.
  *
  * ---------------------------------------------------------------------------
  * [DISCREPANCY] Four of the screenshot's six fields are not approved copy.
@@ -48,27 +47,6 @@ import type { SelectOption } from "@/components/ui/Select";
  * a privacy notice is a P0, and it is a routing and legal task rather than a copy
  * one. The element is absent rather than placeheld.
  *
- * ---------------------------------------------------------------------------
- * [SHORTENED] The intro is now one approved sentence pair, not two.
- *
- * It carried both paragraphs the document gives § Section 4. The first — "Open
- * your Omanga account and travel with your payments and your health cover already
- * handled. The spirit of Ubuntu lives in us all…" — is dropped, not rewritten.
- * Shortening by selection rather than by editing is the only way to shorten
- * approved copy without becoming its author.
- *
- * Which one goes was not a coin toss. The remaining line is the one that explains
- * what the form is for and what pressing the button does; the dropped one is a
- * brand statement about Omanga that says nothing about the form beneath it. The
- * heading already carries the invitation.
- *
- * Two things follow. The dropped sentence is not lost from the site — it is
- * `cta.content.ts` verbatim, so it still ships on the homepage's closing band,
- * and dropping it here also settles the duplicate-body-copy question the previous
- * version of this note raised. And the heading is unchanged, because the approved
- * document does not require otherwise: § Section 4 gives it as "Ready to
- * experience Africa?", which `get-started-seo.md` § Heading hierarchy also lists
- * as this section's H2. The brief's "Book a demo" is the benchmark's heading.
  */
 
 /**
@@ -91,17 +69,20 @@ import type { SelectOption } from "@/components/ui/Select";
 export const ENQUIRY_CHROME = {
   requiredNote: "required",
   optionalNote: "optional",
-  unselectedLabel: "Select one",
+  // [CHANGED, 2026-10-14] UX copy pass: "Choose" matches the section's "Choose what to set up first".
+  unselectedLabel: "Choose one",
 } as const;
 
 /**
- * The four approved choices, in the approved order, preceded by the unselected
- * entry. The document gives them as "Payments · Insurance · Both · Not sure yet".
+ * The four choices, in the approved order, preceded by the unselected entry.
+ * The values are the wire protocol and do not change; the labels also name the
+ * choice in the delivered email (`lib/enquiry-email.ts`).
  */
+// [CHANGED, 2026-10-14] UX copy pass: labels use the body nouns (wallet, health cover); values unchanged.
 const NEEDS_OPTIONS: readonly SelectOption[] = [
   { value: "", label: ENQUIRY_CHROME.unselectedLabel },
-  { value: "payments", label: "Payments" },
-  { value: "insurance", label: "Insurance" },
+  { value: "payments", label: "Wallet" },
+  { value: "insurance", label: "Health cover" },
   { value: "both", label: "Both" },
   { value: "not-sure", label: "Not sure yet" },
 ] as const;
@@ -161,49 +142,57 @@ export type GetStartedEnquiryContent = {
  * of problem from an unapproved sentence.
  */
 export const getStartedEnquiryContent: GetStartedEnquiryContent = {
-  /* [CHANGED, 2026-10-10] Was "Ready to experience Africa?", the same text as the
-     closing CTA band's h2 below it. A distinct, descriptive heading resolves the
-     duplicate-heading defect recorded in get-started-cta.content.ts (way out 1). */
-  heading: "Get help choosing the right Omanga solution",
+  // [CHANGED, 2026-10-14] UX copy pass: the heading names the visitor's problem; the intro says what
+  // the form does. No reply time is promised (none is confirmed).
+  heading: "Not sure where to start? Ask us",
   intro:
-    "Tell us where you’re travelling and what you need, and we’ll point you to the right one.",
+    "Tell us about your trip and we’ll reply by email to help you choose the wallet, health cover or both.",
   fields: {
     name: {
       id: ENQUIRY_FIELDS.name,
       label: "Name",
-      errorWhenEmpty: "Enter your name so we know who to reply to.",
+      // [CHANGED, 2026-10-14] UX copy pass: shorter; the instruction is the whole message.
+      errorWhenEmpty: "Enter your name",
     },
     email: {
       id: ENQUIRY_FIELDS.email,
       label: "Email address",
-      errorWhenEmpty: "Enter an email address like name@example.com",
+      // [CHANGED, 2026-10-14] UX copy pass: shown for empty and malformed addresses, so it covers both.
+      errorWhenEmpty: "Enter your email address, like name@example.com",
     },
     destination: {
       id: ENQUIRY_FIELDS.destination,
-      label: "Destination",
+      // [CHANGED, 2026-10-14] UX copy pass: was "Destination"; plain question form.
+      label: "Where you’re travelling",
     },
     needs: {
       id: ENQUIRY_FIELDS.needs,
-      label: "What you need",
+      // [CHANGED, 2026-10-14] UX copy pass: was "What you need"; ties the field to the page's choice.
+      label: "What you want to set up",
     },
   },
   needsOptions: NEEDS_OPTIONS,
   submitLabel: "Send enquiry",
-  submitPendingLabel: "Sending",
-  helperText:
-    // [VERIFY] "no monthly fee" is a fee claim that needs to stay true.
-    "It takes a minute and there’s no obligation. Holding a wallet has no monthly fee.",
+  // [CHANGED, 2026-10-14] UX copy pass: ellipsis marks an action in progress.
+  submitPendingLabel: "Sending…",
+  // [CHANGED, 2026-10-14] UX copy pass: dropped "no monthly fee" (unconfirmed fee claim).
+  helperText: "It takes about a minute, and there’s no obligation to sign up.",
+  // [CHANGED, 2026-10-14] UX copy pass: was "Check your inbox for the next step" — nothing is sent
+  // to the visitor automatically. The link label now matches its /payments destination.
   successMessage: {
-    lead: "Thanks, we’ve got your enquiry. Check your inbox for the next step, or ",
-    link: { label: "open your free wallet", href: "/payments" },
-    trail: " now.",
+    lead: "Enquiry sent. We’ll reply to the email address you gave us. Until then, you can ",
+    link: { label: "explore the wallet", href: "/payments" },
+    trail: ".",
   },
+  // [CHANGED, 2026-10-14] UX copy pass: fields are validated before sending, so the failure is ours;
+  // no longer blames the email address.
   failureMessage: {
-    lead: "Your enquiry didn’t send. Check your email address and try again, or email us at ",
+    lead: "Your enquiry didn’t send. Try again, or email us at ",
     link: { label: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
     trail: ".",
   },
-  errorSummaryLabel: "There is a problem with this form",
+  // [CHANGED, 2026-10-14] UX copy pass: says what happened and what to do.
+  errorSummaryLabel: "Your enquiry wasn’t sent. Fix the fields below.",
 } as const;
 
 /** Shared so the `h2` and the section's `aria-labelledby` cannot drift apart. */

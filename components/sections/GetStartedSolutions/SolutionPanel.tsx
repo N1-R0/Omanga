@@ -81,7 +81,7 @@ export function SolutionPanel({
       }
       action={
         /*
-          A link, not a button — it navigates to a route, and "the rendered
+          A link, not a button — it navigates, and "the rendered
           element follows semantics: `button` for actions, `a` for navigation,
           chosen by prop, never by styling".
 
@@ -99,6 +99,8 @@ export function SolutionPanel({
           variant="primary"
           tone="light"
           href={content.action.href}
+          // [CHANGED, 2026-10-14] UX copy pass: the wallet panel now links off-site to sign-up.
+          isExternal={content.action.isExternal}
         >
           {content.action.label}
         </Button>

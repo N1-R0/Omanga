@@ -69,32 +69,23 @@ import { buildPageMetadata } from "@/lib/seo";
  * this page. Both are mounted on `app/(redesign)/plans/page.tsx` instead — see
  * the `[CHANGED]` note in `content/insurance.content.ts` — so the four controls
  * the spec sends to `#plans` (the hero primary, § 4's contextual link, the care
- * band's `View plans`, the closing CTA) are routes to `/plans` rather than
+ * band's link, the closing CTA) are routes to `/plans` rather than
  * anchors, and all four now land on rendered content.
  */
 
 /**
- * Title and description are verbatim from `Omanga-Insurance-Page-Content-Spec`
- * § 11.1, which states them as 58 and 154 characters. Both are transcribed
- * rather than interpolated: neither contains a country count, so the 52/43
- * correction applied across the content modules does not reach them.
- *
- * The title already ends in "| Omanga", so it is set `absolute` — the layout's
- * `%s | Omanga` template would otherwise append the brand twice.
+ * Title is set `absolute` by the shared builder, so it carries the brand itself.
  *
  * `og:image` is not set. The `(redesign)` segment's `opengraph-image.tsx`
  * applies to every route beneath it, so this page inherits a real 1200×630
- * image today. § 11.1 asks for OG image to be "set"; a per-route override
- * becomes possible once the hero photograph exists.
+ * image today.
  */
 const insuranceMeta: PageMetaContent = {
-  // [CHANGED, 2026-10-11] Keyword title, replacing the 2026-10-07 short sitelink
-  // label "Insurance", for the same reason as Payments ("travel insurance
-  // africa"). See design.md § SEO audit.
-  title: "Travel Health Insurance for Africa | Omanga",
-  // [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
+  // [CHANGED, 2026-10-14] UX copy pass: cover applies in Nigeria only, so the
+  // title names Nigeria ("travel insurance nigeria"), in the home "Omanga: …" form.
+  title: "Omanga: Travel Health Insurance for Nigeria",
   description:
-    "Short-term travel health insurance for Africa from established Nigerian health providers. Silver, Gold and Diamond plans from $50 a month. Compare plans today.",
+    "Short-term health insurance for your trip to Nigeria from Phillips HMO, regulated by NAICOM. Plans from $50 a month, no commitment. Compare health plans.",
   path: "/insurance",
 };
 
@@ -170,7 +161,7 @@ export default function InsurancePreviewPage() {
         own band with an `h2`. Light, after the dark deep dive, so the page
         alternates.
 
-        [DEVIATION] The spec gives this section no CTA. `View plans` added on
+        [DEVIATION] The spec gives this section no CTA. `Compare health plans` added on
         instruction; see the content module.
       */}
       <InsuranceCare

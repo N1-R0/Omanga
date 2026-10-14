@@ -14,16 +14,20 @@ import type { FaqContent } from "@/types/blog.types";
 export const PAYMENTS_FAQ_HEADING_ID = "payments-faq-heading";
 
 export const paymentsFaqContent: FaqContent = {
-  heading: "Questions about the Omanga travel money wallet",
+  // [CHANGED, 2026-10-14] UX copy pass: shorter.
+  heading: "Questions about the Omanga wallet",
   items: [
     {
       question: "What is Omanga Payment Solutions?",
-      answer: `Omanga Payment Solutions is a multi-currency wallet for travel across Africa. You can hold, send and receive money in six currencies. Fund it from USD, GBP or CAD and spend from your balance in ${COUNTRIES_SERVED_DISPLAY} African countries.`,
+      // [CHANGED, 2026-10-14] UX copy pass: one sentence fewer; adds "free to open". Shown on home (index 0).
+      answer: `Omanga Payment Solutions is a multi-currency wallet for travel in Africa. Fund it from USD, GBP or CAD, hold 6 currencies and spend in ${COUNTRIES_SERVED_DISPLAY} African countries, online or in person. It is free to open.`,
     },
     {
       question: "How do I fund my Omanga wallet?",
+      // [CHANGED, 2026-10-14] UX copy pass: verb-first; "see the rate before you
+      // confirm" is left to the shared deep dive. Shown on home (index 1).
       answer:
-        "You fund your Omanga wallet from USD, GBP or CAD. Every conversion runs at the mid-market rate, and you see the rate before you confirm.",
+        "Add money from USD, GBP or CAD, with no minimum amount. Omanga converts it at the mid-market rate.",
     },
     {
       // [CHANGED, 2026-10-14] Was "Does Omanga charge hidden fees?" answered
@@ -35,17 +39,20 @@ export const paymentsFaqContent: FaqContent = {
     },
     {
       question: "What exchange rate does Omanga use?",
+      // [CHANGED, 2026-10-14] UX copy pass: dropped "no markup", which implied
+      // conversion is free (unconfirmed), and a repeat of "see the rate first".
       answer:
-        "Omanga uses the mid-market rate, taken from public market data and refreshed hourly. You see the real rate before you convert, so no markup turns up later on your statement.",
+        "Omanga uses the mid-market rate: the midpoint between buying and selling prices, taken from public market data and refreshed hourly.",
     },
     {
       question: "Where can I spend money with Omanga?",
-      answer: `You can spend from your Omanga balance in ${COUNTRIES_SERVED_DISPLAY} African countries, online or in person.`,
+      answer: `You can spend from your Omanga wallet in ${COUNTRIES_SERVED_DISPLAY} African countries, online or in person.`,
     },
     {
       question: "Who operates the Omanga wallet?",
+      // [CHANGED, 2026-10-14] UX copy pass: active voice, shorter.
       answer:
-        "The Omanga wallet is operated by Fuspay Technologies, a registered microfinance bank holding a banking licence from the Central Bank of Nigeria.",
+        "Fuspay Technologies operates the Omanga wallet. Fuspay is a microfinance bank licensed by the Central Bank of Nigeria.",
     },
   ],
 };

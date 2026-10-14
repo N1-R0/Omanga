@@ -85,7 +85,7 @@ export function InsuranceHero({ content, headingId }: InsuranceHeroProps) {
 
               {/*
                 `role="small"` rather than a caption. It is a plain qualifier on
-                the offer — "Cover for your trip, not a year" — and not legal
+                the offer — "No commitment. Cancel any time." — and not legal
                 text, so it takes no separate treatment.
               */}
               <Text role="small" measure="narrow">

@@ -92,7 +92,9 @@ const SERVICES: FooterLinkColumn = {
       now the single source for this destination, so the two cannot drift again.
     */
     {
-      label: `Coverage — ${COUNTRIES_SERVED_DISPLAY} countries`,
+      // [CHANGED, 2026-10-14] Sits under insurance links, and cover is Nigeria
+      // only; the 50+ count belongs to the wallet.
+      label: "Where cover applies",
       href: INSURANCE_COVERAGE_HREF,
     },
     /*

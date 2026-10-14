@@ -155,17 +155,19 @@ import type { PageMetaContent } from "@/types/content.types";
  * currencies, three funding currencies, mid-market rates, the country count —
  * with the instrument replaced by the balance.
  *
- * The title already ends in "| Omanga", so `buildPageMetadata` sets it absolute
- * and the layout's `%s | Omanga` template does not append the brand twice.
+ * `buildPageMetadata` sets the title absolute, so the layout's `%s | Omanga`
+ * template does not append the brand.
  */
 const paymentsMeta: PageMetaContent = {
   // [CHANGED, 2026-10-11] Keyword title, replacing the 2026-10-07 short sitelink
   // label "Payment Solution". The site has no rankings yet, so sitelinks don't
   // apply; the title now names the searches this page should win ("travel
   // wallet" ~4,400/mo, "multi currency wallet"). See design.md § SEO audit.
-  title: "Multi-Currency Travel Wallet for Africa | Omanga",
-  // [CHANGED, 2026-10-10] Copy pass: keyword-first, ends on a call to action, 158 characters with "50+". Same facts.
-  description: `A multi-currency travel wallet for Africa: hold and send six currencies, fund in USD, GBP or CAD at mid-market rates, spend in ${COUNTRIES_SERVED_DISPLAY} countries. Open yours free.`,
+  // [CHANGED, 2026-10-14] UX copy pass: "Omanga: …" format to match home; adds
+  // "travel money" (UK term). 53 characters.
+  title: "Omanga: Multi-Currency Travel Money Wallet for Africa",
+  // [CHANGED, 2026-10-14] UX copy pass: names the ₦20 fee and "send money"; ~155 characters with "50+".
+  description: `A multi-currency travel wallet: fund from USD, GBP or CAD, convert at the mid-market rate, send money for ₦20 and spend in ${COUNTRIES_SERVED_DISPLAY} African countries.`,
   path: "/payments",
 };
 

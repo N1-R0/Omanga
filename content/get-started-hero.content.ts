@@ -1,63 +1,27 @@
-// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
+// [CHANGED, 2026-10-14] UX copy pass (design.md § Home UX copy pass): verb-first H1, wallet vs
+// health cover nouns, named provider, cover scoped to Nigeria. Replaces the 2026-10-10 pass.
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { Eyebrow } from "@/types/content.types";
 
 /**
  * Get Started hero content.
  *
- * Verbatim from `Omanga-Get-Started-Copy - NJ reviewed.docx`, § Section 2 —
- * Hero, with NJ's tracked changes accepted. The heading is corroborated
- * independently by `get-started-seo.md` § Heading hierarchy, which lists the
- * same string as the page's single H1.
+ * Structure from `Omanga-Get-Started-Copy - NJ reviewed.docx` § Section 2; the
+ * strings are now the 2026-10-14 UX copy pass rather than that document's text.
  *
- * ---------------------------------------------------------------------------
- * [DISCREPANCY] The screenshot's copy is not this page's copy.
+ * [DISCREPANCY] The Hero screenshot carries the benchmark's copy ("ClarityGo",
+ * insurance-page heading). It is read for layout only.
  *
- * The Hero screenshot reads "ClarityGo" in the pill, "Travel health insurance
- * for Africa, sorted before you fly" as the heading, and a paragraph ending
- * "travel across 52 African countries". None of it is in the approved document:
- * "ClarityGo" is the structural benchmark's own brand name — the same string
- * `content/solutions.content.ts` already refuses to ship — the heading is
- * insurance-page copy rather than a router's, and 52 is the country count NJ's
- * tracked changes struck out.
- *
- * Precedence is copy doc → visual reference, so the approved strings ship and
- * the screenshot is read for layout only. Raised, not resolved: if the intent is
- * that this page's hero should carry insurance copy, that is a copy change and
- * has to come back through the approval document.
- *
- * ---------------------------------------------------------------------------
- * [RESOLVED — needs confirmation] The country count is missing from the source.
- *
- * The approved paragraph reads "a multi-currency wallet for spending across
- * ␣␣African countries" — two spaces, no number. The figure was removed and
- * never replaced, so the document as written cannot be rendered verbatim.
- *
- * `COUNTRIES_SERVED` is interpolated rather than a number being typed here. That
- * is the site's single owner of the figure, it is the value NJ's own tracked
- * change wrote into the neighbouring paragraph of this same document
- * (52 → 43), and project-context.md § Non-negotiable copy facts states 43
- * "everywhere". So this is the project's already-resolved fact being applied,
- * not a number invented at the component. Confirm the blank was meant to be 43.
+ * `COUNTRIES_SERVED_DISPLAY` is interpolated so the figure has one owner. It
+ * describes the wallet only: health cover applies in Nigeria only.
  */
-/**
- * [SHORTENED] The document's second hero line is dropped, not rewritten.
- *
- * § Section 2 follows the paragraph with "Select the solution that fits your trip,
- * or choose both." Removed on instruction, by selection rather than by editing —
- * the remaining paragraph is the one that says what Omanga is.
- *
- * Nothing indexed is lost. The dropped line is an instruction to choose between
- * the two offerings, and the section that presents that choice opens with its own
- * approved version of it: "Start with the one your trip needs most — you can add
- * the other at any time, without a second signup."
- */
-const INTRO = `Get started with Omanga before you fly: one account for a multi-currency wallet in ${COUNTRIES_SERVED_DISPLAY} African countries and holiday health insurance from established Nigerian providers.`;
+// [CHANGED, 2026-10-14] UX copy pass: says what each product does and where, names Phillips HMO.
+const INTRO = `Spend in ${COUNTRIES_SERVED_DISPLAY} African countries with a free wallet, and get health cover from Phillips HMO for your time in Nigeria. Both sit in one Omanga account.`;
 
 export type GetStartedHeroContent = {
   readonly eyebrow: Eyebrow;
   readonly heading: string;
-  /** One paragraph. See the note above on which of the document's two, and why. */
+  /** One paragraph. */
   readonly intro: string;
 };
 
@@ -70,8 +34,8 @@ export type GetStartedHeroContent = {
  */
 export const getStartedHeroContent: GetStartedHeroContent = {
   eyebrow: "Get started",
-  // [CHANGED, 2026-10-10] ≤ 8 words and carries the page's primary keyword.
-  heading: "Your travel wallet and health insurance for Africa",
+  // [CHANGED, 2026-10-14] UX copy pass: verb-first, 8 words, states the choice the page exists for.
+  heading: "Get a travel wallet, health cover or both",
   intro: INTRO,
 } as const;
 

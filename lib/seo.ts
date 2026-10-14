@@ -58,7 +58,7 @@ const OG_IMAGE = {
   url: absoluteUrl("/opengraph-image"),
   width: 1200,
   height: 630,
-  alt: "Omanga — travel money wallet and holiday insurance for Africa",
+  alt: "Omanga — travel money wallet and health insurance for Nigeria",
 } as const;
 
 export type PageMetadataOptions = {

@@ -1,7 +1,6 @@
 // [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import { WALLET_URL } from "@/config/site";
 import { ctaContent, type CtaContent } from "@/content/cta.content";
-import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 
 /**
  * The closing conversion band — spec § 9.
@@ -45,14 +44,13 @@ import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
  * ---------------------------------------------------------------------------
  * [CONSTRAINT] Closing copy recaps; it never introduces.
  *
- * Every claim in the paragraph below is made earlier on the page: the funding
- * currencies and mid-market rates in § 4's metric row, the country count in § 4's
- * third card, the fees and minimums in § 5's fourth row, 24/7 support in § 5's
- * fifth. Nothing here is new, which is what a closing band is for.
+ * Every claim in the paragraph below is made earlier on the page: free to open
+ * and no minimums in the FAQ and § 4, the ₦20 fee in the hero and § 5, the
+ * operator and its licence in the FAQ. Nothing here is new, which is what a
+ * closing band is for.
  *
  * [CHANGED from spec] § 9's paragraph reads "pay your way across 52+ African
- * countries with one card". The card goes, per the page header note, and the
- * count is interpolated.
+ * countries with one card". The card goes, per the page header note.
  */
 
 /**
@@ -63,8 +61,10 @@ import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
  * `src` is typed twice.
  */
 export const paymentsCtaContent: CtaContent = {
-  heading: "Start spending across Africa today",
-  intro: `Open your Omanga wallet in minutes, fund it from USD, GBP or CAD at mid-market rates, and spend in ${COUNTRIES_SERVED_DISPLAY} African countries. No minimums, no hidden fees and 24/7 support from the day you sign up.`,
+  // [CHANGED, 2026-10-14] UX copy pass: heading no longer repeats the button;
+  // intro shows the fee and names the regulator next to the CTA (Wise model).
+  heading: "Get your travel money ready before you fly",
+  intro: "Free to open, no minimums, ₦20 per transfer. Fuspay Technologies, a microfinance bank licensed by the Central Bank of Nigeria, operates the wallet.",
   action: {
     label: "Open your free wallet",
     href: WALLET_URL,

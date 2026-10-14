@@ -38,9 +38,11 @@ export type CtaContent = {
 };
 
 export const ctaContent: CtaContent = {
-  heading: "Ready to experience Africa?",
+  // [CHANGED, 2026-10-14] UX copy pass: "Ready to experience Africa?" was a
+  // cliché with no promise. Matches the home closing panel.
+  heading: "Land with everything sorted",
   intro:
-    "Open your account and travel with your payments and health cover already sorted.",
+    "Open your free wallet, add health cover, and arrive in Nigeria with both ready.",
   action: PRIMARY_CTA,
   graphic: GRAPHIC,
 } as const;

@@ -54,7 +54,8 @@ export const insuranceInclusionsContent: InsuranceInclusionsContent = {
       id: "roaming",
       term: "Roaming",
       description:
-        "Your cover travels with you across the countries Omanga serves.",
+        // [CHANGED, 2026-10-14] Cover applies in Nigeria only.
+        "Your cover goes with you wherever you travel in Nigeria.",
     },
     {
       id: "contact-centre",

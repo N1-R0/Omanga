@@ -1,14 +1,15 @@
-// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
+// [CHANGED, 2026-10-14] UX copy pass (design.md § Home UX copy pass): owner-confirmed facts,
+// wallet / health cover nouns, and each panel's action is the next step rather than "explore".
+import { HERO_PRIMARY_ACTION } from "@/content/hero.content";
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { CallToAction, Eyebrow } from "@/types/content.types";
 
 /**
  * The Two Solutions content.
  *
- * Verbatim from `Omanga-Get-Started-Copy - NJ reviewed.docx`, § Section 3 — The
- * two solutions, with NJ's tracked changes accepted. The section heading and both
- * card headings are corroborated independently by `get-started-seo.md` § Heading
- * hierarchy, which lists them as the page's H2 and its two H3s.
+ * Structure from `Omanga-Get-Started-Copy - NJ reviewed.docx`, § Section 3. The
+ * panel headings (the product names, as H3s) are still that document's; the
+ * other strings are the 2026-10-14 UX copy pass.
  *
  * ---------------------------------------------------------------------------
  * [DISCREPANCY] The screenshot's copy is the benchmark's, not this page's.
@@ -66,28 +67,23 @@ import type { CallToAction, Eyebrow } from "@/types/content.types";
 
 const PAYMENTS: GetStartedSolution = {
   heading: "Omanga Payment Solutions",
-  /**
-   * `COUNTRIES_SERVED` is interpolated where the document writes "43". The figure
-   * is verbatim either way — this is the number NJ's tracked change put here,
-   * replacing 52 — but the site has one owner for it, and typing it again would
-   * be a second place for it to go stale.
-   */
-  // [VERIFY] "6 currencies" is the open question in design-lab/type-and-copy-research.md; home says "several".
-  body: `A multi-currency wallet for spending across Africa. Fund it in USD, GBP or CAD at transparent real-time rates, and send and receive in 6 currencies. Pay from your balance in ${COUNTRIES_SERVED_DISPLAY} African countries, online or in person, with no surprise exchange-rate costs at checkout.`,
-  action: {
-    label: "Explore payments",
-    href: "/payments",
-    emphasis: "primary",
-  },
+  // [CHANGED, 2026-10-14] UX copy pass: owner-confirmed facts (six currencies, mid-market rate,
+  // ₦20 transfers, Fuspay) replace "transparent real-time rates" and "no surprise costs".
+  body: `A wallet for your trip. Fund it from USD, GBP or CAD, hold six currencies and see the mid-market rate before you confirm. Spend online or in person in ${COUNTRIES_SERVED_DISPLAY} African countries. It’s free to open, transfers cost ₦20 and transfers to other Omanga users are free. Operated by Fuspay, licensed by the Central Bank of Nigeria.`,
+  // [CHANGED, 2026-10-14] UX copy pass: was "Explore payments" (/payments). The page's job is to
+  // get the wallet opened, so the panel links straight to sign-up. One owner for label and URL.
+  action: HERO_PRIMARY_ACTION,
 } as const;
 
 const INSURANCE: GetStartedSolution = {
   heading: "Omanga Holiday Insurance",
-  // [VERIFY] "under 5 minutes" and "no paperwork" are claims that need evidence.
-  body: "Short-term travel medical cover for the length of your trip, from established Nigerian health providers with local care networks. Choose Silver, Gold or Diamond and activate it in under 5 minutes, with no paperwork. Get care in any country Omanga covers.",
+  // [CHANGED, 2026-10-14] UX copy pass: names Phillips HMO and the prices, scopes cover to Nigeria.
+  // Dropped unverified "under 5 minutes" / "no paperwork" and the wrong "any country Omanga covers".
+  body: "Short-term health cover for your time in Nigeria, from Phillips HMO, regulated by NAICOM. Choose Silver at $50, Gold at $85 or Diamond at $120 a month. Cover applies in Nigeria only.",
+  // [CHANGED, 2026-10-14] UX copy pass: was "Explore holiday insurance". Choosing a plan is the next step.
   action: {
-    label: "Explore holiday insurance",
-    href: "/insurance",
+    label: "Compare health plans",
+    href: "/plans",
     emphasis: "primary",
   },
 } as const;
@@ -122,11 +118,11 @@ export type GetStartedSolutionsContent = {
  * takes on the homepage's equivalent section.
  */
 export const getStartedSolutionsContent: GetStartedSolutionsContent = {
-  eyebrow: "Two solutions, one account",
-  // [CHANGED, 2026-10-10] Descriptive H2 carrying the primary keyword.
-  heading: "Choose your travel wallet, health insurance or both",
+  // [CHANGED, 2026-10-14] UX copy pass: eyebrow, H2 and intro say what to do here, in body nouns.
+  eyebrow: "One account",
+  heading: "Choose what to set up first",
   intro:
-    "Use Omanga Payment Solutions and Omanga Holiday Insurance alone or together in one account, and add the other later without signing up again.",
+    "Start with the one your trip needs most. You can add the other later without signing up again.",
   solutions: [PAYMENTS, INSURANCE],
 } as const;
 

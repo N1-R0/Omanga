@@ -1,5 +1,4 @@
 // [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
-import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { ComparisonGroup } from "@/content/why-omanga.content";
 
 /**
@@ -26,13 +25,15 @@ const WITHOUT_OMANGA: ComparisonGroup = {
   id: "without-omanga-insurance",
   title: "Without Omanga",
   sentiment: "negative",
+  // [CHANGED, 2026-10-14] UX copy pass: row 5 was about multi-country cover,
+  // which the plan does not give (Nigeria only). Now 24/7 help, a confirmed fact.
   items: [
-    "A policy from an insurer with no local hospital network",
-    "Paying up front and claiming it back weeks later",
-    "An annual policy that keeps charging after you're home",
-    "One rigid level of cover at one price",
-    "A new arrangement for every country on the itinerary",
-    "Insurance in one place, travel money in another",
+    "An insurer with no hospital network in Nigeria",
+    "Paying up front and claiming the money back later",
+    "An annual policy you keep paying for after you leave",
+    "One level of cover at one price",
+    "No one to call when you need a doctor at night",
+    "Health cover in one app, travel money in another",
   ],
 } as const;
 
@@ -40,13 +41,15 @@ const WITH_OMANGA: ComparisonGroup = {
   id: "with-omanga-insurance",
   title: "With Omanga",
   sentiment: "positive",
+  // [CHANGED, 2026-10-14] UX copy pass: names Phillips HMO; drops the
+  // 50+-country claim (cover applies in Nigeria only).
   items: [
-    "Cover delivered through established Nigerian health providers",
-    "Hospital admission through your provider, not a refund form",
-    "Short-term cover for the length of your trip; cancel any time",
-    "Three plans from $50 a month, so the cover matches your trip",
-    `One plan across ${COUNTRIES_SERVED_DISPLAY} African countries, roaming included`,
-    "Insurance and your Omanga wallet in the same account",
+    "Cover from Phillips HMO, with its own hospital network in Nigeria",
+    "Hospital admission through Phillips HMO, not a refund form",
+    "Monthly plans with no commitment. Cancel any time",
+    "Three plans from $50 to $120 a month",
+    "A 24/7 contact centre and telemedicine with licensed doctors",
+    "Your plan and your wallet in one account",
   ],
 } as const;
 
@@ -58,8 +61,9 @@ export type InsuranceWhyContent = {
 
 export const insuranceWhyContent: InsuranceWhyContent = {
   heading: "Why choose Omanga Holiday Insurance",
+  // [CHANGED, 2026-10-14] UX copy pass: Nigeria, not Africa; fluff cut.
   intro:
-    "Many travellers to Africa buy cover at home from an insurer with no local presence, and learn what it's worth when they need it.",
+    "Many visitors buy travel insurance at home, from an insurer with no hospitals in Nigeria.",
   groups: [WITHOUT_OMANGA, WITH_OMANGA],
 } as const;
 

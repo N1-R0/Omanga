@@ -48,8 +48,10 @@ export type InsuranceDeepDiveContent = {
 };
 
 export const insuranceDeepDiveContent: InsuranceDeepDiveContent = {
-  heading: "What you get with Omanga Holiday Insurance",
-  intro: "What the Silver, Gold and Diamond plans do, feature by feature.",
+  // [CHANGED, 2026-10-14] UX copy pass: body noun "health cover"; the intro
+  // says what the six features cover instead of restating the heading.
+  heading: "What you get with Omanga health cover",
+  intro: "Three plans, one provider, and cover you can renew or cancel from your account.",
   product: holidayInsuranceProduct,
 } as const;
 

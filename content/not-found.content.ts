@@ -41,7 +41,7 @@ export const notFoundContent: {
   },
   linksHeading: "You might be looking for",
   links: [
-    { label: "Holiday insurance for Africa", href: "/insurance" },
+    { label: "Health insurance for Nigeria", href: "/insurance" },
     { label: "Insurance plans and prices", href: "/plans" },
     { label: "Omanga Payment Solutions", href: "/payments" },
     { label: "Get started", href: "/get-started" },

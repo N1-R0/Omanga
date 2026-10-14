@@ -133,7 +133,8 @@ const SERVICES: readonly SchemaNode[] = [
     url: absoluteUrl("/insurance"),
     provider: INSURANCE_PROVIDER,
     brand: { "@id": ORGANIZATION_ID },
-    areaServed: AREA_SERVED,
+    // [CHANGED, 2026-10-14] Cover applies in Nigeria only (owner-confirmed).
+    areaServed: { "@type": "Country", name: "Nigeria" },
   },
 ];
 

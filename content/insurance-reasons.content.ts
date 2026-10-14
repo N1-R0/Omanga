@@ -1,5 +1,4 @@
 import { INSURANCE_PLANS_HREF } from "@/content/insurance.content";
-import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { CallToAction } from "@/types/content.types";
 
 /**
@@ -41,8 +40,9 @@ export type InsuranceReasonsContent = {
 };
 
 const COVERAGE: InsuranceReason = {
-  heading: `Coverage across ${COUNTRIES_SERVED_DISPLAY} African countries`,
-  body: "One plan for the whole itinerary, however many borders it crosses. Your cover travels with you, and roaming is included on every plan.",
+  // [CHANGED, 2026-10-14] UX copy pass: health cover applies in Nigeria only.
+  heading: "Cover across Nigeria",
+  body: "One plan for your whole stay, wherever you go in Nigeria. Roaming is included on every plan.",
 } as const;
 
 const PRICING: InsuranceReason = {

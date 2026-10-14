@@ -210,8 +210,10 @@ export const insurancePlansContent: InsurancePlansContent = {
   includedHeading: "What's included",
   cardFootnote: "No commitment · Cancel any time",
   plans: [SILVER, GOLD, DIAMOND],
+  // [CHANGED, 2026-10-14] UX copy pass: "roaming cover across Nigeria", so it
+  // can't be read as cover in other countries.
   footnote:
-    "No commitment. Cancel any time. Every plan includes telemedicine, roaming cover, 24/7 support, the mobile app and a health-tips newsletter.",
+    "No commitment. Cancel any time. Every plan includes telemedicine, roaming cover across Nigeria, 24/7 support, the mobile app and a health-tips newsletter.",
   action: {
     label: "Compare all benefits",
     // A bare fragment: the comparison table is the next section on this same

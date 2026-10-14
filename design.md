@@ -609,6 +609,31 @@ medical kit) instead of a photo. Cards are `sticky` under the header and stack
 as you scroll — CSS only. Heading shortened to "From funding before you fly to
 care mid-trip".
 
+## Addendum · 2026-10-14 · Home services as photo cards (Samara)
+
+Replaces S1; the 3D illustrations leave this section on the owner's instruction.
+After Samara on Mobbin (29d6b6a5). Three tall full-bleed photo cards (4:5 on
+mobile, 3:4.2 from tablet), each card is the link. Top-left, two white lines of
+the same size: the heading at 75% then the action with an arrow. A short black
+scrim (55% to 0 over the top half) keeps the text at AA. No body copy on screen;
+it stays in `services.content.ts`. Photos: `/service-spend.jpg`, Unsplash
+8Nppe0yLmn8 (omid armin, banknotes) for Currencies, `/service-insurance.jpg`.
+A round of minimal text-only options is in `design-lab/services-minimal.html`.
+
+## Addendum · 2026-10-14 · Home services as label-tab cards (S1)
+
+Replaces K5. Picked from `design-lab/services-grid.html` (after Anchor on Mobbin,
+1ade62cd). Three tall flat cards in a row (blush, crimson, ink; one column below
+desktop), approved body copy at the top, the 3D object large and cropped by the
+card's right edge, and a label tab (Payments, Currencies, Insurance) that
+overhangs both card edges in a sibling card's colour and is the card's link.
+Same day, on the owner's note that Anchor's cards are not plain: each card's lower
+half got a full-bleed scene (bands, stripes, a second object). Judged too much,
+so it is now one angled plane a tone deeper than the card, with the object
+standing on it. Text stays on the flat top half.
+No sticky behaviour. The service headings stay as visually hidden `h3`s; the tab's
+accessible name is "<tag>, <action label>". New `tag` field in `services.content.ts`.
+
 ## Addendum · 2026-10-10 · Home copy and type scale review
 
 Approved in `design-lab/home-copy.html`. Type scale now: display 48→88 (lh 0.98,

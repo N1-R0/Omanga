@@ -1,5 +1,4 @@
-import type { Object3D } from "@/content/home-v2.content";
-import type { Eyebrow, LinkTarget } from "@/types/content.types";
+import type { Eyebrow, ImageAsset, LinkTarget } from "@/types/content.types";
 import {
   COUNTRIES_SERVED_DISPLAY,
   PAYMENTS_RATES_ANCHOR,
@@ -8,6 +7,13 @@ import {
 // Section 4 of Omanga-Homepage-Copy-Approval NJ edits.docx, tracked changes accepted.
 
 /*
+  [CHANGED, 2026-10-14, later] Illustrations dropped on the owner's instruction.
+  Cards are now full-bleed photos after Samara on Mobbin (29d6b6a5). Payments and
+  Insurance reuse the site's own photos; Currencies is from Unsplash.
+
+  [CHANGED, 2026-10-14] Layout was pick S1, "Anchor cards with label tabs"
+  (`design-lab/services-grid.html`). The objects carry over.
+
   [CHANGED, 2026-10-10] The three service photos are replaced by 3D objects
   from the app's set, on the owner's instruction (pick K5, "tilted deck",
   from `design-lab/services-stack.html`). The objects are decorative.
@@ -45,12 +51,19 @@ const INSURANCE_ACTION: LinkTarget = {
 } as const;
 
 /** `action` carries no emphasis: the pattern fixes it, so copy does not choose it. */
+/**
+ * `body` is approved copy but the photo cards (2026-10-14) show only the heading
+ * and the action, as the Samara reference does. Kept here so it can return
+ * without another copy round.
+ */
 export type ServiceContentItem = {
   readonly heading: string;
   readonly body: string;
   readonly action: LinkTarget;
-  /** The 3D object that carries the card. */
-  readonly object: Object3D;
+  /** Full-bleed card photo (pick: Samara photo cards, 2026-10-14). */
+  readonly image: ImageAsset;
+  /** Credit for a photo that is not Omanga's own. */
+  readonly imageCredit?: { readonly name: string; readonly url: string };
 };
 
 /** A fixed three-tuple, so a fourth service or a missing one fails the build. */
@@ -103,19 +116,39 @@ export const servicesContent: ServicesContent = {
       */
       body: `Pay from your wallet balance in ${COUNTRIES_SERVED_DISPLAY} African countries, online or in person, however many borders your trip crosses.`,
       action: SPEND_ACTION,
-      object: "africa-continent",
+      image: {
+        src: "/service-spend.jpg",
+        alt: "A woman smiling at her phone on a busy street.",
+        width: 1600,
+        height: 1600,
+      },
     },
     {
       heading: "Move money between currencies",
       body: "Hold, send and receive several currencies, and top up from USD, GBP or CAD. You see the rate before you convert, so there are no surprises.",
       action: CURRENCY_ACTION,
-      object: "exchange",
+      // Unsplash (free licence). Portrait crop from the CDN.
+      image: {
+        src: "https://images.unsplash.com/photo-1580048915913-4f8f5cb481c4?w=1200&h=1600&fit=crop",
+        alt: "A hand holding a fan of banknotes in several currencies against a teal wall.",
+        width: 1200,
+        height: 1600,
+      },
+      imageCredit: {
+        name: "omid armin",
+        url: "https://unsplash.com/photos/hand-holding-assorted-international-banknotes-8Nppe0yLmn8",
+      },
     },
     {
       heading: "Stay covered while you travel",
       body: "Choose Silver, Gold or Diamond cover for the length of your trip, get care through established Nigerian providers, and extend if the trip runs long.",
       action: INSURANCE_ACTION,
-      object: "insurance-kit",
+      image: {
+        src: "/service-insurance.jpg",
+        alt: "A smiling couple talking through cover with an adviser.",
+        width: 1600,
+        height: 1600,
+      },
     },
   ],
 } as const;

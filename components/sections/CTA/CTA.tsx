@@ -31,7 +31,12 @@ export function CTA({ content, headingId }: CTAProps) {
           <h2 id={headingId} className="font-sans text-h1 text-balance measure-heading">
             {heading}
           </h2>
-          <p className="font-sans text-large text-on-dark-muted measure-narrow">{intro}</p>
+          {/*
+            [FIXED, 2026-10-15] Was text-on-dark-muted (white 50%), 2.70:1 on
+            the brand end of the gradient. White 85% is 5.21:1 there and
+            8.48:1 on the plum end.
+          */}
+          <p className="font-sans text-large text-on-dark/85 measure-narrow">{intro}</p>
           <Button as="link" href={action.href} isExternal={action.isExternal} variant="primary" tone="brand">
             {action.label}
           </Button>

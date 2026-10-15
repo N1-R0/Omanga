@@ -34,7 +34,23 @@
      until the preview replaces the live home page. */
   --color-blush: #fbe8ee;
   --color-blush-strong: #f6d3dd;
-  --color-brand-deep: #7c1530;
+  /* [CHANGED, 2026-10-15] Was #7c1530. Now the plum from the owner's Adobe
+     triad palette (design.md § Colour palette 2026-10). Same hue as the brand
+     (OKLCH H 3 vs 12), so it reads as dark brand. White on it: 11.05:1. */
+  --color-brand-deep: #58303b;
+
+  /* [ADDED, 2026-10-15] Owner's Adobe triad palette, home page 60/30/10.
+     design.md § Colour palette 2026-10. (The charcoal surface was added and
+     then removed on the owner's request; the features band is grey again.)
+
+     support       The teal (#248CAD). A second accent with one job:
+                   wayfinding (step markers, feature icons). Never an action
+                   colour. 3.87:1 on white, so never text; 3.45:1 on its 10%
+                   tint, which clears the 3:1 floor for icons only.
+     support-strong The same hue at OKLCH L 0.50 (#006e8b), for teal glyphs
+                   that must read as text. 5.83:1 on white. */
+  --color-support: #248cad;
+  --color-support-strong: #006e8b;
 
   /* Ink / dark surfaces ---------------------------------------------------- */
   --color-ink: #161717;

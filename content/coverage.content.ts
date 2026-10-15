@@ -4,7 +4,10 @@ import type {
   ImageAsset,
 } from "@/types/content.types";
 import { INSURANCE_COVERAGE_HREF } from "@/content/insurance.content";
-import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
+import {
+  COUNTRIES_SERVED,
+  COUNTRIES_SERVED_DISPLAY,
+} from "@/content/site.content";
 
 /**
  * African Coverage content.
@@ -124,9 +127,10 @@ const COVERAGE_FLAGS: readonly ImageAsset[] = [
   because it is approved copy.
 */
 const COVERAGE_ACTION: CallToAction = {
-  // [CHANGED, 2026-10-14] Was "See all countries", which this link never
-  // delivered. The label now says where it goes.
-  label: "Compare health plans",
+  // [CHANGED, 2026-10-15] Back to "See all countries" on owner instruction.
+  // [BLOCKED] Still points at /plans, because no country list exists in the
+  // project. Repoint `href` once the owner supplies the 50+ countries.
+  label: "See all countries",
   href: INSURANCE_COVERAGE_HREF,
   emphasis: "text",
 } as const;
@@ -138,6 +142,8 @@ export type AfricanCoverageContent = {
   readonly flags: readonly ImageAsset[];
   /** The flag cluster's accessible name. See the field for why it exists. */
   readonly flagsLabel: string;
+  /** [ADDED, 2026-10-15] The last pill in the cloud, after the named flags. */
+  readonly moreLabel: string;
   readonly action: CallToAction;
 };
 
@@ -198,6 +204,12 @@ export const coverageContent: AfricanCoverageContent = {
    * countries would be inaccurate. **Needs copy approval like every string here.**
    */
   flagsLabel: "Some of the countries where the wallet works",
+
+  /*
+    [ADDED, 2026-10-15] Popcorn layout's closing pill. Derived, never typed:
+    the served count is a floor ("50+"), so the remainder is a floor too.
+  */
+  moreLabel: `${COUNTRIES_SERVED - COVERAGE_FLAGS.length}+ more`,
 
   action: COVERAGE_ACTION,
 } as const;

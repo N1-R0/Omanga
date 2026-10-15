@@ -1,84 +1,52 @@
+import Image from "next/image";
+
+import { ArrowRight } from "@/components/icons/ArrowRight";
 import { Section } from "@/components/layout/Section";
+import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import type { AfricanCoverageContent } from "@/content/coverage.content";
 
-import { CoverageContent } from "./CoverageContent";
-import { FlagCluster } from "./FlagCluster";
+/**
+ * [REBUILT, 2026-10-15] Popcorn layout (mobbin section efced987; owner pick).
+ *
+ * A faint dot map of Africa behind a centred pill eyebrow, heading and intro,
+ * then a loose cloud of flag + name pills, each tilted a little, closing on a
+ * "39+ more" pill. Replaces the flag arch (FlagCluster / FlagColumn /
+ * FlagItem / CoverageContent, deleted).
+ *
+ * The map is decorative (`alt=""`): only Africa north of ~6°S (owner: "just
+ * the top"), so it is wide like the reference's US map, fading out under the
+ * pills. Ink dots at 6% with a random fifth in teal at 20%. An earlier brand highlight on
+ * Nigeria was dropped because it sat directly behind the heading.
+ *
+ * A Server Component: one link, nothing hydrates.
+ */
 
 /**
- * The homepage's African Coverage section — the flag arch with the coverage
- * claim sitting inside it.
- *
- * A Server Component. Nothing here is interactive except one link, so nothing
- * hydrates and every string is in the server HTML, which the SEO plan requires.
- *
- * ---------------------------------------------------------------------------
- * [BLOCKER] Not built from the Figma MCP frame.
- *
- * The brief names the frame (node 1265:12975) as the mandatory source. The Figma
- * Dev Mode MCP server is not reachable in this environment — `get_metadata`,
- * `get_design_context`, `get_screenshot` and `get_variable_defs` all return the
- * same setup instruction — and the Figma connector is unauthorised. The section is
- * built instead from the supplied SwiftUI dimensions plus the section screenshot,
- * at the request of the person who supplied them.
- *
- * The spec was checked against the screenshot before any code was written and is
- * internally consistent: at a 1440 × 836 frame the derived chip size, column
- * pitch, crest and base offsets and the text block's baseline all land within a
- * few pixels of the image. **Re-verify against the frame once the MCP server is
- * available.**
- *
- * ---------------------------------------------------------------------------
- * [DECISION] The composition is a two-item grid stack, not absolute positioning.
- *
- * The design needs the text to sit *inside* the arch — lower than the chips'
- * tops, in the well the curve leaves open. `component-rules.md` § Layout rules
- * permits absolute positioning for "decorative art", which the flags are, but a
- * grid stack gets the same result with no positioned ancestor, no fixed height and
- * no z-index: both children are placed in row 1, column 1, and the taller one
- * sets the section's height.
- *
- * The text block is the taller of the two, so height follows content exactly as
- * the layout rules require, and the spec's fixed 836 is not reproduced as a height.
- *
- * ---------------------------------------------------------------------------
- * THE WELL. `pt-34` — 136 — is the only composed value in the section, and it is
- * derived rather than measured:
- *
- *   mid-column elevation   40
- *   chip                 + 96
- *                        ----
- *   text block top        136
- *
- * The four columns that sit horizontally behind the text block are the two `crest`
- * columns (chips at 0–96) and the two `mid` columns (chips at 40–136). Starting
- * the text at 136 puts its first line exactly on the lowest of those chip edges,
- * so the two never collide at any width, and the arch reads as framing the text
- * rather than sitting above it. The frame's own 488-tall flag row is the same
- * number arrived at from the other direction.
- *
- * ---------------------------------------------------------------------------
- * [REJECTED] The spec's `.padding(.horizontal, 432)`.
- *
- * 432 either side of a 1392-wide flag row needs a 2256 frame; the section is 1440,
- * and the screenshot shows the row inset about 24 per side, which is exactly
- * (1440 − 1392) / 2. Read as the text block's padding instead it gives a 576
- * measure, below the 648–756 band `design.md` sets for body copy and
- * narrower than the frame's paragraph renders. It is the one value in the spec
- * that contradicts both the geometry and the screenshot, so it is not used: the
- * row centres in the content column and the paragraph takes the `narrow` measure.
- *
- * ---------------------------------------------------------------------------
- * [NOTE] The section is light, and so is the Product Deep Dive above it.
- * `component-rules.md` asks consecutive sections to alternate surface. The frame
- * paints this one white and surface alternation is a page-composition decision,
- * so it belongs to whoever assembles the eleven sections rather than to this one.
- *
- * The flags carry no entrance animation. `design.md` § Motion principles
- * would stagger them at 80ms, and fourteen chips is exactly the case the stagger
- * exists for — but motion is not in this section's brief, and adding it would be
- * scope the design has not signed off. **Raise with design.**
+ * Tilt and vertical nudge per pill, in order, hand-tuned against the Popcorn
+ * reference so the cloud reads as dropped rather than laid out: no two
+ * neighbours lean the same way, and nudges are big enough that the rows
+ * interlock. Cycled if the flag list grows.
  */
+const SCATTER = [
+  "-rotate-[8deg] translate-y-3",
+  "rotate-[2deg] -translate-y-1",
+  "-rotate-[4deg] translate-y-2",
+  "rotate-[9deg] -translate-y-2",
+  "-rotate-[6deg] translate-y-1",
+  "rotate-[5deg] translate-y-3",
+  "-rotate-[3deg] -translate-y-2",
+  "rotate-[7deg] translate-y-1",
+  "-rotate-[9deg] -translate-y-1",
+  "rotate-[3deg] translate-y-2",
+  "-rotate-[5deg] -translate-y-3",
+  "rotate-[8deg]",
+] as const;
+
+/* No hairline: on white the pill is separated by its shadow, as in the
+   reference, and a border on a tilted pill reads as a sticker outline. */
+const PILL =
+  "inline-flex items-center gap-2.5 rounded-pill bg-surface-page py-1.5 pl-1.5 pr-4 font-sans text-small font-medium tablet:py-2 tablet:pl-2 tablet:pr-5 tablet:text-main text-ink shadow-glass-raised";
 
 export type AfricanCoverageProps = {
   content: AfricanCoverageContent;
@@ -92,43 +60,110 @@ export type AfricanCoverageProps = {
 };
 
 export function AfricanCoverage({ content, headingId }: AfricanCoverageProps) {
+  const { eyebrow, heading, intro, flags, flagsLabel, moreLabel, action } =
+    content;
+
   return (
     <Section labelledBy={headingId} tone="light">
-      {/*
-        Below the wide breakpoint this is an ordinary two-row grid — text, then
-        flags, 40 apart. At wide both children occupy the same cell and overlap.
-
-        The text comes first in the DOM at every width. It carries the section's
-        heading and its meaning; the flags are a sample that illustrates it, and
-        fourteen country names announced ahead of the sentence they support would
-        bury it.
-      */}
-      <div className="grid gap-fluid-6 wide:gap-0">
+      <div className="flex flex-col gap-fluid-6">
         {/*
-          MOTION. `Reveal` sits *inside* each cell, not around it. At wide both
-          cells are placed into the same grid slot to produce the overlap, so a
-          wrapper outside them would become the grid item and the two would stop
-          sharing a cell — the arch would drop below the text.
-
-          The flags follow the text by one stagger step, matching the DOM order,
-          which is also the order the section reads in.
+          The map is scoped to the heading and the pills, not the action, so
+          it ends where the pills sit, as in the reference.
         */}
-        <div className="wide:col-start-1 wide:row-start-1 wide:pt-34">
+        <div className="relative isolate flex flex-col gap-fluid-7">
+          <Image
+            src="/coverage/africa-dots.svg"
+            alt=""
+            width={564}
+            height={352}
+            unoptimized
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-12 left-1/2 -z-10 h-auto w-[min(64rem,160%)] max-w-none -translate-x-1/2 [mask-image:linear-gradient(to_bottom,black_55%,transparent)]"
+          />
+
           <Reveal index={0}>
-            <CoverageContent
-              eyebrow={content.eyebrow}
-              heading={content.heading}
-              headingId={headingId}
-              intro={content.intro}
-              action={content.action}
-            />
+            <div className="flex flex-col items-center gap-fluid-3 text-center">
+              <span className="rounded-pill bg-surface-page px-4 py-2 font-sans text-small font-medium shadow-glass-control">
+                {eyebrow}
+              </span>
+              {/*
+                Owner: heading and intro on two lines each. `text-balance` in a
+                capped measure splits them evenly rather than leaving a widow.
+              */}
+              <h2
+                id={headingId}
+                className="max-w-[22ch] font-sans text-h2 text-balance"
+              >
+                {heading}
+              </h2>
+              <p className="max-w-[44ch] font-sans text-large text-balance text-secondary">
+                {intro}
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal index={1}>
+            {/*
+              No column gap and a slight negative margin per pill, so
+              neighbours touch the way scattered objects do; a small row gap
+              so the tilted rows interlock without covering names. Wrapping
+              stays natural, so the short second row centres itself.
+              `pt-fluid-8` on top of the block gap (owner): the reference
+              leaves clear air between the intro and the cloud, ~110px here.
+            */}
+            <ul
+              aria-label={flagsLabel}
+              className="mx-auto flex max-w-[66rem] flex-wrap justify-center gap-y-3 px-2 pb-3 pt-fluid-8"
+            >
+              {flags.map((flag, index) => (
+                <li
+                  key={flag.src}
+                  className={`-mx-0.5 ${SCATTER[index % SCATTER.length]}`}
+                >
+                  <span className={PILL}>
+                    {/*
+                      The SVGs are 32-square with a 30x24 flag and a faint
+                      edge stroke. The image is 1.45x the round mask so only
+                      the flag's centre shows, stroke cropped. alt="" because
+                      the name sits beside it.
+                    */}
+                    <span className="relative size-7 shrink-0 overflow-hidden rounded-full tablet:size-9">
+                      <Image
+                        src={flag.src}
+                        alt=""
+                        width={flag.width}
+                        height={flag.height}
+                        unoptimized
+                        loading="lazy"
+                        className="absolute left-1/2 top-1/2 w-[2.5rem] max-w-none tablet:w-[3.25rem] -translate-x-1/2 -translate-y-1/2"
+                      />
+                    </span>
+                    {flag.alt}
+                  </span>
+                </li>
+              ))}
+              <li
+                className={`-mx-0.5 ${SCATTER[flags.length % SCATTER.length]}`}
+              >
+                <span className={`${PILL} min-h-10 pl-4 tablet:min-h-[3.25rem] tablet:pl-5`}>
+                  {moreLabel}
+                </span>
+              </li>
+            </ul>
           </Reveal>
         </div>
 
-        <div className="wide:col-start-1 wide:row-start-1">
-          <Reveal index={1}>
-            <FlagCluster flags={content.flags} label={content.flagsLabel} />
-          </Reveal>
+        <div className="flex justify-center">
+          <Button
+            as="link"
+            variant={action.emphasis}
+            tone="light"
+            href={action.href}
+            isExternal={action.isExternal}
+            trailingIcon={<ArrowRight size="sm" />}
+          >
+            {action.label}
+          </Button>
         </div>
       </div>
     </Section>

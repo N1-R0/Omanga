@@ -42,7 +42,7 @@ export function StepsV2() {
               <div className="flex flex-col gap-fluid-2 p-fluid-4">
                 <span
                   aria-hidden="true"
-                  className="grid size-8 place-items-center rounded-pill border border-border-hairline font-sans text-small"
+                  className="grid size-8 place-items-center rounded-pill bg-support-strong font-sans text-small text-on-dark"
                 >
                   {index + 1}
                 </span>

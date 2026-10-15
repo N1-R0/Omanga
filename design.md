@@ -978,3 +978,55 @@ types and lint pass afterwards.
   one line ([NEW] copy, needs sign-off); h1 unchanged for SEO.
 - Type: Geist (headings) + Inter (text) are global tokens, so every page
   already uses the home page's fonts.
+
+## Addendum · 2026-10-15 · Colour palette 2026-10 (home 60/30/10)
+
+Owner's Adobe Color triad on `#AE2448`: crimson, teal `#248CAD`, olive
+`#ADA424`, plum `#58303B`, charcoal `#242F33`. Applied to the home page on the
+60/30/10 rule, white background unchanged.
+
+| Share | Colour | Where |
+| --- | --- | --- |
+| 60 | White `#fff` and `#f6f6f6` (unchanged) | Every light section |
+| 30 | Charcoal `--color-surface-dark`, plum `--color-brand-deep`, ink footer | Features band (`AccountFeatures tone="dark"`), brand→plum gradient on Why Omanga card and CTA panel |
+| 10 | Crimson `--color-brand`; teal `--color-support` / `--color-support-strong` | Crimson: actions only. Teal: wayfinding only (step numbers, feature icons) |
+
+Measured (WCAG 2.x): white on charcoal 13.73, white 80% on charcoal 9.32,
+white on plum 11.05, white on support-strong 5.83, support-strong on white
+5.83, teal on its 10% tint 3.45 (icons only), brand on charcoal **2.06** (so no
+brand on the dark band).
+
+Decisions:
+
+- **Olive not used.** 2.59:1 on white fails even the 3:1 UI floor, it reads as
+  a warning colour and clashes with the gold tier badge. Only safe as a fill
+  under ink text (6.94:1); no home element needs that role, so no token.
+- **Plum replaces `#7c1530` as `--color-brand-deep`.** Same hue as the brand,
+  so it reads as dark brand. Because `CTA` and `WhyOmanga` are shared, their
+  gradient end changes on every page.
+- **Feature icons are teal everywhere `AccountFeatures` renders** (home,
+  Payments, Insurance), so teal keeps one meaning site-wide. Brand stays for
+  actions.
+- **CTA intro** moved from white 50% (2.70:1 on brand, a failure) to white 85%
+  (5.21:1).
+- Charcoal is a home-only surface for now; the footer stays `--color-ink`.
+- Charcoal darkened on request to `#111d21` (OKLCH L 0.22, same hue 222):
+  white 17.19, white 80% 11.31, brand 2.58 (still no brand on it).
+
+## Addendum · 2026-10-15 · Coverage as a Popcorn pill cloud
+
+Owner pick: Mobbin section efced987 (Popcorn "Our coverage?"). The flag arch is
+replaced by a centred pill eyebrow, heading and intro over a faint Africa dot
+map (`public/coverage/africa-dots.svg`, generated from a rough outline: ink
+cropped to north of ~6°S and faded at the bottom, ink at 6%, a random fifth
+in teal at 20%, no country highlight because it sat behind the heading;
+Magnific's dotted Africa maps were checked and rejected, all posters with baked
+titles and backgrounds), then tilted flag + name pills closing on a derived
+"39+ more" pill (`COUNTRIES_SERVED - flags.length`). Heading and intro are
+capped and balanced so each runs to two lines (owner). Old FlagCluster / FlagColumn / FlagItem / CoverageContent deleted.
+- Action relabelled "See all countries" (owner). [BLOCKED] It still links to
+  /plans: no list of the 50+ countries exists in the project.
+- [REVERTED, 2026-10-15] Features band back to `--color-surface-light`, the
+  FAQ grey (owner). `--color-surface-dark` and `AccountFeatures`' `tone` prop
+  removed. The "30" is now the brand→plum gradients and the ink footer only;
+  feature icons stay teal.

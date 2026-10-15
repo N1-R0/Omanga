@@ -95,7 +95,13 @@ export function AccountFeatures({ content, headingId }: AccountFeaturesProps) {
                     key={feature.heading}
                     className="flex flex-col gap-3 rounded-[0.875rem] bg-surface-page p-6 desktop:p-7"
                   >
-                    <span className="mb-3 flex size-10 items-center justify-center rounded-[0.625rem] bg-brand/10 text-brand">
+                    {/*
+                      [CHANGED, 2026-10-15] Teal, not brand: these icons label
+                      a feature, they are not actions, and brand is kept for
+                      actions only. Strong teal on its 10% tint is an icon
+                      pair (3:1 floor).
+                    */}
+                    <span className="mb-3 flex size-10 items-center justify-center rounded-[0.625rem] bg-support/10 text-support-strong">
                       {ICONS[feature.icon]}
                     </span>
                     <CardHeading className="font-sans text-large font-medium leading-snug">

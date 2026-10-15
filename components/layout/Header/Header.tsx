@@ -71,15 +71,20 @@ const OVER_PHOTO_PX = 24;
  * [ADDED, 2026-10-15] Pages that open with `PhotoHero`, where the bar starts
  * transparent over the photo. Grows as each page moves to the photo hero.
  */
-const PHOTO_HERO_PATHS: readonly string[] = ["/", "/insurance", "/payments", "/about"];
+const PHOTO_HERO_PATHS: readonly string[] = [
+  "/",
+  "/insurance",
+  "/payments",
+  "/about",
+];
 
 /**
  * How far the page must move before the bar accepts a change of direction.
  *
  * [FIXED] Without this the bar juddered on every wheel gesture.
  *
- * Direction was `y > lastY` — a zero threshold. `SmoothScroll` replaces native
- * scrolling with Lenis, which writes an interpolated, fractional scroll
+ * Direction was `y > lastY` — a zero threshold. `SmoothScroll` (since removed)
+ * replaced native scrolling with Lenis, which wrote an interpolated, fractional scroll
  * position, so through the ease-out tail of every gesture `window.scrollY`
  * oscillates by well under a pixel and the sign of the delta alternates frame
  * to frame. `isHidden` flipped with it, and because the bar transitions
@@ -131,7 +136,8 @@ export function Header({
   // The open mobile menu is a full-screen blurred sheet; the bar goes
   // see-through over it the same way it does over the home hero.
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const isOverPhoto = (PHOTO_HERO_PATHS.includes(pathname) && isAtTop) || isMenuOpen;
+  const isOverPhoto =
+    (PHOTO_HERO_PATHS.includes(pathname) && isAtTop) || isMenuOpen;
 
   /** Last known scroll offset. A ref — it is never rendered. */
   const lastYRef = useRef(0);
@@ -220,7 +226,7 @@ export function Header({
           [FIXED] `fixed`, not `sticky`. This is what stopped the bar jittering
           while scrolling.
 
-          `SmoothScroll` writes `scrollTop` from inside Lenis's own animation
+          `SmoothScroll` (since removed) wrote `scrollTop` from inside Lenis's animation
           frame. The browser then recomputes every `position: sticky` element's
           offset against that new position — in a different phase from the write
           — so a sticky element resolves a frame behind the compositor's paint

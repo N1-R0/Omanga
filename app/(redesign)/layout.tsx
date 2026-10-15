@@ -6,7 +6,6 @@ import { ConsentedAnalytics } from "@/components/consent/ConsentedAnalytics";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { SkipLink } from "@/components/layout/SkipLink";
-import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { fontVariables } from "@/config/fonts";
 import { BRAND_COLOR, SITE_NAME, SITE_URL } from "@/config/site";
 import { footerContent, formatCopyright } from "@/content/footer.content";
@@ -127,32 +126,31 @@ export default function RedesignRootLayout({
           wrapping the document costs nothing.
         */}
         <ConsentProvider>
-        {/*
+          {/*
           First in the document, therefore first in tab order. No `tabindex` is
           involved — a positive one here is the usual way this gets broken.
         */}
-        <SkipLink label={SKIP_LINK_LABEL} targetId={MAIN_CONTENT_ID} />
+          <SkipLink label={SKIP_LINK_LABEL} targetId={MAIN_CONTENT_ID} />
 
-        {/*
-          Renders nothing. Mounted here rather than per page because scroll is a
-          document-wide concern and one instance must own it — two would fight
-          over the same scroll position. It sits after the skip link so it cannot
-          come between that and the tab order.
+          {/*
+          [REMOVED, 2026-10-15] Lenis wheel smoothing (owner request: plain
+          scrolling, like Revolut). The page scrolls natively; in-page anchors
+          still glide via `scroll-behavior: smooth` (globals.css), which is
+          off under reduced motion.
         */}
-        <SmoothScroll />
 
-        <Header
-          items={navigationContent.items}
-          action={navigationContent.action}
-          menuAction={navigationContent.menuAction}
-          landmarkLabel={navigationContent.landmarkLabel}
-          wordmark={SITE_NAME}
-          homeLabel={navigationContent.homeLabel}
-          openLabel={navigationContent.menuOpenLabel}
-          closeLabel={navigationContent.menuCloseLabel}
-        />
+          <Header
+            items={navigationContent.items}
+            action={navigationContent.action}
+            menuAction={navigationContent.menuAction}
+            landmarkLabel={navigationContent.landmarkLabel}
+            wordmark={SITE_NAME}
+            homeLabel={navigationContent.homeLabel}
+            openLabel={navigationContent.menuOpenLabel}
+            closeLabel={navigationContent.menuCloseLabel}
+          />
 
-        {/*
+          {/*
           The `main` landmark lives in the layout, not in each page, so there
           is exactly one per document and the skip link has a stable target.
 
@@ -161,32 +159,32 @@ export default function RedesignRootLayout({
           the top of the document, so the next Tab returns to the header — the
           most common way a skip link silently fails while looking correct.
         */}
-        <main id={MAIN_CONTENT_ID} tabIndex={-1} className="flex-1">
-          {children}
-        </main>
+          <main id={MAIN_CONTENT_ID} tabIndex={-1} className="flex-1">
+            {children}
+          </main>
 
-        <Footer
-          columns={footerContent.columns}
-          brandParagraph={footerContent.brandParagraph}
-          contact={footerContent.contact}
-          socialLinks={footerContent.socialLinks}
-          copyright={copyright}
-          wordmark={SITE_NAME}
-          homeLabel={navigationContent.homeLabel}
-        />
+          <Footer
+            columns={footerContent.columns}
+            brandParagraph={footerContent.brandParagraph}
+            contact={footerContent.contact}
+            socialLinks={footerContent.socialLinks}
+            copyright={copyright}
+            wordmark={SITE_NAME}
+            homeLabel={navigationContent.homeLabel}
+          />
 
-        {/*
+          {/*
           Last in the body, so the banner and dialog come after the page's own
           content in the tab order. Both are `fixed`, so this does not affect
           where they paint.
         */}
-        <ConsentManager />
+          <ConsentManager />
 
-        {/*
+          {/*
           Was a bare `<SpeedInsights />`, which loaded for everyone regardless of
           choice. It now mounts only while analytics consent is granted.
         */}
-        <ConsentedAnalytics />
+          <ConsentedAnalytics />
         </ConsentProvider>
       </body>
     </html>

@@ -7,7 +7,7 @@ import { paymentsPhotoHeroContent } from "@/content/payments-hero.content";
 
 /**
  * [ADDED, 2026-10-15] Payments hero, take 4 (owner request): the home hero's
- * photo in a band at least 60% of the viewport tall, with the heading, intro
+ * photo in a band at least 75% of the viewport tall, with the heading, intro
  * and actions centred in it. The app's real home screen sits on a phone
  * centred under the copy, its top overlapping the band's lower edge so the
  * product reads as part of the hero.
@@ -27,7 +27,7 @@ export function PaymentsHeroCentered({ headingId }: { headingId: string }) {
       aria-labelledby={headingId}
       className="relative isolate -mt-header pb-fluid-6 desktop:pb-24"
     >
-      <div className="focus-ring-on-dark relative flex min-h-[60svh] flex-col justify-center pt-header pb-28 text-on-dark desktop:pb-36">
+      <div className="focus-ring-on-dark relative flex min-h-[75svh] flex-col justify-center pt-header pb-28 text-on-dark desktop:pb-36">
         {/* The home hero's backdrop and framing, so the two match. */}
         <div
           aria-hidden="true"

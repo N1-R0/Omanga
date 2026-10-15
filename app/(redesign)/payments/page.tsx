@@ -33,6 +33,7 @@ import { TRUST_HEADING_ID, trustContent } from "@/content/trust.content";
 import { getExchangeRates } from "@/lib/rates";
 import {
   PAYMENTS_FAQ_HEADING_ID,
+  PAYMENTS_FEES_ANSWER,
   paymentsFaqContent,
 } from "@/content/payments-faq.content";
 import { buildFaqPage, buildPageGraph } from "@/lib/schema";
@@ -208,6 +209,8 @@ export default async function PaymentsPage() {
       <JsonLd
         graph={buildPageGraph(paymentsMeta, {
           crumb: "Omanga Payment Solutions",
+          services: ["wallet"],
+          walletFees: PAYMENTS_FEES_ANSWER,
           nodes: [buildFaqPage(paymentsMeta, paymentsFaqContent.items)],
         })}
       />

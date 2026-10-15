@@ -38,11 +38,27 @@ const ORGANIZATION: SchemaNode = {
   "@type": "Organization",
   "@id": ORGANIZATION_ID,
   name: SITE_NAME,
+  /*
+    [ADDED, 2026-10-15] Mirrors the WebSite node, which carries the same two
+    names the other way round (SEO audit: the two nodes read as different
+    entities). Not `legalName`: the registered name is still unconfirmed
+    (legal-shared.content.ts, "Company identity").
+  */
+  alternateName: SITE_TAGLINE,
   url: SITE_URL,
+  /*
+    [CHANGED, 2026-10-15] A raster logo. Google accepts SVG here but documents
+    raster (min 112 × 112) as the safe choice. `/apple-icon.png` is the 180px
+    brand mark Next already serves from `app/apple-icon.png`.
+  */
   logo: {
     "@type": "ImageObject",
-    url: absoluteUrl("/logo-omanga.svg"),
+    "@id": `${SITE_URL}/#logo`,
+    url: absoluteUrl("/apple-icon.png"),
+    width: 180,
+    height: 180,
   },
+  image: { "@id": `${SITE_URL}/#logo` },
   /*
     [ADDED, 2026-08-29] `email` and `areaServed` at organisation level.
 
@@ -84,20 +100,28 @@ const WEBSITE: SchemaNode = {
 /**
  * The two entities that actually deliver the regulated services.
  *
- * Named nodes with no `url` or `@id`: their websites are not recorded anywhere
- * in this project, and a guessed domain in structured data is a factual claim
- * about a third party. The names are the confirmed ones and are imported from
- * `legal-shared.content.ts` so the schema and the legal pages cannot disagree
- * about who provides what.
+ * No `url`: their websites are not recorded anywhere in this project, and a
+ * guessed domain in structured data is a factual claim about a third party. The
+ * names are the confirmed ones and are imported from `legal-shared.content.ts`
+ * so the schema and the legal pages cannot disagree about who provides what.
+ *
+ * [CHANGED, 2026-10-15] Each now has an `@id`, so a service on one page and a
+ * reference on another resolve to the same entity (SEO audit, schema #1).
  */
+const WALLET_PROVIDER_ID = `${SITE_URL}/#fuspay`;
+const INSURANCE_PROVIDER_ID = `${SITE_URL}/#phillips-hmo`;
+
 const WALLET_PROVIDER: SchemaNode = {
   "@type": "Organization",
+  "@id": WALLET_PROVIDER_ID,
   name: WALLET_PROVIDER_NAME,
 };
 
 const INSURANCE_PROVIDER: SchemaNode = {
   "@type": "Organization",
+  "@id": INSURANCE_PROVIDER_ID,
   name: INSURANCE_PROVIDER_NAME,
+  logo: absoluteUrl("/philip-hmo-logo.png"),
 };
 
 /**
@@ -117,32 +141,66 @@ const INSURANCE_PROVIDER: SchemaNode = {
  *
  * `brand` keeps Omanga attached, which is accurate: these are Omanga-branded
  * services delivered by licensed partners.
+ *
+ * [CHANGED, 2026-10-15] SEO audit, schema #1 and #2:
+ * - Both nodes have an `@id` and are emitted only where the page is about them
+ *   (`services` in `PageGraphOptions`): the home page lists both, /payments the
+ *   wallet, /insurance and /plans the cover. They were repeated on every page,
+ *   blog posts and legal pages included, which was noise.
+ * - The wallet is a `FinancialProduct` (a `Service` subtype), with its fee
+ *   stated. The fee text is passed in from the payments FAQ, the copy the page
+ *   renders, so the two cannot drift.
  */
-const SERVICES: readonly SchemaNode[] = [
-  {
-    "@type": "Service",
-    name: "Omanga Payment Solutions",
-    url: absoluteUrl("/payments"),
-    provider: WALLET_PROVIDER,
-    brand: { "@id": ORGANIZATION_ID },
-    areaServed: AREA_SERVED,
-  },
-  {
-    "@type": "Service",
-    name: "Omanga Holiday Insurance",
-    url: absoluteUrl("/insurance"),
-    provider: INSURANCE_PROVIDER,
-    brand: { "@id": ORGANIZATION_ID },
-    // [CHANGED, 2026-10-14] Cover applies in Nigeria only (owner-confirmed).
-    areaServed: { "@type": "Country", name: "Nigeria" },
-  },
-];
+export type ServiceKey = "wallet" | "insurance";
 
-function buildWebPage(meta: PageMetaContent): SchemaNode {
+function buildServiceNodes(
+  key: ServiceKey,
+  walletFees?: string,
+): readonly SchemaNode[] {
+  if (key === "wallet") {
+    return [
+      {
+        "@type": "FinancialProduct",
+        "@id": `${absoluteUrl("/payments")}#wallet`,
+        name: "Omanga Payment Solutions",
+        description: `A multi-currency travel wallet. Fund it from USD, GBP or CAD and spend in ${COUNTRIES_SERVED_DISPLAY} African countries.`,
+        category: "Multi-currency travel wallet",
+        url: absoluteUrl("/payments"),
+        provider: { "@id": WALLET_PROVIDER_ID },
+        brand: { "@id": ORGANIZATION_ID },
+        areaServed: AREA_SERVED,
+        ...(walletFees === undefined
+          ? {}
+          : { feesAndCommissionsSpecification: walletFees }),
+      },
+      WALLET_PROVIDER,
+    ];
+  }
+
+  return [
+    {
+      "@type": "Service",
+      "@id": `${absoluteUrl("/insurance")}#service`,
+      name: "Omanga Holiday Insurance",
+      serviceType: "Short-term travel health insurance",
+      url: absoluteUrl("/insurance"),
+      provider: { "@id": INSURANCE_PROVIDER_ID },
+      brand: { "@id": ORGANIZATION_ID },
+      // [CHANGED, 2026-10-14] Cover applies in Nigeria only (owner-confirmed).
+      areaServed: { "@type": "Country", name: "Nigeria" },
+    },
+    INSURANCE_PROVIDER,
+  ];
+}
+
+function buildWebPage(
+  meta: PageMetaContent,
+  pageType: PageType,
+): SchemaNode {
   const url = absoluteUrl(meta.path);
 
   return {
-    "@type": "WebPage",
+    "@type": pageType,
     "@id": `${url}#webpage`,
     url,
     name: meta.title,
@@ -219,11 +277,25 @@ export type PageGraphOptions = {
    * Extra nodes for this page only — currently the three plan `Product`s.
    */
   readonly nodes?: readonly SchemaNode[];
+  /**
+   * [ADDED, 2026-10-15] The services this page is about. Omit on pages that
+   * are about neither (legal, blog, contact). See `buildServiceNodes`.
+   */
+  readonly services?: readonly ServiceKey[];
+  /** The wallet's fee line, as the page renders it. Only with `"wallet"`. */
+  readonly walletFees?: string;
+  /**
+   * [ADDED, 2026-10-15] `AboutPage` / `ContactPage` for /about and /contact
+   * (SEO audit, schema #10). Both are `WebPage` subtypes.
+   */
+  readonly pageType?: PageType;
 };
 
+export type PageType = "WebPage" | "AboutPage" | "ContactPage";
+
 /**
- * Graph for a page: the organisation, the site, the page itself, the two
- * services, and optionally a breadcrumb trail and page-specific nodes.
+ * Graph for a page: the organisation, the site, the page itself, the
+ * services it is about, and optionally a breadcrumb trail and page-specific nodes.
  *
  * Fields blocked in project-context.md — postal address, telephone,
  * registration number, `AggregateRating` — remain omitted rather than filled.
@@ -232,9 +304,16 @@ export type PageGraphOptions = {
  */
 export function buildPageGraph(
   meta: PageMetaContent,
-  { crumb, parent, nodes = [] }: PageGraphOptions = {},
+  {
+    crumb,
+    parent,
+    nodes = [],
+    services = [],
+    walletFees,
+    pageType = "WebPage",
+  }: PageGraphOptions = {},
 ): JsonLdGraph {
-  const webPage = buildWebPage(meta);
+  const webPage = buildWebPage(meta, pageType);
 
   return {
     "@context": "https://schema.org",
@@ -250,7 +329,7 @@ export function buildPageGraph(
            */
           { ...webPage, breadcrumb: { "@id": `${absoluteUrl(meta.path)}#breadcrumb` } },
       ...(crumb === undefined ? [] : [buildBreadcrumb(meta, crumb, parent)]),
-      ...SERVICES,
+      ...services.flatMap((key) => buildServiceNodes(key, walletFees)),
       ...nodes,
     ],
   };

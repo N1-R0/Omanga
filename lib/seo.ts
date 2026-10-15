@@ -51,11 +51,14 @@ import type { PageMetaContent } from "@/types/content.types";
  * relative one, but several crawlers and most chat clients do not, and an OG
  * image that fails to resolve is indistinguishable from an absent one.
  *
- * The route is Next's generated filename for `app/(redesign)/opengraph-image.tsx`.
- * It is stable for a given build and is what the homepage already serves.
+ * A static file in `public/`. It replaced `app/(redesign)/opengraph-image.tsx`
+ * on 2026-10-15: inside a route group Next serves that file at a hashed path
+ * (`/opengraph-image-a1e7va`), so the plain `/opengraph-image` URL named here
+ * returned 404 on every page (SEO audit, 2026-10-11). The PNG is that route's
+ * own output, saved once. A static path cannot drift between builds.
  */
 const OG_IMAGE = {
-  url: absoluteUrl("/opengraph-image"),
+  url: absoluteUrl("/og.png"),
   width: 1200,
   height: 630,
   alt: "Omanga — travel money wallet and health insurance for Nigeria",

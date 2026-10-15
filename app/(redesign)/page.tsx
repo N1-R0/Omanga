@@ -73,7 +73,7 @@ export const metadata: Metadata = buildPageMetadata(homeMeta);
 export default function HomePage() {
   return (
     <>
-      <JsonLd graph={buildPageGraph(homeMeta)} />
+      <JsonLd graph={buildPageGraph(homeMeta, { services: ["wallet", "insurance"] })} />
 
       <Hero content={heroContent} headingId={HERO_HEADING_ID} />
 

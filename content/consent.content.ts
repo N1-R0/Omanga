@@ -125,9 +125,15 @@ export const consentContent: {
       explicit act, and closing the page without pressing one leaves everything
       optional switched off.
     */
-    body: "We use strictly necessary cookies to run this site. We would also like to use optional ones for embedded content and anonymous performance measurement. You can accept, refuse, or choose for yourself — and change your mind at any time.",
+    // [CHANGED, 2026-10-15] Shortened for the compact mobile bar (SEO audit
+    // visual #1: the banner covered ~45% of a 375px viewport). Same facts: what
+    // is necessary, what is optional, and that optional stays off by default.
+    body: "We use necessary cookies to run this site. Optional ones, for embedded content and anonymous performance measurement, stay off unless you accept.",
     acceptLabel: "Accept all",
-    rejectLabel: "Reject non-essential",
+    // [CHANGED, 2026-10-15] Was "Reject non-essential"; wrapped to two lines in
+    // the half-width mobile button. Pairs with "Accept all"; necessary cookies
+    // cannot be rejected anyway, as the body says.
+    rejectLabel: "Reject all",
     manageLabel: "Manage preferences",
     policyLink: { label: "Cookie Policy", href: "/cookie-policy" },
   },

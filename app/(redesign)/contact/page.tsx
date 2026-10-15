@@ -228,7 +228,7 @@ export default async function ContactPreviewPage({
         data. What § Schema asks for beyond that is recorded in the note above and
         is a stage of its own.
       */}
-      <JsonLd graph={buildPageGraph(contactMeta, { crumb: "Contact" })} />
+      <JsonLd graph={buildPageGraph(contactMeta, { crumb: "Contact", pageType: "ContactPage" })} />
 
       {/*
         Stage 2. The hero — spec §§ 2 and 3, from Figma node 2579:131893, and the

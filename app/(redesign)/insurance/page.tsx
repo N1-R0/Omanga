@@ -117,6 +117,7 @@ export default function InsurancePreviewPage() {
     <>
       <JsonLd graph={buildPageGraph(insuranceMeta, {
         crumb: "Holiday Insurance",
+        services: ["insurance"],
         nodes: [buildFaqPage(insuranceMeta, insuranceFaqContent.items)],
       })} />
 

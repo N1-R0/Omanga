@@ -135,6 +135,7 @@ export default function PlansPage() {
       <JsonLd
         graph={buildPageGraph(plansMeta, {
           crumb: "Health Insurance Plans",
+          services: ["insurance"],
           nodes: buildPlanProducts(
             insurancePlansContent.plans.map((plan) => ({
               name: plan.name,

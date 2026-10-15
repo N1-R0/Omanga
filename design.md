@@ -761,7 +761,11 @@ footer paragraph.
       Gold both get A+B. Confirm which is right.
 - [x] 24/7 contact centre confirmed by the owner (2026-10-14).
 - [ ] "No commitment, cancel any time" for health cover is published but not
-      owner-confirmed.
+      owner-confirmed. Bigger conflict (2026-10-15): the Paystack checkouts are
+      recurring monthly subscriptions ("charged monthly payments of USD 50",
+      lib/schema.ts note of 2026-09-20), but /policy-terms §§ 2.2, 4 and 5 say
+      payment is one-off for 30 days and never recurs. One of them is wrong;
+      the marketing copy matches Paystack, so it was left as is.
 - [ ] Claims: "not a refund claim" wording kept on /insurance; confirm how
       claims actually work.
 - [ ] Payments hero mockup (`AppHomeMockup.tsx`) shows a "Cards" tab, which
@@ -783,3 +787,22 @@ footer paragraph.
       has no mailing-list provider (people email info@omanga.biz).
 - [ ] About page, privacy policy and blog posts still say "for Africa"/"across
       Africa" about insurance in places. Legal copy needs owner sign-off.
+
+## Addendum · 2026-10-15 · SEO audit high-priority fixes
+
+- **OG image** is now a static `public/og.png` (the old route's own output).
+  Inside the `(redesign)` route group Next served `opengraph-image.tsx` at a
+  hashed path, so `/opengraph-image` in `lib/seo.ts` was a 404 on every page.
+- **Cookie banner**: compact bar on mobile (heading visually hidden, Accept
+  and Reject in equal halves, Manage below; ~27% of a 375 × 812 viewport,
+  was ~45%), a 26rem bottom-right card on desktop. Body copy shortened and
+  lifted to 80% white for contrast. "Reject non-essential" became
+  "Reject all" so it fits and pairs with "Accept all".
+- **Schema**: Organization gets `alternateName` (mirrors WebSite) and a raster
+  logo (`/apple-icon.png`, 180px); no `legalName` until the registered name
+  is confirmed. Providers have `@id`s. The wallet is a `FinancialProduct`
+  with its ₦20 fee; service nodes now appear only on home, /payments,
+  /insurance and /plans. /about and /contact are `AboutPage`/`ContactPage`.
+- **Copy contradictions**: Silver categories, "50+ countries" and "lost 30"
+  were already fixed on 2026-10-14. Monthly vs one-off billing is open (see
+  Copy to-do).

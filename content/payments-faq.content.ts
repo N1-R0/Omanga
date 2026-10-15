@@ -13,6 +13,14 @@ import type { FaqContent } from "@/types/blog.types";
  */
 export const PAYMENTS_FAQ_HEADING_ID = "payments-faq-heading";
 
+/**
+ * The fee answer, exported so the wallet's structured data
+ * (`feesAndCommissionsSpecification`, lib/schema.ts) states the same fee the
+ * page shows.
+ */
+export const PAYMENTS_FEES_ANSWER =
+  "Opening an Omanga wallet is free. Each transfer costs ₦20, transfers between Omanga accounts are free, and there are no minimums.";
+
 export const paymentsFaqContent: FaqContent = {
   // [CHANGED, 2026-10-14] UX copy pass: shorter.
   heading: "Questions about the Omanga wallet",
@@ -34,8 +42,7 @@ export const paymentsFaqContent: FaqContent = {
       // without naming a fee. ₦20 is confirmed; whether conversion is free is
       // not yet (design.md § Copy to-do).
       question: "What fees does Omanga charge?",
-      answer:
-        "Opening an Omanga wallet is free. Each transfer costs ₦20, transfers between Omanga accounts are free, and there are no minimums.",
+      answer: PAYMENTS_FEES_ANSWER,
     },
     {
       question: "What exchange rate does Omanga use?",

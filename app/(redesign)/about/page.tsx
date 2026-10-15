@@ -155,7 +155,7 @@ export default function AboutPage() {
   */
   return (
     <>
-      <JsonLd graph={buildPageGraph(aboutMeta, { crumb: "About" })} />
+      <JsonLd graph={buildPageGraph(aboutMeta, { crumb: "About", pageType: "AboutPage" })} />
 
       {/*
         Stage 2. The hero — spec § 2, and the page's only `h1`. Laid out from the

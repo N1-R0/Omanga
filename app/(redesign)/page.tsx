@@ -8,8 +8,7 @@ import { WhyOmanga } from "@/components/sections/WhyOmanga";
 import { HOME_V2_IDS, homeV2Content } from "@/content/home-v2.content";
 import { StepsV2 } from "@/components/home-v2/StepsV2";
 import { HeroPoster } from "@/components/home-v2/HeroPoster";
-import { ProductDeepDive } from "@/components/sections/ProductDeepDive";
-import { Services } from "@/components/sections/Services";
+import { AccountFeatures } from "@/components/sections/AccountFeatures";
 import { SolutionsOverview } from "@/components/sections/SolutionsOverview";
 import { TrustPartners } from "@/components/sections/TrustPartners";
 import {
@@ -17,14 +16,10 @@ import {
   coverageContent,
 } from "@/content/coverage.content";
 import {
-  DEEP_DIVE_HEADING_ID,
-  deepDiveContent,
-} from "@/content/deep-dive.content";
+  ACCOUNT_FEATURES_HEADING_ID,
+  accountFeaturesContent,
+} from "@/content/account-features.content";
 import { HERO_HEADING_ID } from "@/content/hero.content";
-import {
-  SERVICES_HEADING_ID,
-  servicesContent,
-} from "@/content/services.content";
 import {
   SOLUTIONS_HEADING_ID,
   solutionsContent,
@@ -73,7 +68,9 @@ export const metadata: Metadata = buildPageMetadata(homeMeta);
 export default function HomePage() {
   return (
     <>
-      <JsonLd graph={buildPageGraph(homeMeta, { services: ["wallet", "insurance"] })} />
+      <JsonLd
+        graph={buildPageGraph(homeMeta, { services: ["wallet", "insurance"] })}
+      />
 
       {/*
         [CHANGED, 2026-10-15] Revolut-style poster hero (owner pick). Same h1 and
@@ -99,8 +96,15 @@ export default function HomePage() {
       */}
       <TrustPartners content={trustContent} headingId={TRUST_HEADING_ID} />
 
-      {/* Phase 3.3. Services — section 4 of the approved copy document. */}
-      <Services content={servicesContent} headingId={SERVICES_HEADING_ID} />
+      {/*
+        [CHANGED, 2026-10-15] Services and the Product Deep Dive are merged into
+        one six-card section, placed straight after the partners (owner
+        decision). See account-features.content.ts.
+      */}
+      <AccountFeatures
+        content={accountFeaturesContent}
+        headingId={ACCOUNT_FEATURES_HEADING_ID}
+      />
 
       {/*
         [CHANGED, 2026-10-09] How it works is the v2 "connected circles" layout
@@ -108,12 +112,6 @@ export default function HomePage() {
         `how-it-works.content.ts` through `home-v2.content.ts`.
       */}
       <StepsV2 />
-
-      {/* Phase 3.4. Product Deep Dive — section 6 of the approved copy document. */}
-      <ProductDeepDive
-        content={deepDiveContent}
-        headingId={DEEP_DIVE_HEADING_ID}
-      />
 
       {/*
         Phase 3.6. African Coverage. Appended after the sections already mounted
@@ -131,7 +129,10 @@ export default function HomePage() {
         [CHANGED, 2026-10-09] v2 split card (pick W1), same approved copy.
         Since 2026-10-10 this design is the shared `WhyOmanga` on every page.
       */}
-      <WhyOmanga content={homeV2Content.comparison} headingId={HOME_V2_IDS.comparison} />
+      <WhyOmanga
+        content={homeV2Content.comparison}
+        headingId={HOME_V2_IDS.comparison}
+      />
 
       {/*
         [ADDED, 2026-10-09] v2 FAQ (pick Q1). Six questions from the approved

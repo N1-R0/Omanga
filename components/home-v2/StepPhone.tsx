@@ -1,10 +1,11 @@
 import Image from "next/image";
 import type { CSSProperties, ReactNode } from "react";
 
+import { DeviceFrame } from "@/components/ui/DeviceFrame";
 import { cx } from "@/lib/cx";
 
 /**
- * A phone frame for the How it works cards, with the same unit system as
+ * A phone for the How it works cards, with the same unit system as
  * `AppHomeMockup` (`--u` is one app point on a 393pt-wide screen) so a screen
  * drawn here and the home screen read as the same app.
  *
@@ -25,14 +26,10 @@ export function StepPhone({
   className?: string;
 }) {
   return (
-    <div
-      aria-hidden
-      className={cx(
-        "rounded-[13%/6%] bg-[#0d0d10] p-[1.3%] shadow-[0_24px_48px_-20px_rgb(20_10_14/0.35)] ring-1 ring-black/40",
-        className,
-      )}
+    <DeviceFrame
+      className={cx("drop-shadow-[0_24px_24px_rgb(20_10_14/0.25)]", className)}
     >
-      <div className="relative overflow-hidden rounded-[12%/5.5%] bg-white [container-type:inline-size]">
+      <div className="[container-type:inline-size]">
         <div
           className="relative flex flex-col overflow-hidden"
           style={{
@@ -47,7 +44,7 @@ export function StepPhone({
           {children}
         </div>
       </div>
-    </div>
+    </DeviceFrame>
   );
 }
 
@@ -92,7 +89,13 @@ export function AppText({
 }) {
   return (
     <span
-      style={{ fontSize: u(size), fontWeight: weight, color, lineHeight: 1.3, ...style }}
+      style={{
+        fontSize: u(size),
+        fontWeight: weight,
+        color,
+        lineHeight: 1.3,
+        ...style,
+      }}
     >
       {children}
     </span>
@@ -101,8 +104,8 @@ export function AppText({
 
 /**
  * The same phone frame around a real screenshot from the app (iOS simulator,
- * iPhone 17 Pro, 1206 × 2622). The screenshot carries its
- * own status bar, so none is drawn here.
+ * iPhone 17 Pro, 1206 × 2622). The screenshot carries its own status bar and
+ * Dynamic Island, so neither is drawn here.
  */
 export function ScreenshotPhone({
   src,
@@ -112,18 +115,18 @@ export function ScreenshotPhone({
   className?: string;
 }) {
   return (
-    <div
-      aria-hidden
-      className={cx(
-        "rounded-[13%/6%] bg-[#0d0d10] p-[1.3%] shadow-[0_24px_48px_-20px_rgb(20_10_14/0.35)] ring-1 ring-black/40",
-        className,
-      )}
+    <DeviceFrame
+      className={cx("drop-shadow-[0_24px_24px_rgb(20_10_14/0.25)]", className)}
     >
-      <div className="relative aspect-[1206/2622] overflow-hidden rounded-[12%/5.5%] bg-white">
-        <Image src={src} alt="" fill sizes="16rem" className="object-cover object-top" />
-        {/* Simulator captures omit the Dynamic Island; drawn where it sits. */}
-        <span className="absolute top-[1.6%] left-1/2 h-[4.1%] w-[31%] -translate-x-1/2 rounded-full bg-black" />
+      <div className="relative aspect-[1206/2622]">
+        <Image
+          src={src}
+          alt=""
+          fill
+          sizes="16rem"
+          className="object-cover object-top"
+        />
       </div>
-    </div>
+    </DeviceFrame>
   );
 }

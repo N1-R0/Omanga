@@ -205,6 +205,16 @@ export function formatCopyright(year: number): string {
   return `© ${year} Omanga. All rights reserved.`;
 }
 
+/**
+ * Attribution for the phone mockup in `DeviceFrame`. Freepik's free licence
+ * requires a visible credit on any site that uses the asset; dropping this
+ * line means buying the premium licence first.
+ */
+export const mockupCredit = {
+  label: "Phone mockup designed by Freepik",
+  href: "https://www.freepik.com/free-psd/smartphone-15-pro-max-mockup_47987-19218.htm",
+} as const;
+
 export const footerContent: {
   readonly brandParagraph: string;
   readonly columns: readonly FooterLinkColumn[];

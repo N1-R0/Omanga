@@ -48,3 +48,7 @@ next-env.d.ts
 /design-lab/
 /public/3d/*.png
 /public/3d/*.jpg
+
+# Source PSD for the phone mockup (69 MB); only its PNG exports ship.
+public/devices/*.psd
+public/devices/*-preview.jpg

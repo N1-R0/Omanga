@@ -1,10 +1,11 @@
 import type { CSSProperties, ReactNode } from "react";
 
+import { DeviceFrame } from "@/components/ui/DeviceFrame";
 import type { AppHomeSample } from "@/content/payments-hero.content";
 import { cx } from "@/lib/cx";
 
 /**
- * The Omanga app's home screen, drawn in HTML inside a phone frame.
+ * The Omanga app's home screen, drawn in HTML inside `DeviceFrame`.
  *
  * [CHANGED, 2026-10-10] Matched to a screenshot of the live app the owner
  * supplied, rather than read off the source alone. Exactly one screen, 393 ×
@@ -58,15 +59,33 @@ const ICONS = {
 
 type IconName = keyof typeof ICONS;
 
-function Icon({ name, size, color = "currentColor" }: { name: IconName; size: number; color?: string }) {
+function Icon({
+  name,
+  size,
+  color = "currentColor",
+}: {
+  name: IconName;
+  size: number;
+  color?: string;
+}) {
   return (
-    <svg viewBox="0 0 24 24" style={{ width: u(size), height: u(size) }} fill={color}>
+    <svg
+      viewBox="0 0 24 24"
+      style={{ width: u(size), height: u(size) }}
+      fill={color}
+    >
       <path d={ICONS[name]} />
     </svg>
   );
 }
 
-function Text({ size, weight, color, style, children }: {
+function Text({
+  size,
+  weight,
+  color,
+  style,
+  children,
+}: {
   size: number;
   weight: 400 | 500 | 600 | 700;
   color: string;
@@ -74,21 +93,37 @@ function Text({ size, weight, color, style, children }: {
   children: ReactNode;
 }) {
   return (
-    <span style={{ fontSize: u(size), fontWeight: weight, color, lineHeight: 1.3, ...style }}>
+    <span
+      style={{
+        fontSize: u(size),
+        fontWeight: weight,
+        color,
+        lineHeight: 1.3,
+        ...style,
+      }}
+    >
       {children}
     </span>
   );
 }
 
 /** Absolutely placed block, in screen points from the top. */
-function At({ top, children, className, style }: {
+function At({
+  top,
+  children,
+  className,
+  style,
+}: {
   top: number;
   children: ReactNode;
   className?: string;
   style?: CSSProperties;
 }) {
   return (
-    <div className={cx("absolute inset-x-0", className)} style={{ top: u(top), ...style }}>
+    <div
+      className={cx("absolute inset-x-0", className)}
+      style={{ top: u(top), ...style }}
+    >
       {children}
     </div>
   );
@@ -115,95 +150,174 @@ const TABS: { icon: IconName; label: string }[] = [
 
 const SHEET_TOP = 453;
 
-export function AppHomeMockup({ sample, className }: { sample: AppHomeSample; className?: string }) {
+export function AppHomeMockup({
+  sample,
+  className,
+}: {
+  sample: AppHomeSample;
+  className?: string;
+}) {
   return (
-    <div
-      aria-hidden
-      className={cx(
-        "rounded-[13%/6%] bg-[#0d0d10] p-[1.3%] shadow-[0_40px_80px_-20px_rgb(20_10_14/0.45)] ring-1 ring-black/40",
-        className,
-      )}
+    <DeviceFrame
+      sizes="(min-width: 64rem) 16vw, 32vw"
+      className={cx("drop-shadow-[0_32px_32px_rgb(20_10_14/0.35)]", className)}
     >
       {/* The screen is the query container; `--u` is one app point. */}
-      <div className="relative overflow-hidden rounded-[12%/5.5%] bg-[#fafafa] [container-type:inline-size]">
+      <div className="relative overflow-hidden bg-[#fafafa] [container-type:inline-size]">
         <div
           className="relative overflow-hidden"
           style={{
             ["--u" as string]: `calc(100cqw / ${SCREEN_PT})`,
-            fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif',
+            fontFamily:
+              '"Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif',
             aspectRatio: `${SCREEN_PT} / ${SCREEN_H_PT}`,
           }}
         >
           {/* Photo header: the top of the screen down to the sheet. */}
           <div
             className="absolute inset-x-0 top-0 bg-[#2F6495] bg-cover bg-center"
-            style={{ height: u(SHEET_TOP + 20), backgroundImage: "url(/app-home/header-background.jpg)" }}
+            style={{
+              height: u(SHEET_TOP + 20),
+              backgroundImage: "url(/app-home/header-background.jpg)",
+            }}
           />
 
           {/* Status bar */}
-          <At top={0} className="flex items-center justify-between" style={{ height: u(54), padding: `${u(12)} ${u(34)} 0` }}>
-            <Text size={16} weight={600} color="#fff">9:41</Text>
+          <At
+            top={0}
+            className="flex items-center justify-between"
+            style={{ height: u(54), padding: `${u(12)} ${u(34)} 0` }}
+          >
+            <Text size={16} weight={600} color="#fff">
+              9:41
+            </Text>
             <span
               className="absolute left-1/2 -translate-x-1/2 rounded-full bg-black"
               style={{ top: u(11), width: u(124), height: u(36) }}
             />
             <span className="flex items-center" style={{ gap: u(6) }}>
-              <span className="flex items-end" style={{ gap: u(2), height: u(11) }}>
+              <span
+                className="flex items-end"
+                style={{ gap: u(2), height: u(11) }}
+              >
                 {[4, 6, 8, 11].map((h) => (
-                  <span key={h} className="block rounded-[1px] bg-white" style={{ width: u(3), height: u(h) }} />
+                  <span
+                    key={h}
+                    className="block rounded-[1px] bg-white"
+                    style={{ width: u(3), height: u(h) }}
+                  />
                 ))}
               </span>
-              <span className="block rounded-[3px] border border-white/60 p-px" style={{ width: u(25), height: u(12) }}>
-                <span className="block h-full rounded-[1.5px] bg-white" style={{ width: "80%" }} />
+              <span
+                className="block rounded-[3px] border border-white/60 p-px"
+                style={{ width: u(25), height: u(12) }}
+              >
+                <span
+                  className="block h-full rounded-[1.5px] bg-white"
+                  style={{ width: "80%" }}
+                />
               </span>
             </span>
           </At>
 
           {/* Greeting bar */}
-          <At top={62} className="flex items-center justify-between" style={{ padding: `0 ${u(20)}` }}>
+          <At
+            top={62}
+            className="flex items-center justify-between"
+            style={{ padding: `0 ${u(20)}` }}
+          >
             <span className="flex items-center" style={{ gap: u(9) }}>
-              <span className="grid place-items-center rounded-full bg-[#ADA424]" style={{ width: u(36), height: u(36) }}>
-                <Text size={16} weight={700} color="#fff">{sample.firstName.charAt(0)}</Text>
+              <span
+                className="grid place-items-center rounded-full bg-[#ADA424]"
+                style={{ width: u(36), height: u(36) }}
+              >
+                <Text size={16} weight={700} color="#fff">
+                  {sample.firstName.charAt(0)}
+                </Text>
               </span>
-              <Text size={20} weight={600} color="#fff" style={{ letterSpacing: u(-0.3) }}>
+              <Text
+                size={20}
+                weight={600}
+                color="#fff"
+                style={{ letterSpacing: u(-0.3) }}
+              >
                 Hi, {sample.firstName} ✌🏼
               </Text>
             </span>
             <span
               className="grid place-items-center rounded-full bg-[#1E88E5] shadow-[0_4px_14px_rgb(30_136_229/0.45)]"
-              style={{ width: u(44), height: u(44), boxShadow: `0 0 0 ${u(3)} rgb(30 136 229 / 0.3), 0 ${u(4)} ${u(14)} rgb(0 0 0 / 0.25)` }}
+              style={{
+                width: u(44),
+                height: u(44),
+                boxShadow: `0 0 0 ${u(3)} rgb(30 136 229 / 0.3), 0 ${u(4)} ${u(14)} rgb(0 0 0 / 0.25)`,
+              }}
             >
               <Icon name="gear" size={26} color="#fff" />
             </span>
           </At>
 
           {/* Balance */}
-          <At top={183} className="flex flex-col items-center" style={{ gap: u(10) }}>
-            <span className="flex items-center rounded-full bg-white/10" style={{ gap: u(7), padding: `${u(6)} ${u(14)}` }}>
+          <At
+            top={183}
+            className="flex flex-col items-center"
+            style={{ gap: u(10) }}
+          >
+            <span
+              className="flex items-center rounded-full bg-white/10"
+              style={{ gap: u(7), padding: `${u(6)} ${u(14)}` }}
+            >
               <span
                 className="block shrink-0 rounded-full"
-                style={{ width: u(18), height: u(18), background: "linear-gradient(90deg,#008751 33.3%,#fff 33.3% 66.6%,#008751 66.6%)" }}
+                style={{
+                  width: u(18),
+                  height: u(18),
+                  background:
+                    "linear-gradient(90deg,#008751 33.3%,#fff 33.3% 66.6%,#008751 66.6%)",
+                }}
               />
-              <Text size={15} weight={600} color="#fff">NGN</Text>
+              <Text size={15} weight={600} color="#fff">
+                NGN
+              </Text>
               <Icon name="chevron" size={16} color="#fff" />
             </span>
             <span className="flex items-center" style={{ gap: u(10) }}>
-              <Text size={46} weight={700} color="#fff" style={{ letterSpacing: u(-1.2), lineHeight: 1.1 }}>
+              <Text
+                size={46}
+                weight={700}
+                color="#fff"
+                style={{ letterSpacing: u(-1.2), lineHeight: 1.1 }}
+              >
                 ₦{sample.balance}
               </Text>
               <Icon name="eyeOff" size={22} color="#fff" />
             </span>
-            <Text size={13.5} weight={400} color="rgb(255 255 255 / 0.75)">Last updated 13 sec ago</Text>
+            <Text size={13.5} weight={400} color="rgb(255 255 255 / 0.75)">
+              Last updated 13 sec ago
+            </Text>
           </At>
 
           {/* Quick actions */}
           <At top={340} className="flex justify-center" style={{ gap: u(24) }}>
             {ACTIONS.map((action) => (
-              <span key={action.label} className="flex flex-col items-center" style={{ width: u(64), gap: u(10) }}>
-                <span className="grid place-items-center rounded-full bg-white/12" style={{ width: u(57), height: u(57) }}>
+              <span
+                key={action.label}
+                className="flex flex-col items-center"
+                style={{ width: u(64), gap: u(10) }}
+              >
+                <span
+                  className="grid place-items-center rounded-full bg-white/12"
+                  style={{ width: u(57), height: u(57) }}
+                >
                   <Icon name={action.icon} size={22} color="#fff" />
                 </span>
-                <Text size={13} weight={600} color="#fff" style={{ whiteSpace: "nowrap" }}>{action.label}</Text>
+                <Text
+                  size={13}
+                  weight={600}
+                  color="#fff"
+                  style={{ whiteSpace: "nowrap" }}
+                >
+                  {action.label}
+                </Text>
               </span>
             ))}
           </At>
@@ -212,47 +326,111 @@ export function AppHomeMockup({ sample, className }: { sample: AppHomeSample; cl
           <At
             top={SHEET_TOP}
             className="bottom-0 bg-[#fafafa]"
-            style={{ borderRadius: `${u(15)} ${u(15)} 0 0`, padding: `${u(19)} ${u(16)} 0` }}
+            style={{
+              borderRadius: `${u(15)} ${u(15)} 0 0`,
+              padding: `${u(19)} ${u(16)} 0`,
+            }}
           >
             {/* Continue setup */}
-            <div className="flex items-center bg-[#FBEAEE]" style={{ gap: u(16), padding: u(16), borderRadius: u(16) }}>
+            <div
+              className="flex items-center bg-[#FBEAEE]"
+              style={{ gap: u(16), padding: u(16), borderRadius: u(16) }}
+            >
               {/* eslint-disable-next-line @next/next/no-img-element -- decorative, inside an aria-hidden mockup */}
-              <img src="/app-home/complete-kyc.webp" alt="" style={{ width: u(56), height: u(56) }} />
+              <img
+                src="/app-home/complete-kyc.webp"
+                alt=""
+                style={{ width: u(56), height: u(56) }}
+              />
               <span className="flex flex-col" style={{ gap: u(4) }}>
-                <Text size={15} weight={600} color="#1E1E1E">Continue setup</Text>
-                <Text size={13} weight={400} color="#666666">Use this guide to finish setting up your account</Text>
-                <Text size={14} weight={600} color="#AE2448" style={{ marginTop: u(6) }}>Complete setup</Text>
+                <Text size={15} weight={600} color="#1E1E1E">
+                  Continue setup
+                </Text>
+                <Text size={13} weight={400} color="#666666">
+                  Use this guide to finish setting up your account
+                </Text>
+                <Text
+                  size={14}
+                  weight={600}
+                  color="#AE2448"
+                  style={{ marginTop: u(6) }}
+                >
+                  Complete setup
+                </Text>
               </span>
             </div>
 
-            <div className="flex items-center justify-between" style={{ padding: `${u(19)} ${u(8)} ${u(12)}` }}>
-              <Text size={14} weight={500} color="#757575">Recent transactions</Text>
-              <Text size={14} weight={500} color="#AE2448">See all</Text>
+            <div
+              className="flex items-center justify-between"
+              style={{ padding: `${u(19)} ${u(8)} ${u(12)}` }}
+            >
+              <Text size={14} weight={500} color="#757575">
+                Recent transactions
+              </Text>
+              <Text size={14} weight={500} color="#AE2448">
+                See all
+              </Text>
             </div>
-            <div className="overflow-hidden border border-[#EDEDED] bg-white" style={{ borderRadius: u(20), padding: `0 ${u(16)}` }}>
+            <div
+              className="overflow-hidden border border-[#EDEDED] bg-white"
+              style={{ borderRadius: u(20), padding: `0 ${u(16)}` }}
+            >
               {sample.transactions.map((row, index) => (
                 <div
                   key={row.title}
-                  className={cx("flex items-center", index > 0 && "border-t border-[#EEEEEE]")}
+                  className={cx(
+                    "flex items-center",
+                    index > 0 && "border-t border-[#EEEEEE]",
+                  )}
                   style={{ gap: u(12), padding: `${u(16)} 0` }}
                 >
-                  <span className="grid shrink-0 place-items-center rounded-full bg-[#F5F5F5]" style={{ width: u(40), height: u(40) }}>
+                  <span
+                    className="grid shrink-0 place-items-center rounded-full bg-[#F5F5F5]"
+                    style={{ width: u(40), height: u(40) }}
+                  >
                     {row.initials !== undefined ? (
-                      <Text size={13} weight={500} color="#6B7A90">{row.initials}</Text>
+                      <Text size={13} weight={500} color="#6B7A90">
+                        {row.initials}
+                      </Text>
                     ) : (
-                      <Icon name={row.kind === "convert" ? "convert" : row.kind} size={20} color="#1E1E1E" />
+                      <Icon
+                        name={row.kind === "convert" ? "convert" : row.kind}
+                        size={20}
+                        color="#1E1E1E"
+                      />
                     )}
                   </span>
-                  <span className="flex min-w-0 flex-1 flex-col" style={{ gap: u(2) }}>
-                    <Text size={16} weight={500} color="#1E1E1E" style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                  <span
+                    className="flex min-w-0 flex-1 flex-col"
+                    style={{ gap: u(2) }}
+                  >
+                    <Text
+                      size={16}
+                      weight={500}
+                      color="#1E1E1E"
+                      style={{
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
                       {row.title}
                     </Text>
-                    <Text size={14} weight={400} color="#767676">{row.detail}</Text>
+                    <Text size={14} weight={400} color="#767676">
+                      {row.detail}
+                    </Text>
                   </span>
-                  <span className="flex flex-col items-end" style={{ gap: u(2) }}>
-                    <Text size={16} weight={500} color="#1E1E1E">{row.amount}</Text>
+                  <span
+                    className="flex flex-col items-end"
+                    style={{ gap: u(2) }}
+                  >
+                    <Text size={16} weight={500} color="#1E1E1E">
+                      {row.amount}
+                    </Text>
                     {row.secondary !== undefined && (
-                      <Text size={13} weight={400} color="#8B96A8">{row.secondary}</Text>
+                      <Text size={13} weight={400} color="#8B96A8">
+                        {row.secondary}
+                      </Text>
                     )}
                   </span>
                 </div>
@@ -271,11 +449,16 @@ export function AppHomeMockup({ sample, className }: { sample: AppHomeSample; cl
               return (
                 <span
                   key={tab.label}
-                  className={cx("flex flex-1 flex-col items-center rounded-full", active && "bg-black/[0.06]")}
+                  className={cx(
+                    "flex flex-1 flex-col items-center rounded-full",
+                    active && "bg-black/[0.06]",
+                  )}
                   style={{ padding: `${u(7)} 0`, gap: u(2) }}
                 >
                   <Icon name={tab.icon} size={24} color={color} />
-                  <Text size={10.5} weight={600} color={color}>{tab.label}</Text>
+                  <Text size={10.5} weight={600} color={color}>
+                    {tab.label}
+                  </Text>
                 </span>
               );
             })}
@@ -286,6 +469,6 @@ export function AppHomeMockup({ sample, className }: { sample: AppHomeSample; cl
           />
         </div>
       </div>
-    </div>
+    </DeviceFrame>
   );
 }

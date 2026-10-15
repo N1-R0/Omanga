@@ -5,6 +5,7 @@ import { Logo } from "@/components/layout/Logo";
 import { Text } from "@/components/ui/Text";
 import { InstagramMark } from "@/components/icons/InstagramMark";
 import { Mail } from "@/components/icons/Mail";
+import { mockupCredit } from "@/content/footer.content";
 import type { FooterLinkColumn, LinkTarget } from "@/types/content.types";
 
 /** Icons for social links, keyed by the link's label in footer.content.ts. */
@@ -124,7 +125,11 @@ export function Footer({
                         : {})}
                       className="focus-ring transition-standard flex size-11 items-center justify-center rounded-pill border border-on-dark/25 text-on-dark hover:bg-on-dark hover:text-ink"
                     >
-                      {icon ?? <span className="px-3 font-sans text-small">{link.label}</span>}
+                      {icon ?? (
+                        <span className="px-3 font-sans text-small">
+                          {link.label}
+                        </span>
+                      )}
                     </a>
                   </li>
                 );
@@ -138,6 +143,16 @@ export function Footer({
             */}
             <Text role="small" isSecondary>
               {copyright}
+            </Text>
+            <Text role="small" isSecondary>
+              <a
+                href={mockupCredit.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="focus-ring underline-offset-2 hover:underline"
+              >
+                {mockupCredit.label}
+              </a>
             </Text>
           </div>
 

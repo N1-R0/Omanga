@@ -1,5 +1,9 @@
+import { heroPosterContent } from "@/content/hero.content";
 import { WALLET_URL } from "@/config/site";
-import { COUNTRIES_SERVED_DISPLAY, PAYMENTS_RATES_ANCHOR } from "@/content/site.content";
+import {
+  COUNTRIES_SERVED_DISPLAY,
+  PAYMENTS_RATES_ANCHOR,
+} from "@/content/site.content";
 import type { CallToAction, Eyebrow } from "@/types/content.types";
 
 /**
@@ -90,9 +94,7 @@ export const paymentsHeroContent: PaymentsHeroContent = {
 export const PAYMENTS_HERO_HEADING_ID = "payments-hero-heading" as const;
 
 /*
-  [ADDED, 2026-10-10] Payments hero — Wise's "phone over traveller photo"
-  (Y6, Mobbin section 622fd829), picked by the owner. Adds the second button,
-  the photo, and the sample account the phone mockup shows.
+  [ADDED, 2026-10-10] The payments hero's second button.
 */
 export const paymentsHeroSecondary: CallToAction = {
   label: "See today's rates",
@@ -101,64 +103,16 @@ export const paymentsHeroSecondary: CallToAction = {
   emphasis: "secondary",
 };
 
-/** Sits above the store badges: the app is not listed in either store yet. */
-export const paymentsHeroStoreLabel = "Coming soon";
-
-export const paymentsHeroPhoto = {
-  src: "/person-wearing-colorful-fashion.jpg",
-  // [CHANGED, 2026-10-14] UX copy pass: shorter alt text.
-  alt: "A smiling traveller in a straw hat and peach suit by a pool.",
-} as const;
-
-export type AppHomeTransaction = {
-  readonly title: string;
-  readonly detail: string;
-  readonly amount: string;
-  readonly secondary?: string;
-  /** A named payee shows initials; everything else shows the kind's glyph. */
-  readonly initials?: string;
-  readonly kind: "in" | "out" | "convert";
-};
-
-export type AppHomeSample = {
-  readonly firstName: string;
-  /** Formatted, without the symbol, whole naira as the app shows it: "412,560". */
-  readonly balance: string;
-  readonly transactions: readonly AppHomeTransaction[];
-};
-
 /**
- * Illustrative only — a traveller who funded in dollars and is spending in
- * naira. Amounts sit near a believable mid-market rate but are not live.
- */
-export const appHomeSample: AppHomeSample = {
-  firstName: "Ada",
-  balance: "412,560",
-  transactions: [
-    { title: "USD to NGN", detail: "10 Oct, 9:14am", amount: "+₦153,200", secondary: "−$100", kind: "convert" },
-    { title: "Kofi Mensah", detail: "9 Oct, 6:52pm", amount: "−₦45,000", initials: "KM", kind: "out" },
-    { title: "Bank transfer", detail: "6 Oct, 11:03am", amount: "+₦80,000", kind: "in" },
-  ],
-};
-
-/**
- * [ADDED, 2026-10-15] Content for the photo hero (`PhotoHero`, the home
- * page's layout, owner request). Heading, intro and both actions are the
- * existing approved copy, unchanged. The phone mockup and "Coming soon" store
- * badges are dropped with the old layout.
+ * [ADDED, 2026-10-15] Content for the payments hero. Heading, intro and both
+ * actions are the existing approved copy, unchanged.
  *
- * Photo: a man in sunglasses under a clear blue sky with a plane overhead
- * (Unsplash 6tAsnpxxGiw, free licence). Self-hosted at
- * public/payments-hero-sky.jpg.
+ * [CHANGED, 2026-10-15] Photo: the home hero's (owner request), so both pages
+ * open on the same picture.
  */
 export const paymentsPhotoHeroContent = {
   heading: paymentsHeroContent.heading,
   intro: paymentsHeroContent.intro,
   actions: [paymentsHeroContent.action, paymentsHeroSecondary],
-  image: {
-    src: "/payments-hero-sky.jpg",
-    alt: "",
-    width: 2400,
-    height: 1600,
-  },
+  image: heroPosterContent.image,
 } as const;

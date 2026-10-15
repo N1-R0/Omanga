@@ -5,9 +5,8 @@ import { DeviceFrame } from "@/components/ui/DeviceFrame";
 import { cx } from "@/lib/cx";
 
 /**
- * A phone for the How it works cards, with the same unit system as
- * `AppHomeMockup` (`--u` is one app point on a 393pt-wide screen) so a screen
- * drawn here and the home screen read as the same app.
+ * A phone for the How it works cards. `--u` is one app point on a 393pt-wide
+ * screen, so screens drawn here match the real screenshots' proportions.
  *
  * Only the top of the phone is meant to show: the card crops it, as in the
  * Norma reference. Decorative and `aria-hidden`; the card's text says what the

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { CTA } from "@/components/sections/CTA";
 import { Faq } from "@/components/sections/Faq";
 import { InsuranceDeepDive } from "@/components/sections/InsuranceDeepDive";
-import { PaymentsHeroV2 } from "@/components/payments-v2/PaymentsHeroV2";
+import { PhotoHero } from "@/components/sections/PhotoHero";
 import { PaymentsFeatures } from "@/components/sections/PaymentsFeatures";
 import { TrustPartners } from "@/components/sections/TrustPartners";
 import { WhyOmanga } from "@/components/sections/WhyOmanga";
@@ -22,7 +22,7 @@ import {
 } from "@/content/payments-features.content";
 import {
   PAYMENTS_HERO_HEADING_ID,
-  paymentsHeroContent,
+  paymentsPhotoHeroContent,
 } from "@/content/payments-hero.content";
 import {
   PAYMENTS_WHY_HEADING_ID,
@@ -223,9 +223,22 @@ export default async function PaymentsPage() {
         `PaymentsHeroV2`, Wise's phone-over-photo layout the owner picked (Y6). Same
         content object and heading id, so the outline and SEO are unchanged.
       */}
-      <PaymentsHeroV2
-        content={paymentsHeroContent}
+      {/*
+        [CHANGED, 2026-10-15] `PaymentsHeroV2` is replaced by `PhotoHero`, the
+        home page's layout (owner request). Same copy and heading id. On
+        desktop the photo is pushed right and fades into the sampled sky so
+        the copy sits on open sky; on small screens it starts low.
+      */}
+      <PhotoHero
         headingId={PAYMENTS_HERO_HEADING_ID}
+        heading={paymentsPhotoHeroContent.heading}
+        intro={paymentsPhotoHeroContent.intro}
+        actions={paymentsPhotoHeroContent.actions}
+        image={paymentsPhotoHeroContent.image}
+        headingClassName="max-w-[16ch]"
+        backdropClassName="bg-[linear-gradient(to_bottom,#5f86c3,#8fb2e8_55%,#bcd6f5)]"
+        photoClassName="inset-0 top-[60%] [mask-image:linear-gradient(to_bottom,transparent,black_15%)] desktop:top-0 desktop:left-[25%] desktop:[mask-image:linear-gradient(to_right,transparent,black_20%)]"
+        imageClassName="object-[45%_0%] desktop:object-center"
       />
 
       {/*

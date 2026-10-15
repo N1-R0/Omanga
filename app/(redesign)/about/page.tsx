@@ -5,10 +5,10 @@ import { WhyOmanga } from "@/components/sections/WhyOmanga";
 import { HOME_V2_IDS, homeV2Content } from "@/content/home-v2.content";
 
 import { CTA } from "@/components/sections/CTA";
-import { AboutHero } from "@/components/sections/AboutHero";
 import { AboutImpact } from "@/components/sections/AboutImpact";
 import { AboutMissionVision } from "@/components/sections/AboutMissionVision";
 import { AboutStory } from "@/components/sections/AboutStory";
+import { PhotoHero } from "@/components/sections/PhotoHero";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 import {
@@ -17,7 +17,7 @@ import {
 } from "@/content/about-cta.content";
 import {
   ABOUT_HERO_HEADING_ID,
-  aboutHeroContent,
+  aboutPhotoHeroContent,
 } from "@/content/about-hero.content";
 import {
   ABOUT_IMPACT_HEADING_ID,
@@ -164,7 +164,23 @@ export default function AboutPage() {
 
         The outline below it opens at `h2` without skipping a level.
       */}
-      <AboutHero content={aboutHeroContent} headingId={ABOUT_HERO_HEADING_ID} />
+      {/*
+        [CHANGED, 2026-10-15] `AboutHero` (copy beside a framed photo) is
+        replaced by `PhotoHero`, the home page's layout (owner request). On
+        desktop the photo is pushed right and fades into the sampled sky; on
+        small screens it starts low and fades in from the top.
+      */}
+      <PhotoHero
+        headingId={ABOUT_HERO_HEADING_ID}
+        heading={aboutPhotoHeroContent.heading}
+        intro={aboutPhotoHeroContent.intro}
+        actions={aboutPhotoHeroContent.actions}
+        image={aboutPhotoHeroContent.image}
+        headingClassName="max-w-[16ch]"
+        backdropClassName="bg-[linear-gradient(to_bottom,#8f9a8f,#6f8a89_55%,#5a818d)]"
+        photoClassName="inset-0 top-[50%] [mask-image:linear-gradient(to_bottom,transparent,black_15%)] desktop:top-0 desktop:left-[30%] desktop:[mask-image:linear-gradient(to_right,transparent,black_25%)]"
+        imageClassName="object-[55%_0%] desktop:object-center"
+      />
 
       {/*
         Stage 3. Our Story — spec § 3. Laid out from Figma node 2578:131852: the

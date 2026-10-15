@@ -963,3 +963,18 @@ types and lint pass afterwards.
 - Fixed the long-standing `MobileNav` lint error (state set in an effect).
 - Kept on purpose: the 3D objects (still rendered by FAQ, closing panel and Why
   Omanga), unused exported prop types, and constants used inside their files.
+
+## Addendum 2026-10-15: photo hero on every page
+
+- Owner: every page opens with the home hero's layout. The markup is now
+  `components/sections/PhotoHero.tsx`; `HeroPoster` (home) wraps it.
+- Each page brings its own Unsplash sky photo (self-hosted, never reused)
+  plus framing classes: a backdrop sampled from the photo's edges, the photo
+  box per breakpoint (desktop pushes it right and fades its left edge so the
+  subject clears the copy; mobile starts it low and fades its top edge).
+- Header goes transparent only on `PHOTO_HERO_PATHS` in Header.tsx; add each
+  page there as it moves over.
+- Done: home, insurance (Unsplash ZYV7qZNe5wY), payments (Unsplash 6tAsnpxxGiw; replaces the Y6 phone-over-photo hero, copy unchanged), about (Unsplash Uwz5MKKgD8g; intro shortened, [NEW] copy; home hero actions added). Insurance intro shortened to
+  one line ([NEW] copy, needs sign-off); h1 unchanged for SEO.
+- Type: Geist (headings) + Inter (text) are global tokens, so every page
+  already uses the home page's fonts.

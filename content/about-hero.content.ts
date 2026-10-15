@@ -1,5 +1,6 @@
 // [CHANGED, 2026-10-10] Locked copy rewritten on the owner's instruction ("do it perfectly"): hype words and US spellings removed, meaning kept.
 // [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
+import { heroPosterContent } from "@/content/hero.content";
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { Eyebrow, ImageAsset } from "@/types/content.types";
 
@@ -131,3 +132,27 @@ export const aboutHeroContent: AboutHeroContent = {
  * that failure is visible on screen.
  */
 export const ABOUT_HERO_HEADING_ID = "about-hero-heading" as const;
+
+/**
+ * [ADDED, 2026-10-15] Content for the photo hero (`PhotoHero`, the home
+ * page's layout, owner request). The h1 is unchanged. The intro is cut to one
+ * short line so the actions stay above the fold; it restates the approved
+ * intro's facts only, but is [NEW] copy and needs sign-off. The actions are
+ * the home hero's two, reused as-is (this hero had none).
+ *
+ * Photo: a smiling man saluting under a soft evening sky (Unsplash
+ * Uwz5MKKgD8g, free licence). Self-hosted at public/about-hero-sky.jpg. The
+ * festival photo above is no longer shown in the hero.
+ */
+export const aboutPhotoHeroContent = {
+  heading: HEADING,
+  intro:
+    "A Lagos company for anyone visiting Nigeria: one account for your travel wallet and your health cover.",
+  actions: heroPosterContent.actions,
+  image: {
+    src: "/about-hero-sky.jpg",
+    alt: "",
+    width: 2400,
+    height: 1600,
+  },
+} as const;

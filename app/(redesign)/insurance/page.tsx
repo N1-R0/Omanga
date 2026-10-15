@@ -2,13 +2,12 @@ import type { Metadata } from "next";
 
 import { CTA } from "@/components/sections/CTA";
 import { Faq } from "@/components/sections/Faq";
-import { GetStartedImageBand } from "@/components/sections/GetStartedImageBand";
 import { InsuranceCare } from "@/components/sections/InsuranceCare";
 import { InsuranceDeepDive } from "@/components/sections/InsuranceDeepDive";
-import { InsuranceHero } from "@/components/sections/InsuranceHero";
 import { InsuranceProof } from "@/components/sections/InsuranceProof";
 import { TrustPartners } from "@/components/sections/TrustPartners";
 import { WhyOmanga } from "@/components/sections/WhyOmanga";
+import { PhotoHero } from "@/components/sections/PhotoHero";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 import {
@@ -25,9 +24,8 @@ import {
 } from "@/content/insurance-deep-dive.content";
 import {
   INSURANCE_HERO_HEADING_ID,
-  insuranceHeroContent,
+  insurancePhotoHeroContent,
 } from "@/content/insurance-hero.content";
-import { insuranceImageContent } from "@/content/insurance-image.content";
 import {
   INSURANCE_PROOF_HEADING_ID,
   insuranceProofContent,
@@ -125,23 +123,31 @@ export default function InsurancePreviewPage() {
         Stage 1. The hero — spec § 2, and the page's only `h1`. The outline
         below it opens at `h2` without skipping a level.
       */}
-      <InsuranceHero
-        content={insuranceHeroContent}
+      {/*
+        [CHANGED, 2026-10-15] The centred `InsuranceHero` band is replaced by
+        `PhotoHero`, the home page's layout (owner request). On desktop the
+        photo is pushed right and its left edge fades into the sampled sky, so
+        the raised arms clear the copy; on small screens it starts low and
+        fades in from the top.
+      */}
+      <PhotoHero
         headingId={INSURANCE_HERO_HEADING_ID}
+        heading={insurancePhotoHeroContent.heading}
+        intro={insurancePhotoHeroContent.intro}
+        helper={insurancePhotoHeroContent.helper}
+        actions={insurancePhotoHeroContent.actions}
+        image={insurancePhotoHeroContent.image}
+        headingClassName="max-w-[16ch]"
+        backdropClassName="bg-[linear-gradient(to_bottom,#24699a,#4a85b5_55%,#62a5d0)]"
+        photoClassName="inset-0 top-[50%] [mask-image:linear-gradient(to_bottom,transparent,black_15%)] desktop:top-0 desktop:left-[42%] desktop:[mask-image:linear-gradient(to_right,transparent,black_20%)]"
+        imageClassName="object-[50%_0%] desktop:object-center"
       />
 
       {/*
-        Stage 2. The full-bleed photographic band. It carries no heading, so it
-        contributes nothing to the outline.
-
-        [NAMING] `GetStartedImageBand` is reused rather than rebuilt — it takes
-        an asset and knows nothing about which page renders it, exactly like
-        `TrustPartners` and `CTA`. Its name is now wrong: it is the site's
-        full-bleed parallax band and belongs at `components/sections/ImageBand`.
-        Left alone here because renaming it means editing a shipped page, which
-        is outside this phase.
+        [REMOVED, 2026-10-15] Stage 2, the full-bleed photo band (the couple
+        reading papers, insurance-consultation.jpg), removed at the owner's
+        request. The photo hero now carries the page's imagery.
       */}
-      <GetStartedImageBand image={insuranceImageContent} />
 
       {/*
         Stage 3. The untabbed deep dive. Its heading is an `h2` and its six

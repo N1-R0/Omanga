@@ -140,3 +140,25 @@ export const appHomeSample: AppHomeSample = {
     { title: "Bank transfer", detail: "6 Oct, 11:03am", amount: "+₦80,000", kind: "in" },
   ],
 };
+
+/**
+ * [ADDED, 2026-10-15] Content for the photo hero (`PhotoHero`, the home
+ * page's layout, owner request). Heading, intro and both actions are the
+ * existing approved copy, unchanged. The phone mockup and "Coming soon" store
+ * badges are dropped with the old layout.
+ *
+ * Photo: a man in sunglasses under a clear blue sky with a plane overhead
+ * (Unsplash 6tAsnpxxGiw, free licence). Self-hosted at
+ * public/payments-hero-sky.jpg.
+ */
+export const paymentsPhotoHeroContent = {
+  heading: paymentsHeroContent.heading,
+  intro: paymentsHeroContent.intro,
+  actions: [paymentsHeroContent.action, paymentsHeroSecondary],
+  image: {
+    src: "/payments-hero-sky.jpg",
+    alt: "",
+    width: 2400,
+    height: 1600,
+  },
+} as const;

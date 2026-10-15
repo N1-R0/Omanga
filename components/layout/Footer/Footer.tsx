@@ -3,8 +3,14 @@ import { Container } from "@/components/layout/Container";
 import { FooterColumn } from "@/components/layout/FooterColumn";
 import { Logo } from "@/components/layout/Logo";
 import { Text } from "@/components/ui/Text";
-import { TextLink } from "@/components/ui/TextLink";
+import { InstagramMark } from "@/components/icons/InstagramMark";
+import { Mail } from "@/components/icons/Mail";
 import type { FooterLinkColumn, LinkTarget } from "@/types/content.types";
+
+/** Icons for social links, keyed by the link's label in footer.content.ts. */
+const SOCIAL_ICONS: Record<string, React.ReactNode> = {
+  Instagram: <InstagramMark size="md" />,
+};
 
 /**
  * The site footer.
@@ -92,26 +98,38 @@ export function Footer({
               existing footer links `mailto:info.omanga.biz`, which is not an
               address. Composed from one constant so there is a single place it
               can be wrong.
-            */}
-            <TextLink href={contact.href} tone="dark">
-              {contact.label}
-            </TextLink>
 
-            {/*
-              Social profiles sit with the contact route: both are ways to reach
-              Omanga. Only client-supplied URLs are listed (see footer.content.ts).
+              [CHANGED, 2026-10-15] Email and social links are icon buttons
+              (owner request) rather than text links. Each keeps its label as
+              the accessible name. Only client-supplied social URLs are listed
+              (see footer.content.ts); a platform without an icon in
+              SOCIAL_ICONS falls back to its text label.
             */}
-            {socialLinks.length > 0 && (
-              <ul className="flex flex-wrap gap-fluid-4">
-                {socialLinks.map((link) => (
+            <ul className="flex flex-wrap gap-fluid-2">
+              {[contact, ...socialLinks].map((link) => {
+                const icon =
+                  link === contact ? (
+                    <Mail size="md" />
+                  ) : (
+                    SOCIAL_ICONS[link.label]
+                  );
+                return (
                   <li key={link.href}>
-                    <TextLink href={link.href} tone="dark" isExternal={link.isExternal}>
-                      {link.label}
-                    </TextLink>
+                    <a
+                      href={link.href}
+                      aria-label={link.label}
+                      title={link.label}
+                      {...(link.isExternal
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
+                      className="focus-ring transition-standard flex size-11 items-center justify-center rounded-pill border border-on-dark/25 text-on-dark hover:bg-on-dark hover:text-ink"
+                    >
+                      {icon ?? <span className="px-3 font-sans text-small">{link.label}</span>}
+                    </a>
                   </li>
-                ))}
-              </ul>
-            )}
+                );
+              })}
+            </ul>
 
             {/*
               Caption role: Inter 12/20, which is the system's legal and metadata

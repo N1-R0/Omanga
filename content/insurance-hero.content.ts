@@ -66,3 +66,28 @@ export const insuranceHeroContent: InsuranceHeroContent = {
 
 /** Shared so the `h1` and the section's `aria-labelledby` cannot drift apart. */
 export const INSURANCE_HERO_HEADING_ID = "insurance-hero-heading" as const;
+
+/**
+ * [ADDED, 2026-10-15] Content for the photo hero (`PhotoHero`, the home
+ * page's layout, owner request). The h1 is unchanged (SEO § 11). The intro is
+ * cut to one short line so the actions stay above the fold; it restates the
+ * approved intro's facts only, but is [NEW] copy and needs sign-off. The full
+ * intro above stays for reference until it is signed off.
+ *
+ * Photo: a woman with crossed arms raised against a plain blue sky
+ * (Unsplash ZYV7qZNe5wY, free licence), chosen to match the home photo.
+ * Self-hosted at public/insurance-hero-sky.jpg.
+ */
+export const insurancePhotoHeroContent = {
+  heading: insuranceHeroContent.heading,
+  intro:
+    "Short-term cover from Phillips HMO, from $50 a month. Hospital care, diagnostics and emergency evacuation included.",
+  helper: insuranceHeroContent.helper,
+  actions: [insuranceHeroContent.action],
+  image: {
+    src: "/insurance-hero-sky.jpg",
+    alt: "",
+    width: 2400,
+    height: 1594,
+  },
+} as const;

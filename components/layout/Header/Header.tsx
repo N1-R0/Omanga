@@ -68,6 +68,12 @@ const HIDE_AFTER_PX = 64;
 const OVER_PHOTO_PX = 24;
 
 /**
+ * [ADDED, 2026-10-15] Pages that open with `PhotoHero`, where the bar starts
+ * transparent over the photo. Grows as each page moves to the photo hero.
+ */
+const PHOTO_HERO_PATHS: readonly string[] = ["/", "/insurance", "/payments", "/about"];
+
+/**
  * How far the page must move before the bar accepts a change of direction.
  *
  * [FIXED] Without this the bar juddered on every wheel gesture.
@@ -117,15 +123,15 @@ export function Header({
   /*
     [ADDED, 2026-10-15] Over the home hero the bar is transparent with light
     text, so the photo runs behind it (Revolut layout, owner request). It
-    returns to the white bar once the page scrolls. Home only: every other page
-    has a light top band.
+    returns to the white bar once the page scrolls. Only on `PHOTO_HERO_PATHS`;
+    pages not yet moved to the photo hero have a light top band.
   */
   const pathname = usePathname();
   const [isAtTop, setIsAtTop] = useState(true);
   // The open mobile menu is a full-screen blurred sheet; the bar goes
   // see-through over it the same way it does over the home hero.
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const isOverPhoto = (pathname === "/" && isAtTop) || isMenuOpen;
+  const isOverPhoto = (PHOTO_HERO_PATHS.includes(pathname) && isAtTop) || isMenuOpen;
 
   /** Last known scroll offset. A ref — it is never rendered. */
   const lastYRef = useRef(0);

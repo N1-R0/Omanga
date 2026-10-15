@@ -1,10 +1,12 @@
-import { Grid } from "@/components/layout/Grid";
 import { Section } from "@/components/layout/Section";
+import { Grid } from "@/components/layout/Grid";
 import { Reveal } from "@/components/ui/Reveal";
 import type { SolutionsOverviewContent } from "@/content/solutions.content";
 
 import { SectionHeader } from "./SectionHeader";
-import { SolutionCard } from "./SolutionCard";
+import { ProductPanel } from "./ProductPanel";
+import { ConverterVisual } from "./visuals/ConverterVisual";
+import { CoverPillVisual } from "./visuals/CoverPillVisual";
 
 /**
  * The homepage's Solutions Overview section — Omanga's two core offerings,
@@ -68,21 +70,7 @@ import { SolutionCard } from "./SolutionCard";
 const INSURANCE_HEADING_ID = "solutions-insurance-heading";
 const PAYMENTS_HEADING_ID = "solutions-payments-heading";
 
-/**
- * The `sizes` attribute for the card art, declared once here because the grid
- * that determines it lives here.
- *
- * The art box is a card's width less the card's own 24 inset. Resolved at each
- * breakpoint the layout actually changes at:
- *
- *   wide    1424 content, cards take 8 of 12 columns   -> ~406
- *   desktop cards take 8 of 12 of a fluid column       -> ~26vw
- *   tablet  cards take the full column, two up         -> ~39vw
- *   mobile  one card per row, full column              -> 100vw less the
- *                                                         gutter and the inset
- */
-const IMAGE_SIZES =
-  "(min-width: 90rem) 406px, (min-width: 64rem) 26vw, (min-width: 48rem) 39vw, calc(100vw - 9rem)";
+
 
 export type SolutionsOverviewProps = {
   content: SolutionsOverviewContent;
@@ -100,39 +88,15 @@ export function SolutionsOverview({
   content,
   headingId,
 }: SolutionsOverviewProps) {
+  /*
+    [CHANGED, 2026-10-15] Wise product cards (owner reference). The original
+    twelve-column split stays: heading and intro in columns 1–4, the two cards
+    in 5–12. Payments first, as in the reference's order of emphasis.
+  */
   return (
-    /*
-      `Section` owns the surface, the vertical rhythm, the container and the
-      accessible name. The light tone gives the 64 / 88 / 100 rhythm, and 100 at
-      the desktop end is what the Figma frame measures — the one section-level
-      figure the frame and the reference agree on.
-    */
     <Section labelledBy={headingId} tone="light">
-      {/*
-        The reference's twelve-column split. `Grid` collapses this to a single
-        column below the desktop breakpoint, which is the right threshold here:
-        a 4-column copy block beside two cards has no room to work at 768, so
-        tablet gets the heading above the cards and the cards still side by side.
-
-        `Grid` never reorders, so the DOM order — heading, then cards — is the
-        reading order at every width.
-      */}
       <Grid columns={12} gap="2xl">
-        {/*
-          Columns 1–4. The span is declared by the section, not by the child:
-          "Sections declare column spans; children never position themselves."
-        */}
         <div className="desktop:col-span-4">
-          {/*
-            MOTION. The heading column enters first, then each card 80ms behind
-            the last — the reference's own order, and the reason the section reads
-            left to right on arrival rather than all at once.
-
-            `Reveal` renders a plain `div` under `prefers-reduced-motion`, so this
-            adds a wrapper element but never a hidden one. It is a client boundary
-            around otherwise-static children, which keeps the copy in the server
-            HTML: nothing below it hydrates.
-          */}
           <Reveal index={0}>
             <SectionHeader
               headingId={headingId}
@@ -143,65 +107,18 @@ export function SolutionsOverview({
           </Reveal>
         </div>
 
-        {/* Columns 5–12, holding the card pair as its own two-column grid. */}
         <div className="desktop:col-span-8">
-          {/*
-            [MEASURED] 40 between the cards, not 24.
-
-            The earlier figure came from reading the reference's twelve-column
-            gutter. Measured directly, its card grid is `gap: 40` — its
-            `--_spacing---space--6` at the wide end, and the same value it puts
-            between the heading column and the cards. 24 is the step for rows
-            inside a card, which is why using it between cards made the pair read
-            as one panel split down the middle rather than as two cards.
-
-            Equal height is `Grid`'s default and is load-bearing: it is what lets
-            `Card` push both copy blocks to the foot of the row so the two pills
-            land on one line however much body copy each offering carries.
-          */}
-          <Grid columns={2} gap="2xl">
-            {/*
-              Insurance first, and emphasised. That is the frame's order and the
-              frame's surface assignment; nothing here infers hierarchy, and
-              swapping the two is a one-line change in this file.
-            */}
-            {/*
-              `Reveal` becomes the grid item, so the equal-height chain still
-              holds: `items-stretch` gives the wrapper the row's height, and
-              `Card`'s `h-full` resolves against it. Without the stretch the
-              wrapper would collapse to its content and the two pills would stop
-              lining up.
-            */}
+          <Grid columns={2} gap="lg">
             <Reveal index={1}>
-              <SolutionCard
-                content={content.insurance}
-                /*
-                  [CHANGED] Was `primary`, which paints the brand fill.
-
-                  The stepper visual is authored on a light ground and its rows
-                  are white — on #ae2448 the whole composition inverted and the
-                  recessed rows read as mauve. Both cards now take the light
-                  surface, and the brand survives in the section as the active
-                  row's icon tile, which is what keeps the two cards from reading
-                  as one undifferentiated pair.
-                */
-                emphasis="secondary"
-                presentation="insurance-visual"
-                headingLevel="h3"
-                headingId={INSURANCE_HEADING_ID}
-                imageSizes={IMAGE_SIZES}
-              />
+              <ProductPanel content={content.insurance} headingId={INSURANCE_HEADING_ID} media="asset">
+                {/* Wise-style cover pill (owner pick over a painted globe). */}
+                <CoverPillVisual />
+              </ProductPanel>
             </Reveal>
-
             <Reveal index={2}>
-              <SolutionCard
-                content={content.payments}
-                emphasis="secondary"
-                presentation="payments-visual"
-                headingLevel="h3"
-                headingId={PAYMENTS_HEADING_ID}
-                imageSizes={IMAGE_SIZES}
-              />
+              <ProductPanel content={content.payments} headingId={PAYMENTS_HEADING_ID} media="widget">
+                <ConverterVisual action={content.payments.primaryAction} />
+              </ProductPanel>
             </Reveal>
           </Grid>
         </div>

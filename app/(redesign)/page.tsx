@@ -7,7 +7,7 @@ import { Faq } from "@/components/sections/Faq";
 import { WhyOmanga } from "@/components/sections/WhyOmanga";
 import { HOME_V2_IDS, homeV2Content } from "@/content/home-v2.content";
 import { StepsV2 } from "@/components/home-v2/StepsV2";
-import { Hero } from "@/components/sections/Hero";
+import { HeroPoster } from "@/components/home-v2/HeroPoster";
 import { ProductDeepDive } from "@/components/sections/ProductDeepDive";
 import { Services } from "@/components/sections/Services";
 import { SolutionsOverview } from "@/components/sections/SolutionsOverview";
@@ -20,7 +20,7 @@ import {
   DEEP_DIVE_HEADING_ID,
   deepDiveContent,
 } from "@/content/deep-dive.content";
-import { HERO_HEADING_ID, heroContent } from "@/content/hero.content";
+import { HERO_HEADING_ID } from "@/content/hero.content";
 import {
   SERVICES_HEADING_ID,
   servicesContent,
@@ -75,7 +75,11 @@ export default function HomePage() {
     <>
       <JsonLd graph={buildPageGraph(homeMeta, { services: ["wallet", "insurance"] })} />
 
-      <Hero content={heroContent} headingId={HERO_HEADING_ID} />
+      {/*
+        [CHANGED, 2026-10-15] Revolut-style poster hero (owner pick). Same h1 and
+        id; the previous plane-window `Hero` is kept in components/sections.
+      */}
+      <HeroPoster headingId={HERO_HEADING_ID} />
 
       {/*
         Phase 3.2. The real Solutions Overview section, rendered directly beneath

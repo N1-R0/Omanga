@@ -141,15 +141,24 @@ export const homeV2Content = {
   steps: {
     heading: howItWorksContent.heading,
     intro: howItWorksContent.intro,
-    items: howItWorksContent.steps.map((step, index) => ({
+    items: howItWorksContent.steps.map((step) => ({
       id: step.id,
       heading: step.heading,
       body: step.body,
-      object: (["coin-stack", "shield-check", "location-pin"] as const)[index],
+      // [CHANGED, 2026-10-15] No 3D object: each step shows an app screen
+      // instead (Norma layout, owner pick). Screens live in StepsV2.
     })),
-    // [CHANGED, 2026-10-14] The home page has one primary action, the wallet.
-    // "Get started" went to an enquiry page instead.
-    action: HERO_PRIMARY_ACTION,
+    // [CHANGED, 2026-10-15] Norma's closing line ("Or start a scan from …")
+    // as the three funding currencies, a confirmed fact. It replaces the
+    // section's button: the hero and closing panel already carry the wallet CTA.
+    fundFrom: {
+      label: "Fund your wallet from",
+      currencies: [
+        { code: "USD", flag: "/flags/united-states.svg" },
+        { code: "GBP", flag: "/flags/united-kingdom.svg" },
+        { code: "CAD", flag: "/flags/canada.svg" },
+      ],
+    },
   },
 
   coverage: {

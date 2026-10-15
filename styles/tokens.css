@@ -121,7 +121,8 @@
      ========================================================================= */
   --font-sans: var(--font-inter), Arial, sans-serif;
 
-  --font-heading: var(--font-manrope), Arial, sans-serif;
+  /* [CHANGED, 2026-10-15] Geist replaces Manrope (Revolut type style). */
+  --font-heading: var(--font-geist), Arial, sans-serif;
   --font-ui: var(--font-sans);
 
   /* The one exception to "one family": the wordmark.
@@ -146,7 +147,9 @@
   --font-weight-medium: 500;
   /* [ADDED, 2026-10-10] Manrope headings (display–h3) at 800; h4–h6 stay 600
      in Inter. Manrope at 500 read thin and soft at heading sizes. */
-  --font-weight-heading: 800;
+  /* [CHANGED, 2026-10-15] 500, as Revolut sets Aeonik: confident through size
+     and tight tracking rather than weight. Was Manrope at 800. */
+  --font-weight-heading: 500;
   --font-weight-subheading: 600;
   --font-weight-bold: 600; /* inline <strong> only */
 
@@ -180,8 +183,8 @@
      `CTAContent` and nowhere else, by rule, so this line changes the closing
      band on every page and nothing else. */
   --text-display: clamp(3rem, 2.2857rem + 3.5714vw, 5.5rem);
-  --text-display--line-height: 0.98;
-  --text-display--letter-spacing: -0.035em;
+  --text-display--line-height: 1;
+  --text-display--letter-spacing: -0.024em;
   --text-display--font-weight: var(--font-weight-heading);
 
   /* H1 — 40 → 64. The hero headline. One per page.
@@ -199,8 +202,8 @@
      buy a barely visible 3px and cost the set its sixth value, which is how a
      type scale stops being a scale. */
   --text-h1: clamp(2.5rem, 2.0714rem + 2.1429vw, 4rem);
-  --text-h1--line-height: 1.05;
-  --text-h1--letter-spacing: -0.03em;
+  --text-h1--line-height: 1;
+  --text-h1--letter-spacing: -0.024em;
   --text-h1--font-weight: var(--font-weight-heading);
 
   /* H2 — 32 → 42. The section-level heading.
@@ -210,14 +213,14 @@
      started reading as a wall. Taken down one notch; the hierarchy against the
      hero's 64 and the body's 18 is unchanged. */
   --text-h2: clamp(1.875rem, 1.6250rem + 1.2500vw, 2.75rem);
-  --text-h2--line-height: 1.1;
-  --text-h2--letter-spacing: -0.025em;
+  --text-h2--line-height: 1.05;
+  --text-h2--letter-spacing: -0.012em;
   --text-h2--font-weight: var(--font-weight-heading);
 
   /* H3 — 30 → 40. */
   --text-h3: clamp(1.5rem, 1.3929rem + 0.5357vw, 1.875rem);
-  --text-h3--line-height: 1.2;
-  --text-h3--letter-spacing: -0.02em;
+  --text-h3--line-height: 1.15;
+  --text-h3--letter-spacing: -0.01em;
   --text-h3--font-weight: var(--font-weight-heading);
 
   /* H4 — 24 → 28. */
@@ -311,7 +314,8 @@
   --text-button: 1rem; /* 16 at every width (scale review, 2026-10-10) */
   --text-button--line-height: 1;
   --text-button--letter-spacing: 0em;
-  --text-button--font-weight: var(--font-weight-subheading); /* Inter 600 (F4, 2026-10-10) */
+  /* [CHANGED, 2026-10-15] Geist 500, as Revolut's buttons. Was Inter 600. */
+  --text-button--font-weight: var(--font-weight-medium);
 
   /* No role here for the product visuals' type. Their sizes are authored against
      a fixed 491-wide canvas and scale with the card's art box rather than with

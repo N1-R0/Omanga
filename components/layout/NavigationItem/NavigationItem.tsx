@@ -41,7 +41,7 @@ import type { Tone } from "@/types/ui.types";
  * directly. `data-label` is required by it and is set below.
  */
 const BASE_CLASS =
-  "nav-link px-fluid-2 font-sans text-small hit-area focus-ring transition-standard";
+  "nav-link rounded-pill px-fluid-2 py-1.5 font-heading font-medium text-small hit-area focus-ring transition-standard";
 
 /**
  * State × tone.
@@ -70,15 +70,17 @@ const STATE_CLASS: Readonly<Record<Tone, { current: string; default: string }>> 
   {
     light: {
       current: "text-brand",
-      default: "text-ink hover:text-brand hover:font-medium",
+      // [CHANGED, 2026-10-15] Revolut hover: a tinted pill, no colour or
+      // weight change.
+      default: "text-ink hover:bg-ink/[0.06]",
     },
     dark: {
       current: "text-on-dark",
-      default: "text-on-dark hover:font-medium",
+      default: "text-on-dark hover:bg-white/15",
     },
     brand: {
       current: "text-on-dark",
-      default: "text-on-dark hover:font-medium",
+      default: "text-on-dark hover:bg-white/15",
     },
   } as const;
 

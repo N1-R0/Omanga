@@ -24,13 +24,20 @@ const inter = localFont({
   adjustFontFallback: "Arial",
 });
 
-/** Manrope — headings (display, h1–h3 roles). Geometric, at 700–800. */
-const manrope = localFont({
-  src: "./fonts/manrope-latin-wght-variable.woff2",
-  weight: "200 800",
+/**
+ * Geist — headings, navigation and buttons.
+ *
+ * [CHANGED, 2026-10-15] Replaces Manrope. The owner asked for Revolut's type
+ * style; Revolut sets headlines in Aeonik Pro at 500 (commercial). Geist is
+ * the closest free face and is already the Omanga app's heading font, so the
+ * site and app now share it. Latin subset (no ₦; amounts stay in Inter).
+ */
+const geist = localFont({
+  src: "./fonts/geist-latin-wght-variable.woff2",
+  weight: "100 900",
   style: "normal",
   display: "swap",
-  variable: "--font-manrope",
+  variable: "--font-geist",
   // The hero heading is the LCP element on most pages.
   preload: true,
   adjustFontFallback: "Arial",
@@ -104,4 +111,5 @@ const fraunces = localFont({
  * Feed `--font-sans` and `--font-wordmark` in `styles/tokens.css`. Components
  * reference `font-sans` and `font-wordmark` and never touch the variables.
  */
-export const fontVariables = `${inter.variable} ${manrope.variable} ${fraunces.variable}`;
+
+export const fontVariables = `${inter.variable} ${geist.variable} ${fraunces.variable}`;

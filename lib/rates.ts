@@ -125,3 +125,37 @@ export async function getExchangeRates(): Promise<RateRow[]> {
     };
   });
 }
+
+/* -----------------------------------------------------------------------------
+   [ADDED, 2026-10-15] Naira rates for the home page converter (Wise-style
+   "currency check" on the Payment Solutions card). One NGN figure per funding
+   currency, from the same public snapshot as `getExchangeRates`.
+   -------------------------------------------------------------------------- */
+
+export type FundingCurrency = "USD" | "GBP" | "CAD";
+
+export type NgnRates = {
+  /** Naira per one unit of each funding currency. */
+  readonly rates: Readonly<Record<FundingCurrency, number>>;
+  /** Snapshot date (YYYY-MM-DD), or null when the fallback is in use. */
+  readonly date: string | null;
+};
+
+const FALLBACK_NGN: NgnRates = {
+  rates: { USD: 1612.4, GBP: 2041.3, CAD: 1176.2 },
+  date: null,
+};
+
+export async function getNgnRates(): Promise<NgnRates> {
+  const today = await fetchUsdSnapshot("latest", 3600);
+  if (!today) return FALLBACK_NGN;
+
+  const pick = (code: FundingCurrency) =>
+    crossRate(today.rates, code.toLowerCase(), "ngn");
+  const usd = pick("USD");
+  const gbp = pick("GBP");
+  const cad = pick("CAD");
+  if (usd === null || gbp === null || cad === null) return FALLBACK_NGN;
+
+  return { rates: { USD: usd, GBP: gbp, CAD: cad }, date: today.date };
+}

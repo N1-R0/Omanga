@@ -137,4 +137,35 @@ export const heroContent: HeroSectionContent = {
  * `aria-labelledby` pointing at it. If they ever disagree the section loses its
  * accessible name, and nothing about that failure is visible on screen.
  */
+/**
+ * [ADDED, 2026-10-15] The Revolut-style poster hero (`HeroPoster`, owner pick:
+ * mobbin section e936d541). The h1 is unchanged; this adds the short line under
+ * it and the photo. The line restates approved facts only (funding currencies,
+ * wallet countries, provider, Nigeria-only cover) but is [NEW] copy and needs
+ * sign-off.
+ *
+ * Photo: a woman with her arms up against a deep blue sky (Unsplash, free
+ * licence; owner pick "Q13", 2026-10-15, after "S10", "P16" and "P03"),
+ * self-hosted at public/hero-arms-up.jpg.
+ */
+export const heroPosterContent = {
+  /*
+    [CHANGED, 2026-10-15] UX writing pass (owner's Material-based UX writing
+    skill): short, benefit-led, both products named, two lines at display size.
+    Was the full h1 "Travel money and health cover for your trip to Nigeria",
+    which ran to four lines and pushed the actions below the fold. The keyword
+    phrase still leads the <title>. Alternatives offered: "Your trip to
+    Nigeria, sorted" and "Land in Nigeria ready".
+  */
+  heading: "Pay and stay covered in Nigeria",
+  intro: "One free wallet for your travel money, plus health cover for your trip.",
+  actions: heroContent.actions,
+  image: {
+    src: "/hero-arms-up.jpg",
+    alt: "",
+    width: 2400,
+    height: 1600,
+  },
+} as const;
+
 export const HERO_HEADING_ID = "hero-heading" as const;

@@ -806,3 +806,122 @@ footer paragraph.
 - **Copy contradictions**: Silver categories, "50+ countries" and "lost 30"
   were already fixed on 2026-10-14. Monthly vs one-off billing is open (see
   Copy to-do).
+
+## Addendum · 2026-10-15 · How it works as Norma cards
+
+- Owner pick: Norma's "How it works" (mobbin section 96f4183b). A Superpower
+  photo-card version was built first and rejected the same day; its Unsplash
+  photos were removed.
+- Left-aligned heading. Three bordered cards (28px radius): number circle,
+  title, line, a hairline, then an app screen cropped by the card's bottom
+  edge. Fixed screen-area height so the cards end level.
+- Screens are HTML in `StepPhone` (same `--u` unit as `AppHomeMockup`): Add
+  money, Choose a plan, and the existing app home screen.
+- Steps 1 and 3 now use real screenshots from the app in the iOS simulator
+  (`public/app-screens`, shown by `ScreenshotPhone`): Top up and Home. Home
+  shows the owner's own test account; the owner approved it. Step 2 stays
+  drawn until the app's insurance screen is built.
+- Choose a plan is a card carousel (Wise "Choose an option", mobbin screen
+  9fd7794c): tall tinted card per plan in display type, next card peeking,
+  dots. The app has no insurance screen yet (its tab is a placeholder), so
+  this design exists only on the site. Plan data comes from the plans content. Sample figures,
+  `aria-hidden`. "Minimum: None" rather than a fee line, because whether
+  top-ups are free is unconfirmed.
+- The section's button is replaced by Norma's closing chip line, "Fund your
+  wallet from USD · GBP · CAD". The hero and closing panel keep the wallet CTA.
+- **No 3D assets.** The owner no longer wants them. Other sections still using
+  `Object3D` are open for the same change.
+
+## Addendum · 2026-10-15 · Home hero, Revolut layout
+
+- Owner pick: Revolut "Change the way you money" (mobbin section e936d541).
+  Built as `components/home-v2/HeroPoster`; the old plane-window `Hero` is
+  kept but no longer used by `/`.
+- Photo: a woman with her arms up against deep blue sky (Unsplash, owner pick
+  "Q13"), self-hosted at `public/hero-arms-up.jpg`. Tried and removed first:
+  "S10" plane wing, "P16" Lagos danfo, "P03" arms crossed.
+- One screen tall (`h-svh`), text top-left over the sky, nothing below the
+  fold. On small screens the photo starts 32% down so her raised hand clears
+  the actions (gap filled with the photo's sampled top-edge sky). On desktop it
+  sits at the top; a 14% shift was tried and rejected as losing the feel.
+- Copy (UX writing pass, owner's Material-based skill): h1 "Pay and stay
+  covered in Nigeria"; line "One free wallet for your travel money, plus
+  health cover for your trip." The long keyword h1 moved out; the <title>
+  still carries it. Both [NEW], need sign-off.
+- Type: see the site-wide type addendum below. The hero h1 uses `text-display`
+  in sentence case, not Revolut's capitals, per the owner.
+- Actions: new Button variant `white` (white fill, ink label, ink hover) for
+  the primary; the secondary stays the bordered white style.
+- Header: transparent with light text over the hero on `/` until the page
+  scrolls 24px, then the usual white bar. The hero runs under it
+  (`-mt-header pt-header`). Revolut's glass phone panel was built and removed
+  on request.
+- The line under the h1 is [NEW] copy restating approved facts; it needs
+  sign-off. It does not name Phillips HMO (owner: not professional in the
+  hero).
+- Header nav hover is now Revolut's tinted pill (`white/15` on photo,
+  `ink/6%` on the white bar), with no underline or weight change on hover.
+  No underline for the current page either (owner request); keyboard focus
+  keeps it.
+- The language switcher (flag) is removed from the header on request; the
+  component is kept.
+
+## Addendum · 2026-10-15 · Site-wide type, Revolut style
+
+Measured on revolut.com at 1440: Aeonik Pro at 500 for all headlines (h1 88px,
+h2 52px, line-height 1.0, tracking −0.024em / −0.012em), Aeonik 500 for nav
+and buttons, Inter for small UI text.
+
+- **Geist replaces Manrope** as `--font-heading` (self-hosted, latin). Aeonik
+  is commercial; Geist is the closest free face and is already the Omanga
+  app's heading font. Manrope's file and loader are removed.
+- **Heading weight 500** (was 800). Display and h1: line-height 1.0, tracking
+  −0.024em. h2: 1.05, −0.012em. h3: 1.15, −0.01em. Sizes unchanged.
+- **Buttons and header nav** now set in Geist 500 (were Inter 600 / 400).
+- Body, forms, footer and h4–h6 stay Inter.
+- Not changed: the Payments hero still sets `font-display font-extrabold`
+  (Wise-heavy, an earlier owner pick); it now renders in Geist 800.
+
+## Addendum · 2026-10-15 · Button, Revolut standard
+
+Measured on revolut.com at 1440: 42px pill, 10 × 24 padding, Aeonik 16 / 500,
+three treatments (near-black, white, 2px outline with a 10% white fill), hover
+= same fill at 85% opacity, colour easing 0.3s cubic-bezier(0.15, 0.5, 0.5, 1).
+The design-taste library had no button entries, so Revolut is the reference.
+
+`components/ui/Button.tsx` is the one button on the site, so the change lands
+everywhere:
+
+- 44px fixed height (Revolut's 42 rounded up to the touch floor), 24px inline
+  padding; header `compact` is 36px with a 44px hit area.
+- Geist 16 / 500, no wrapping.
+- Hover: 85% opacity on every boxed variant (was an ink inversion). Press:
+  scale 0.98, off under reduced motion.
+- Secondary: 2px border; on dark or photo also a 10% white fill.
+- Omanga crimson stays the primary fill on light surfaces (owner confirmed,
+  2026-10-15), rather than Revolut's near-black (#1F1F1F).
+
+## Addendum · 2026-10-15 · Payment Solutions visual, Wise converter
+
+- The home Payment Solutions card now shows a working currency check in the
+  style of wise.com's converter (owner request): rate chip, "You convert"
+  (amount field + USD/GBP/CAD pill) and "You get" (NGN), then Rate
+  (mid-market) and Transfers (₦20 each).
+- Live: `getNgnRates()` in `lib/rates.ts` reads the same public daily FX
+  snapshot as the Payments page, revalidated hourly, with a fallback.
+  Labelled "Indicative rate · {date}". NGN shown in whole naira.
+- Accessible: labelled field and native select, result in an `aria-live`
+  `<output>`. Server wrapper `ConverterVisual`, client `ConverterWidget`.
+- The drawn `PaymentsVisual` app panel is kept but no longer used on `/`.
+- [2026-10-15, later] Card shape follows wise.com's product cards (owner
+  reference): heading and intro stay in columns 1–4; two cards in 5–12. Each
+  card: large rounded neutral panel, title, line and underlined link top-left.
+  Insurance: an asset centred below (current stepper visual as a placeholder
+  until the asset is chosen). Payments: the converter as a white panel to the
+  card's sides and bottom, with Wise-style icon fact rows and a full-width
+  "Open your free wallet" button. Neutral colours on purpose until the
+  section's palette is decided (`ProductPanel.tsx` holds the colour).
+- Insurance card media: a Wise-style cover pill ("Hospital stay · Covered"
+  with an "Emergency evacuation included" chip), owner pick 2026-10-15 over a
+  Magnific watercolour globe. Both claims hold for every plan. Neutral until
+  colours are chosen. `InsuranceVisual` (the stepper) is kept but unused here.

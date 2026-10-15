@@ -154,7 +154,7 @@ export function NavigationDropdown({
         */
         data-label={group.label}
         className={cx(
-          "nav-link px-fluid-2 font-sans text-small hit-area focus-ring transition-standard",
+          "nav-link rounded-pill px-fluid-2 py-1.5 font-heading font-medium text-small hit-area focus-ring transition-standard",
           "gap-fluid-1",
           hasCurrentChild || isOpen
             ? NAV_STATE[tone].current
@@ -242,7 +242,8 @@ export function NavigationDropdown({
  * passing classes down as props would let any caller restyle a nav item.
  */
 const NAV_STATE: Readonly<Record<Tone, { current: string; default: string }>> = {
-  light: { current: "text-brand", default: "text-ink hover:text-brand" },
-  dark: { current: "text-on-dark", default: "text-on-dark" },
-  brand: { current: "text-on-dark", default: "text-on-dark" },
+  // [CHANGED, 2026-10-15] Revolut hover pill, matching `NavigationItem`.
+  light: { current: "text-brand", default: "text-ink hover:bg-ink/[0.06]" },
+  dark: { current: "text-on-dark", default: "text-on-dark hover:bg-white/15" },
+  brand: { current: "text-on-dark", default: "text-on-dark hover:bg-white/15" },
 } as const;

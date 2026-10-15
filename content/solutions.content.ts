@@ -1,3 +1,4 @@
+import { WALLET_URL } from "@/config/site";
 import type { Eyebrow, ImageAsset, LinkTarget } from "@/types/content.types";
 
 /**
@@ -137,6 +138,11 @@ export type SolutionContent = {
   readonly heading: string;
   readonly body: string;
   readonly action: LinkTarget;
+  /**
+   * [ADDED, 2026-10-15] The Wise-style panel's primary button. `action` is
+   * now its secondary, underlined text link.
+   */
+  readonly primaryAction: LinkTarget;
   readonly image: ImageAsset;
 };
 
@@ -177,12 +183,14 @@ export const solutionsContent: SolutionsOverviewContent = {
     // One provider, not "providers"; cover applies in Nigeria only.
     body: "Short-term health cover in Nigeria from Phillips HMO. Three plans, from $50 a month.",
     action: INSURANCE_ACTION,
+    primaryAction: { label: "Compare health plans", href: "/plans" },
     image: INSURANCE_IMAGE,
   },
   payments: {
     heading: "Omanga Payment Solutions",
     body: "Hold six currencies, top up from USD, GBP or CAD, and convert at the mid-market rate.",
     action: PAYMENTS_ACTION,
+    primaryAction: { label: "Open your free wallet", href: WALLET_URL, isExternal: true },
     image: PAYMENTS_IMAGE,
   },
 } as const;

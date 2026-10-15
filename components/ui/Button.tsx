@@ -20,8 +20,8 @@ import type { Tone } from "@/types/ui.types";
  * position a button, it positions the button's container.
  */
 
-/** design.md § 9. Closed set of three. */
-type ButtonVariant = "primary" | "secondary" | "text";
+/** design.md § 9. Closed set of four. */
+type ButtonVariant = "primary" | "secondary" | "text" | "white";
 
 /**
  * How much room the control takes, independent of what it looks like.
@@ -100,78 +100,69 @@ export type ButtonProps =
     });
 
 /**
- * Shared geometry. design.md § 9.
+ * Shared geometry.
  *
- * [MEASURED] 16 × 24 padding and a body-size label at weight 400, replacing the
- * previous 12 × 20 at 14/600. The reference sets its buttons at body size in
- * regular weight, and the difference is not cosmetic: a 14px semibold pill reads
- * as a form control, an 18px regular pill reads as an invitation. This is the
- * single largest contributor to the buttons feeling small against the reference.
+ * [CHANGED, 2026-10-15] Revolut's button standard, measured on revolut.com at
+ * 1440: a 42px pill, 10 × 24 padding, Aeonik 16 / 500 with normal tracking,
+ * background and colour easing over 0.3s on cubic-bezier(0.15, 0.5, 0.5, 1),
+ * and hover as the same fill at 85% opacity rather than a colour change.
  *
- * `text-button` is `--text-main` at line-height 1, so the pill's height is set by
- * its padding alone rather than by the label's leading — which is what keeps the
- * two variants exactly the same height despite one carrying a border.
+ * Here: Geist (`font-heading`, the Aeonik stand-in) 16 / 500, a fixed 44px
+ * height (Revolut's 42 rounded up to the WCAG touch floor) and fixed 24px
+ * inline padding. A fixed height, not padding, sets the size, so a bordered
+ * button and a filled one are always exactly the same height. A slight press
+ * (`active:scale-[0.98]`) confirms the tap.
  *
- * Padding is fluid: `--space-3` (14 → 16) block, `--space-4` (20 → 24) inline, so
- * the control shrinks with the viewport instead of eating a third of a 320px
- * screen. `hit-area` holds the 44px WCAG floor underneath.
+ * Replaces the 2026-08 geometry (fluid 14–16 × 20–24 padding, Inter) and the
+ * ink-inversion hover.
  */
 const BASE_CLASS =
-  "inline-flex items-center justify-center gap-fluid-1 font-sans hit-area focus-ring transition-standard";
+  "inline-flex items-center justify-center gap-fluid-1 whitespace-nowrap font-heading hit-area focus-ring " +
+  "transition-[background-color,color,border-color,opacity,transform] duration-300 ease-[cubic-bezier(0.15,0.5,0.5,1)] " +
+  "active:scale-[0.98] motion-reduce:active:scale-100";
 
 /**
- * Size × the two things a size decides: the label and the padding.
- *
- * `compact` steps both down one rung of the same scales rather than picking new
- * numbers — `--text-small` instead of `--text-main`, `--space-2`/`--space-3`
- * instead of `--space-3`/`--space-4`. The pill therefore keeps its proportions
- * and nothing here is an arbitrary value.
- *
- * `hit-area` is in `BASE_CLASS` and applies to both, so the compact button is
- * visually smaller but still meets the 44px WCAG floor. Below roughly 20px of
- * block padding that floor is what actually sets the height, which is the point
- * at which shrinking the padding further would stop doing anything.
+ * Size × label and box. `compact` is the header bar's button only: 36px tall
+ * at `--text-small`, still with the 44px hit area underneath from `hit-area`.
  */
 const SIZE_CLASS: Readonly<Record<ButtonSize, { text: string; shape: string }>> =
   {
-    main: { text: "text-button", shape: "py-fluid-3 px-fluid-4" },
-    compact: { text: "text-small", shape: "py-fluid-2 px-fluid-3" },
+    main: { text: "text-button", shape: "h-11 px-6" },
+    compact: { text: "text-small", shape: "h-9 px-4" },
   } as const;
 
 /**
  * Variant × tone.
  *
- * [MEASURED] Hover is an INVERSION, not a tint.
+ * [CHANGED, 2026-10-15] Revolut's three treatments, with Omanga's crimson kept
+ * as the primary fill on light surfaces so the brand colour survives:
  *
- * The reference sends both its filled and its bordered button to the same place
- * on hover — an ink fill with a light label — so a button group reads as one
- * control set rather than as two controls that happen to sit together. The
- * previous behaviour (filled variants darken 8%, bordered variants fill at 10%
- * of their border colour) produced two unrelated hover states and neither was
- * strong enough to register as feedback.
+ *   primary     brand fill, white label (white fill, brand label on brand)
+ *   white       white fill, ink label — over photography
+ *   secondary   2px border; over dark or photo also a 10% white fill, as
+ *               Revolut's outline button
+ *   text        unchanged: a coloured label, no box
  *
- * The brand tone is the exception, and necessarily: the band is already brand,
- * so the resting state is a white fill and hover goes to ink. Same inversion,
- * opposite starting point.
- *
- * [MEASURED] `secondary` on `dark` carries no resting fill. The dark tone's only
- * use is beside a primary over photography, and a white @20% fill lightens the
- * 55%-scrimmed sky enough to put the white label at 3.83:1 — an AA failure at
- * every breakpoint. Transparent, the same label sits on the scrim directly at
- * 6.01:1 and the 1px white border marks the control at 5.74:1. Do not restore
- * the fill without re-measuring.
+ * Hover on every boxed variant is the same fill at 85% opacity (Revolut),
+ * so a button group hovers as one control set.
  */
+const HOVER = "hover:opacity-85";
+
 const VARIANT_CLASS: Readonly<Record<ButtonVariant, Record<Tone, string>>> = {
   primary: {
-    light: "bg-brand text-on-dark hover:bg-ink",
-    dark: "bg-brand text-on-dark hover:bg-ink",
-    brand: "bg-surface-page text-brand hover:bg-ink hover:text-on-dark",
+    light: `bg-brand text-on-dark ${HOVER}`,
+    dark: `bg-brand text-on-dark ${HOVER}`,
+    brand: `bg-surface-page text-brand ${HOVER}`,
   },
   secondary: {
-    light: "border border-ink text-ink hover:bg-ink hover:text-on-dark",
-    dark: "border border-on-dark text-on-dark hover:border-ink hover:bg-ink",
-    brand:
-      "border border-on-dark text-on-dark hover:border-ink hover:bg-ink",
+    light: `border-2 border-ink text-ink ${HOVER}`,
+    dark: `border-2 border-on-dark bg-white/10 text-on-dark ${HOVER}`,
+    brand: `border-2 border-on-dark bg-white/10 text-on-dark ${HOVER}`,
+  },
+  white: {
+    light: `bg-surface-page text-ink ${HOVER}`,
+    dark: `bg-surface-page text-ink ${HOVER}`,
+    brand: `bg-surface-page text-ink ${HOVER}`,
   },
   text: {
     light: "text-brand hover:text-ink",
@@ -185,7 +176,7 @@ const VARIANT_CLASS: Readonly<Record<ButtonVariant, Record<Tone, string>>> = {
  * disabled state looks identical wherever it appears.
  */
 const DISABLED_CLASS =
-  "bg-disabled-surface text-disabled-ink border-transparent hover:bg-disabled-surface";
+  "bg-disabled-surface text-disabled-ink border-transparent hover:bg-disabled-surface hover:opacity-100 active:scale-100";
 
 export function Button(props: ButtonProps) {
   const {
@@ -199,8 +190,8 @@ export function Button(props: ButtonProps) {
 
   const { text, shape: padding } = SIZE_CLASS[size];
 
-  // The text variant carries no fill or border, so horizontal padding would
-  // push it out of alignment with the copy column it sits under.
+  // The text variant carries no fill or border, so a fixed box would push it
+  // out of alignment with the copy column it sits under.
   const shape = variant === "text" ? "rounded-pill" : cx("rounded-pill", padding);
 
   if (props.as === "link") {

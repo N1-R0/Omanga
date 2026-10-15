@@ -297,19 +297,16 @@
     pointer-events: none;
   }
 
-  &:focus-visible::after,
-  &[aria-current="page"]::after {
+  /* [CHANGED, 2026-10-15] The current page no longer draws the rule (owner
+     request, Revolut's header has none); `aria-current` still marks it for
+     assistive tech. Keyboard focus keeps the rule. */
+  &:focus-visible::after {
     transform: scaleX(1);
   }
 
-  /* Matches how Tailwind compiles `hover:`, so the rule and the weight change
-     arrive together. Unguarded, a tap on a touch device would leave the
-     underline stuck open on a link whose label never went medium. */
-  @media (hover: hover) {
-    &:hover::after {
-      transform: scaleX(1);
-    }
-  }
+  /* [CHANGED, 2026-10-15] Hover no longer draws the rule. Hover is now a
+     rounded tinted pill behind the label (Revolut's header, owner request),
+     set by the nav item's tone classes. */
 
   /* The rule still arrives, it just stops travelling to get there. */
   @media (prefers-reduced-motion: reduce) {

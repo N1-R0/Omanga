@@ -1,9 +1,9 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import { Container } from "@/components/layout/Container";
-import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { Logo } from "@/components/layout/Logo";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { Navigation } from "@/components/layout/Navigation";
@@ -64,6 +64,9 @@ import type { CallToAction, NavigationEntry } from "@/types/content.types";
  */
 const HIDE_AFTER_PX = 64;
 
+/** Scroll offset below which the home header stays transparent over the hero. */
+const OVER_PHOTO_PX = 24;
+
 /**
  * How far the page must move before the bar accepts a change of direction.
  *
@@ -112,9 +115,18 @@ export function Header({
   homeLabel,
   openLabel,
   closeLabel,
-  language,
 }: HeaderProps) {
   const [isHidden, setIsHidden] = useState(false);
+
+  /*
+    [ADDED, 2026-10-15] Over the home hero the bar is transparent with light
+    text, so the photo runs behind it (Revolut layout, owner request). It
+    returns to the white bar once the page scrolls. Home only: every other page
+    has a light top band.
+  */
+  const pathname = usePathname();
+  const [isAtTop, setIsAtTop] = useState(true);
+  const isOverPhoto = pathname === "/" && isAtTop;
 
   /** Last known scroll offset. A ref — it is never rendered. */
   const lastYRef = useRef(0);
@@ -144,6 +156,8 @@ export function Header({
         */
         const y = Math.max(0, window.scrollY);
 
+        setIsAtTop(y <= OVER_PHOTO_PX);
+
         /*
           Near the top the bar is always shown, whatever the direction. Without
           this an upward scroll that finishes in increments smaller than the
@@ -171,6 +185,9 @@ export function Header({
     // `passive` because the handler never calls preventDefault, which lets the
     // browser keep scrolling on the compositor rather than waiting on this.
     window.addEventListener("scroll", handleScroll, { passive: true });
+    // A reload can restore a scrolled position with no scroll event, which
+    // would leave the bar transparent over content. Read it once on mount.
+    handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -221,7 +238,10 @@ export function Header({
           it replaces what the previous revert removed for the opposite reason.
         */
         "fixed inset-x-0 top-0 z-header flex h-header items-center",
-        "border-b border-border-hairline bg-surface-page text-ink focus-ring-on-light",
+        isOverPhoto
+          ? "border-b border-transparent bg-transparent text-on-dark focus-ring-on-dark"
+          : "border-b border-border-hairline bg-surface-page text-ink focus-ring-on-light",
+        "transition-colors",
         "transition-header",
         isHidden && "-translate-y-full",
         /*
@@ -257,27 +277,16 @@ export function Header({
               items={items}
               landmarkLabel={landmarkLabel}
               orientation="row"
-              tone="light"
+              tone={isOverPhoto ? "dark" : "light"}
             />
           </div>
 
           <div className="flex flex-1 items-center justify-end gap-fluid-2">
             {/*
-              Before the call to action, and rendered at every width.
-
-              It stays in the bar on a phone rather than moving into the
-              disclosure panel, unlike the primary button: someone who cannot
-              read the header has to be able to change the language without
-              first finding a menu labelled in a language they do not read. It
-              is a flag and a 44px target, so it costs the narrow bar almost
-              nothing.
+              [REMOVED, 2026-10-15] The language switcher (flag), on the
+              owner's request. `LanguageSwitcher` and the `language` prop are
+              kept so it can return without re-plumbing.
             */}
-            <LanguageSwitcher
-              triggerLabel={language.triggerLabel}
-              menuLabel={language.menuLabel}
-              currentSuffix={language.currentSuffix}
-              pendingNote={language.pendingNote}
-            />
 
             {/*
               Desktop only below `desktop`, the primary call to action moves into
@@ -295,7 +304,7 @@ export function Header({
               */}
               <Button
                 as="link"
-                variant="primary"
+                variant={isOverPhoto ? "white" : "primary"}
                 tone="light"
                 size="compact"
                 href={action.href}
@@ -310,7 +319,7 @@ export function Header({
               landmarkLabel={landmarkLabel}
               openLabel={openLabel}
               closeLabel={closeLabel}
-              tone="light"
+              tone={isOverPhoto ? "dark" : "light"}
             />
           </div>
         </div>

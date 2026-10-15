@@ -76,10 +76,6 @@ export type ConsentCategory = (typeof CONSENT_CATEGORIES)[number];
  */
 export const NECESSARY_CATEGORY: ConsentCategory = "necessary";
 
-/** The categories a visitor can actually decide about. */
-export const OPTIONAL_CATEGORIES: readonly ConsentCategory[] =
-  CONSENT_CATEGORIES.filter((category) => category !== NECESSARY_CATEGORY);
-
 export type ConsentDecisions = Readonly<Record<ConsentCategory, boolean>>;
 
 /* -----------------------------------------------------------------------------

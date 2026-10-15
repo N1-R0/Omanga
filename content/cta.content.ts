@@ -46,6 +46,3 @@ export const ctaContent: CtaContent = {
   action: PRIMARY_CTA,
   graphic: GRAPHIC,
 } as const;
-
-/** Shared so the `h2` and the section's `aria-labelledby` cannot drift apart. */
-export const CTA_HEADING_ID = "cta-heading";

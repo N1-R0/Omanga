@@ -135,14 +135,18 @@ export function MobileNav({
    * Without this, tapping a link in the panel navigates but leaves the panel
    * open over the new page. `usePathname` is the signal because the App Router
    * gives no navigation callback, and this is a subscription to something
-   * outside React rather than a derived value — which is the only thing effects
-   * are for here.
+   * outside React.
    */
   const pathname = usePathname();
 
-  useEffect(() => {
+  // [CHANGED, 2026-10-15] Adjusted during render, not in an effect (React's
+  // "storing information from previous renders" pattern): when the path
+  // changes, close the panel in the same render instead of one render later.
+  const [renderedPath, setRenderedPath] = useState(pathname);
+  if (pathname !== renderedPath) {
+    setRenderedPath(pathname);
     setIsOpen(false);
-  }, [pathname]);
+  }
 
   return (
     <>

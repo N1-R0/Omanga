@@ -107,6 +107,3 @@ export const whyOmangaContent: WhyOmangaContent = {
     "Most trips get patched together: a bank card that might be declined, insurance bought separately, and costs you only see later.",
   groups: [WITHOUT_OMANGA, WITH_OMANGA],
 } as const;
-
-/** Shared so the `h2` and the section's `aria-labelledby` cannot drift apart. */
-export const WHY_OMANGA_HEADING_ID = "why-omanga-heading";

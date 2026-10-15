@@ -1,5 +1,5 @@
 import { WALLET_URL } from "@/config/site";
-import type { CallToAction, ImageAsset } from "@/types/content.types";
+import type { CallToAction } from "@/types/content.types";
 
 /**
  * Hero content.
@@ -63,37 +63,6 @@ const SECONDARY_ACTION: CallToAction = {
   emphasis: "secondary",
 } as const;
 
-/**
- * The hero photograph.
- *
- * `alt` is deliberately empty. The image is a full-bleed background sitting
- * behind the headline under a scrim; it carries no information the adjacent text
- * does not already give, so an empty alt is the correct statement rather than an
- * omission.
- *
- * ---------------------------------------------------------------------------
- * [DISCREPANCY] The asset is probably wrong, and this is not the place to fix it.
- *
- * The brand carries "real African photography"; the asset in `public/` is an
- * aeroplane window over what appears to be a European or North American suburb.
- * Shipped as-is because it is what the repository contains, and substituting an
- * image is a design decision. Raised for design.
- *
- * If the photograph is replaced, `--color-scrim` must be re-measured — the
- * current 55% was derived from this specific image's brightest pixels.
- *
- * [CHANGED, 2026-10-11] Re-exported as `/hero.jpg`: 2560px wide, quality 82,
- * 395KB, down from a 5.4MB 4096px file misnamed `.png`. 2560 still covers the
- * largest `next/image` size this band requests. The smaller source cuts the
- * optimiser's cold encode after each deploy, which took ~3s in a lab run.
- */
-const IMAGE: ImageAsset = {
-  src: "/hero.jpg",
-  alt: "",
-  width: 2560,
-  height: 1440,
-} as const;
-
 export type HeroSectionContent = {
   readonly heading: string;
   /**
@@ -117,16 +86,15 @@ export type HeroSectionContent = {
     plans and pricing are described. It is gone from the hero only, where the
     band is now the headline and its two actions.
   */
-  readonly image: ImageAsset;
 };
 
-export const heroContent: HeroSectionContent = {
+// Not exported: `heroPosterContent` below is what the page renders.
+const heroContent: HeroSectionContent = {
   // [CHANGED, 2026-10-14] UX copy pass. The old h1 said "one insurance plan"
   // (there are three) and "customized" (nothing is). Cover is Nigeria only, so
   // the promise names Nigeria; the wallet's wider reach is said further down.
   heading: "Travel money and health cover for your trip to Nigeria",
   actions: [HERO_PRIMARY_ACTION, SECONDARY_ACTION],
-  image: IMAGE,
 } as const;
 
 /**

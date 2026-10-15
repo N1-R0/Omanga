@@ -13,7 +13,6 @@ import { TextLink } from "@/components/ui/TextLink";
 import { fontVariables } from "@/config/fonts";
 import { SITE_NAME } from "@/config/site";
 import { footerContent, formatCopyright } from "@/content/footer.content";
-import { languageContent } from "@/content/language.content";
 import { navigationContent } from "@/content/navigation.content";
 import { notFoundContent } from "@/content/not-found.content";
 import "@/styles/globals.css";
@@ -90,7 +89,6 @@ export default function NotFound() {
           homeLabel={navigationContent.homeLabel}
           openLabel={navigationContent.menuOpenLabel}
           closeLabel={navigationContent.menuCloseLabel}
-          language={languageContent}
         />
 
         <main className="flex-1">

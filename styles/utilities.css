@@ -432,17 +432,6 @@
    those widths a half-bleed split is a stacked band with a photograph under it,
    which is the correct degradation and needs no special case.
    -------------------------------------------------------------------------- */
-@utility bleed-copy {
-  padding-inline: var(--spacing-gutter);
-
-  @media (width >= theme(--breakpoint-desktop)) {
-    padding-inline-start: calc(
-      max((100vw - var(--container-content)) / 2, 0px) + var(--spacing-gutter)
-    );
-    padding-inline-end: var(--space-8);
-  }
-}
-
 /* The band itself. Fills the viewport from desktop up.
 
    `dvh`, not `vh`: on mobile browsers `vh` is measured against the viewport with

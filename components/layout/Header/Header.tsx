@@ -100,13 +100,6 @@ export type HeaderProps = {
   homeLabel: string;
   openLabel: string;
   closeLabel: string;
-  /** Strings for the language menu, from `content/language.content.ts`. */
-  language: {
-    triggerLabel: string;
-    menuLabel: string;
-    currentSuffix: string;
-    pendingNote: string;
-  };
 };
 
 export function Header({
@@ -290,8 +283,7 @@ export function Header({
           <div className="flex flex-1 items-center justify-end gap-fluid-2">
             {/*
               [REMOVED, 2026-10-15] The language switcher (flag), on the
-              owner's request. `LanguageSwitcher` and the `language` prop are
-              kept so it can return without re-plumbing.
+              owner's request, along with its component, prop and content.
             */}
 
             {/*

@@ -58,50 +58,6 @@ export function ArrowUpRight() {
   );
 }
 
-export function User() {
-  return (
-    <Glyph>
-      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-      <circle cx="12" cy="7" r="4" />
-    </Glyph>
-  );
-}
-
-export function Bell() {
-  return (
-    <Glyph>
-      <path d="M10.268 21a2 2 0 0 0 3.464 0" />
-      <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
-    </Glyph>
-  );
-}
-
-export function Eye() {
-  return (
-    <Glyph>
-      <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
-      <circle cx="12" cy="12" r="3" />
-    </Glyph>
-  );
-}
-
-/**
- * Overflow control.
- *
- * Three zero-length strokes rather than three filled circles: globals.css sets
- * `fill: none` on every `svg` in the document, so a filled dot cannot be
- * expressed here at all. A round line cap on a zero-length path is the shape that
- * survives it.
- */
-export function Ellipsis() {
-  return (
-    <Glyph>
-      <path d="M5 12h.01" />
-      <path d="M12 12h.01" />
-      <path d="M19 12h.01" />
-    </Glyph>
-  );
-}
 
 /**
  * Confirmation mark.
@@ -118,13 +74,6 @@ export function Check() {
   );
 }
 
-export function ChevronRight() {
-  return (
-    <Glyph>
-      <path d="m9 18 6-6-6-6" />
-    </Glyph>
-  );
-}
 
 /*
  * The insurance cover glyphs. One per row of the stepper, each naming what that
@@ -191,15 +140,6 @@ export function Video() {
   );
 }
 
-/** Prescription drugs. */
-export function Pill() {
-  return (
-    <Glyph>
-      <path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z" />
-      <path d="m8.5 8.5 7 7" />
-    </Glyph>
-  );
-}
 
 /** Round-the-clock support. */
 export function Clock() {

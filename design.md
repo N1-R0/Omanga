@@ -941,3 +941,25 @@ after them; two pills pinned at the foot ("Log in" / "Sign up").
 - The header goes transparent with light text while the menu is open
   (`onOpenChange`), so the bar and sheet read as one surface.
 - Desktop is unchanged. The old `MobileNavGroup` is no longer used by the menu.
+
+## Addendum · 2026-10-15 · Dead-code cleanup
+
+Found with knip plus manual checks of `public/` and the CSS utilities; build,
+types and lint pass afterwards.
+
+- Removed 30 unused components and modules: the old plane-window `Hero`, the
+  old `HowItWorks` section, the unused home-v2 sections (hero, partners,
+  products, features, statement, coverage, collage) and their content blocks,
+  `SolutionCard` and its drawn visuals, `LanguageSwitcher` and its content
+  and prop, `MobileNavGroup` and the column branch of `Navigation`, `Avatar`,
+  two icons, `useMediaQuery`, `config/locales.ts`,
+  `insurance-reasons.content.ts`.
+- Removed unused assets: the old hero photo, Next starter SVGs, old screen
+  captures, two flags, and Manrope (earlier).
+- Removed ~60 dead `pv-*` utilities, `animate-hero-pan` with its keyframes and
+  tokens, `bleed-copy`, `transition-underline`, and a few unused constants.
+- Dropped `@vercel/analytics` and `lucide-react` from `package.json` (never
+  imported).
+- Fixed the long-standing `MobileNav` lint error (state set in an effect).
+- Kept on purpose: the 3D objects (still rendered by FAQ, closing panel and Why
+  Omanga), unused exported prop types, and constants used inside their files.

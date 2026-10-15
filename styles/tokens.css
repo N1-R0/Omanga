@@ -757,34 +757,6 @@
      the global rule, via `data-motion="loop"` at the call site. */
   --duration-live-pulse: 2500ms;
 
-  /* Hero Ken Burns.
-
-     [TUNED — 24s -> 12s -> 8s] 24s moved the image under 2% over a typical time
-     on the hero and read as completely static.
-
-     [NOT MEASURED — see below] 8s is reasoned from the benchmark, not taken from
-     it. Its hero is a four-image slideshow, each frame pushing while it is on
-     screen and crossfading to the next; the cycle is what makes its motion read
-     as brisk. Omanga's hero is a single photograph, so there is no crossfade to
-     hide a slow push behind and the pan itself has to carry the movement. 8s over
-     1.08 is about 1% per second, which is visible without reading as a zoom.
-
-     The benchmark's exact frame duration could not be read: its timing lives in
-     Webflow interaction JavaScript rather than in CSS, so it needs a live browser
-     to measure. **Worth re-measuring and matching properly.**
-
-     [CHANGED, 2026-08-29] 4s rather than 8s, on instruction — the push was asked
-     to be faster. The scale is untouched at 1.08, so the same distance is
-     covered in half the time: about 2% per second instead of 1%.
-
-     Duration is the right control to move here and scale is not. The pan runs
-     `forwards`, so its end state is where the image spends the rest of the
-     visit; raising the scale would crop more of the photograph permanently,
-     which on this image means pushing the aircraft wing further into the copy
-     column. Shortening the duration changes only how quickly it arrives. */
-  --duration-hero-pan: 4s;
-  --motion-hero-pan-scale: 1.08;
-
   /* Reveal geometry. 40px is far enough to read as an arrival; 16px reads as a
      flicker. The 200ms hold is what stops a band of siblings all firing the
      instant the section's top edge crosses the threshold. */

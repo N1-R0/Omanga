@@ -10,7 +10,6 @@ import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { fontVariables } from "@/config/fonts";
 import { BRAND_COLOR, SITE_NAME, SITE_URL } from "@/config/site";
 import { footerContent, formatCopyright } from "@/content/footer.content";
-import { languageContent } from "@/content/language.content";
 import { navigationContent } from "@/content/navigation.content";
 import { MAIN_CONTENT_ID, SKIP_LINK_LABEL } from "@/content/site.content";
 import "@/styles/globals.css";
@@ -151,7 +150,6 @@ export default function RedesignRootLayout({
           homeLabel={navigationContent.homeLabel}
           openLabel={navigationContent.menuOpenLabel}
           closeLabel={navigationContent.menuCloseLabel}
-          language={languageContent}
         />
 
         {/*

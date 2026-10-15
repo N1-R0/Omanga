@@ -48,6 +48,3 @@ export const howItWorksContent: HowItWorksContent = {
     },
   ],
 } as const;
-
-/** Shared so the `h2` and the section's `aria-labelledby` cannot drift apart. */
-export const HOW_IT_WORKS_HEADING_ID = "how-it-works-heading";

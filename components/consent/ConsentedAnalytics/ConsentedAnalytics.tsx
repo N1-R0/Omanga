@@ -51,12 +51,9 @@ const SpeedInsights = dynamic(
  * analytics control. A control that governs nothing is worse than no control.
  *
  * ---------------------------------------------------------------------------
- * `@vercel/analytics` is a dependency of this project and is deliberately NOT
- * mounted here or anywhere. It was installed and never used. Mounting it would
- * add page-view tracking nobody asked for, and this task is not the place to
- * introduce a tracker. Either wire it in behind this same gate as a deliberate
- * decision, or drop it from `package.json` — leaving it installed and unmounted
- * is the only option that is merely untidy rather than wrong.
+ * [CHANGED, 2026-10-15] `@vercel/analytics` was installed and never mounted;
+ * it has been removed from `package.json`. Page-view tracking, if ever wanted,
+ * goes behind this same gate as a deliberate decision.
  */
 export function ConsentedAnalytics() {
   return (

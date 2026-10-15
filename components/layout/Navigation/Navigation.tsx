@@ -2,7 +2,6 @@
 
 import { usePathname } from "next/navigation";
 
-import { MobileNavGroup } from "@/components/layout/MobileNavGroup";
 import { NavigationDropdown } from "@/components/layout/NavigationDropdown";
 import { NavigationGroup } from "@/components/layout/NavigationGroup";
 import { NavigationItem } from "@/components/layout/NavigationItem";
@@ -69,19 +68,6 @@ export function Navigation({
                   isCurrent={isCurrentPath(pathname, entry.href)}
                   tone={tone}
                 />
-              </li>
-            );
-          }
-
-          /*
-            [CHANGED, 2026-10-09] The column (mobile panel) now gets its own
-            tap-to-expand group instead of a flattened heading and list, on
-            instruction. Rationale and behaviour: `MobileNavGroup`.
-          */
-          if (orientation === "column") {
-            return (
-              <li key={entry.label}>
-                <MobileNavGroup group={entry} pathname={pathname} tone={tone} />
               </li>
             );
           }

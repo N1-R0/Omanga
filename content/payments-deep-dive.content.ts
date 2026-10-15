@@ -1,8 +1,9 @@
 // [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import {
-  omangaPaymentsProduct,
-  type DeepDiveProduct,
-} from "@/content/deep-dive.content";
+  cardsFromDeepDive,
+  type AccountFeaturesContent,
+} from "@/content/account-features.content";
+import { omangaPaymentsProduct } from "@/content/deep-dive.content";
 
 /**
  * A closer look at Omanga Payments — the untabbed deep dive.
@@ -67,17 +68,23 @@ import {
  * render would fill this plate and replace that mockup in one change.
  */
 
-export type PaymentsDeepDiveContent = {
-  readonly heading: string;
-  readonly intro: string;
-  readonly product: DeepDiveProduct;
-};
+export type PaymentsDeepDiveContent = AccountFeaturesContent;
 
 export const paymentsDeepDiveContent: PaymentsDeepDiveContent = {
   // [CHANGED, 2026-10-14] UX copy pass: verb-led, plain; the "fly/land" line moves to § 4.
   heading: "What you can do with the wallet",
   intro: "Six features, from adding money to paying when you arrive.",
-  product: omangaPaymentsProduct,
+  // [CHANGED, 2026-10-15] Shown as the features card grid (owner request).
+  groups: [
+    cardsFromDeepDive(omangaPaymentsProduct.features, {
+      "multi-currency-wallet": "wallet",
+      funding: "top-up",
+      "exchange-rates": "convert",
+      "the-wallet": "pay",
+      coverage: "spend",
+      control: "one-view",
+    }),
+  ],
 } as const;
 
 export const PAYMENTS_DEEP_DIVE_HEADING_ID =

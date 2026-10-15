@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { CTA } from "@/components/sections/CTA";
 import { Faq } from "@/components/sections/Faq";
 import { InsuranceCare } from "@/components/sections/InsuranceCare";
-import { InsuranceDeepDive } from "@/components/sections/InsuranceDeepDive";
+import { AccountFeatures } from "@/components/sections/AccountFeatures";
 import { InsuranceProof } from "@/components/sections/InsuranceProof";
 import { TrustPartners } from "@/components/sections/TrustPartners";
 import { WhyOmanga } from "@/components/sections/WhyOmanga";
@@ -113,11 +113,13 @@ export default function InsurancePreviewPage() {
   */
   return (
     <>
-      <JsonLd graph={buildPageGraph(insuranceMeta, {
-        crumb: "Holiday Insurance",
-        services: ["insurance"],
-        nodes: [buildFaqPage(insuranceMeta, insuranceFaqContent.items)],
-      })} />
+      <JsonLd
+        graph={buildPageGraph(insuranceMeta, {
+          crumb: "Holiday Insurance",
+          services: ["insurance"],
+          nodes: [buildFaqPage(insuranceMeta, insuranceFaqContent.items)],
+        })}
+      />
 
       {/*
         Stage 1. The hero — spec § 2, and the page's only `h1`. The outline
@@ -158,7 +160,8 @@ export default function InsurancePreviewPage() {
         entirely. Built on instruction; the objection and its reasoning are
         recorded in `content/insurance-deep-dive.content.ts`.
       */}
-      <InsuranceDeepDive
+      {/* [CHANGED, 2026-10-15] The deep dive is now the features card grid (owner request). */}
+      <AccountFeatures
         content={insuranceDeepDiveContent}
         headingId={INSURANCE_DEEP_DIVE_HEADING_ID}
       />
@@ -242,10 +245,7 @@ export default function InsurancePreviewPage() {
       */}
       <Faq content={insuranceFaqContent} headingId={INSURANCE_FAQ_HEADING_ID} />
 
-      <CTA
-        content={insuranceCtaContent}
-        headingId={INSURANCE_CTA_HEADING_ID}
-      />
+      <CTA content={insuranceCtaContent} headingId={INSURANCE_CTA_HEADING_ID} />
     </>
   );
 }

@@ -1,8 +1,9 @@
 // [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import {
-  holidayInsuranceProduct,
-  type DeepDiveProduct,
-} from "@/content/deep-dive.content";
+  cardsFromDeepDive,
+  type AccountFeaturesContent,
+} from "@/content/account-features.content";
+import { holidayInsuranceProduct } from "@/content/deep-dive.content";
 
 /**
  * A closer look at Holiday Insurance — the untabbed deep dive.
@@ -41,18 +42,25 @@ import {
  * Both strings need copy approval.
  */
 
-export type InsuranceDeepDiveContent = {
-  readonly heading: string;
-  readonly intro: string;
-  readonly product: DeepDiveProduct;
-};
+export type InsuranceDeepDiveContent = AccountFeaturesContent;
 
 export const insuranceDeepDiveContent: InsuranceDeepDiveContent = {
   // [CHANGED, 2026-10-14] UX copy pass: body noun "health cover"; the intro
   // says what the six features cover instead of restating the heading.
   heading: "What you get with Omanga health cover",
-  intro: "Three plans, one provider, and cover you can renew or cancel from your account.",
-  product: holidayInsuranceProduct,
+  intro:
+    "Three plans, one provider, and cover you can renew or cancel from your account.",
+  // [CHANGED, 2026-10-15] Shown as the features card grid (owner request).
+  groups: [
+    cardsFromDeepDive(holidayInsuranceProduct.features, {
+      "plan-tiers": "plans",
+      providers: "provider",
+      "trip-length-cover": "trip",
+      "renew-and-extend": "extend",
+      "care-access": "care",
+      "one-account": "one-view",
+    }),
+  ],
 } as const;
 
 export const INSURANCE_DEEP_DIVE_HEADING_ID =

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { CTA } from "@/components/sections/CTA";
 import { Faq } from "@/components/sections/Faq";
-import { InsuranceDeepDive } from "@/components/sections/InsuranceDeepDive";
+import { AccountFeatures } from "@/components/sections/AccountFeatures";
 import { PaymentsFeatures } from "@/components/sections/PaymentsFeatures";
 import { PaymentsHeroCentered } from "@/components/payments-v2/PaymentsHeroCentered";
 import { TrustPartners } from "@/components/sections/TrustPartners";
@@ -254,7 +254,8 @@ export default async function PaymentsPage() {
         Dark, after the photographic band, so the page alternates: light hero,
         photograph, dark band.
       */}
-      <InsuranceDeepDive
+      {/* [CHANGED, 2026-10-15] The deep dive is now the features card grid (owner request). */}
+      <AccountFeatures
         content={paymentsDeepDiveContent}
         headingId={PAYMENTS_DEEP_DIVE_HEADING_ID}
       />

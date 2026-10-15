@@ -14,7 +14,17 @@ import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
  */
 
 export type AccountFeatureIcon =
-  "top-up" | "convert" | "spend" | "plans" | "care" | "extend";
+  | "top-up"
+  | "convert"
+  | "spend"
+  | "plans"
+  | "care"
+  | "extend"
+  | "wallet"
+  | "pay"
+  | "one-view"
+  | "provider"
+  | "trip";
 
 export type AccountFeature = {
   readonly icon: AccountFeatureIcon;
@@ -23,13 +33,15 @@ export type AccountFeature = {
 };
 
 export type AccountFeatureGroup = {
-  readonly label: string;
+  /** Omitted when the section has one group (the product pages). */
+  readonly label?: string;
   readonly features: readonly AccountFeature[];
 };
 
 export type AccountFeaturesContent = {
-  readonly eyebrow: string;
+  readonly eyebrow?: string;
   readonly heading: string;
+  readonly intro?: string;
   readonly groups: readonly AccountFeatureGroup[];
 };
 
@@ -81,3 +93,20 @@ export const accountFeaturesContent: AccountFeaturesContent = {
 } as const;
 
 export const ACCOUNT_FEATURES_HEADING_ID = "account-features-heading";
+
+/**
+ * Turns a deep-dive product's features into one card group, keeping their
+ * approved heading and body. `icons` names an icon per feature id.
+ */
+export function cardsFromDeepDive(
+  features: readonly { id: string; heading: string; body: string }[],
+  icons: Readonly<Record<string, AccountFeatureIcon>>,
+): AccountFeatureGroup {
+  return {
+    features: features.map(({ id, heading, body }) => {
+      const icon = icons[id];
+      if (!icon) throw new Error(`No icon for feature "${id}"`);
+      return { icon, heading, body };
+    }),
+  };
+}

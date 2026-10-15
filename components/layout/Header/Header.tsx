@@ -92,6 +92,8 @@ const DIRECTION_THRESHOLD_PX = 8;
 export type HeaderProps = {
   items: readonly NavigationEntry[];
   action: CallToAction;
+  /** The mobile menu's second pill (the wallet sign-up). */
+  menuAction: CallToAction;
   landmarkLabel: string;
   /** Wordmark text and the accessible name for the home link. */
   wordmark: string;
@@ -110,6 +112,7 @@ export type HeaderProps = {
 export function Header({
   items,
   action,
+  menuAction,
   landmarkLabel,
   wordmark,
   homeLabel,
@@ -126,7 +129,10 @@ export function Header({
   */
   const pathname = usePathname();
   const [isAtTop, setIsAtTop] = useState(true);
-  const isOverPhoto = pathname === "/" && isAtTop;
+  // The open mobile menu is a full-screen blurred sheet; the bar goes
+  // see-through over it the same way it does over the home hero.
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isOverPhoto = (pathname === "/" && isAtTop) || isMenuOpen;
 
   /** Last known scroll offset. A ref — it is never rendered. */
   const lastYRef = useRef(0);
@@ -320,6 +326,8 @@ export function Header({
               openLabel={openLabel}
               closeLabel={closeLabel}
               tone={isOverPhoto ? "dark" : "light"}
+              menuAction={menuAction}
+              onOpenChange={setIsMenuOpen}
             />
           </div>
         </div>

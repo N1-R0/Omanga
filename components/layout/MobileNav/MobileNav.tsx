@@ -3,13 +3,19 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
-import { Navigation } from "@/components/layout/Navigation";
+import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import { useDismiss } from "@/hooks/useDismiss";
 import { useFocusReturn } from "@/hooks/useFocusReturn";
 import { cx } from "@/lib/cx";
-import type { CallToAction, NavigationEntry } from "@/types/content.types";
+import { isCurrentPath } from "@/lib/is-current-path";
+import { isLinkGroup } from "@/types/content.types";
+import type {
+  CallToAction,
+  LinkGroup,
+  NavigationEntry,
+} from "@/types/content.types";
 import type { Tone } from "@/types/ui.types";
 
 import { MobileNavToggle } from "./MobileNavToggle";
@@ -51,6 +57,10 @@ import { MobileNavToggle } from "./MobileNavToggle";
  */
 
 export type MobileNavProps = {
+  /** The second pill at the foot of the open menu (the wallet sign-up). */
+  menuAction: CallToAction;
+  /** Lets the header go see-through while the full-screen menu is open. */
+  onOpenChange?: (isOpen: boolean) => void;
   items: readonly NavigationEntry[];
   /**
    * The header's primary call to action.
@@ -78,6 +88,8 @@ export type MobileNavProps = {
 export function MobileNav({
   items,
   action,
+  menuAction,
+  onOpenChange,
   landmarkLabel,
   openLabel,
   closeLabel,
@@ -113,6 +125,10 @@ export function MobileNav({
   // The page behind cannot scroll away from the panel while it is open.
   useBodyScrollLock(isOpen);
 
+  useEffect(() => {
+    onOpenChange?.(isOpen);
+  }, [isOpen, onOpenChange]);
+
   /**
    * Close on navigation.
    *
@@ -146,88 +162,149 @@ export function MobileNav({
         />
       </div>
 
+      {/*
+        [CHANGED, 2026-10-15] Revolut's mobile menu (measured on revolut.com):
+        a full-screen sheet over the page, 50% black with an 85px backdrop
+        blur, white type. Top-level links are left-aligned rows; a group is an
+        accordion row with a chevron, smaller sub-links and a hairline after it;
+        two full-width pills follow the links.
+
+        The sheet is positioned inside the header from its top edge, under the
+        bar's own content, and the header goes transparent while it is open
+        (`onOpenChange`), so logo, toggle and sheet read as one surface.
+      */}
       <div
         id={panelId}
         ref={panelRef}
         inert={!isOpen}
         className={cx(
-          /*
-            `top-full` anchors the panel to the bottom edge of the header with no
-            magic offset and no header-height token — the header is the
-            positioned ancestor, so the panel simply starts where it ends.
-
-            `max-h-screen` with internal scrolling is the safety net for a very
-            short viewport or very large text: the panel's natural height is
-            about six rows, which fits comfortably, but if it ever does not,
-            everything inside stays reachable rather than being clipped.
-          */
-          "absolute inset-x-0 top-full z-menu max-h-screen overflow-y-auto",
-          /*
-            The panel and the bar are both `--color-surface-page`, so the top
-            edge is the only thing separating them and it has to be visible.
-
-            `--color-border-field` and not `--color-border-light`: the latter is
-            `#E5F2F2`, which Phase 1 measured at 1.05:1 on a light surface — it
-            fails the 3:1 UI-boundary requirement and would draw nothing a user
-            could see. The field token is ink at 50% and measures 3.37:1.
-
-            [QUESTION] Its name is wrong for this use. The system has no general
-            light-surface divider token, because Figma contains no drawn
-            boundaries on light surfaces at all — the same gap Phase 1 raised as
-            open question 4.5, and the same gap behind the header's absent bottom
-            border. One token named for the role would close both.
-          */
-          "border-t border-border-field bg-surface-page px-fluid-4 py-fluid-4",
+          "absolute inset-x-0 top-0 -z-10 flex h-dvh flex-col bg-black/50 pt-header text-on-dark backdrop-blur-[85px]",
           "desktop:hidden",
-          /*
-            [MEASURED from the structural benchmark] Its menu panels open over
-            300ms on `outCirc`, wiping downward as they fade in.
-
-            `transition-menu` carries both, replacing `transition-emphasis`. Same
-            duration — 300ms was already the token — but the curve is the
-            benchmark's, and a wipe is added to the fade. `outCirc` decelerates far
-            harder than `--ease-standard`, which is what makes a panel of this size
-            arrive and stop rather than drift into place.
-
-            The benchmark animates `height` to produce the wipe. `clip-path` gives
-            the same result on the compositor without touching layout, and without
-            needing the panel's height known in advance. See the utility.
-
-            Under `prefers-reduced-motion` the global policy collapses the
-            duration, so the panel appears and disappears instantly with its final
-            state intact — nothing is gated on the animation running.
-          */
-          "transition-menu",
-          isOpen
-            ? "menu-expanded translate-y-0 opacity-100"
-            : "menu-collapsed -translate-y-2 opacity-0",
+          "transition-[opacity,visibility] duration-300 ease-[cubic-bezier(0.15,0.5,0.5,1)]",
+          isOpen ? "visible opacity-100" : "invisible opacity-0",
         )}
       >
-        {/*
-          Navigation, then the primary call to action beneath it.
+        <div className="flex-1 overflow-y-auto px-fluid-4 pt-fluid-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+          <nav aria-label={landmarkLabel}>
+            <ul role="list" className="flex flex-col">
+              {items.map((entry) =>
+                isLinkGroup(entry) ? (
+                  <li key={entry.label}>
+                    <MenuGroup group={entry} pathname={pathname} />
+                  </li>
+                ) : (
+                  <li key={entry.href}>
+                    <Link
+                      href={entry.href}
+                      aria-current={
+                        isCurrentPath(pathname, entry.href) ? "page" : undefined
+                      }
+                      className="flex h-12 items-center font-heading text-main font-medium focus-ring"
+                    >
+                      {entry.label}
+                    </Link>
+                  </li>
+                ),
+              )}
+            </ul>
+          </nav>
 
-          The button is not a second copy: the bar hides its own below `desktop`,
-          so exactly one filled brand button exists in the viewport at any width.
-          It sits last so the nav links stay closest to the toggle that revealed
-          them, and so the strongest action is the last thing read.
+          {/*
+          [CHANGED, 2026-10-15] Stacked full width, right under the links (owner
+          request), rather than pinned to the foot of the sheet. Wallet first:
+          it is the primary action on every page.
         */}
-        <div className="flex flex-col gap-fluid-4">
-          <Navigation
-            items={items}
-            landmarkLabel={landmarkLabel}
-            orientation="column"
-            tone="light"
-          />
-
-          {/* Content width, centred — the panel's links are centred too, and a
-              full-bleed button would read as a surface rather than a control. */}
-          <div className="flex justify-center">
-            <Button as="link" variant="primary" tone="light" href={action.href}>
+          <div className="grid gap-fluid-2 pt-fluid-5">
+            <Button
+              as="link"
+              variant="white"
+              tone="dark"
+              href={menuAction.href}
+              isExternal={menuAction.isExternal}
+            >
+              {menuAction.label}
+            </Button>
+            <Button
+              as="link"
+              variant="secondary"
+              tone="dark"
+              href={action.href}
+            >
               {action.label}
             </Button>
           </div>
         </div>
       </div>
     </>
+  );
+}
+
+/**
+ * A group row: label and chevron; open, its links in smaller regular type and
+ * a hairline after them (Revolut). Opens by default when it holds the current
+ * page.
+ */
+function MenuGroup({
+  group,
+  pathname,
+}: {
+  group: LinkGroup;
+  pathname: string;
+}) {
+  const hasCurrentChild = group.items.some((item) =>
+    isCurrentPath(pathname, item.href),
+  );
+  const [isOpen, setIsOpen] = useState(hasCurrentChild);
+  const listId = useId();
+
+  return (
+    <div className={cx(isOpen && "border-b border-white/20 pb-fluid-2")}>
+      <button
+        type="button"
+        aria-expanded={isOpen}
+        aria-controls={listId}
+        onClick={() => setIsOpen((wasOpen) => !wasOpen)}
+        className="flex h-12 w-full items-center justify-between font-heading text-main font-medium focus-ring"
+      >
+        {group.label}
+        <svg
+          viewBox="0 0 24 24"
+          className={cx(
+            "size-4 transition-transform duration-300",
+            isOpen && "rotate-180",
+          )}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2}
+          aria-hidden
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div
+        id={listId}
+        inert={!isOpen}
+        className={cx(
+          "grid transition-[grid-template-rows,opacity] duration-300",
+          isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
+        )}
+      >
+        <ul role="list" className="min-h-0 overflow-hidden">
+          {group.items.map((item) => (
+            <li key={item.href}>
+              <Link
+                href={item.href}
+                aria-current={
+                  isCurrentPath(pathname, item.href) ? "page" : undefined
+                }
+                className="flex h-11 items-center font-sans text-small text-on-dark/85 focus-ring"
+              >
+                {item.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }

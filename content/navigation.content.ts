@@ -1,3 +1,4 @@
+import { WALLET_URL } from "@/config/site";
 import { PRIMARY_CTA } from "@/content/site.content";
 import type { CallToAction, NavigationEntry } from "@/types/content.types";
 
@@ -100,6 +101,11 @@ const PRIMARY_ITEMS: readonly NavigationEntry[] = [
 export const navigationContent: {
   readonly items: readonly NavigationEntry[];
   readonly action: CallToAction;
+  /**
+   * [ADDED, 2026-10-15] The mobile menu's second pill, beside `action`
+   * (Revolut's "Log in" / "Sign up" pair). The wallet sign-up the hero uses.
+   */
+  readonly menuAction: CallToAction;
   /** Accessible name for the navigation landmark. Not marketing copy. */
   readonly landmarkLabel: string;
   /** Accessible name for the menu toggle, per state. Not marketing copy. */
@@ -112,6 +118,12 @@ export const navigationContent: {
   // Imported rather than retyped, so the label cannot drift between the
   // header, the hero and the CTA band.
   action: PRIMARY_CTA,
+  menuAction: {
+    label: "Open your free wallet",
+    href: WALLET_URL,
+    isExternal: true,
+    emphasis: "primary",
+  },
   landmarkLabel: "Main",
   menuOpenLabel: "Open menu",
   menuCloseLabel: "Close menu",

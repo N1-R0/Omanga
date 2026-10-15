@@ -925,3 +925,19 @@ everywhere:
   with an "Emergency evacuation included" chip), owner pick 2026-10-15 over a
   Magnific watercolour globe. Both claims hold for every plan. Neutral until
   colours are chosen. `InsuranceVisual` (the stepper) is kept but unused here.
+
+## Addendum · 2026-10-15 · Mobile menu, Revolut style
+
+Measured on revolut.com (375 wide): a full-screen sheet over the page,
+rgba(0,0,0,0.5) with an 85px backdrop blur, white type; top-level rows about
+46px; groups as accordion rows with a chevron, smaller sub-links and a hairline
+after them; two pills pinned at the foot ("Log in" / "Sign up").
+
+- `MobileNav` now renders that sheet: rows in Geist 500, "Company" as the one
+  accordion (opens by default when it holds the current page), then two
+  full-width pills stacked right under the links (owner request, instead of
+  Revolut's pair pinned at the foot): "Open your free wallet" (white,
+  `navigationContent.menuAction`) above "Get started" (outline).
+- The header goes transparent with light text while the menu is open
+  (`onOpenChange`), so the bar and sheet read as one surface.
+- Desktop is unchanged. The old `MobileNavGroup` is no longer used by the menu.

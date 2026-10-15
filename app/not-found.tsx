@@ -84,6 +84,7 @@ export default function NotFound() {
         <Header
           items={navigationContent.items}
           action={navigationContent.action}
+          menuAction={navigationContent.menuAction}
           landmarkLabel={navigationContent.landmarkLabel}
           wordmark={SITE_NAME}
           homeLabel={navigationContent.homeLabel}

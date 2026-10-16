@@ -65,6 +65,13 @@
     /* No `scroll-behavior: smooth` here. It is opt-in via the skip link and
        in-page anchors only, and is disabled under reduced motion. */
     block-size: 100%;
+    /* Makes the body guard below actually clip. With `html` left `visible`,
+       the body's `overflow-x` is propagated to the viewport instead of applying
+       to the body box, and mobile browsers still widen the layout viewport to
+       fit the overflow — the coverage map's 160% bleed gave a 459px-wide page
+       at 375. Any non-visible value here stops the propagation; `clip` adds no
+       scrollport, for the same sticky reason given on `body`. */
+    overflow-x: clip;
   }
 
   body {

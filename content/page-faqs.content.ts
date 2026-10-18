@@ -31,7 +31,7 @@ export const aboutFaqContent: FaqContent = {
   items: pick([
     "What is the Omanga travel wallet?",
     "What health insurance does Omanga offer for Nigeria?",
-    "Who operates the Omanga wallet?",
+    "What fees does Omanga charge?",
     "Who provides Omanga's health cover?",
     "Where can I spend money with Omanga?",
     "Does Omanga health cover work outside Nigeria?",

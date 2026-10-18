@@ -1108,3 +1108,13 @@ audit found no CBN record for "Fuspay", and HMOs are usually NHIA-licensed).
 Nigerian HMO provides your cover". Legal pages untouched. To restore: the
 exact legal name (Fuspay vs Fusepay), licence category and number, the HMO's
 regulator and number, and register links.
+
+## Addendum · 2026-10-18 · Wallet partner removed from public copy (owner)
+
+The wallet's operating partner and backend set-up aren't public. Removed from
+every marketing page: the "Who operates the Omanga wallet?" FAQ, Fuspay in
+copy (Payments closing, Get Started, About, the $100 post), the Fuspay logo
+in the partner strip and insurance partners (file deleted), and the wallet
+`provider` node in schema (Omanga stays as `brand` only). /safety is now
+general: rate before you pay, Phillips HMO for cover (customer-facing, kept),
+help, account tips. The legal pages still name Fuspay; review with counsel.

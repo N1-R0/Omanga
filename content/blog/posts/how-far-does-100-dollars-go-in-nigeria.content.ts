@@ -346,7 +346,7 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
           content: [
             // [CHANGED, 2026-10-14] UX copy pass: named the ₦20 fee instead of "no
             // hidden fees"; removed 24/7 wallet support (not owner-confirmed).
-            "The wallet is free to open and holds 6+ currencies, with no minimums. Transfers cost ₦20. It's operated by Fuspay Technologies. ",
+            "The wallet is free to open and holds 6+ currencies, with no minimums. Transfers cost ₦20. ",
             { text: "Explore the wallet", href: "/payments" },
             ".",
           ],

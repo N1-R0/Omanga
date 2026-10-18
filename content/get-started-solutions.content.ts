@@ -69,7 +69,7 @@ const PAYMENTS: GetStartedSolution = {
   heading: "Omanga Payment Solutions",
   // [CHANGED, 2026-10-14] UX copy pass: owner-confirmed facts (six currencies, mid-market rate,
   // ₦20 transfers, Fuspay) replace "transparent real-time rates" and "no surprise costs".
-  body: `A wallet for your trip. Fund it from USD, GBP or CAD, hold 6+ currencies and see the mid-market rate before you confirm. Spend online or in person in ${COUNTRIES_SERVED_DISPLAY} African countries. It’s free to open and transfers cost ₦20. Operated by Fuspay Technologies.`,
+  body: `A wallet for your trip. Fund it from USD, GBP or CAD, hold 6+ currencies and see the mid-market rate before you confirm. Spend online or in person in ${COUNTRIES_SERVED_DISPLAY} African countries. It’s free to open and transfers cost ₦20.`,
   // [CHANGED, 2026-10-14] UX copy pass: was "Explore payments" (/payments). The page's job is to
   // get the wallet opened, so the panel links straight to sign-up. One owner for label and URL.
   action: HERO_PRIMARY_ACTION,

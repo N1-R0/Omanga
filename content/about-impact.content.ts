@@ -141,7 +141,7 @@ const PILLARS: readonly ImpactPillar[] = [
     id: "partnership",
     tabLabel: "Partnership",
     heading: "Partnership",
-    body: "We work with established partners. Fuspay Technologies runs the wallet. Phillips HMO, a Nigerian health maintenance organisation (HMO), provides health cover.",
+    body: "We work with established partners. Phillips HMO, a Nigerian health maintenance organisation (HMO), provides our health cover.",
     image: {
       src: "/insurance-care-handshake.jpg",
       alt: "",

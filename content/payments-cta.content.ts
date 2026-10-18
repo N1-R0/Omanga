@@ -64,7 +64,8 @@ export const paymentsCtaContent: CtaContent = {
   // [CHANGED, 2026-10-14] UX copy pass: heading no longer repeats the button;
   // intro shows the fee and names the regulator next to the CTA (Wise model).
   heading: "Get your travel money ready before you fly",
-  intro: "Free to open, no minimums, ₦20 per transfer. Fuspay Technologies operates the wallet.",
+  // [CHANGED, 2026-10-18] Owner: who runs the wallet behind the scenes is not public information.
+  intro: "Free to open, no minimums, ₦20 per transfer.",
   action: {
     label: "Open your free wallet",
     href: WALLET_URL,

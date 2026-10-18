@@ -65,11 +65,7 @@ export const paymentsFaqContent: FaqContent = {
       answer:
         "Add pounds, dollars or Canadian dollars to your Omanga wallet, then convert them to naira in the app at the mid-market rate. You see the rate before you confirm.",
     },
-    {
-      question: "Who operates the Omanga wallet?",
-      // [CHANGED, 2026-10-14] UX copy pass: active voice, shorter.
-      answer:
-        "Fuspay Technologies operates the Omanga wallet.",
-    },
+    // [REMOVED, 2026-10-18] "Who operates the Omanga wallet?" Owner: the
+    // wallet's operating partner isn't public information.
   ],
 };

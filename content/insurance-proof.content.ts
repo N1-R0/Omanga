@@ -91,7 +91,6 @@ const STATS: readonly ProofStat[] = [
 
 const PARTNERS: readonly ProofPartner[] = [
   { name: "phillips.hmo" },
-  { name: "fuspay" },
   { name: "zira" },
 ] as const;
 

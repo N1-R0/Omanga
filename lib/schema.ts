@@ -9,7 +9,6 @@ import {
 } from "@/config/site";
 import {
   INSURANCE_PROVIDER_NAME,
-  WALLET_PROVIDER_NAME,
 } from "@/content/legal/legal-shared.content";
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { BlogPost, FaqItem } from "@/types/blog.types";
@@ -108,14 +107,7 @@ const WEBSITE: SchemaNode = {
  * [CHANGED, 2026-10-15] Each now has an `@id`, so a service on one page and a
  * reference on another resolve to the same entity (SEO audit, schema #1).
  */
-const WALLET_PROVIDER_ID = `${SITE_URL}/#fuspay`;
 const INSURANCE_PROVIDER_ID = `${SITE_URL}/#phillips-hmo`;
-
-const WALLET_PROVIDER: SchemaNode = {
-  "@type": "Organization",
-  "@id": WALLET_PROVIDER_ID,
-  name: WALLET_PROVIDER_NAME,
-};
 
 const INSURANCE_PROVIDER: SchemaNode = {
   "@type": "Organization",
@@ -166,14 +158,15 @@ function buildServiceNodes(
         description: `A multi-currency travel wallet. Fund it from USD, GBP or CAD and spend in ${COUNTRIES_SERVED_DISPLAY} African countries.`,
         category: "Multi-currency travel wallet",
         url: absoluteUrl("/payments"),
-        provider: { "@id": WALLET_PROVIDER_ID },
+        // [CHANGED, 2026-10-18] No `provider`: the operating partner isn't
+        // public (owner). Omanga stays as `brand` only, so the markup still
+        // doesn't claim Omanga holds the payment licence.
         brand: { "@id": ORGANIZATION_ID },
         areaServed: AREA_SERVED,
         ...(walletFees === undefined
           ? {}
           : { feesAndCommissionsSpecification: walletFees }),
       },
-      WALLET_PROVIDER,
     ];
   }
 

@@ -56,6 +56,18 @@ const hundredDollarsImage: ImageAsset = {
   height: 1500,
 };
 
+/**
+ * [ADDED, 2026-10-18] Audit quick win: the share image is the same photo,
+ * cropped to 1200x630 and self-hosted (public/blog/og/), so link previews
+ * don't depend on Unsplash or show a 4:3 crop.
+ */
+const shareImage: ImageAsset = {
+  src: "/blog/og/how-far-does-100-dollars-go-in-nigeria.jpg",
+  alt: hundredDollarsImage.alt,
+  width: 1200,
+  height: 630,
+};
+
 const FCDO_SAFETY_URL =
   "https://www.gov.uk/foreign-travel-advice/nigeria/safety-and-security";
 
@@ -68,7 +80,7 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
     description:
       "Is $100 a lot in Nigeria? What $20, $50, $100 and $200 really buy in Lagos in 2026, why December costs more, and how to avoid bad exchange rates.",
     path: "/blog/how-far-does-100-dollars-go-in-nigeria",
-    ogImage: hundredDollarsImage,
+    ogImage: shareImage,
   },
   category: "Payments",
   title: "How far does $100 actually go in Nigeria?",

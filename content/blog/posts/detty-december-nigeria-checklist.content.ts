@@ -41,6 +41,18 @@ const dettyDecemberImage: ImageAsset = {
   height: 1500,
 };
 
+/**
+ * [ADDED, 2026-10-18] Audit quick win: the share image is the same photo,
+ * cropped to 1200x630 and self-hosted (public/blog/og/), so link previews
+ * don't depend on Unsplash or show a 4:3 crop.
+ */
+const shareImage: ImageAsset = {
+  src: "/blog/og/detty-december-nigeria-checklist.jpg",
+  alt: dettyDecemberImage.alt,
+  width: 1200,
+  height: 630,
+};
+
 const FCDO_SAFETY_URL =
   "https://www.gov.uk/foreign-travel-advice/nigeria/safety-and-security";
 const FCDO_ENTRY_URL =
@@ -55,7 +67,7 @@ export const dettyDecemberChecklistPost: BlogPost = {
     description:
       "Flying home to Lagos for Detty December? How to handle money, avoid bad exchange rates, keep cash safe and sort your health cover before you land.",
     path: "/blog/detty-december-nigeria-checklist",
-    ogImage: dettyDecemberImage,
+    ogImage: shareImage,
   },
   category: "Travel",
   title: "Detty December 2026: your money and health checklist for Nigeria",

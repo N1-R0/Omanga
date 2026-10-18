@@ -75,6 +75,9 @@ export function RateConverterBar({
           <div className="flex items-center gap-3 rounded-[1rem] border border-border-hairline px-4 py-3 focus-within:border-ink">
             <input
               id={amountId}
+              // [ADDED, 2026-10-18] Audit: an explicit name for agents and
+              // assistive tech, alongside the visible label.
+              aria-label="Amount to convert"
               inputMode="decimal"
               autoComplete="off"
               value={amount}

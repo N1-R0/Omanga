@@ -1,5 +1,9 @@
 import { BLOG_POSTS } from "@/content/blog";
+import { LEGAL_EFFECTIVE_DATE } from "@/content/legal/legal-shared.content";
 import { RATE_PAIRS } from "@/content/rates.content";
+
+/** Last content change on the marketing pages (2026-10-18 copy pass). */
+const MARKETING_UPDATED = "2026-10-18";
 
 /**
  * The site's public routes, in one place.
@@ -34,22 +38,31 @@ export type PublicRoute = {
    * and it documents intent for whoever next edits this file.
    */
   readonly priority: SitemapPriority;
+  /**
+   * [ADDED, 2026-10-18] Sitemap `lastmod` (audit quick win): the date the
+   * page's content last changed, YYYY-MM-DD. "rates" means the live rate
+   * snapshot date, resolved in app/sitemap.ts. Update a page's date when its
+   * copy changes. (`priority` stays here as documented intent but is no
+   * longer emitted in the sitemap.)
+   */
+  readonly lastModified: string;
 };
 
 const MARKETING_ROUTES: readonly PublicRoute[] = [
-  { path: "/", priority: 1 },
-  { path: "/insurance", priority: 0.7 },
-  { path: "/plans", priority: 0.7 },
-  { path: "/payments", priority: 0.7 },
-  { path: "/get-started", priority: 0.7 },
-  { path: "/about", priority: 0.7 },
-  { path: "/contact", priority: 0.7 },
+  { path: "/", priority: 1, lastModified: MARKETING_UPDATED },
+  { path: "/insurance", priority: 0.7, lastModified: MARKETING_UPDATED },
+  { path: "/plans", priority: 0.7, lastModified: MARKETING_UPDATED },
+  { path: "/payments", priority: 0.7, lastModified: MARKETING_UPDATED },
+  { path: "/get-started", priority: 0.7, lastModified: MARKETING_UPDATED },
+  { path: "/about", priority: 0.7, lastModified: MARKETING_UPDATED },
+  { path: "/contact", priority: 0.7, lastModified: MARKETING_UPDATED },
   // [ADDED, 2026-10-18] "Is Omanga safe?"
-  { path: "/safety", priority: 0.7 },
+  { path: "/safety", priority: 0.7, lastModified: MARKETING_UPDATED },
   // [ADDED, 2026-10-18] Live rate pages (content/rates.content.ts).
   ...RATE_PAIRS.map((pair) => ({
     path: `/rates/${pair.slug}`,
     priority: 0.7 as const,
+    lastModified: "rates",
   })),
 ];
 
@@ -62,11 +75,19 @@ const MARKETING_ROUTES: readonly PublicRoute[] = [
  * budget on.
  */
 const LEGAL_ROUTES: readonly PublicRoute[] = [
-  { path: "/privacy-policy", priority: 0.3 },
-  { path: "/terms-of-use", priority: 0.3 },
-  { path: "/policy-terms", priority: 0.3 },
-  { path: "/complaints-procedure", priority: 0.3 },
-  { path: "/cookie-policy", priority: 0.3 },
+  {
+    path: "/privacy-policy",
+    priority: 0.3,
+    lastModified: LEGAL_EFFECTIVE_DATE,
+  },
+  { path: "/terms-of-use", priority: 0.3, lastModified: LEGAL_EFFECTIVE_DATE },
+  { path: "/policy-terms", priority: 0.3, lastModified: LEGAL_EFFECTIVE_DATE },
+  {
+    path: "/complaints-procedure",
+    priority: 0.3,
+    lastModified: LEGAL_EFFECTIVE_DATE,
+  },
+  { path: "/cookie-policy", priority: 0.3, lastModified: LEGAL_EFFECTIVE_DATE },
 ];
 
 /**
@@ -74,10 +95,11 @@ const LEGAL_ROUTES: readonly PublicRoute[] = [
  * list so a new article reaches the sitemap without a second registration.
  */
 const BLOG_ROUTES: readonly PublicRoute[] = [
-  { path: "/blog", priority: 0.7 },
+  { path: "/blog", priority: 0.7, lastModified: MARKETING_UPDATED },
   ...BLOG_POSTS.map((post) => ({
     path: post.meta.path,
     priority: 0.7 as const,
+    lastModified: post.updatedDate ?? post.publishedDate,
   })),
 ];
 

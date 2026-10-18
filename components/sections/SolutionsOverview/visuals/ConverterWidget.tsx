@@ -102,6 +102,9 @@ export function ConverterWidget({
             />
             <input
               id={amountId}
+              // [ADDED, 2026-10-18] Audit: an explicit name for agents and
+              // assistive tech, alongside the visible label.
+              aria-label="Amount to convert"
               inputMode="decimal"
               autoComplete="off"
               value={amount}
@@ -281,4 +284,3 @@ function LockIcon() {
     </svg>
   );
 }
-

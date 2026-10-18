@@ -28,6 +28,18 @@ const nairaNotesImage: ImageAsset = {
   height: 1500,
 };
 
+/**
+ * [ADDED, 2026-10-18] Audit quick win: the share image is the same photo,
+ * cropped to 1200x630 and self-hosted (public/blog/og/), so link previews
+ * don't depend on Unsplash or show a 4:3 crop.
+ */
+const shareImage: ImageAsset = {
+  src: "/blog/og/pounds-to-naira-best-rate.jpg",
+  alt: nairaNotesImage.alt,
+  width: 1200,
+  height: 630,
+};
+
 export const poundsToNairaBestRatePost: BlogPost = {
   slug: "pounds-to-naira-best-rate",
   meta: {
@@ -35,7 +47,7 @@ export const poundsToNairaBestRatePost: BlogPost = {
     description:
       "Changing pounds to naira for Nigeria? Where visitors lose money on the rate, why to pay in naira, and how to check you're getting a fair deal.",
     path: "/blog/pounds-to-naira-best-rate",
-    ogImage: nairaNotesImage,
+    ogImage: shareImage,
   },
   category: "Payments",
   title: "Pounds to naira: how to get the best rate in Nigeria",
@@ -72,7 +84,7 @@ export const poundsToNairaBestRatePost: BlogPost = {
           content: [
             "The fairest benchmark is the mid-market rate: the midpoint between the price banks buy and sell pounds at. It's the rate you see on Google. Our ",
             { text: "pounds to naira page", href: "/rates/pounds-to-naira" },
-            " shows today's figure, a 30-day chart and a converter.",
+            " shows today's figure, a converter and today's rates against dollars and Canadian dollars.",
           ],
         },
         {
@@ -174,7 +186,7 @@ export const poundsToNairaBestRatePost: BlogPost = {
       {
         question: "Where can I check the pounds to naira rate today?",
         answer:
-          "Omanga's pounds to naira page shows today's mid-market rate, a 30-day chart and a converter. The mid-market rate is also the one you see on Google.",
+          "Omanga's pounds to naira page shows today's mid-market rate and a converter. The mid-market rate is also the one you see on Google.",
       },
       {
         question: "Why is the rate I get lower than the rate on Google?",

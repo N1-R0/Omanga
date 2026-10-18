@@ -84,7 +84,10 @@ export function SkyHero({
           src={image.src}
           alt={image.alt}
           fill
-          priority
+          /* [CHANGED, 2026-10-18] Audit: `priority` is deprecated in Next 16;
+             the docs recommend eager loading + fetchPriority for the LCP hero. */
+          loading="eager"
+          fetchPriority="high"
           sizes="(min-width: 1024px) 50vw, 100vw"
           className="object-cover object-[50%_30%]"
         />

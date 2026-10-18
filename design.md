@@ -1087,3 +1087,12 @@ emergency number, when cover starts, exclusions.
   code, name, tick) replaces the native select in both converters.
 - To check: the site says Phillips HMO is "regulated by NAICOM". In Nigeria,
   HMOs are usually accredited by the NHIA. Confirm which regulator to name.
+
+## Addendum · 2026-10-18 · Audit quick wins (omanga.biz-audit/ACTION-PLAN.md Phase 4)
+
+Sitemap `lastmod` on every URL (`PUBLIC_ROUTES.lastModified`; rate pages use
+the live snapshot date, sitemap revalidates hourly) and no `priority`;
+`aria-label="Amount to convert"` on both converters; hero image
+`loading="eager"` + `fetchPriority="high"` (Next 16 deprecates `priority`);
+self-hosted 1200×630 share images per post in `public/blog/og/`. The pounds
+post no longer mentions the removed 30-day chart.

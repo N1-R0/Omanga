@@ -40,6 +40,18 @@ const healthInsuranceImage: ImageAsset = {
   height: 1500,
 };
 
+/**
+ * [ADDED, 2026-10-18] Audit quick win: the share image is the same photo,
+ * cropped to 1200x630 and self-hosted (public/blog/og/), so link previews
+ * don't depend on Unsplash or show a 4:3 crop.
+ */
+const shareImage: ImageAsset = {
+  src: "/blog/og/health-insurance-for-visiting-nigeria.jpg",
+  alt: healthInsuranceImage.alt,
+  width: 1200,
+  height: 630,
+};
+
 const FCDO_HEALTH_URL = "https://www.gov.uk/foreign-travel-advice/nigeria/health";
 const LIVING_IN_NIGERIA_URL = "https://www.gov.uk/living-in-nigeria";
 const MEDICARE_ABROAD_URL = "https://www.medicare.gov/coverage/travel-outside-the-u.s.";
@@ -54,7 +66,7 @@ export const healthInsuranceVisitingNigeriaPost: BlogPost = {
     description:
       "Do you need travel insurance for Nigeria? The NHS, Medicare and most provincial plans won't pay for treatment there. What your health cover should include.",
     path: "/blog/health-insurance-for-visiting-nigeria",
-    ogImage: healthInsuranceImage,
+    ogImage: shareImage,
   },
   category: "Insurance",
   title: "Do you need travel insurance for Nigeria?",

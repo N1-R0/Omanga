@@ -8,9 +8,12 @@ import type { PageMetaContent } from "@/types/content.types";
  * a page titled with this question; it answers the trust check a first-time
  * visitor makes before handing over money.
  *
- * Every claim is already approved elsewhere on the site: Fuspay (CBN-licensed
- * microfinance bank) operates the wallet, Phillips HMO (stated as NAICOM-
- * regulated across the site) provides cover in Nigeria only, mid-market rate
+ * [CHANGED, 2026-10-18] Owner: regulator and licence wording is softened
+ * site-wide until the licences are confirmed (SEO audit: no CBN record found
+ * for "Fuspay"; HMOs are usually NHIA-licensed, not NAICOM). The page names
+ * the partners only. Restore regulators, licence numbers and register links
+ * once confirmed. Other claims are approved: Fuspay operates the wallet,
+ * Phillips HMO provides cover in Nigeria only, mid-market rate
  * shown before you confirm, ₦20 per transfer, free to open, no card. Nothing
  * about how funds are held, insured or segregated is stated: unconfirmed.
  * The account-safety tips are general advice, not Omanga policy claims.
@@ -21,7 +24,7 @@ export const SAFETY_HEADING_ID = "safety-heading" as const;
 export const safetyMeta: PageMetaContent = {
   title: "Is Omanga Safe? Your Wallet and Health Cover | Omanga",
   description:
-    "Who runs the Omanga wallet and who provides your health cover: Fuspay, licensed by the Central Bank of Nigeria, and Phillips HMO. How to keep your account safe.",
+    "Is Omanga safe? Who runs the Omanga wallet and who provides your health cover, what you see before you pay, and how to keep your account safe.",
   path: "/safety",
 };
 
@@ -29,15 +32,15 @@ export const safetyContent = {
   eyebrow: "Safety and trust",
   heading: "Is Omanga safe?",
   intro:
-    "Omanga works with regulated partners. Here's who runs your wallet, who provides your health cover, and what you see before you pay.",
+    "Here's who runs your wallet, who provides your health cover, and what you see before you pay.",
   pillarsHeading: "How Omanga is set up",
   pillars: [
     {
-      heading: "A licensed bank runs your wallet",
-      body: "Fuspay Technologies operates the Omanga wallet. Fuspay is a microfinance bank licensed by the Central Bank of Nigeria.",
+      heading: "A payments partner runs your wallet",
+      body: "Fuspay Technologies operates the Omanga wallet. Omanga isn't a bank.",
     },
     {
-      heading: "A regulated provider covers your health",
+      heading: "A Nigerian HMO provides your cover",
       body: "Phillips HMO provides every Omanga health plan and runs its own hospital network in Nigeria. Omanga isn't the insurer.",
     },
     {
@@ -68,17 +71,17 @@ export const safetyFaq: readonly FaqItem[] = [
   {
     question: "Is Omanga safe to use?",
     answer:
-      "Omanga works with regulated partners. Fuspay Technologies, a microfinance bank licensed by the Central Bank of Nigeria, operates the wallet. Phillips HMO provides health cover in Nigeria.",
+      "Fuspay Technologies operates the Omanga wallet, and Phillips HMO, a Nigerian health maintenance organisation (HMO), provides health cover in Nigeria. You see the rate before you confirm, and transfers cost ₦20.",
   },
   {
     question: "Is Omanga a bank?",
     answer:
-      "No. Omanga is a Lagos company. Fuspay Technologies, a microfinance bank licensed by the Central Bank of Nigeria, operates the Omanga wallet.",
+      "No. Omanga is a Lagos company. Fuspay Technologies operates the Omanga wallet.",
   },
   {
     question: "Who provides Omanga's health cover?",
     answer:
-      "Phillips HMO provides Omanga Holiday Insurance. It's a Nigerian health provider regulated by the National Insurance Commission (NAICOM), with its own hospital network.",
+      "Phillips HMO provides Omanga Holiday Insurance. It's a Nigerian health maintenance organisation (HMO) with its own hospital network.",
   },
   {
     question: "Does Omanga issue a card?",

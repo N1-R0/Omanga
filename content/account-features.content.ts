@@ -80,7 +80,7 @@ export const accountFeaturesContent: AccountFeaturesContent = {
         {
           icon: "care",
           heading: "Get care across Nigeria",
-          body: "See a doctor or visit a hospital in Phillips HMO's network. Phillips HMO is regulated by NAICOM.",
+          body: "See a doctor or visit a hospital in Phillips HMO's network.",
         },
         {
           icon: "extend",

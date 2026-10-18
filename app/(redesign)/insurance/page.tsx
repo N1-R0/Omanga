@@ -81,7 +81,7 @@ const insuranceMeta: PageMetaContent = {
   // lead the title; "health cover" keeps it honest (health only, no trip cover).
   title: "Travel Insurance for Nigeria: Health Cover from $50 | Omanga",
   description:
-    "Travel insurance for Nigeria that covers your health: short-term plans from Phillips HMO, regulated by NAICOM, from $50 a month. Compare health plans.",
+    "Travel insurance for Nigeria that covers your health: short-term plans from Phillips HMO, from $50 a month. Compare health plans.",
   path: "/insurance",
 };
 

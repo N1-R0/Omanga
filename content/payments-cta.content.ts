@@ -64,7 +64,7 @@ export const paymentsCtaContent: CtaContent = {
   // [CHANGED, 2026-10-14] UX copy pass: heading no longer repeats the button;
   // intro shows the fee and names the regulator next to the CTA (Wise model).
   heading: "Get your travel money ready before you fly",
-  intro: "Free to open, no minimums, ₦20 per transfer. Fuspay Technologies, a microfinance bank licensed by the Central Bank of Nigeria, operates the wallet.",
+  intro: "Free to open, no minimums, ₦20 per transfer. Fuspay Technologies operates the wallet.",
   action: {
     label: "Open your free wallet",
     href: WALLET_URL,

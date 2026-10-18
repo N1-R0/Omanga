@@ -176,7 +176,7 @@ export const healthInsuranceVisitingNigeriaPost: BlogPost = {
           content: [
             // [CHANGED, 2026-10-14] UX copy pass: one named provider, not "established
             // Nigerian health providers"; Nigeria-only; activation ≠ cover start.
-            "Omanga's health cover is short-term cover for your time in Nigeria. It comes from Phillips HMO, which is regulated by Nigeria's National Insurance Commission (NAICOM) and has its own hospital network. The cover applies in Nigeria only. You can activate a plan in about five minutes, and renew or extend it from your account.",
+            "Omanga's health cover is short-term cover for your time in Nigeria. It comes from Phillips HMO, a Nigerian health maintenance organisation (HMO) with its own hospital network. The cover applies in Nigeria only. You can activate a plan in about five minutes, and renew or extend it from your account.",
           ],
         },
         {
@@ -271,7 +271,7 @@ export const healthInsuranceVisitingNigeriaPost: BlogPost = {
       {
         question: "Who provides Omanga Holiday Insurance?",
         answer:
-          "Phillips HMO provides the cover. It is regulated by Nigeria's National Insurance Commission (NAICOM) and has its own hospital network. The cover applies in Nigeria only.",
+          "Phillips HMO, a Nigerian health maintenance organisation (HMO) with its own hospital network, provides the cover. The cover applies in Nigeria only.",
       },
     ],
   },

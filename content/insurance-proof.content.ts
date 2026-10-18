@@ -103,7 +103,7 @@ export const insuranceProofContent: InsuranceProofContent = {
     // [CHANGED, 2026-10-18] Copy audit (design-lab/copy-seo-review-2026-10-18.md § 7): the network sentence
     // is already in "How you get care in Nigeria" just above; this keeps the
     // regulator and the buy-before-you-fly step only.
-    "Every Omanga plan comes from Phillips HMO, a Nigerian health provider regulated by NAICOM. Buy your plan before you travel and use it when you arrive.",
+    "Every Omanga plan comes from Phillips HMO, a Nigerian health maintenance organisation (HMO). Buy your plan before you travel and use it when you arrive.",
   stats: STATS,
   partners: PARTNERS,
   action: {

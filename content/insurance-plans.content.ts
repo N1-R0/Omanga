@@ -211,7 +211,7 @@ export const insurancePlansContent: InsurancePlansContent = {
   // the provider and regulator, and says the plans apply in Nigeria only.
   heading: "Health insurance plans for your trip to Nigeria",
   intro:
-    "Short-term health cover in Nigeria from Phillips HMO, regulated by NAICOM. Every plan covers hospital admission, diagnostics, emergency assistance and evacuation. Plans differ in ward type, scans and hospital access.",
+    "Short-term health cover in Nigeria from Phillips HMO, a Nigerian health maintenance organisation (HMO). Every plan covers hospital admission, diagnostics, emergency assistance and evacuation. Plans differ in ward type, scans and hospital access.",
   currency: "USD",
   billingPeriod: "month",
   accessLabel: "Hospital access",

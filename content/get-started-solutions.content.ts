@@ -69,7 +69,7 @@ const PAYMENTS: GetStartedSolution = {
   heading: "Omanga Payment Solutions",
   // [CHANGED, 2026-10-14] UX copy pass: owner-confirmed facts (six currencies, mid-market rate,
   // ₦20 transfers, Fuspay) replace "transparent real-time rates" and "no surprise costs".
-  body: `A wallet for your trip. Fund it from USD, GBP or CAD, hold 6+ currencies and see the mid-market rate before you confirm. Spend online or in person in ${COUNTRIES_SERVED_DISPLAY} African countries. It’s free to open and transfers cost ₦20. Operated by Fuspay, licensed by the Central Bank of Nigeria.`,
+  body: `A wallet for your trip. Fund it from USD, GBP or CAD, hold 6+ currencies and see the mid-market rate before you confirm. Spend online or in person in ${COUNTRIES_SERVED_DISPLAY} African countries. It’s free to open and transfers cost ₦20. Operated by Fuspay Technologies.`,
   // [CHANGED, 2026-10-14] UX copy pass: was "Explore payments" (/payments). The page's job is to
   // get the wallet opened, so the panel links straight to sign-up. One owner for label and URL.
   action: HERO_PRIMARY_ACTION,
@@ -79,7 +79,7 @@ const INSURANCE: GetStartedSolution = {
   heading: "Omanga Holiday Insurance",
   // [CHANGED, 2026-10-14] UX copy pass: names Phillips HMO and the prices, scopes cover to Nigeria.
   // Dropped unverified "under 5 minutes" / "no paperwork" and the wrong "any country Omanga covers".
-  body: "Short-term health cover for your time in Nigeria, from Phillips HMO, regulated by NAICOM. Choose Silver at $50, Gold at $85 or Diamond at $120 a month. Cover applies in Nigeria only.",
+  body: "Short-term health cover for your time in Nigeria, from Phillips HMO, a Nigerian health maintenance organisation (HMO). Choose Silver at $50, Gold at $85 or Diamond at $120 a month. Cover applies in Nigeria only.",
   // [CHANGED, 2026-10-14] UX copy pass: was "Explore holiday insurance". Choosing a plan is the next step.
   action: {
     label: "Compare health plans",

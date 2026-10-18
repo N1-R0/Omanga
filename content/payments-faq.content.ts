@@ -69,7 +69,7 @@ export const paymentsFaqContent: FaqContent = {
       question: "Who operates the Omanga wallet?",
       // [CHANGED, 2026-10-14] UX copy pass: active voice, shorter.
       answer:
-        "Fuspay Technologies operates the Omanga wallet. Fuspay is a microfinance bank licensed by the Central Bank of Nigeria.",
+        "Fuspay Technologies operates the Omanga wallet.",
     },
   ],
 };

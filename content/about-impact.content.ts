@@ -141,7 +141,7 @@ const PILLARS: readonly ImpactPillar[] = [
     id: "partnership",
     tabLabel: "Partnership",
     heading: "Partnership",
-    body: "We work with regulated partners. Fuspay Technologies, licensed by the Central Bank of Nigeria, runs the wallet. Phillips HMO, regulated by NAICOM, provides health cover.",
+    body: "We work with established partners. Fuspay Technologies runs the wallet. Phillips HMO, a Nigerian health maintenance organisation (HMO), provides health cover.",
     image: {
       src: "/insurance-care-handshake.jpg",
       alt: "",

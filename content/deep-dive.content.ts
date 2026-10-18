@@ -85,7 +85,7 @@ const INSURANCE_FEATURES: readonly DeepDiveFeature[] = [
     id: "providers",
     label: "Provider",
     heading: "Care from Phillips HMO",
-    body: "Your plan comes from Phillips HMO, a Nigerian health provider regulated by NAICOM, with its own hospital network.",
+    body: "Your plan comes from Phillips HMO, a Nigerian health maintenance organisation (HMO) with its own hospital network.",
   },
   {
     id: "trip-length-cover",

@@ -1096,3 +1096,15 @@ the live snapshot date, sitemap revalidates hourly) and no `priority`;
 `loading="eager"` + `fetchPriority="high"` (Next 16 deprecates `priority`);
 self-hosted 1200×630 share images per post in `public/blog/og/`. The pounds
 post no longer mentions the removed 30-day chart.
+
+## Addendum · 2026-10-18 · Regulator wording softened (owner request)
+
+Until licences are confirmed, marketing copy names the partners but no
+regulator: "Fuspay Technologies operates the wallet" and "Phillips HMO, a
+Nigerian health maintenance organisation (HMO)". Removed: "microfinance bank
+licensed by the Central Bank of Nigeria" and "regulated by NAICOM" (the SEO
+audit found no CBN record for "Fuspay", and HMOs are usually NHIA-licensed).
+/safety headings now read "A payments partner runs your wallet" and "A
+Nigerian HMO provides your cover". Legal pages untouched. To restore: the
+exact legal name (Fuspay vs Fusepay), licence category and number, the HMO's
+regulator and number, and register links.

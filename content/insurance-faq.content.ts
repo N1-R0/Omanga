@@ -54,7 +54,7 @@ export const insuranceFaqContent: FaqContent = {
       // [CHANGED, 2026-10-18] Owner: phrased the way people ask it.
       question: "Who provides Omanga's health cover?",
       answer:
-        "Phillips HMO provides Omanga Holiday Insurance. It's a Nigerian health provider regulated by the National Insurance Commission (NAICOM), with its own hospital network.",
+        "Phillips HMO provides Omanga Holiday Insurance. It's a Nigerian health maintenance organisation (HMO) with its own hospital network.",
     },
     {
       question: "Does Omanga health cover work outside Nigeria?",

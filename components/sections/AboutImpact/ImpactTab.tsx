@@ -1,9 +1,7 @@
 "use client";
 
-import { motion } from "motion/react";
 
 import { cx } from "@/lib/cx";
-import { MOTION } from "@/lib/motion";
 
 /**
  * One row of the impact tab list.
@@ -75,9 +73,6 @@ export type ImpactTabProps = {
   label: string;
   isActive: boolean;
   isLast: boolean;
-  /** Shared across the list so the brand fill animates between rows. */
-  indicatorLayoutId: string;
-  isReducedMotion: boolean;
   onSelect: () => void;
   onKeyDown: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
   registerRef: (element: HTMLButtonElement | null) => void;
@@ -89,8 +84,6 @@ export function ImpactTab({
   label,
   isActive,
   isLast,
-  indicatorLayoutId,
-  isReducedMotion,
   onSelect,
   onKeyDown,
   registerRef,
@@ -116,30 +109,16 @@ export function ImpactTab({
       )}
     >
       {isActive && (
-        <motion.span
-          layoutId={indicatorLayoutId}
+        <span
           aria-hidden
           /*
             No radius. The reference fills the row corner to corner and lets the
             panel's own 8px clip the outer corners, which is what makes the fill
             read as part of the panel rather than as a chip inside it.
+            [CHANGED, 2026-10-18] No longer slides between rows (was a shared
+            `layoutId`); site animations removed on the owner's request.
           */
           className="absolute inset-0 bg-brand"
-          transition={
-            isReducedMotion
-              ? { duration: 0 }
-              : {
-                  /*
-                    `durationUnderline` (250ms), the same token `ProductTab`'s
-                    indicator uses. It is the site's value for a mark that says
-                    where you are — the nav underline and both tab indicators —
-                    and holding one value is worth more than the 50ms a "faster"
-                    number would buy.
-                  */
-                  duration: MOTION.durationUnderline,
-                  ease: MOTION.easeStandard,
-                }
-          }
         />
       )}
       <span className={LABEL_CLASS}>{label}</span>

@@ -1,10 +1,8 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
 import { useId, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 
-import { MOTION } from "@/lib/motion";
 import type { AboutImpactContent } from "@/content/about-impact.content";
 
 import { ImpactPanel } from "./ImpactPanel";
@@ -94,7 +92,6 @@ export type ImpactTabsProps = {
 };
 
 export function ImpactTabs({ pillars, labelledBy }: ImpactTabsProps) {
-  const isReducedMotion = useReducedMotion() === true;
   const baseId = useId();
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -143,8 +140,6 @@ export function ImpactTabs({ pillars, labelledBy }: ImpactTabsProps) {
             label={pillar.tabLabel}
             isActive={index === activeIndex}
             isLast={index === pillars.length - 1}
-            indicatorLayoutId={`${baseId}-indicator`}
-            isReducedMotion={isReducedMotion}
             onSelect={() => setActiveIndex(index)}
             onKeyDown={handleKeyDown}
             registerRef={(element) => {
@@ -160,39 +155,22 @@ export function ImpactTabs({ pillars, labelledBy }: ImpactTabsProps) {
             const isActive = index === activeIndex;
 
             return (
-              <motion.div
+              <div
                 key={pillar.id}
                 role="tabpanel"
                 id={`${baseId}-${pillar.id}-panel`}
                 aria-labelledby={`${baseId}-${pillar.id}-tab`}
                 aria-hidden={!isActive}
                 className={PANEL_CLASS}
-                /*
-                  `initial={false}` so the first paint is the resolved state
-                  rather than an entrance — the section's one-shot entrance is
-                  `Reveal`'s, on the whole band, and a panel fading in on top of
-                  it would read as two animations for one arrival.
-                */
-                initial={false}
-                animate={{ opacity: isActive ? 1 : 0 }}
-                transition={
-                  isReducedMotion
-                    ? { duration: 0 }
-                    : {
-                        /*
-                          `durationStandard` (200ms) against the indicator's 250:
-                          the fill is travelling a distance and the copy is only
-                          changing state, so the shorter value is what stops the
-                          panel trailing behind the tab it belongs to.
-                        */
-                        duration: MOTION.durationStandard,
-                        ease: MOTION.easeStandard,
-                      }
-                }
-                style={{ pointerEvents: isActive ? "auto" : "none" }}
+                /* [CHANGED, 2026-10-18] Swaps instantly; the 200ms opacity
+                   fade went with the site's other animations (owner request). */
+                style={{
+                  opacity: isActive ? 1 : 0,
+                  pointerEvents: isActive ? "auto" : "none",
+                }}
               >
                 <ImpactPanel pillar={pillar} />
-              </motion.div>
+              </div>
             );
           })}
         </div>

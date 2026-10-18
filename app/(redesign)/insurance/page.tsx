@@ -6,8 +6,7 @@ import { InsuranceCare } from "@/components/sections/InsuranceCare";
 import { AccountFeatures } from "@/components/sections/AccountFeatures";
 import { InsuranceProof } from "@/components/sections/InsuranceProof";
 import { TrustPartners } from "@/components/sections/TrustPartners";
-import { WhyOmanga } from "@/components/sections/WhyOmanga";
-import { PhotoHero } from "@/components/sections/PhotoHero";
+import { SkyHero } from "@/components/sections/SkyHero";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 import {
@@ -30,10 +29,6 @@ import {
   INSURANCE_PROOF_HEADING_ID,
   insuranceProofContent,
 } from "@/content/insurance-proof.content";
-import {
-  INSURANCE_WHY_HEADING_ID,
-  insuranceWhyContent,
-} from "@/content/insurance-why.content";
 import { TRUST_HEADING_ID, trustContent } from "@/content/trust.content";
 import {
   INSURANCE_FAQ_HEADING_ID,
@@ -81,9 +76,12 @@ import { buildPageMetadata } from "@/lib/seo";
 const insuranceMeta: PageMetaContent = {
   // [CHANGED, 2026-10-14] UX copy pass: cover applies in Nigeria only, so the
   // title names Nigeria ("travel insurance nigeria"), in the home "Omanga: …" form.
-  title: "Omanga: Travel Health Insurance for Nigeria",
+  // [CHANGED, 2026-10-18] Semrush keyword pass (design-lab/copy-seo-review-2026-10-18.md):
+  // "travel insurance nigeria" / "…for nigeria" (UK 260 + 170/mo, KD 16)
+  // lead the title; "health cover" keeps it honest (health only, no trip cover).
+  title: "Travel Insurance for Nigeria: Health Cover from $50 | Omanga",
   description:
-    "Short-term health insurance for your trip to Nigeria from Phillips HMO, regulated by NAICOM. Plans from $50 a month, no commitment. Compare health plans.",
+    "Travel insurance for Nigeria that covers your health: short-term plans from Phillips HMO, regulated by NAICOM, from $50 a month. Compare health plans.",
   path: "/insurance",
 };
 
@@ -132,17 +130,16 @@ export default function InsurancePreviewPage() {
         the raised arms clear the copy; on small screens it starts low and
         fades in from the top.
       */}
-      <PhotoHero
+      {/*
+        [CHANGED, 2026-10-18] `PhotoHero` -> `SkyHero`, the shared hero every
+        photo-hero page now uses (owner request). Same copy and heading id.
+      */}
+      <SkyHero
         headingId={INSURANCE_HERO_HEADING_ID}
         heading={insurancePhotoHeroContent.heading}
         intro={insurancePhotoHeroContent.intro}
         helper={insurancePhotoHeroContent.helper}
         actions={insurancePhotoHeroContent.actions}
-        image={insurancePhotoHeroContent.image}
-        headingClassName="max-w-[16ch]"
-        backdropClassName="bg-[linear-gradient(to_bottom,#24699a,#4a85b5_55%,#62a5d0)]"
-        photoClassName="inset-0 top-[50%] [mask-image:linear-gradient(to_bottom,transparent,black_15%)] desktop:top-0 desktop:left-[42%] desktop:[mask-image:linear-gradient(to_right,transparent,black_20%)]"
-        imageClassName="object-[50%_0%] desktop:object-center"
       />
 
       {/*
@@ -180,21 +177,9 @@ export default function InsurancePreviewPage() {
       />
 
       {/*
-        Stage 5. Why choose Omanga Insurance — spec § 7.
-
-        `WhyOmanga` is reused rather than rebuilt. It takes its content and its
-        heading id as props and knows nothing about which page renders it, the
-        same arrangement `TrustPartners` and `CTA` already have — so the two
-        comparisons on the site render through one set of components and cannot
-        drift apart. Its `h2` and two `h3` column titles continue the outline
-        without skipping a level.
-
-        Dark, after the light care band, so the page still alternates.
+        [REMOVED, 2026-10-18] The comparison split card (`WhyOmanga`), on the
+        owner's instruction: removed from every page.
       */}
-      <WhyOmanga
-        content={insuranceWhyContent}
-        headingId={INSURANCE_WHY_HEADING_ID}
-      />
 
       {/*
         Stage 6. Who stands behind your cover — spec § 8. Light, after the dark

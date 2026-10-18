@@ -52,7 +52,9 @@ export const insuranceHeroContent: InsuranceHeroContent = {
   eyebrow: "Omanga Holiday Insurance",
   // [CHANGED, 2026-10-14] UX copy pass: cover applies in Nigeria only, so the
   // h1 names Nigeria, not Africa. Who, what, where and price now sit in the hero.
-  heading: "Health insurance for your trip to Nigeria",
+  // [CHANGED, 2026-10-18] Semrush keyword pass (design-lab/copy-seo-review-2026-10-18.md): adds "travel", matching
+  // "travel health insurance in nigeria" and the page title.
+  heading: "Travel health insurance for your trip to Nigeria",
   intro:
     "Short-term health cover from Phillips HMO for tourists, Nigerians living abroad and anyone visiting Nigeria. Plans cost $50 to $120 a month and cover hospital admission, diagnostics and emergency evacuation in Nigeria.",
   helper: "No commitment. Cancel any time.",

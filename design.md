@@ -1030,3 +1030,14 @@ capped and balanced so each runs to two lines (owner). Old FlagCluster / FlagCol
   FAQ grey (owner). `--color-surface-dark` and `AccountFeatures`' `tone` prop
   removed. The "30" is now the brand→plum gradients and the ink footer only;
   feature icons stay teal.
+
+## Addendum · 2026-10-18 · Competitor copy and keyword pass
+
+Full review: `design-lab/copy-seo-review-2026-10-18.md` (Wise, Revolut, LemFi
+copy research + Semrush free-plan keyword pulls). Applied: keyword-first titles
+on /insurance ("Travel Insurance for Nigeria"), /plans ("Health Insurance Plans
+in Nigeria") and /payments ("Pounds and Dollars to Naira"), the insurance H1
+now says "travel health insurance", and three search-phrased FAQs. "Send money
+to Nigeria" (UK ~12K/mo) is **not** targeted until it is confirmed the wallet
+pays out UK-funded money in Nigeria. "Card" terms stay out (no card). Biggest
+open opportunity: live pounds/dollars-to-naira rate pages (UK ~180K/mo).

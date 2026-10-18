@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 
 import { Faq } from "@/components/sections/Faq";
-import { WhyOmanga } from "@/components/sections/WhyOmanga";
 import { HOME_V2_IDS, homeV2Content } from "@/content/home-v2.content";
 
 import { CTA } from "@/components/sections/CTA";
 import { AboutImpact } from "@/components/sections/AboutImpact";
 import { AboutMissionVision } from "@/components/sections/AboutMissionVision";
 import { AboutStory } from "@/components/sections/AboutStory";
-import { PhotoHero } from "@/components/sections/PhotoHero";
+import { SkyHero } from "@/components/sections/SkyHero";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 import {
@@ -170,16 +169,16 @@ export default function AboutPage() {
         desktop the photo is pushed right and fades into the sampled sky; on
         small screens it starts low and fades in from the top.
       */}
-      <PhotoHero
+      {/*
+        [CHANGED, 2026-10-18] `PhotoHero` -> `SkyHero`, the shared hero every
+        photo-hero page now uses (owner request), so About shows the sky photo
+        instead of its own. Same copy and heading id.
+      */}
+      <SkyHero
         headingId={ABOUT_HERO_HEADING_ID}
         heading={aboutPhotoHeroContent.heading}
         intro={aboutPhotoHeroContent.intro}
         actions={aboutPhotoHeroContent.actions}
-        image={aboutPhotoHeroContent.image}
-        headingClassName="max-w-[16ch]"
-        backdropClassName="bg-[linear-gradient(to_bottom,#8f9a8f,#6f8a89_55%,#5a818d)]"
-        photoClassName="inset-0 top-[50%] [mask-image:linear-gradient(to_bottom,transparent,black_15%)] desktop:top-0 desktop:left-[30%] desktop:[mask-image:linear-gradient(to_right,transparent,black_25%)]"
-        imageClassName="object-[55%_0%] desktop:object-center"
       />
 
       {/*
@@ -247,11 +246,9 @@ export default function AboutPage() {
         pages; the content module records what that costs.
       */}
       {/*
-        [ADDED, 2026-10-10] The shared "Why Omanga" and FAQ bands, on the
-        owner's instruction that every page closes the way the home page does.
-        Home's copy, since this page has none of its own for either.
+        [REMOVED, 2026-10-18] The comparison split card (`WhyOmanga`), on the
+        owner's instruction: removed from every page.
       */}
-      <WhyOmanga content={homeV2Content.comparison} headingId={HOME_V2_IDS.comparison} />
       <Faq content={homeV2Content.faq} headingId={HOME_V2_IDS.faq} />
 
       <CTA content={aboutCtaContent} headingId={ABOUT_CTA_HEADING_ID} />

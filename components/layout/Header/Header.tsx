@@ -71,6 +71,8 @@ const OVER_PHOTO_PX = 24;
  * [ADDED, 2026-10-15] Pages that open with `PhotoHero`, where the bar starts
  * transparent over the photo. Grows as each page moves to the photo hero.
  */
+// [CHANGED, 2026-10-18] The pages that open with `SkyHero`, which runs up
+// under the bar (owner: the hero background covers the header at the top).
 const PHOTO_HERO_PATHS: readonly string[] = [
   "/",
   "/insurance",
@@ -251,7 +253,9 @@ export function Header({
         "fixed inset-x-0 top-0 z-header flex h-header items-center",
         isOverPhoto
           ? "border-b border-transparent bg-transparent text-on-dark focus-ring-on-dark"
-          : "border-b border-border-hairline bg-surface-page text-ink focus-ring-on-light",
+          : /* [CHANGED, 2026-10-18] Off the top the bar is a soft, slightly
+             see-through white with a blur (owner request), not solid. */
+            "border-b border-border-hairline bg-surface-page/80 backdrop-blur-md text-ink focus-ring-on-light",
         "transition-colors",
         "transition-header",
         isHidden && "-translate-y-full",

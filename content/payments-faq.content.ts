@@ -56,6 +56,14 @@ export const paymentsFaqContent: FaqContent = {
       answer: `You can spend from your Omanga wallet in ${COUNTRIES_SERVED_DISPLAY} African countries, online or in person.`,
     },
     {
+      // [ADDED, 2026-10-18] Semrush: "pounds to naira" (12.1K/mo UK) and
+      // "british pounds to naira". Facts already approved: GBP/USD funding,
+      // mid-market conversion. [NEW] copy, needs sign-off.
+      question: "How do I change pounds or dollars to naira?",
+      answer:
+        "Add pounds, dollars or Canadian dollars to your Omanga wallet, then convert them to naira in the app at the mid-market rate. You see the rate before you confirm.",
+    },
+    {
       question: "Who operates the Omanga wallet?",
       // [CHANGED, 2026-10-14] UX copy pass: active voice, shorter.
       answer:

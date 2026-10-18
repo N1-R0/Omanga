@@ -4,10 +4,9 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { AfricanCoverage } from "@/components/sections/AfricanCoverage";
 import { CTA } from "@/components/sections/CTA";
 import { Faq } from "@/components/sections/Faq";
-import { WhyOmanga } from "@/components/sections/WhyOmanga";
 import { HOME_V2_IDS, homeV2Content } from "@/content/home-v2.content";
 import { StepsV2 } from "@/components/home-v2/StepsV2";
-import { HeroPoster } from "@/components/home-v2/HeroPoster";
+import { HeroCard } from "@/components/home-v2/HeroCard";
 import { AccountFeatures } from "@/components/sections/AccountFeatures";
 import { SolutionsOverview } from "@/components/sections/SolutionsOverview";
 import { TrustPartners } from "@/components/sections/TrustPartners";
@@ -76,7 +75,7 @@ export default function HomePage() {
         [CHANGED, 2026-10-15] Revolut-style poster hero (owner pick). Same h1 and
         id; the previous plane-window `Hero` is kept in components/sections.
       */}
-      <HeroPoster headingId={HERO_HEADING_ID} />
+      <HeroCard headingId={HERO_HEADING_ID} />
 
       {/*
         Phase 3.2. The real Solutions Overview section, rendered directly beneath
@@ -126,13 +125,9 @@ export default function HomePage() {
       />
 
       {/*
-        [CHANGED, 2026-10-09] v2 split card (pick W1), same approved copy.
-        Since 2026-10-10 this design is the shared `WhyOmanga` on every page.
+        [REMOVED, 2026-10-18] "What changes with Omanga" (`WhyOmanga`), on
+        the owner's instruction. Other pages still render it.
       */}
-      <WhyOmanga
-        content={homeV2Content.comparison}
-        headingId={HOME_V2_IDS.comparison}
-      />
 
       {/*
         [ADDED, 2026-10-09] v2 FAQ (pick Q1). Six questions from the approved

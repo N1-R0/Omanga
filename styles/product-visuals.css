@@ -364,7 +364,7 @@
   block-size: calc(7 * var(--pf));
   border-radius: 100vw;
   background-color: var(--color-brand);
-  animation: pf-pulse var(--duration-live-pulse) ease-in-out infinite;
+  /* [CHANGED, 2026-10-18] No pulse: site animations removed (owner request). */
 }
 
 /* Opacity only. The dot's size is fixed, so the pulse cannot shift anything
@@ -496,11 +496,8 @@
 @utility pf-chip-track {
   display: flex;
   inline-size: max-content;
-  animation: pf-drift var(--duration-chip-drift) linear infinite;
-
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-  }
+  /* [CHANGED, 2026-10-18] Static: the drift loop is removed with the site's
+     other animations (owner request). The row's overflow and edge mask crop it. */
 }
 
 /* The second row runs the other way, which is the whole reason there are two.

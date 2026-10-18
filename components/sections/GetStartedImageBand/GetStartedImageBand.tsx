@@ -1,10 +1,5 @@
-"use client";
-
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import Image from "next/image";
-import { useRef } from "react";
 
-import { MOTION } from "@/lib/motion";
 import type { ImageAsset } from "@/types/content.types";
 
 /**
@@ -74,80 +69,19 @@ import type { ImageAsset } from "@/types/content.types";
  * degraded state.
  */
 
-/**
- * Scroll range the parallax is mapped across: from the band's top edge reaching
- * the bottom of the viewport, to its bottom edge leaving the top. Anchoring to
- * the element rather than to the document is also what keeps the work scoped —
- * outside this range the value stops updating, which is the "pauses off-screen"
- * requirement met by the range itself rather than by an observer.
- */
-const SCROLL_OFFSET = ["start end", "end start"] as const;
-
 export type GetStartedImageBandProps = {
   image: ImageAsset;
 };
 
 export function GetStartedImageBand({ image }: GetStartedImageBandProps) {
-  const bandRef = useRef<HTMLDivElement>(null);
-  const isReducedMotion = useReducedMotion();
-
-  const { scrollYProgress } = useScroll({
-    target: bandRef,
-    offset: [...SCROLL_OFFSET],
-  });
-
-  /**
-   * Travel is one overscan in each direction, so the layer reaches its own edge
-   * exactly at each end of the range and never past it.
-   *
-   * Negative to positive: the layer sits high as the band enters and drifts down
-   * as the page scrolls up, which is what reads as the image moving slower than
-   * the page rather than faster.
-   */
-  const y = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [-MOTION.parallaxOverscan, MOTION.parallaxOverscan],
-  );
-
+  /*
+    [CHANGED, 2026-10-18] Static. The scroll-linked parallax (`useScroll`)
+    is removed with the site's other scroll effects (owner request,
+    crawlability), so the photo simply fills the band.
+  */
   return (
-    <div
-      ref={bandRef}
-      /*
-        `overflow-hidden` is what makes the band a window: the layer inside is
-        taller than this box at all times and the crop is what hides its edges.
-
-        `bg-surface-light` is the reserved surface underneath. A failed or
-        not-yet-painted image leaves a neutral band at full height rather than a
-        broken element or a collapsed one.
-      */
-      className="relative h-image-band w-full overflow-hidden bg-surface-light"
-    >
-      {/*
-        Under reduced motion the layer is `inset-0` and static — not merely
-        unanimated. Holding the overscan there would crop 128px of the photograph
-        for travel that never happens, so the reduced-motion state shows more of
-        the image rather than the same crop frozen. "prefers-reduced-motion
-        removes … motion, holds the final state" — the final state of a parallax
-        that never runs is the undisplaced image.
-      */}
-      {isReducedMotion === true ? (
-        <div className="absolute inset-0">
-          <BandImage image={image} />
-        </div>
-      ) : (
-        <motion.div
-          /*
-            Taller than its box by one overscan at each edge, which is exactly the
-            distance `y` moves. `inset-x-0` keeps the width pinned so only the
-            vertical axis is overscanned.
-          */
-          className="absolute inset-x-0 -inset-y-parallax-overscan"
-          style={{ y }}
-        >
-          <BandImage image={image} />
-        </motion.div>
-      )}
+    <div className="relative h-image-band w-full overflow-hidden bg-surface-light">
+      <BandImage image={image} />
     </div>
   );
 }

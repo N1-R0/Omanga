@@ -15,7 +15,8 @@ export const INSURANCE_FAQ_HEADING_ID = "insurance-faq-heading";
 // Order is load-bearing: home shows items[0], [1] and [2] by index. Two items
 // added at the end (where cover applies, extending a plan).
 export const insuranceFaqContent: FaqContent = {
-  heading: "Common questions about Omanga Holiday Insurance",
+  // [CHANGED, 2026-10-18] Semrush keyword pass (design-lab/copy-seo-review-2026-10-18.md): searchable heading.
+  heading: "Travel insurance for Nigeria: common questions",
   items: [
     {
       question: "What is Omanga Holiday Insurance?",
@@ -23,9 +24,11 @@ export const insuranceFaqContent: FaqContent = {
         "Omanga Holiday Insurance is short-term health insurance for your trip to Nigeria. It comes from Phillips HMO, a Nigerian health provider with its own hospital network. Cover applies in Nigeria only.",
     },
     {
-      question: "How much does Omanga Holiday Insurance cost?",
+      // [CHANGED, 2026-10-18] Semrush keyword pass (design-lab/copy-seo-review-2026-10-18.md): phrased as the search
+      // ("how much is travel insurance in nigeria"). Same facts.
+      question: "How much is travel insurance for Nigeria?",
       answer:
-        "Silver costs $50 a month, Gold $85 and Diamond $120. There's no commitment, and you can cancel any time.",
+        "Omanga's travel health insurance for Nigeria costs $50 a month on Silver, $85 on Gold and $120 on Diamond. There's no commitment, and you can cancel any time.",
     },
     {
       question: "What does each Omanga plan cover: Silver, Gold or Diamond?",
@@ -59,6 +62,13 @@ export const insuranceFaqContent: FaqContent = {
       question: "Can I extend my Omanga plan if my trip runs long?",
       answer:
         "Yes. Renew or extend your plan from your Omanga account. There's no commitment, so you can also cancel any time.",
+    },
+    {
+      // [ADDED, 2026-10-18] Semrush: "how does health insurance work in
+      // nigeria", "hmo health insurance in nigeria". [NEW] copy, needs sign-off.
+      question: "How does health insurance work in Nigeria?",
+      answer:
+        "In Nigeria, health insurance usually runs through a health maintenance organisation (HMO), which works with a network of partner hospitals. Omanga's cover comes from Phillips HMO: you use the hospitals in your plan's category, and Phillips handles your care through its network.",
     },
   ],
 };

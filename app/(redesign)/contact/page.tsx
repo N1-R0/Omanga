@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 
 import { CTA } from "@/components/sections/CTA";
 import { Faq } from "@/components/sections/Faq";
-import { WhyOmanga } from "@/components/sections/WhyOmanga";
 import { HOME_V2_IDS, homeV2Content } from "@/content/home-v2.content";
 
 import { ContactHero } from "@/components/sections/ContactHero";
@@ -275,11 +274,9 @@ export default async function ContactPreviewPage({
         headingId={CONTACT_INFORMATION_HEADING_ID}
       />
       {/*
-        [ADDED, 2026-10-10] The shared "Why Omanga" and FAQ bands, on the
-        owner's instruction that every page closes the way the home page does.
-        Home's copy, since this page has none of its own; the closing panel too.
+        [REMOVED, 2026-10-18] The comparison split card (`WhyOmanga`), on the
+        owner's instruction: removed from every page.
       */}
-      <WhyOmanga content={homeV2Content.comparison} headingId={HOME_V2_IDS.comparison} />
       <Faq content={homeV2Content.faq} headingId={HOME_V2_IDS.faq} />
 
       <CTA content={homeV2Content.closing} headingId={HOME_V2_IDS.closing} />

@@ -27,12 +27,32 @@ import { whyOmangaContent } from "@/content/why-omanga.content";
  */
 
 export type Object3D =
-  | "africa-continent" | "airplane" | "boarding-pass" | "card-declined"
-  | "coin-dollar" | "coin-naira" | "coin-pound" | "coin-stack" | "coin-omanga"
-  | "exchange" | "globe" | "heart-pulse" | "insurance-kit" | "location-pin"
-  | "passport-pay" | "passport-stamped" | "phone-app" | "question-bubble"
-  | "shield-check" | "sparkle-gold" | "sparkle-pink" | "speech-stars"
-  | "success-check" | "suitcase" | "wallet-closed" | "wallet-open";
+  | "africa-continent"
+  | "airplane"
+  | "boarding-pass"
+  | "card-declined"
+  | "coin-dollar"
+  | "coin-naira"
+  | "coin-pound"
+  | "coin-stack"
+  | "coin-omanga"
+  | "exchange"
+  | "globe"
+  | "heart-pulse"
+  | "insurance-kit"
+  | "location-pin"
+  | "passport-pay"
+  | "passport-stamped"
+  | "phone-app"
+  | "question-bubble"
+  | "shield-check"
+  | "sparkle-gold"
+  | "sparkle-pink"
+  | "speech-stars"
+  | "success-check"
+  | "suitcase"
+  | "wallet-closed"
+  | "wallet-open";
 
 export const HOME_V2_IDS = {
   steps: "v2-steps-heading",
@@ -42,11 +62,6 @@ export const HOME_V2_IDS = {
 } as const;
 
 export const homeV2Content = {
-
-
-
-
-
   steps: {
     heading: howItWorksContent.heading,
     intro: howItWorksContent.intro,
@@ -57,26 +72,16 @@ export const homeV2Content = {
       // [CHANGED, 2026-10-15] No 3D object: each step shows an app screen
       // instead (Norma layout, owner pick). Screens live in StepsV2.
     })),
-    // [CHANGED, 2026-10-15] Norma's closing line ("Or start a scan from …")
-    // as the three funding currencies, a confirmed fact. It replaces the
-    // section's button: the hero and closing panel already carry the wallet CTA.
-    fundFrom: {
-      label: "Fund your wallet from",
-      currencies: [
-        { code: "USD", flag: "/flags/united-states.svg" },
-        { code: "GBP", flag: "/flags/united-kingdom.svg" },
-        { code: "CAD", flag: "/flags/canada.svg" },
-      ],
-    },
+    // [CHANGED, 2026-10-18] The funding-currency chips are gone with the
+    // Norma layout; the Wise layout carries one action under the intro.
+    action: HERO_PRIMARY_ACTION,
   },
-
 
   comparison: {
     heading: whyOmangaContent.heading,
     intro: whyOmangaContent.intro,
     groups: whyOmangaContent.groups,
   },
-
 
   faq: {
     heading: "Frequently asked questions",
@@ -98,7 +103,8 @@ export const homeV2Content = {
     // [CHANGED, 2026-10-14] Home-only copy; the shared ctaContent still reads
     // "Ready to experience Africa?" on other pages until their pass.
     heading: "Land with everything sorted",
-    intro: "Open your free wallet, add health cover, and arrive in Nigeria with both ready.",
+    intro:
+      "Open your free wallet, add health cover, and arrive in Nigeria with both ready.",
     action: { ...HERO_PRIMARY_ACTION, href: WALLET_URL, isExternal: true },
   },
 } as const;

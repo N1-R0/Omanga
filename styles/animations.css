@@ -97,24 +97,11 @@
    -------------------------------------------------------------------------- */
 @utility marquee-track {
   display: flex;
-  inline-size: max-content;
-  animation: var(--animate-marquee);
-
-  &:hover,
-  &:focus-within {
-    animation-play-state: paused;
-  }
-
-  @media (width >= theme(--breakpoint-tablet)) {
-    inline-size: 100%;
-    animation: none;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    inline-size: 100%;
-    flex-wrap: wrap;
-    animation: none;
-  }
+  /* [CHANGED, 2026-10-18] Never drifts: the marquee is removed with the
+     site's other animations (owner request). The logos wrap and sit still at
+     every width, as they did under reduced motion. */
+  inline-size: 100%;
+  flex-wrap: wrap;
 }
 
 @utility marquee-set {

@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 
 import { Faq } from "@/components/sections/Faq";
-import { WhyOmanga } from "@/components/sections/WhyOmanga";
 import { INSURANCE_FAQ_HEADING_ID, insuranceFaqContent } from "@/content/insurance-faq.content";
-import { INSURANCE_WHY_HEADING_ID, insuranceWhyContent } from "@/content/insurance-why.content";
 
 import { CTA } from "@/components/sections/CTA";
 import { InsuranceCoverage } from "@/components/sections/InsuranceCoverage";
@@ -98,9 +96,11 @@ import { buildPageMetadata } from "@/lib/seo";
 const plansMeta: PageMetaContent = {
   // [CHANGED, 2026-10-14] UX copy pass: "Omanga: …" pattern, searchable terms
   // (health insurance plans, Nigeria), provider named, all three prices.
-  title: "Omanga: Health Insurance Plans for Nigeria from $50",
+  // [CHANGED, 2026-10-18] Semrush keyword pass (design-lab/copy-seo-review-2026-10-18.md):
+  // "health insurance plans in nigeria", keyword first.
+  title: "Health Insurance Plans in Nigeria from $50 a Month | Omanga",
   description:
-    "Compare Silver, Gold and Diamond health insurance for your trip to Nigeria, from Phillips HMO. $50, $85 or $120 a month. Choose your plan.",
+    "Compare health insurance plans in Nigeria for your trip: Silver, Gold and Diamond from Phillips HMO at $50, $85 or $120 a month. Choose your plan.",
   path: "/plans",
 };
 
@@ -190,11 +190,9 @@ export default function PlansPage() {
         one emphasis surface.
       */}
       {/*
-        [ADDED, 2026-10-10] The shared "Why Omanga" and FAQ bands, on the
-        owner's instruction that every page closes the way the home page does.
-        The insurance page's copy: plans are an insurance decision.
+        [REMOVED, 2026-10-18] The comparison split card (`WhyOmanga`), on the
+        owner's instruction: removed from every page.
       */}
-      <WhyOmanga content={insuranceWhyContent} headingId={INSURANCE_WHY_HEADING_ID} />
       <Faq content={insuranceFaqContent} headingId={INSURANCE_FAQ_HEADING_ID} />
 
       <CTA content={plansCtaContent} headingId={PLANS_CTA_HEADING_ID} />

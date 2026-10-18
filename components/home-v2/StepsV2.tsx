@@ -1,95 +1,98 @@
-import Image from "next/image";
-
 import { HOME_V2_IDS, homeV2Content } from "@/content/home-v2.content";
 import {
   type InsurancePlan,
   insurancePlansContent,
 } from "@/content/insurance-plans.content";
+import { Button } from "@/components/ui/Button";
 import { cx } from "@/lib/cx";
 
 import { AppText, ScreenshotPhone, StepPhone, u } from "./StepPhone";
 import { V2Section } from "./V2Section";
 
 /**
- * How it works, Norma layout (mobbin section 96f4183b; owner pick 2026-10-15,
- * after the Superpower photo cards were rejected). Left-aligned heading, three
- * bordered cards — number, title and line on top, a hairline, then an app
- * screen cropped by the card's bottom edge — and one closing line of chips.
+ * How it works.
+ *
+ * [CHANGED, 2026-10-18] Wise "Safe at every step" layout (owner reference):
+ * centred heading, line and one action, then three square tiles each holding
+ * an app screen, with the step's title and line set under its tile, not in
+ * a card. Was the Norma bordered cards (mobbin 96f4183b, owner pick
+ * 2026-10-15) with a closing line of funding-currency chips; the chips go,
+ * and the action comes back because the reference has one.
+ *
+ * Tiles use the triad palette, one each, as Wise mixes a dark, a light and a
+ * photo tile: plum (brand-deep), a teal tint (support) and blush. The phone
+ * sits at the top of each tile and is cropped by its bottom edge.
  *
  * Screens, not photos or 3D: step 1 adds money, step 2 picks a plan, step 3 is
- * the app home screen the Payments hero already uses. All sample figures.
- * An ordered list, because the order is the content.
+ * the app home screen. All sample figures. An ordered list, because the order
+ * is the content.
  */
+const TILE_SURFACE = [
+  "bg-brand-deep",
+  "bg-[color-mix(in_oklab,var(--color-support)_28%,white)]",
+  "bg-blush-strong",
+] as const;
+
 export function StepsV2() {
-  const { heading, intro, items, fundFrom } = homeV2Content.steps;
+  const { heading, intro, items, action } = homeV2Content.steps;
 
   return (
     <V2Section labelledBy={HOME_V2_IDS.steps}>
-      <div className="flex flex-col gap-fluid-6">
-        <div className="flex flex-col gap-fluid-2">
-          <h2 id={HOME_V2_IDS.steps} className="font-sans text-h2 text-balance">
+      <div className="flex flex-col gap-fluid-8">
+        <div className="flex flex-col items-center gap-fluid-3 text-center">
+          <h2
+            id={HOME_V2_IDS.steps}
+            className="font-heading text-h1 font-semibold text-balance"
+          >
             {heading}
           </h2>
-          <p className="font-sans text-large text-secondary measure-body">{intro}</p>
+          <p className="font-sans text-large text-secondary measure-body">
+            {intro}
+          </p>
+          <div className="pt-fluid-2">
+            <Button
+              as="link"
+              href={action.href}
+              isExternal={action.isExternal}
+              variant="primary"
+              tone="light"
+            >
+              {action.label}
+            </Button>
+          </div>
         </div>
 
-        <ol className="grid gap-fluid-4 desktop:grid-cols-3">
+        <ol className="grid gap-x-fluid-5 gap-y-fluid-7 tablet:grid-cols-2 desktop:grid-cols-3">
           {items.map((step, index) => (
-            <li
-              key={step.id}
-              className="flex flex-col overflow-hidden rounded-[1.75rem] border border-border-hairline bg-surface-page"
-            >
-              <div className="flex flex-col gap-fluid-2 p-fluid-4">
-                <span
-                  aria-hidden="true"
-                  className="grid size-8 place-items-center rounded-pill bg-support-strong font-sans text-small text-on-dark"
-                >
-                  {index + 1}
-                </span>
-                <h3 className="mt-fluid-2 font-sans text-h4">
+            <li key={step.id} className="flex flex-col gap-fluid-5">
+              <div
+                className={cx(
+                  "relative aspect-square overflow-hidden rounded-[1.75rem]",
+                  TILE_SURFACE[index],
+                )}
+              >
+                <div className="absolute inset-x-0 top-[12%] flex justify-center">
+                  {SCREENS[index]}
+                </div>
+              </div>
+              <div className="flex flex-col gap-fluid-2">
+                <h3 className="font-sans text-h4">
                   <span className="sr-only">Step {index + 1}: </span>
                   {step.heading}
                 </h3>
-                <p className="font-sans text-main text-secondary">{step.body}</p>
-              </div>
-
-              {/*
-                The phone's top shows, its bottom is cut by the card, as in the
-                reference. Fixed height so all three cards end level.
-              */}
-              <div className="relative mt-auto h-72 overflow-hidden border-t border-border-hairline bg-surface-page desktop:h-80">
-                <div className="absolute inset-x-0 top-fluid-4 flex justify-center">
-                  {SCREENS[index]}
-                </div>
+                <p className="font-sans text-main text-secondary">
+                  {step.body}
+                </p>
               </div>
             </li>
           ))}
         </ol>
-
-        <p className="flex flex-wrap items-center justify-center gap-2 font-sans text-main text-secondary">
-          <span>{fundFrom.label}</span>
-          {fundFrom.currencies.map((currency) => (
-            <span
-              key={currency.code}
-              className="inline-flex items-center gap-1.5 rounded-pill bg-surface-light px-3 py-1 text-ink"
-            >
-              <Image
-                src={currency.flag}
-                alt=""
-                width={16}
-                height={16}
-                className="size-4 rounded-pill object-cover"
-              />
-              {currency.code}
-            </span>
-          ))}
-        </p>
       </div>
     </V2Section>
   );
 }
 
-const PHONE_WIDTH = "w-[min(16rem,66%)]";
+const PHONE_WIDTH = "w-[62%]";
 
 /* -----------------------------------------------------------------------------
    Step screens. Sample figures only, in the same spirit as the hero's wallet.
@@ -108,10 +111,19 @@ const PLAN_TINT: Record<string, string> = {
   Diamond: "#FBEAEE",
 };
 
-function PlanCard({ plan, peek = false }: { plan: InsurancePlan; peek?: boolean }) {
+function PlanCard({
+  plan,
+  peek = false,
+}: {
+  plan: InsurancePlan;
+  peek?: boolean;
+}) {
   return (
     <div
-      className={cx("flex shrink-0 flex-col", peek && "border-[3px] border-[#1E1E1E]")}
+      className={cx(
+        "flex shrink-0 flex-col",
+        peek && "border-[3px] border-[#1E1E1E]",
+      )}
       style={{
         width: u(300),
         height: u(360),
@@ -119,7 +131,10 @@ function PlanCard({ plan, peek = false }: { plan: InsurancePlan; peek?: boolean 
         background: PLAN_TINT[plan.name],
       }}
     >
-      <div className="flex flex-1 flex-col" style={{ padding: u(22), gap: u(10) }}>
+      <div
+        className="flex flex-1 flex-col"
+        style={{ padding: u(22), gap: u(10) }}
+      >
         <AppText
           size={40}
           weight={700}
@@ -145,7 +160,10 @@ function PlanCard({ plan, peek = false }: { plan: InsurancePlan; peek?: boolean 
           </AppText>
         </span>
       </div>
-      <div className="border-t border-black/10" style={{ padding: `${u(18)} ${u(22)}` }}>
+      <div
+        className="border-t border-black/10"
+        style={{ padding: `${u(18)} ${u(22)}` }}
+      >
         <AppText size={17} weight={600}>
           ${plan.price} · Phillips HMO
         </AppText>
@@ -168,11 +186,17 @@ function ChoosePlanScreen() {
         <PlanCard plan={first} />
         <PlanCard plan={second} peek />
       </div>
-      <div className="flex justify-center" style={{ gap: u(8), paddingTop: u(16) }}>
+      <div
+        className="flex justify-center"
+        style={{ gap: u(8), paddingTop: u(16) }}
+      >
         {[0, 1, 2].map((dot) => (
           <span
             key={dot}
-            className={cx("block rounded-full", dot === 0 ? "bg-[#1E1E1E]" : "bg-[#C9C9C9]")}
+            className={cx(
+              "block rounded-full",
+              dot === 0 ? "bg-[#1E1E1E]" : "bg-[#C9C9C9]",
+            )}
             style={{ width: u(8), height: u(8) }}
           />
         ))}
@@ -184,9 +208,17 @@ function ChoosePlanScreen() {
 const SCREENS = [
   // [CHANGED, 2026-10-15] The app's real Top up screen, captured from the
   // simulator (owner's request). It shows no account data.
-  <ScreenshotPhone key="add" src="/app-screens/top-up.png" className={PHONE_WIDTH} />,
+  <ScreenshotPhone
+    key="add"
+    src="/app-screens/top-up.png"
+    className={PHONE_WIDTH}
+  />,
   <ChoosePlanScreen key="plan" />,
   // [CHANGED, 2026-10-15] The app's real home screen from the simulator. It
   // shows the owner's own test account; the owner approved its use.
-  <ScreenshotPhone key="home" src="/app-screens/home.png" className={PHONE_WIDTH} />,
+  <ScreenshotPhone
+    key="home"
+    src="/app-screens/home.png"
+    className={PHONE_WIDTH}
+  />,
 ] as const;

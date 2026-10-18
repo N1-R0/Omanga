@@ -237,9 +237,6 @@
      Smooth scrolling is opt-in and must also be revoked here. The full
      reduced-motion policy lives in animations.css.
      ------------------------------------------------------------------------ */
-  @media (prefers-reduced-motion: no-preference) {
-    :where(html) {
-      scroll-behavior: smooth;
-    }
-  }
+  /* [REMOVED, 2026-10-18] `scroll-behavior: smooth`, with the site's other
+     scroll effects (owner request). Anchor jumps are instant. */
 }

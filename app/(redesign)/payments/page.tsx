@@ -4,9 +4,9 @@ import { CTA } from "@/components/sections/CTA";
 import { Faq } from "@/components/sections/Faq";
 import { AccountFeatures } from "@/components/sections/AccountFeatures";
 import { PaymentsFeatures } from "@/components/sections/PaymentsFeatures";
-import { PaymentsHeroCentered } from "@/components/payments-v2/PaymentsHeroCentered";
+import { SkyHero } from "@/components/sections/SkyHero";
+import { paymentsPhotoHeroContent } from "@/content/payments-hero.content";
 import { TrustPartners } from "@/components/sections/TrustPartners";
-import { WhyOmanga } from "@/components/sections/WhyOmanga";
 import { JsonLd } from "@/components/seo/JsonLd";
 import {
   PAYMENTS_CTA_HEADING_ID,
@@ -21,10 +21,6 @@ import {
   paymentsFeaturesContent,
 } from "@/content/payments-features.content";
 import { PAYMENTS_HERO_HEADING_ID } from "@/content/payments-hero.content";
-import {
-  PAYMENTS_WHY_HEADING_ID,
-  paymentsWhyContent,
-} from "@/content/payments-why.content";
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import { TRUST_HEADING_ID, trustContent } from "@/content/trust.content";
 import { getExchangeRates } from "@/lib/rates";
@@ -163,9 +159,12 @@ const paymentsMeta: PageMetaContent = {
   // wallet" ~4,400/mo, "multi currency wallet"). See design.md § SEO audit.
   // [CHANGED, 2026-10-14] UX copy pass: "Omanga: …" format to match home; adds
   // "travel money" (UK term). 53 characters.
-  title: "Omanga: Multi-Currency Travel Money Wallet for Africa",
+  // [CHANGED, 2026-10-18] Semrush keyword pass (design-lab/copy-seo-review-2026-10-18.md):
+  // the pounds↔naira cluster is the biggest money search (UK ~180K/mo). Omanga
+  // converts GBP/USD to naira, so the title names it. No "card" (Omanga has none).
+  title: "Travel Money Wallet: Pounds and Dollars to Naira | Omanga",
   // [CHANGED, 2026-10-14] UX copy pass: names the ₦20 fee and "send money"; ~155 characters with "50+".
-  description: `A multi-currency travel wallet: fund from USD, GBP or CAD, convert at the mid-market rate, send money for ₦20 and spend in ${COUNTRIES_SERVED_DISPLAY} African countries.`,
+  description: `A free travel money wallet: change pounds, dollars or CAD to naira at the mid-market rate, send money for ₦20 and spend in ${COUNTRIES_SERVED_DISPLAY} African countries.`,
   path: "/payments",
 };
 
@@ -231,7 +230,18 @@ export default async function PaymentsPage() {
         (owner request): the home hero's photo, a half-viewport band with the
         copy centred, and the app's home screen on a phone centred beneath it.
       */}
-      <PaymentsHeroCentered headingId={PAYMENTS_HERO_HEADING_ID} />
+      {/*
+        [CHANGED, 2026-10-18] `PaymentsHeroCentered` -> `SkyHero`, the shared
+        hero every photo-hero page now uses (owner request). The phone with
+        the app's home screen under the copy goes with it. Same copy and
+        heading id.
+      */}
+      <SkyHero
+        headingId={PAYMENTS_HERO_HEADING_ID}
+        heading={paymentsPhotoHeroContent.heading}
+        intro={paymentsPhotoHeroContent.intro}
+        actions={paymentsPhotoHeroContent.actions}
+      />
 
       {/*
         [REMOVED, 2026-10-10] The full-bleed phone-on-rocks image band that sat
@@ -278,29 +288,9 @@ export default async function PaymentsPage() {
       />
 
       {/*
-        § 5. Without / With — the page's loss-framing band, and the spec's
-        sharpest conversion device. Its `h2` continues the outline and its two
-        column titles are `h3`s.
-
-        `WhyOmanga` is reused rather than rebuilt. It takes its content and its
-        heading id as props and knows nothing about which page renders it — the
-        third page to mount it, after the homepage and `/insurance`, so all three
-        comparisons on the site render through one set of components and cannot
-        drift apart. Unlike the hero, the band and the deep dive, this one is
-        already named for what it is rather than for a product.
-
-        [DELIBERATELY CTA-FREE] The spec is explicit: no call to action in this
-        section, mirroring the benchmark, so "persuasion is allowed to compound
-        rather than leak". `WhyOmangaContent` has no action field, so none can be
-        added without a content decision.
-
-        Dark, after the light feature band, so the page alternates: light hero,
-        photograph, dark deep dive, light features, dark comparison.
+        [REMOVED, 2026-10-18] The comparison split card (`WhyOmanga`), on the
+        owner's instruction: removed from every page.
       */}
-      <WhyOmanga
-        content={paymentsWhyContent}
-        headingId={PAYMENTS_WHY_HEADING_ID}
-      />
 
       {/*
         [REMOVED, 2026-10-10] § 6, the "The Omanga app is coming soon" band,

@@ -118,7 +118,7 @@ function PartnerSet({ partners, isDuplicate = false }: PartnerSetProps) {
 
   if (isDuplicate) {
     return (
-      <ul aria-hidden className="marquee-set tablet:hidden motion-reduce:hidden">
+      <ul aria-hidden className="hidden">
         {items}
       </ul>
     );

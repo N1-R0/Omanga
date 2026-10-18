@@ -77,8 +77,6 @@ const BASE_CLASS = "h-full w-0.75 bg-surface-light";
  * names "active underline" among the five things it is for. This is the same kind
  * of mark — a 3px brand rule that says where you are.
  */
-const PROGRESS_CLASS =
-  "sticky top-0 -mt-rail-progress h-rail-progress w-0.75 bg-brand";
 
 /**
  * The rail's ends, softened into the page rather than stopping square.
@@ -103,7 +101,8 @@ export function TimelineConnector() {
         Paint order is unaffected by the swap: the base is a static block and the
         fill is positioned, so the fill paints above it either way.
       */}
-      <div className={PROGRESS_CLASS} />
+      {/* [CHANGED, 2026-10-18] The scroll-linked brand fill (sticky
+          `PROGRESS_CLASS`) is removed with the other scroll effects. */}
       <div className={BASE_CLASS} />
       <div className={cx(FADE_CLASS, FADE_TOP_CLASS)} />
       <div className={cx(FADE_CLASS, FADE_BOTTOM_CLASS)} />

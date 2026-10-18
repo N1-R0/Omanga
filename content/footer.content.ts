@@ -156,6 +156,8 @@ const SUPPORT: FooterLinkColumn = {
   heading: "Support",
   links: [
     { label: "Contact", href: "/contact" },
+    // [ADDED, 2026-10-18] The trust page (Revolut/Wise pattern).
+    { label: "Is Omanga safe?", href: "/safety" },
     { label: "Claims", href: "/policy-terms#claims" },
     /*
       [REMOVED] A second "Complaints" entry pointing at `/complaints-procedure`.

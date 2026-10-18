@@ -5,6 +5,10 @@ import Link from "next/link";
 import { type ReactNode, useId, useState } from "react";
 
 import { Button } from "@/components/ui/Button";
+import {
+  type CurrencyOption,
+  CurrencyPicker,
+} from "@/components/ui/CurrencyPicker";
 import { RATE_PAIRS } from "@/content/rates.content";
 import type { FundingCurrency } from "@/lib/rates";
 import type { LinkTarget } from "@/types/content.types";
@@ -27,7 +31,11 @@ const FLAGS: Readonly<Record<FundingCurrency | "NGN", string>> = {
   NGN: "/flags/nigeria.svg",
 };
 
-const CURRENCIES: readonly FundingCurrency[] = ["USD", "GBP", "CAD"];
+const CURRENCY_OPTIONS: readonly CurrencyOption[] = [
+  { code: "USD", name: "US dollar", flag: "/flags/united-states.svg" },
+  { code: "GBP", name: "British pound", flag: "/flags/united-kingdom.svg" },
+  { code: "CAD", name: "Canadian dollar", flag: "/flags/canada.svg" },
+];
 
 const toNumber = (value: string) => {
   const n = Number(value.replace(/,/g, ""));
@@ -43,7 +51,10 @@ const readableDate = (iso: string) =>
   });
 
 const format = (n: number) =>
-  n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  n.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 
 export function ConverterWidget({
   rates,
@@ -60,7 +71,6 @@ export function ConverterWidget({
   const [amount, setAmount] = useState("1,000");
   const [currency, setCurrency] = useState<FundingCurrency>(initialCurrency);
   const amountId = useId();
-  const currencyId = useId();
 
   const rate = rates[currency];
   const result = toNumber(amount) * rate;
@@ -76,34 +86,28 @@ export function ConverterWidget({
 
         {/* You convert */}
         <div className="flex flex-col gap-1.5">
-          <label htmlFor={amountId} className="font-sans text-small text-secondary">
+          <label
+            htmlFor={amountId}
+            className="font-sans text-small text-secondary"
+          >
             You convert
           </label>
           <div className="flex items-center justify-between gap-3">
-            <span className="relative inline-flex shrink-0 items-center gap-1.5 rounded-pill bg-surface-light py-1.5 pr-7 pl-2">
-              <Flag code={currency} />
-              <span className="font-sans text-small font-semibold">{currency}</span>
-              <ChevronIcon />
-              <select
-                id={currencyId}
-                aria-label="Currency you convert from"
-                value={currency}
-                onChange={(event) => setCurrency(event.target.value as FundingCurrency)}
-                className="absolute inset-0 cursor-pointer opacity-0"
-              >
-                {CURRENCIES.map((code) => (
-                  <option key={code} value={code}>
-                    {code}
-                  </option>
-                ))}
-              </select>
-            </span>
+            {/* [CHANGED, 2026-10-18] Wise-style picker, not the native select. */}
+            <CurrencyPicker
+              value={currency}
+              options={CURRENCY_OPTIONS}
+              onChange={(code) => setCurrency(code as FundingCurrency)}
+              label="Currency you convert from"
+            />
             <input
               id={amountId}
               inputMode="decimal"
               autoComplete="off"
               value={amount}
-              onChange={(event) => setAmount(event.target.value.replace(/[^\d.,]/g, ""))}
+              onChange={(event) =>
+                setAmount(event.target.value.replace(/[^\d.,]/g, ""))
+              }
               onBlur={() => setAmount(toNumber(amount).toLocaleString("en-US"))}
               className="w-full min-w-0 bg-transparent text-right font-heading text-[clamp(1.5rem,1.1rem+1.2vw,2.25rem)] font-semibold tracking-[-0.03em] text-ink outline-none focus-visible:underline"
             />
@@ -119,7 +123,7 @@ export function ConverterWidget({
               <span className="font-sans text-small font-semibold">NGN</span>
             </span>
             <output
-              htmlFor={`${amountId} ${currencyId}`}
+              htmlFor={amountId}
               aria-live="polite"
               className="min-w-0 truncate text-right font-heading text-[clamp(1.5rem,1.1rem+1.2vw,2.25rem)] font-semibold tracking-[-0.03em] text-ink"
             >
@@ -129,7 +133,11 @@ export function ConverterWidget({
         </div>
 
         <div className="flex flex-col gap-3 border-t border-border-hairline pt-4">
-          <FactRow icon={<RateIcon />} label="Exchange rate" value="Mid-market, before you confirm" />
+          <FactRow
+            icon={<RateIcon />}
+            label="Exchange rate"
+            value="Mid-market, before you confirm"
+          />
           {/* Wise's fees row: label, plain-language line, amount as a link. Only
               confirmed facts (payments FAQ): ₦20 per transfer; the link opens
               the fee answer. Conversion fees are unconfirmed, so no "total". */}
@@ -201,7 +209,9 @@ function FactRow({
       </span>
       <span className="flex min-w-0 flex-col">
         <span className="font-sans text-small text-secondary">{label}</span>
-        <span className="font-heading text-main font-medium text-ink">{value}</span>
+        <span className="font-heading text-main font-medium text-ink">
+          {value}
+        </span>
       </span>
       {trailing !== undefined && (
         <Link
@@ -209,7 +219,14 @@ function FactRow({
           className="ml-auto inline-flex shrink-0 items-center gap-1 font-heading text-small font-medium text-ink underline underline-offset-4 transition-opacity duration-300 hover:opacity-70 focus-ring"
         >
           {trailing.label}
-          <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden>
+          <svg
+            viewBox="0 0 24 24"
+            className="size-4"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            aria-hidden
+          >
             <path d="m9 6 6 6-6 6" />
           </svg>
         </Link>
@@ -220,7 +237,14 @@ function FactRow({
 
 function RateIcon() {
   return (
-    <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth={1.75} aria-hidden>
+    <svg
+      viewBox="0 0 24 24"
+      className="size-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      aria-hidden
+    >
       <path d="M4 8h13l-3-3M20 16H7l3 3" />
     </svg>
   );
@@ -228,7 +252,14 @@ function RateIcon() {
 
 function ReceiptIcon() {
   return (
-    <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth={1.75} aria-hidden>
+    <svg
+      viewBox="0 0 24 24"
+      className="size-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      aria-hidden
+    >
       <path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3z" />
       <path d="M9 8h6M9 12h6" />
     </svg>
@@ -237,17 +268,17 @@ function ReceiptIcon() {
 
 function LockIcon() {
   return (
-    <svg viewBox="0 0 24 24" className="size-3.5" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden>
+    <svg
+      viewBox="0 0 24 24"
+      className="size-3.5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      aria-hidden
+    >
       <rect x="5" y="11" width="14" height="10" rx="2" />
       <path d="M8 11V8a4 4 0 0 1 8 0v3" />
     </svg>
   );
 }
 
-function ChevronIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="pointer-events-none absolute right-2 size-4" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden>
-      <path d="m6 9 6 6 6-6" />
-    </svg>
-  );
-}

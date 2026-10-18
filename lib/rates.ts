@@ -161,41 +161,10 @@ export async function getNgnRates(): Promise<NgnRates> {
 }
 
 /* -----------------------------------------------------------------------------
-   [ADDED, 2026-10-18] Rate-page data: a 30-day naira history per funding
-   currency (R2 chart) and the cross rates between USD, GBP, CAD and NGN (M1
-   matrix). Same public snapshot as above; past days come from its dated
-   archive, which never changes, so those fetches are cached for a week.
+   [ADDED, 2026-10-18] Rate-page data: the cross rates between USD, GBP, CAD
+   and NGN (M1 matrix), from the same public snapshot as above. (A 30-day
+   history for a chart was added and removed the same day.)
    -------------------------------------------------------------------------- */
-
-export type RatePoint = { readonly date: string; readonly rate: number };
-
-/** Daily NGN per one unit of `code`, oldest first, ending at the latest snapshot. */
-export async function getNgnHistory(
-  code: FundingCurrency,
-  days = 30,
-): Promise<RatePoint[]> {
-  const latest = await fetchUsdSnapshot("latest", 3600);
-  if (!latest) return [];
-
-  const dates: string[] = [];
-  let cursor = latest.date;
-  for (let i = 1; i < days; i += 1) {
-    cursor = dayBefore(cursor);
-    dates.unshift(cursor);
-  }
-
-  const past = await Promise.all(
-    dates.map((date) => fetchUsdSnapshot(date, 60 * 60 * 24 * 7)),
-  );
-
-  return [...past, latest]
-    .map((snapshot) => {
-      if (!snapshot) return null;
-      const rate = crossRate(snapshot.rates, code.toLowerCase(), "ngn");
-      return rate === null ? null : { date: snapshot.date, rate };
-    })
-    .filter((point): point is RatePoint => point !== null);
-}
 
 export type MatrixCurrency = FundingCurrency | "NGN";
 

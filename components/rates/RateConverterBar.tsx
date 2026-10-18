@@ -5,6 +5,10 @@ import { useRouter } from "next/navigation";
 import { useId, useState } from "react";
 
 import { Button } from "@/components/ui/Button";
+import {
+  type CurrencyOption,
+  CurrencyPicker,
+} from "@/components/ui/CurrencyPicker";
 import { RATE_PAIRS } from "@/content/rates.content";
 import type { FundingCurrency } from "@/lib/rates";
 import type { LinkTarget } from "@/types/content.types";
@@ -25,6 +29,12 @@ const FLAGS: Readonly<Record<FundingCurrency | "NGN", string>> = {
   NGN: "/flags/nigeria.svg",
 };
 
+const CURRENCY_OPTIONS: readonly CurrencyOption[] = [
+  { code: "USD", name: "US dollar", flag: "/flags/united-states.svg" },
+  { code: "GBP", name: "British pound", flag: "/flags/united-kingdom.svg" },
+  { code: "CAD", name: "Canadian dollar", flag: "/flags/canada.svg" },
+];
+
 const toNumber = (value: string) => {
   const n = Number(value.replace(/,/g, ""));
   return Number.isFinite(n) && n >= 0 ? n : 0;
@@ -38,13 +48,11 @@ export function RateConverterBar({
   rate,
   updated,
   action,
-  chartHref,
 }: {
   code: FundingCurrency;
   rate: number;
   updated: string;
   action: LinkTarget;
-  chartHref: string;
 }) {
   const router = useRouter();
   const [amount, setAmount] = useState("1,000");
@@ -76,37 +84,16 @@ export function RateConverterBar({
               onBlur={() => setAmount(toNumber(amount).toLocaleString("en-GB"))}
               className={AMOUNT_CLASS}
             />
-            <span className="relative inline-flex shrink-0 items-center gap-1.5 rounded-pill bg-surface-light py-1.5 pr-7 pl-2">
-              <Flag code={code} />
-              <span className="font-sans text-small font-semibold">{code}</span>
-              <svg
-                viewBox="0 0 24 24"
-                className="pointer-events-none absolute right-2 size-4"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                aria-hidden
-              >
-                <path d="m6 9 6 6 6-6" />
-              </svg>
-              <select
-                aria-label="Currency you convert from"
-                value={code}
-                onChange={(event) => {
-                  const next = RATE_PAIRS.find(
-                    (pair) => pair.code === event.target.value,
-                  );
-                  if (next) router.push(`/rates/${next.slug}`);
-                }}
-                className="absolute inset-0 cursor-pointer opacity-0"
-              >
-                {RATE_PAIRS.map((pair) => (
-                  <option key={pair.code} value={pair.code}>
-                    {pair.code}
-                  </option>
-                ))}
-              </select>
-            </span>
+            {/* [CHANGED, 2026-10-18] Wise-style picker, not the native select. */}
+            <CurrencyPicker
+              value={code}
+              options={CURRENCY_OPTIONS}
+              onChange={(next) => {
+                const pair = RATE_PAIRS.find((p) => p.code === next);
+                if (pair && next !== code) router.push(`/rates/${pair.slug}`);
+              }}
+              label="Currency you convert from"
+            />
           </div>
         </div>
 
@@ -164,9 +151,6 @@ export function RateConverterBar({
           </p>
         </div>
         <div className="flex flex-wrap gap-fluid-2">
-          <Button as="link" href={chartHref} variant="secondary" tone="light">
-            See the 30-day chart
-          </Button>
           <Button
             as="link"
             href={action.href}

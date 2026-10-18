@@ -1055,7 +1055,7 @@ schema with the live figure). Linked from the footer, from the converter
 sign-off.
 Layout (owner pick from Mobbin, same day): R1 plum band with a wide converter
 card across its edge (Wise converter 669f7e5e; choosing another currency opens
-that pair's page), R2 30-day SVG chart with 1 week / 1 month chips and
+that pair's page), R2 30-day chart (removed the same day, owner request) and
 high/low/change as text (Wise rate tracker 76aac368; history from the feed's
 dated archive), M1 USD/GBP/CAD/NGN matrix (Wise top currencies b54e2297),
 which replaces the two amount tables. Components in `components/rates/`.
@@ -1070,3 +1070,20 @@ removed (unconfirmed; legal pages untouched, flagged), "6+ currencies", Plans
 FAQ split, FAQ questions phrased as searches, Payments H1 "Travel money, ready
 when you land in Africa". Waiting on Phillips HMO: admission days per plan,
 emergency number, when cover starts, exclusions.
+
+## Addendum · 2026-10-18 · Phase 1 (plan from the copy and SEO review)
+
+- Payments hero: the home converter sits over the photo on the right
+  (`SkyHero` `aside` slot; stacks under the copy below desktop).
+- `/safety`, "Is Omanga safe?": partners and regulators, what Omanga is and
+  isn't, account tips, FAQ. Approved facts only; nothing on how funds are
+  held. In the footer and sitemap.
+- Blog: the health-insurance post is retargeted to "Do you need travel
+  insurance for Nigeria?" (same slug) rather than a second post on the same
+  question. New post: "Pounds to naira: how to get the best rate in
+  Nigeria" (`/blog/pounds-to-naira-best-rate`), linking to the rate page.
+  Both [NEW] copy, need sign-off.
+- Currency picker: Wise-style `CurrencyPicker` (search, popular list, flag,
+  code, name, tick) replaces the native select in both converters.
+- To check: the site says Phillips HMO is "regulated by NAICOM". In Nigeria,
+  HMOs are usually accredited by the NHIA. Confirm which regulator to name.

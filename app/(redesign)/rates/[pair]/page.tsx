@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 
 import { V2Section } from "@/components/home-v2/V2Section";
 import { Container } from "@/components/layout/Container";
-import { RateChart } from "@/components/rates/RateChart";
 import { RateConverterBar } from "@/components/rates/RateConverterBar";
 import { RateMatrix } from "@/components/rates/RateMatrix";
 import { Faq } from "@/components/sections/Faq";
@@ -17,7 +16,7 @@ import {
   rateFaq,
   rateMeta,
 } from "@/content/rates.content";
-import { crossMatrix, getNgnHistory, getNgnRates } from "@/lib/rates";
+import { crossMatrix, getNgnRates } from "@/lib/rates";
 import { buildFaqPage, buildPageGraph } from "@/lib/schema";
 import { buildPageMetadata } from "@/lib/seo";
 
@@ -64,17 +63,13 @@ export default async function RatePage(props: PageProps<"/rates/[pair]">) {
   const pair = getRatePair(slug);
   if (pair === undefined) notFound();
 
-  const [{ rates, date }, history] = await Promise.all([
-    getNgnRates(),
-    getNgnHistory(pair.code, 30),
-  ]);
+  const { rates, date } = await getNgnRates();
   const rate = rates[pair.code];
   const updated = formatDate(date) ?? "latest available";
   const copy = rateCopy(pair);
   const meta = rateMeta(pair);
   const faqItems = rateFaq(pair, rate, updated);
   const headingId = `rate-${pair.slug}-heading`;
-  const chartId = `${headingId}-chart`;
 
   return (
     <>
@@ -118,23 +113,12 @@ export default async function RatePage(props: PageProps<"/rates/[pair]">) {
               rate={rate}
               updated={updated}
               action={HERO_PRIMARY_ACTION}
-              chartHref={`#${chartId}`}
             />
           </div>
         </Container>
       </section>
 
-      {/* R2 (Wise rate tracker, mobbin 76aac368): 30-day chart. */}
-      <V2Section labelledBy={chartId}>
-        <div className="mx-auto flex max-w-[64rem] flex-col gap-fluid-5">
-          <h2 id={chartId} className="font-sans text-h2 text-balance">
-            {copy.chartHeading}
-          </h2>
-          <div className="rounded-[1.5rem] border border-border-hairline p-fluid-5">
-            <RateChart code={pair.code} points={history} />
-          </div>
-        </div>
-      </V2Section>
+      {/* [REMOVED, 2026-10-18] R2 30-day chart, on the owner's instruction. */}
 
       {/* M1 (Wise top currencies, mobbin b54e2297): the rate matrix. */}
       <V2Section

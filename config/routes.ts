@@ -44,6 +44,8 @@ const MARKETING_ROUTES: readonly PublicRoute[] = [
   { path: "/get-started", priority: 0.7 },
   { path: "/about", priority: 0.7 },
   { path: "/contact", priority: 0.7 },
+  // [ADDED, 2026-10-18] "Is Omanga safe?"
+  { path: "/safety", priority: 0.7 },
   // [ADDED, 2026-10-18] Live rate pages (content/rates.content.ts).
   ...RATE_PAIRS.map((pair) => ({
     path: `/rates/${pair.slug}`,

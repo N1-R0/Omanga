@@ -4,7 +4,9 @@ import { CTA } from "@/components/sections/CTA";
 import { Faq } from "@/components/sections/Faq";
 import { AccountFeatures } from "@/components/sections/AccountFeatures";
 import { PaymentsFeatures } from "@/components/sections/PaymentsFeatures";
+import { HERO_PRIMARY_ACTION } from "@/content/hero.content";
 import { SkyHero } from "@/components/sections/SkyHero";
+import { ConverterVisual } from "@/components/sections/SolutionsOverview/visuals/ConverterVisual";
 import { paymentsPhotoHeroContent } from "@/content/payments-hero.content";
 import { TrustPartners } from "@/components/sections/TrustPartners";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -241,6 +243,7 @@ export default async function PaymentsPage() {
         heading={paymentsPhotoHeroContent.heading}
         intro={paymentsPhotoHeroContent.intro}
         actions={paymentsPhotoHeroContent.actions}
+        aside={<ConverterVisual action={HERO_PRIMARY_ACTION} />}
       />
 
       {/*

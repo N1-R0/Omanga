@@ -47,18 +47,21 @@ const MEDICARE_ABROAD_URL = "https://www.medicare.gov/coverage/travel-outside-th
 export const healthInsuranceVisitingNigeriaPost: BlogPost = {
   slug: "health-insurance-for-visiting-nigeria",
   meta: {
-    title: "Health Insurance for Visiting Nigeria: Do You Need It? | Omanga",
+    // [CHANGED, 2026-10-18] Retargeted to "travel insurance nigeria" (Semrush
+    // UK 260/mo, KD 16) instead of a second post on the same question, which
+    // would compete with this one. Slug unchanged so links keep working.
+    title: "Do You Need Travel Insurance for Nigeria? | Omanga",
     description:
-      "The NHS, Medicare and most provincial plans won't pay for treatment in Nigeria. How hospital care works there, and what to look for in health cover.",
+      "Do you need travel insurance for Nigeria? The NHS, Medicare and most provincial plans won't pay for treatment there. What your health cover should include.",
     path: "/blog/health-insurance-for-visiting-nigeria",
     ogImage: healthInsuranceImage,
   },
   category: "Insurance",
-  title: "Do you need health insurance when visiting Nigeria?",
+  title: "Do you need travel insurance for Nigeria?",
   summary:
     "Your cover at home almost certainly stops at the airport. What happens if you need a doctor in Nigeria, and what good health cover for your trip should include.",
   publishedDate: "2026-10-09",
-  updatedDate: "2026-10-14",
+  updatedDate: "2026-10-18",
   readingMinutes: 6,
   image: healthInsuranceImage,
   imageCredit: {
@@ -75,7 +78,7 @@ export const healthInsuranceVisitingNigeriaPost: BlogPost = {
     {
       kind: "paragraph",
       content: [
-        "Most trips pass without a single clinic visit. But a fever that won't settle, a bad stomach bug or a road accident can happen to anyone. Those are the moments you don't want to be negotiating a bill. Health insurance for visiting Nigeria is how you avoid that.",
+        "Most trips pass without a single clinic visit. But a fever that won't settle, a bad stomach bug or a road accident can happen to anyone. Those are the moments you don't want to be negotiating a bill. Travel insurance that covers your health in Nigeria is how you avoid that.",
       ],
     },
   ],

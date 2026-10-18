@@ -73,9 +73,8 @@ export function rateCopy(pair: RatePair) {
   return {
     eyebrow: `${pair.code} to NGN exchange rate`,
     heading: `${capitalise(pair.plural)} to naira today`,
-    // [CHANGED, 2026-10-18] R2 chart and M1 matrix (owner pick) replace the
-    // two amount tables.
-    chartHeading: `${capitalise(pair.plural)} to naira over the last 30 days`,
+    // [CHANGED, 2026-10-18] The M1 matrix (owner pick) replaces the two
+    // amount tables. The R2 chart was added and then removed the same day.
     matrixHeading: "Naira, dollar and pound rates today",
     matrixCaption: `Mid-market rates between US dollars, British pounds, Canadian dollars and Nigerian naira, including naira to ${pair.plural}`,
     stepsHeading: `Change ${pair.plural} to naira with Omanga`,

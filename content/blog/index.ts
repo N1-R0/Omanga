@@ -3,6 +3,7 @@ import type { BlogCategory, BlogPost } from "@/types/blog.types";
 import { dettyDecemberChecklistPost } from "./posts/detty-december-nigeria-checklist.content";
 import { howFarDoes100DollarsGoPost } from "./posts/how-far-does-100-dollars-go-in-nigeria.content";
 import { healthInsuranceVisitingNigeriaPost } from "./posts/health-insurance-for-visiting-nigeria.content";
+import { poundsToNairaBestRatePost } from "./posts/pounds-to-naira-best-rate.content";
 
 /**
  * Every published article. Adding a post: create a module in `./posts`, then
@@ -15,6 +16,7 @@ const POSTS: readonly BlogPost[] = [
   howFarDoes100DollarsGoPost,
   healthInsuranceVisitingNigeriaPost,
   dettyDecemberChecklistPost,
+  poundsToNairaBestRatePost,
 ];
 
 export const BLOG_POSTS: readonly BlogPost[] = [...POSTS].sort((a, b) =>

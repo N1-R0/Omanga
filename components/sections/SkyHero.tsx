@@ -1,7 +1,9 @@
 import Image from "next/image";
+import type { ReactNode } from "react";
 
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
+import { cx } from "@/lib/cx";
 import type { CallToAction } from "@/types/content.types";
 
 /**
@@ -40,6 +42,12 @@ export type SkyHeroProps = {
   actions: readonly CallToAction[];
   /** Optional small qualifier under the actions ("No commitment..."). */
   helper?: string;
+  /**
+   * [ADDED, 2026-10-18] Optional panel on the right, over the photo (owner:
+   * the Payments converter sits "on top of the image on the hero section to
+   * the right"). Stacks under the copy below desktop.
+   */
+  aside?: ReactNode;
 };
 
 export function SkyHero({
@@ -48,6 +56,7 @@ export function SkyHero({
   intro,
   actions,
   helper,
+  aside,
 }: SkyHeroProps) {
   const image = SKY_PHOTO;
 
@@ -87,32 +96,58 @@ export function SkyHero({
       />
 
       <Container>
-        <div className="flex flex-col gap-fluid-4 py-fluid-8 desktop:max-w-[54%]">
-          <h1
-            id={headingId}
-            className="max-w-[17ch] font-heading text-[clamp(2.75rem,1.9rem+3.6vw,5.25rem)] leading-[0.98] font-semibold tracking-[-0.03em] text-balance"
+        <div
+          className={cx(
+            "grid gap-fluid-6 py-fluid-8",
+            aside !== undefined &&
+              "desktop:grid-cols-[minmax(0,1fr)_minmax(0,27rem)] desktop:items-center desktop:gap-fluid-8",
+          )}
+        >
+          <div
+            className={cx(
+              "flex flex-col gap-fluid-4",
+              aside === undefined && "desktop:max-w-[54%]",
+            )}
           >
-            {heading}
-          </h1>
-          <p className="max-w-[34ch] font-sans text-main text-on-dark/90">
-            {intro}
-          </p>
-          <div className="flex flex-wrap gap-fluid-2 pt-fluid-1">
-            {actions.map((action) => (
-              <Button
-                key={action.label}
-                as="link"
-                href={action.href}
-                isExternal={action.isExternal}
-                variant={action.emphasis === "primary" ? "white" : "secondary"}
-                tone="brand"
-              >
-                {action.label}
-              </Button>
-            ))}
+            <h1
+              id={headingId}
+              className={cx(
+                "max-w-[17ch] font-heading leading-[0.98] font-semibold tracking-[-0.03em] text-balance",
+                /* A narrower column beside the panel, so the h1 steps down. */
+                aside === undefined
+                  ? "text-[clamp(2.75rem,1.9rem+3.6vw,5.25rem)]"
+                  : "text-[clamp(2.75rem,1.9rem+2.8vw,4.5rem)]",
+              )}
+            >
+              {heading}
+            </h1>
+            <p className="max-w-[34ch] font-sans text-main text-on-dark/90">
+              {intro}
+            </p>
+            <div className="flex flex-wrap gap-fluid-2 pt-fluid-1">
+              {actions.map((action) => (
+                <Button
+                  key={action.label}
+                  as="link"
+                  href={action.href}
+                  isExternal={action.isExternal}
+                  variant={
+                    action.emphasis === "primary" ? "white" : "secondary"
+                  }
+                  tone="brand"
+                >
+                  {action.label}
+                </Button>
+              ))}
+            </div>
+            {helper ? (
+              <p className="font-sans text-small text-on-dark/80">{helper}</p>
+            ) : null}
           </div>
-          {helper ? (
-            <p className="font-sans text-small text-on-dark/80">{helper}</p>
+          {aside !== undefined ? (
+            <div className="text-ink desktop:justify-self-end desktop:w-full">
+              {aside}
+            </div>
           ) : null}
         </div>
       </Container>

@@ -31,7 +31,7 @@ const PAYMENTS_FEATURES: readonly DeepDiveFeature[] = [
     id: "multi-currency-wallet",
     label: "Multi-currency wallet",
     heading: "Six currencies, one wallet",
-    body: "Hold, send and receive six currencies without opening a separate account for each.",
+    body: "Hold, send and receive 6+ currencies without opening a separate account for each.",
   },
   {
     id: "funding",

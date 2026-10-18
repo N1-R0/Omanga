@@ -59,8 +59,9 @@ export const insuranceInclusionsContent: InsuranceInclusionsContent = {
     },
     {
       id: "contact-centre",
-      term: "24/7 contact centre",
-      description: "Call for help at any hour, day or night.",
+      // [CHANGED, 2026-10-18] Owner: hours unconfirmed.
+      term: "Contact centre",
+      description: "Call or message for help with your plan or your care.",
     },
     {
       id: "newsletter",

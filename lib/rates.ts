@@ -159,3 +159,56 @@ export async function getNgnRates(): Promise<NgnRates> {
 
   return { rates: { USD: usd, GBP: gbp, CAD: cad }, date: today.date };
 }
+
+/* -----------------------------------------------------------------------------
+   [ADDED, 2026-10-18] Rate-page data: a 30-day naira history per funding
+   currency (R2 chart) and the cross rates between USD, GBP, CAD and NGN (M1
+   matrix). Same public snapshot as above; past days come from its dated
+   archive, which never changes, so those fetches are cached for a week.
+   -------------------------------------------------------------------------- */
+
+export type RatePoint = { readonly date: string; readonly rate: number };
+
+/** Daily NGN per one unit of `code`, oldest first, ending at the latest snapshot. */
+export async function getNgnHistory(
+  code: FundingCurrency,
+  days = 30,
+): Promise<RatePoint[]> {
+  const latest = await fetchUsdSnapshot("latest", 3600);
+  if (!latest) return [];
+
+  const dates: string[] = [];
+  let cursor = latest.date;
+  for (let i = 1; i < days; i += 1) {
+    cursor = dayBefore(cursor);
+    dates.unshift(cursor);
+  }
+
+  const past = await Promise.all(
+    dates.map((date) => fetchUsdSnapshot(date, 60 * 60 * 24 * 7)),
+  );
+
+  return [...past, latest]
+    .map((snapshot) => {
+      if (!snapshot) return null;
+      const rate = crossRate(snapshot.rates, code.toLowerCase(), "ngn");
+      return rate === null ? null : { date: snapshot.date, rate };
+    })
+    .filter((point): point is RatePoint => point !== null);
+}
+
+export type MatrixCurrency = FundingCurrency | "NGN";
+
+/** Units of `to` per one unit of `from`, for every pair of USD, GBP, CAD, NGN. */
+export function crossMatrix(
+  ngn: Readonly<Record<FundingCurrency, number>>,
+): Record<MatrixCurrency, Record<MatrixCurrency, number>> {
+  const perNgn: Record<MatrixCurrency, number> = { ...ngn, NGN: 1 };
+  const codes: MatrixCurrency[] = ["USD", "GBP", "CAD", "NGN"];
+  return Object.fromEntries(
+    codes.map((from) => [
+      from,
+      Object.fromEntries(codes.map((to) => [to, perNgn[from] / perNgn[to]])),
+    ]),
+  ) as Record<MatrixCurrency, Record<MatrixCurrency, number>>;
+}

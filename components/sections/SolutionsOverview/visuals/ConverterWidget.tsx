@@ -5,6 +5,7 @@ import Link from "next/link";
 import { type ReactNode, useId, useState } from "react";
 
 import { Button } from "@/components/ui/Button";
+import { RATE_PAIRS } from "@/content/rates.content";
 import type { FundingCurrency } from "@/lib/rates";
 import type { LinkTarget } from "@/types/content.types";
 
@@ -33,6 +34,14 @@ const toNumber = (value: string) => {
   return Number.isFinite(n) && n >= 0 ? n : 0;
 };
 
+const readableDate = (iso: string) =>
+  new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+
 const format = (n: number) =>
   n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
@@ -40,13 +49,16 @@ export function ConverterWidget({
   rates,
   date,
   action,
+  initialCurrency = "USD",
 }: {
   rates: Readonly<Record<FundingCurrency, number>>;
   date: string | null;
   action: LinkTarget;
+  /** [ADDED, 2026-10-18] The rate pages open on their own currency. */
+  initialCurrency?: FundingCurrency;
 }) {
   const [amount, setAmount] = useState("1,000");
-  const [currency, setCurrency] = useState<FundingCurrency>("USD");
+  const [currency, setCurrency] = useState<FundingCurrency>(initialCurrency);
   const amountId = useId();
   const currencyId = useId();
 
@@ -142,7 +154,16 @@ export function ConverterWidget({
         </div>
 
         <p className="text-center font-sans text-small text-secondary">
-          Indicative rate{date ? ` · ${date}` : ""}
+          {/* [CHANGED, 2026-10-18] Copy audit: a readable date, not ISO. */}
+          Indicative rate{date ? ` · ${readableDate(date)}` : ""} ·{" "}
+          {/* [ADDED, 2026-10-18] Links the converter to the live rate page
+              for the selected currency (internal links for the rate pages). */}
+          <Link
+            href={`/rates/${RATE_PAIRS.find((pair) => pair.code === currency)?.slug ?? "pounds-to-naira"}`}
+            className="underline underline-offset-4 hover:text-ink focus-ring"
+          >
+            {currency} to NGN today
+          </Link>
         </p>
       </div>
     </div>

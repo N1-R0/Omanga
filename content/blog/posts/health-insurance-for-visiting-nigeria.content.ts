@@ -170,7 +170,7 @@ export const healthInsuranceVisitingNigeriaPost: BlogPost = {
             {
               term: "Silver, $50 a month",
               description: [
-                "The essentials, for a short, straightforward trip: 24/7 emergency assistance, 15 days in hospital per trip, basic diagnostics, emergency evacuation and essential prescription drugs.",
+                "The essentials, for a short, straightforward trip: emergency assistance, 15 days in hospital per trip, basic diagnostics, emergency evacuation and essential prescription drugs.",
               ],
             },
             {
@@ -192,7 +192,7 @@ export const healthInsuranceVisitingNigeriaPost: BlogPost = {
           content: [
             // [CHANGED, 2026-10-14] UX copy pass: removed "Silver and Gold open
             // Category A and B" (conflicts with insurance-plans.content.ts).
-            "Every plan includes hospital admission, diagnostics, emergency assistance and evacuation, telemedicine, roaming across Nigeria and a 24/7 contact centre. Each plan opens a different set of hospital categories. ",
+            "Every plan includes hospital admission, diagnostics, emergency assistance and evacuation, telemedicine, roaming across Nigeria and a contact centre. Each plan opens a different set of hospital categories. ",
             { text: "Compare health plans", href: "/plans" },
             " to see which hospitals each one covers. If your trip needs something you don't see listed, such as a flight home, ask us before you buy.",
           ],

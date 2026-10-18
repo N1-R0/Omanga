@@ -48,7 +48,7 @@ const WITH_OMANGA: ComparisonGroup = {
     "Hospital admission through Phillips HMO, not a refund form",
     "Monthly plans with no commitment. Cancel any time",
     "Three plans from $50 to $120 a month",
-    "A 24/7 contact centre and telemedicine with licensed doctors",
+    "A contact centre and telemedicine with licensed doctors",
     "Your plan and your wallet in one account",
   ],
 } as const;

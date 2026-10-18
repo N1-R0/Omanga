@@ -138,7 +138,8 @@ const SILVER: InsurancePlan = {
   description: "The essentials, for a short, straightforward trip.",
   hospitalAccess: "Category A",
   included: [
-    "24/7 emergency assistance",
+    // [CHANGED, 2026-10-18] Owner: "24/7" unconfirmed.
+    "Emergency assistance",
     "15 days in hospital per trip",
     "Basic diagnostics",
     "Emergency evacuation",
@@ -221,7 +222,7 @@ export const insurancePlansContent: InsurancePlansContent = {
   // [CHANGED, 2026-10-14] UX copy pass: drops the cancel line the cards
   // already carry; adds renew/extend (owner-confirmed). Roaming is Nigeria only.
   footnote:
-    "Every plan also includes telemedicine, roaming across Nigeria, 24/7 support, the mobile app and a health-tips newsletter. Renew or extend your plan from your account.",
+    "Every plan also includes telemedicine, roaming across Nigeria, a contact centre, the mobile app and a health-tips newsletter. Renew or extend your plan from your account.",
   action: {
     label: "Compare every benefit",
     // A bare fragment: the comparison table is the next section on this same

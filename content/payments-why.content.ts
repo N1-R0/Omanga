@@ -102,9 +102,10 @@ const WITH_OMANGA: ComparisonGroup = {
     // hidden fees"; numerals; "wallet" as the one body noun.
     "One wallet for spending across Africa",
     "The mid-market rate, from public market data, refreshed hourly",
-    "6 currencies held, sent and received in one wallet",
-    "₦20 per transfer, free transfers between Omanga accounts and no minimums",
-    `Spend in ${COUNTRIES_SERVED_DISPLAY} African countries, with 24/7 support`,
+    "6+ currencies held, sent and received in one wallet",
+    // [CHANGED, 2026-10-18] Owner: unconfirmed free-transfer claim removed.
+    "₦20 per transfer and no minimums",
+    `Spend in ${COUNTRIES_SERVED_DISPLAY} African countries`,
   ],
 } as const;
 

@@ -19,7 +19,8 @@ export const insuranceFaqContent: FaqContent = {
   heading: "Travel insurance for Nigeria: common questions",
   items: [
     {
-      question: "What is Omanga Holiday Insurance?",
+      // [CHANGED, 2026-10-18] Owner: phrased as a search ("health insurance … nigeria").
+      question: "What health insurance does Omanga offer for Nigeria?",
       answer:
         "Omanga Holiday Insurance is short-term health insurance for your trip to Nigeria. It comes from Phillips HMO, a Nigerian health provider with its own hospital network. Cover applies in Nigeria only.",
     },
@@ -47,10 +48,11 @@ export const insuranceFaqContent: FaqContent = {
     {
       question: "What's included on every Omanga plan?",
       answer:
-        "Every plan includes telemedicine with licensed doctors, roaming cover across Nigeria, a 24/7 contact centre, the mobile app and a health-tips newsletter.",
+        "Every plan includes telemedicine with licensed doctors, roaming cover across Nigeria, a contact centre, the mobile app and a health-tips newsletter.",
     },
     {
-      question: "Who provides Omanga Holiday Insurance?",
+      // [CHANGED, 2026-10-18] Owner: phrased the way people ask it.
+      question: "Who provides Omanga's health cover?",
       answer:
         "Phillips HMO provides Omanga Holiday Insurance. It's a Nigerian health provider regulated by the National Insurance Commission (NAICOM), with its own hospital network.",
     },

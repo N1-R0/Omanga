@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 
 import { Faq } from "@/components/sections/Faq";
-import { INSURANCE_FAQ_HEADING_ID, insuranceFaqContent } from "@/content/insurance-faq.content";
+import { INSURANCE_FAQ_HEADING_ID } from "@/content/insurance-faq.content";
+import { plansFaqContent } from "@/content/page-faqs.content";
 
 import { CTA } from "@/components/sections/CTA";
 import { InsuranceCoverage } from "@/components/sections/InsuranceCoverage";
@@ -193,7 +194,8 @@ export default function PlansPage() {
         [REMOVED, 2026-10-18] The comparison split card (`WhyOmanga`), on the
         owner's instruction: removed from every page.
       */}
-      <Faq content={insuranceFaqContent} headingId={INSURANCE_FAQ_HEADING_ID} />
+      {/* [CHANGED, 2026-10-18] Plan-choice questions (content/page-faqs). */}
+      <Faq content={plansFaqContent} headingId={INSURANCE_FAQ_HEADING_ID} />
 
       <CTA content={plansCtaContent} headingId={PLANS_CTA_HEADING_ID} />
     </>

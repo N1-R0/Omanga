@@ -19,16 +19,18 @@ export const PAYMENTS_FAQ_HEADING_ID = "payments-faq-heading";
  * page shows.
  */
 export const PAYMENTS_FEES_ANSWER =
-  "Opening an Omanga wallet is free. Each transfer costs ₦20, transfers between Omanga accounts are free, and there are no minimums.";
+  // [CHANGED, 2026-10-18] Owner: "free between Omanga accounts" is unconfirmed, so it's out.
+  "Opening an Omanga wallet is free. Each transfer costs ₦20, and there are no minimums.";
 
 export const paymentsFaqContent: FaqContent = {
   // [CHANGED, 2026-10-14] UX copy pass: shorter.
   heading: "Questions about the Omanga wallet",
   items: [
     {
-      question: "What is Omanga Payment Solutions?",
+      // [CHANGED, 2026-10-18] Owner: phrased as a search; the product name stays in the answer.
+      question: "What is the Omanga travel wallet?",
       // [CHANGED, 2026-10-14] UX copy pass: one sentence fewer; adds "free to open". Shown on home (index 0).
-      answer: `Omanga Payment Solutions is a multi-currency wallet for travel in Africa. Fund it from USD, GBP or CAD, hold 6 currencies and spend in ${COUNTRIES_SERVED_DISPLAY} African countries, online or in person. It is free to open.`,
+      answer: `Omanga Payment Solutions is a multi-currency wallet for travel in Africa. Fund it from USD, GBP or CAD, hold 6+ currencies and spend in ${COUNTRIES_SERVED_DISPLAY} African countries, online or in person. It is free to open.`,
     },
     {
       question: "How do I fund my Omanga wallet?",

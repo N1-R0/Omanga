@@ -71,7 +71,13 @@ export function StepsV2() {
                   TILE_SURFACE[index],
                 )}
               >
-                <div className="absolute inset-x-0 top-[12%] flex justify-center">
+                {/* [CHANGED, 2026-10-18] Copy audit: the app screens are
+                    illustrations; hidden from assistive tech and the list's
+                    text so the step reads as its title and line only. */}
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-x-0 top-[12%] flex justify-center"
+                >
                   {SCREENS[index]}
                 </div>
               </div>

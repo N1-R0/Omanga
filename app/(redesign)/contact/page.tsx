@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { CTA } from "@/components/sections/CTA";
+import { contactFaqContent } from "@/content/page-faqs.content";
 import { Faq } from "@/components/sections/Faq";
 import { HOME_V2_IDS, homeV2Content } from "@/content/home-v2.content";
 
@@ -227,7 +228,12 @@ export default async function ContactPreviewPage({
         data. What § Schema asks for beyond that is recorded in the note above and
         is a stage of its own.
       */}
-      <JsonLd graph={buildPageGraph(contactMeta, { crumb: "Contact", pageType: "ContactPage" })} />
+      <JsonLd
+        graph={buildPageGraph(contactMeta, {
+          crumb: "Contact",
+          pageType: "ContactPage",
+        })}
+      />
 
       {/*
         Stage 2. The hero — spec §§ 2 and 3, from Figma node 2579:131893, and the
@@ -277,7 +283,8 @@ export default async function ContactPreviewPage({
         [REMOVED, 2026-10-18] The comparison split card (`WhyOmanga`), on the
         owner's instruction: removed from every page.
       */}
-      <Faq content={homeV2Content.faq} headingId={HOME_V2_IDS.faq} />
+      {/* [CHANGED, 2026-10-18] Page-specific questions (content/page-faqs). */}
+      <Faq content={contactFaqContent} headingId={HOME_V2_IDS.faq} />
 
       <CTA content={homeV2Content.closing} headingId={HOME_V2_IDS.closing} />
     </>

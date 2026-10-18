@@ -122,7 +122,7 @@ const FEATURES: readonly [PaymentsFeature, PaymentsFeature, PaymentsFeature] = [
   {
     id: "wallet",
     // [CHANGED, 2026-10-14] UX copy pass: specific (6 currencies) and numerals.
-    heading: "Hold 6 currencies in one wallet",
+    heading: "Hold 6+ currencies in one wallet",
   },
   {
     id: "rates",
@@ -150,12 +150,14 @@ const METRICS: readonly PaymentsMetric[] = [
     term: `${COUNTRIES_SERVED_DISPLAY} African countries`,
     // [CHANGED, 2026-10-14] UX copy pass: says how you spend instead of a slogan.
     description:
-      "Pay online or in person from one wallet, from Algiers to Cape Town.",
+      // [CHANGED, 2026-10-18] Copy audit (design-lab/copy-seo-review-2026-10-18.md § 7): Algeria is not on
+      // the coverage list; both places named now are.
+      "Pay online or in person from one wallet, from Lagos to Cape Town.",
   },
   {
     id: "currencies",
     // [CHANGED, 2026-10-14] UX copy pass: numerals.
-    term: "6 currencies, one wallet",
+    term: "6+ currencies, one wallet",
     description:
       "Hold, send and receive each one without opening a separate account.",
   },
@@ -170,8 +172,10 @@ const METRICS: readonly PaymentsMetric[] = [
     id: "support",
     // [CHANGED, 2026-10-14] UX copy pass: "emergency help in every country"
     // read as an insurance claim and health cover is Nigeria-only. Plain support claim.
-    term: "24/7 support",
-    description: "Reach the Omanga team any time, day or night.",
+    // [CHANGED, 2026-10-18] Owner: 24/7 support unconfirmed. Replaced
+    // with the confirmed fee.
+    term: "₦20 per transfer",
+    description: "One flat fee to send money. Opening the wallet is free.",
   },
 ] as const;
 

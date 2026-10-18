@@ -72,7 +72,7 @@ const PARAGRAPHS: readonly StoryParagraph[] = [
     tier: "emphasis",
   },
   {
-    text: `So we put both in one account. Fund your wallet from USD, GBP or CAD, hold six currencies and see the mid-market rate before you confirm. Spend in ${COUNTRIES_SERVED_DISPLAY} African countries. The wallet is free to open and transfers cost ₦20.`,
+    text: `So we put both in one account. Fund your wallet from USD, GBP or CAD, hold 6+ currencies and see the mid-market rate before you confirm. Spend in ${COUNTRIES_SERVED_DISPLAY} African countries. The wallet is free to open and transfers cost ₦20.`,
     tier: "recede",
   },
   {

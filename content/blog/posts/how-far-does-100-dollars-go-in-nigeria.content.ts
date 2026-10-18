@@ -62,9 +62,11 @@ const FCDO_SAFETY_URL =
 export const howFarDoes100DollarsGoPost: BlogPost = {
   slug: "how-far-does-100-dollars-go-in-nigeria",
   meta: {
-    title: "How Far Does $100 Go in Nigeria? Real Lagos Prices for 2026 | Omanga",
+    // [CHANGED, 2026-10-18] Copy audit: title 68 → 59 and description
+    // 167 → 145 characters, so neither is cut off in search results.
+    title: "How Far Does $100 Go in Nigeria? Lagos Prices 2026 | Omanga",
     description:
-      "Is $100 a lot in Nigeria? What $20, $50, $100 and $200 really buy in Lagos in 2026, why December changes everything, and how to stop losing money on the exchange rate.",
+      "Is $100 a lot in Nigeria? What $20, $50, $100 and $200 really buy in Lagos in 2026, why December costs more, and how to avoid bad exchange rates.",
     path: "/blog/how-far-does-100-dollars-go-in-nigeria",
     ogImage: hundredDollarsImage,
   },
@@ -109,7 +111,10 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "In early October 2026, the official rate was around ₦1,330 to the dollar. Street rates were a little higher, around ₦1,375 to ₦1,390. The gap is much smaller than it was 2 years ago, which is good news for visitors. This guide uses a round ₦1,350.",
+            "In early October 2026, the official rate was around ₦1,330 to the dollar. Street rates were a little higher, around ₦1,375 to ₦1,390. The gap is much smaller than it was 2 years ago, which is good news for visitors. This guide uses a round ₦1,350. For today's figure, see our ",
+            // [ADDED, 2026-10-18] Internal link to the live rate page.
+            { text: "dollars to naira rate", href: "/rates/dollars-to-naira" },
+            ".",
           ],
         },
         {
@@ -329,7 +334,7 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
           content: [
             // [CHANGED, 2026-10-14] UX copy pass: named the ₦20 fee instead of "no
             // hidden fees"; removed 24/7 wallet support (not owner-confirmed).
-            "The wallet is free to open and holds six currencies, with no minimums. Transfers cost ₦20, and transfers between Omanga wallets are free, which helps when family use it too. It's operated by Fuspay Technologies, a microfinance bank licensed by the Central Bank of Nigeria. ",
+            "The wallet is free to open and holds 6+ currencies, with no minimums. Transfers cost ₦20. It's operated by Fuspay Technologies, a microfinance bank licensed by the Central Bank of Nigeria. ",
             { text: "Explore the wallet", href: "/payments" },
             ".",
           ],

@@ -1,9 +1,6 @@
 import { heroPosterContent } from "@/content/hero.content";
 import { WALLET_URL } from "@/config/site";
-import {
-  COUNTRIES_SERVED_DISPLAY,
-  PAYMENTS_RATES_ANCHOR,
-} from "@/content/site.content";
+import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { CallToAction, Eyebrow } from "@/types/content.types";
 
 /**
@@ -51,7 +48,11 @@ export const paymentsHeroContent: PaymentsHeroContent = {
   */
   // [CHANGED, 2026-10-14] UX copy pass: shorter headline; the intro now leads
   // with the funding currencies and shows the ₦20 fee (Wise model).
-  heading: "One wallet for your travel money across Africa",
+  // [CHANGED, 2026-10-18] Owner: the wallet is for people coming to Africa;
+  // the H1 now leads with "travel money" and the arrival moment. Considered:
+  // "Travel money for your trip to Africa", "Land in Africa with your money
+  // ready". Was "One wallet for your travel money across Africa".
+  heading: "Travel money, ready when you land in Africa",
   intro: `Fund it from USD, GBP or CAD, convert at the mid-market rate and spend in ${COUNTRIES_SERVED_DISPLAY} African countries. Transfers cost ₦20.`,
 
   /*
@@ -98,7 +99,9 @@ export const PAYMENTS_HERO_HEADING_ID = "payments-hero-heading" as const;
 */
 export const paymentsHeroSecondary: CallToAction = {
   label: "See today's rates",
-  href: `#${PAYMENTS_RATES_ANCHOR}`,
+  // [CHANGED, 2026-10-18] Copy audit (design-lab/copy-seo-review-2026-10-18.md § 7): the live rate pages
+  // exist now; this used to jump to the rate card further down the page.
+  href: "/rates/pounds-to-naira",
   isExternal: false,
   emphasis: "secondary",
 };

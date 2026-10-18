@@ -55,7 +55,7 @@ export const accountFeaturesContent: AccountFeaturesContent = {
         {
           icon: "top-up",
           heading: "Top up in the currency you earn",
-          body: "Fund your wallet from USD, GBP or CAD and hold six currencies in one place.",
+          body: "Fund your wallet from USD, GBP or CAD and hold 6+ currencies in one place.",
         },
         {
           icon: "convert",

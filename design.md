@@ -1041,3 +1041,32 @@ now says "travel health insurance", and three search-phrased FAQs. "Send money
 to Nigeria" (UK ~12K/mo) is **not** targeted until it is confirmed the wallet
 pays out UK-funded money in Nigeria. "Card" terms stay out (no card). Biggest
 open opportunity: live pounds/dollars-to-naira rate pages (UK ~180K/mo).
+
+## Addendum · 2026-10-18 · Live rate pages
+
+/rates/pounds-to-naira, /rates/dollars-to-naira, /rates/canadian-dollars-to-naira
+(`app/(redesign)/rates/[pair]`, copy in `content/rates.content.ts`). One page per
+funding currency covers both directions (pounds↔naira) so there are no thin
+duplicates. Rate from `lib/rates.ts` (public mid-market snapshot, fetched hourly,
+ISR); the page states it is a reference rate and the app shows the exact rate
+before you confirm. Static HTML holds the rate, two tables and a FAQ (FAQPage
+schema with the live figure). Linked from the footer, from the converter
+("GBP to NGN today") and between pairs; in the sitemap. Copy is [NEW] and needs
+sign-off.
+Layout (owner pick from Mobbin, same day): R1 plum band with a wide converter
+card across its edge (Wise converter 669f7e5e; choosing another currency opens
+that pair's page), R2 30-day SVG chart with 1 week / 1 month chips and
+high/low/change as text (Wise rate tracker 76aac368; history from the feed's
+dated archive), M1 USD/GBP/CAD/NGN matrix (Wise top currencies b54e2297),
+which replaces the two amount tables. Components in `components/rates/`.
+
+## Addendum · 2026-10-18 · Site-wide copy audit
+
+Applied fixes and the 8 open items (facts or decisions) are in
+`design-lab/copy-seo-review-2026-10-18.md` § 7. Page-specific FAQs for About
+and Contact live in `content/page-faqs.content.ts`.
+Owner answers same day: free Omanga-to-Omanga transfers and all 24/7 claims
+removed (unconfirmed; legal pages untouched, flagged), "6+ currencies", Plans
+FAQ split, FAQ questions phrased as searches, Payments H1 "Travel money, ready
+when you land in Africa". Waiting on Phillips HMO: admission days per plan,
+emergency number, when cover starts, exclusions.

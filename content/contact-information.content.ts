@@ -115,7 +115,8 @@ const CARDS: readonly ContactInfoCard[] = [
     // [CHANGED, 2026-10-10] Was "Need support?", the same text as the hero's h3.
     heading: "Get help on WhatsApp",
     // [CHANGED, 2026-10-14] UX copy pass: body nouns; 24/7 kept as published, not strengthened.
-    body: "Chat with us about a payment, your wallet or your health cover. Our contact centre is staffed 24/7.",
+    body: // [CHANGED, 2026-10-18] Owner: "staffed 24/7" unconfirmed.
+      "Chat with us about a payment, your wallet or your health cover.",
     action: {
       label: "Chat on WhatsApp",
       href: WHATSAPP_URL,

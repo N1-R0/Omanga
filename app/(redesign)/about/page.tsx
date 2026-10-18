@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 
+import { aboutFaqContent } from "@/content/page-faqs.content";
 import { Faq } from "@/components/sections/Faq";
-import { HOME_V2_IDS, homeV2Content } from "@/content/home-v2.content";
+import { HOME_V2_IDS } from "@/content/home-v2.content";
 
 import { CTA } from "@/components/sections/CTA";
 import { AboutImpact } from "@/components/sections/AboutImpact";
@@ -154,7 +155,12 @@ export default function AboutPage() {
   */
   return (
     <>
-      <JsonLd graph={buildPageGraph(aboutMeta, { crumb: "About", pageType: "AboutPage" })} />
+      <JsonLd
+        graph={buildPageGraph(aboutMeta, {
+          crumb: "About",
+          pageType: "AboutPage",
+        })}
+      />
 
       {/*
         Stage 2. The hero — spec § 2, and the page's only `h1`. Laid out from the
@@ -249,7 +255,8 @@ export default function AboutPage() {
         [REMOVED, 2026-10-18] The comparison split card (`WhyOmanga`), on the
         owner's instruction: removed from every page.
       */}
-      <Faq content={homeV2Content.faq} headingId={HOME_V2_IDS.faq} />
+      {/* [CHANGED, 2026-10-18] Page-specific questions (content/page-faqs). */}
+      <Faq content={aboutFaqContent} headingId={HOME_V2_IDS.faq} />
 
       <CTA content={aboutCtaContent} headingId={ABOUT_CTA_HEADING_ID} />
     </>

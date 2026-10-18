@@ -78,6 +78,9 @@ const SERVICES: FooterLinkColumn = {
     { label: "Omanga Payment Solutions", href: "/payments" },
     { label: "Holiday Insurance", href: "/insurance" },
     { label: "Insurance Plans", href: "/plans" },
+    // [ADDED, 2026-10-18] The live rate page with the most search demand
+    // (pounds↔naira). The page links to the USD and CAD pages.
+    { label: "Pounds to naira today", href: "/rates/pounds-to-naira" },
     /*
       [FIXED] This pointed at `/insurance#coverage`, which was not a 404 and was
       still broken — the worst combination, because nothing reports it.

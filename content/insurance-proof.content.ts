@@ -83,7 +83,9 @@ const STATS: readonly ProofStat[] = [
   // cover starts after activation is unconfirmed.
   { figure: "5 min", label: "to activate your plan" },
   { figure: "3", label: "plans to choose from" },
-  { figure: "24/7", label: "emergency assistance" },
+  // [CHANGED, 2026-10-18] Owner: "24/7" unconfirmed; the three hospital
+  // categories (A, B, C) are in the approved plan data.
+  { figure: "A–C", label: "hospital categories" },
   { figure: "$50", label: "starting price per month" },
 ] as const;
 
@@ -98,7 +100,10 @@ export const insuranceProofContent: InsuranceProofContent = {
   // Nigerian health providers".
   heading: "Who provides your health cover",
   intro:
-    "Every Omanga plan comes from Phillips HMO, a Nigerian health provider regulated by NAICOM. It runs its own hospital network in Nigeria, so you buy your plan before you travel and use it when you arrive.",
+    // [CHANGED, 2026-10-18] Copy audit (design-lab/copy-seo-review-2026-10-18.md § 7): the network sentence
+    // is already in "How you get care in Nigeria" just above; this keeps the
+    // regulator and the buy-before-you-fly step only.
+    "Every Omanga plan comes from Phillips HMO, a Nigerian health provider regulated by NAICOM. Buy your plan before you travel and use it when you arrive.",
   stats: STATS,
   partners: PARTNERS,
   action: {

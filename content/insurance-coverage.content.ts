@@ -188,7 +188,8 @@ const ROWS: readonly CoverageRow[] = [
     diamond: INCLUDED,
   },
   {
-    label: "24/7 emergency assistance",
+    // [CHANGED, 2026-10-18] Owner: "24/7" unconfirmed.
+    label: "Emergency assistance",
     silver: INCLUDED,
     gold: INCLUDED,
     diamond: INCLUDED,

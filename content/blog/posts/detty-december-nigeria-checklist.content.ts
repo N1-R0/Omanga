@@ -49,9 +49,11 @@ const FCDO_ENTRY_URL =
 export const dettyDecemberChecklistPost: BlogPost = {
   slug: "detty-december-nigeria-checklist",
   meta: {
-    title: "Detty December 2026: Money & Health Checklist for Nigeria | Omanga",
+    // [CHANGED, 2026-10-18] Copy audit: title 66 → 56 and description
+    // 162 → 146 characters, so neither is cut off in search results.
+    title: "Detty December 2026: Money and Health Checklist | Omanga",
     description:
-      "Flying home to Lagos for Detty December? How to handle money, avoid bad exchange rates, stay safe with cash and cards, and sort your health cover before you land.",
+      "Flying home to Lagos for Detty December? How to handle money, avoid bad exchange rates, keep cash safe and sort your health cover before you land.",
     path: "/blog/detty-december-nigeria-checklist",
     ogImage: dettyDecemberImage,
   },

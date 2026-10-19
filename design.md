@@ -1118,3 +1118,9 @@ in the partner strip and insurance partners (file deleted), and the wallet
 `provider` node in schema (Omanga stays as `brand` only). /safety is now
 general: rate before you pay, Phillips HMO for cover (customer-facing, kept),
 help, account tips. The legal pages still name Fuspay; review with counsel.
+
+## Addendum · 2026-10-19 · Fuspay logo restored (owner)
+
+The Fuspay logo is back in the partner strip and the insurance partners list
+(`public/fusepay-logo.png` restored). Fuspay copy, the "Who operates the
+wallet?" FAQ and the schema provider node stay removed.

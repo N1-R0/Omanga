@@ -74,7 +74,14 @@ const PARTNER_LOGOS: readonly ImageAsset[] = [
     width: 1412,
     height: 496,
   },
-  // [REMOVED, 2026-10-18] The wallet partner's logo. [CHANGED, 2026-10-18] Owner: who runs the wallet behind the scenes is not public information.
+  // [RESTORED, 2026-10-19] Owner asked for the Fuspay logo back in the partner
+  // strip. Copy mentions of Fuspay stay removed (see design.md).
+  {
+    src: "/fusepay-logo.png",
+    alt: "Fuspay",
+    width: 960,
+    height: 456,
+  },
   {
     src: "/zira-logo.png",
     alt: "Zira",

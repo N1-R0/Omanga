@@ -1,0 +1,19 @@
+<svg viewBox="0 0 1200 600" width="2400" height="1200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs>
+    <linearGradient id="base" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#360511"/><stop offset=".55" stop-color="#74142D"/><stop offset="1" stop-color="#560C20"/></linearGradient>
+    <linearGradient id="r1" x1="0" x2="1"><stop offset="0" stop-color="#E0315F" stop-opacity="0"/><stop offset=".4" stop-color="#F46A82"/><stop offset="1" stop-color="#AE2448" stop-opacity=".2"/></linearGradient>
+    <linearGradient id="r2" x1="0" x2="1"><stop offset="0" stop-color="#F7A2AD" stop-opacity=".1"/><stop offset=".6" stop-color="#FAC9CE"/><stop offset="1" stop-color="#F46A82" stop-opacity="0"/></linearGradient>
+    <filter id="b40" filterUnits="userSpaceOnUse" x="-400" y="-400" width="2000" height="1400"><feGaussianBlur stdDeviation="40"/></filter>
+    <filter id="b18" filterUnits="userSpaceOnUse" x="-400" y="-400" width="2000" height="1400"><feGaussianBlur stdDeviation="18"/></filter>
+    <filter id="b8" filterUnits="userSpaceOnUse" x="-400" y="-400" width="2000" height="1400"><feGaussianBlur stdDeviation="8"/></filter>
+  <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .07 0"/></filter></defs>
+  <rect width="1200" height="600" fill="url(#base)"/>
+  <path d="M-100 560 C 180 420, 420 520, 640 360 S 980 80, 1320 120" stroke="#AE2448" stroke-width="220" fill="none" filter="url(#b40)"/>
+  <path d="M-100 600 C 220 470, 460 560, 700 400 S 1020 140, 1320 180" stroke="#E0315F" stroke-width="110" fill="none" filter="url(#b18)" opacity=".85"/>
+  <path d="M0 640 C 280 500, 520 560, 760 420 S 1060 200, 1300 220" stroke="url(#r2)" stroke-width="60" fill="none" filter="url(#b18)" opacity=".9"/>
+  <path d="M120 660 C 380 520, 600 560, 820 440 S 1100 260, 1300 280" stroke="#FAC9CE" stroke-width="10" fill="none" filter="url(#b8)" opacity=".8"/>
+  <path d="M260 680 C 480 560, 700 580, 900 470 S 1140 330, 1300 360" stroke="#F7A2AD" stroke-width="22" fill="none" filter="url(#b18)" opacity=".6"/>
+  <path d="M-60 80 C 240 0, 520 180, 820 60 S 1100 -40, 1300 20" stroke="#931D3C" stroke-width="180" fill="none" filter="url(#b40)" opacity=".8"/>
+  <path d="M700 -60 C 860 120, 1000 200, 1260 160" stroke="#F46A82" stroke-width="70" fill="none" filter="url(#b40)" opacity=".55"/>
+  <rect width="1200" height="600" filter="url(#grain)"/>
+</svg>

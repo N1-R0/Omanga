@@ -1,0 +1,51 @@
+/* =============================================================================
+   Omanga new redesign — Global stylesheet
+   -----------------------------------------------------------------------------
+   Imported only by app/(new-redesign)/layout.tsx. The live site's stylesheet
+   (styles/globals.css) never sees these files, and this one never scans the
+   live site's components, so neither design system can leak into the other.
+   ========================================================================== */
+
+@import "tailwindcss" source(none);
+@source "..";
+@source "../../app/(new-redesign)";
+
+@import "./tokens.css";
+@import "./typography.css";
+@import "./utilities.css";
+@import "./animations.css";
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.32px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--color-brand-100);
+    color: var(--color-text);
+  }
+}

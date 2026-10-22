@@ -1,0 +1,166 @@
+/* =============================================================================
+   Omanga new redesign — Design tokens
+   -----------------------------------------------------------------------------
+   Source of truth : design-lab/design-system.html (v1, 2026-10-21)
+   Decisions       : design.md § "New redesign: design system v1" and later
+                     addenda (brand backgrounds, glass frame)
+
+   Primitives name a value and are never used in a component. Semantic tokens
+   name a job and are the only colours components reference.
+
+   Tailwind's default palette is cleared (`--color-*: initial`), so a class like
+   `bg-red-500` generates nothing. Only the colours below exist.
+   ========================================================================== */
+
+@theme {
+  --color-*: initial;
+
+  /* ---- Primitives: brand (OKLCH hue 11.8 held constant; 600 = #AE2448) ---- */
+  --color-brand-50: #fef2f3;
+  --color-brand-100: #fce0e2;
+  --color-brand-200: #fac9ce;
+  --color-brand-300: #f7a2ad;
+  --color-brand-400: #f46a82;
+  --color-brand-500: #e0315f;
+  --color-brand-600: #ae2448;
+  --color-brand-700: #931d3c;
+  --color-brand-800: #74142d;
+  --color-brand-900: #560c20;
+  --color-brand-950: #360511;
+
+  /* ---- Primitives: neutral (pure grey to match the #F7F7F7 page) ---------- */
+  --color-neutral-0: #ffffff;
+  --color-neutral-50: #f7f7f7;
+  --color-neutral-100: #e8e8e8;
+  --color-neutral-200: #d7d7d7;
+  --color-neutral-300: #bebebe;
+  --color-neutral-400: #9e9e9e;
+  --color-neutral-500: #808080;
+  --color-neutral-600: #656565;
+  --color-neutral-700: #525252;
+  --color-neutral-800: #404040;
+  --color-neutral-900: #2e2e2e;
+  --color-neutral-950: #1b1b1b;
+
+  /* ---- Primitives: status. Only the two the site renders. Error sits at hue
+     33.8, 22° from brand, so a crimson button never reads as an error. ------ */
+  --color-success-50: #e5fde9;
+  --color-success-700: #276036;
+  --color-success-800: #1d4b29;
+  --color-error-50: #fef2f0;
+  --color-error-700: #8e2d18;
+  --color-error-800: #702110;
+
+  /* ---- Semantic: surfaces ------------------------------------------------- */
+  --color-bg: var(--color-neutral-50);
+  --color-surface: var(--color-neutral-0);
+  --color-surface-muted: var(--color-neutral-100);
+  --color-surface-inverse: var(--color-neutral-950);
+  --color-border: var(--color-neutral-100);
+  --color-border-strong: var(--color-neutral-200);
+
+  /* ---- Semantic: text (ratios measured against bg #F7F7F7) --------------- */
+  --color-text: var(--color-neutral-950); /* 16.08:1 */
+  --color-text-secondary: var(--color-neutral-600); /* 5.44:1; 4.76 on surface-muted */
+  --color-text-inverse: var(--color-neutral-0);
+  --color-text-inverse-secondary: var(--color-neutral-300); /* 9.27:1 on inverse */
+
+  /* ---- Semantic: accent. One filled action per view. --------------------- */
+  --color-accent: var(--color-brand-600); /* 6.23:1 on bg */
+  --color-accent-hover: var(--color-brand-700);
+  --color-accent-subtle: var(--color-brand-50);
+  --color-accent-text: var(--color-brand-600);
+  --color-on-accent: var(--color-neutral-0); /* 6.68:1 on accent */
+
+  /* ---- Semantic: status --------------------------------------------------- */
+  --color-success-text: var(--color-success-700); /* 6.97:1 */
+  --color-success-subtle: var(--color-success-50);
+  --color-error-text: var(--color-error-700); /* 7.72:1 */
+  --color-error-subtle: var(--color-error-50);
+
+  /* ---- Type --------------------------------------------------------------- */
+  --font-sans: var(--font-host-grotesk), ui-sans-serif, system-ui, sans-serif;
+
+  /* ---- Radius: small and quiet ------------------------------------------- */
+  --radius-xs: 2px; /* cards, plan cards, tiles */
+  --radius-sm: 4px; /* photos, textures */
+  --radius-md: 8px; /* buttons, inputs, accordion rows, mini-visual cards */
+  --radius-glass: 14px; /* glass frame: inner 8 + 8px ring, minus the 1px edge */
+
+  /* ---- Elevation: only mini visuals floating on photos and textures ------ */
+  --shadow-float: 0 10px 30px rgb(20 4 9 / 0.18);
+  --shadow-raise: 0 24px 48px rgb(20 4 9 / 0.12), 0 2px 6px rgb(20 4 9 / 0.06); /* lifted card: the walkthrough's active step */
+
+  /* ---- Breakpoints -------------------------------------------------------- */
+  --breakpoint-md: 48rem; /* 768: tablet */
+  --breakpoint-lg: 64rem; /* 1024: desktop */
+
+  /* ---- Motion ------------------------------------------------------------- */
+  --ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
+  /* Wise's navigation curve, measured on wise.com 2026-10-21. */
+  --ease-nav: cubic-bezier(0.8, 0.05, 0.2, 0.95);
+}
+
+/* -----------------------------------------------------------------------------
+   Values that change with the viewport live outside @theme, as plain custom
+   properties, so one utility can read them at every width. Mobile first.
+   -------------------------------------------------------------------------- */
+:root {
+  /* Type scale: the owner's specs. H1 and H2 step down one size on mobile. */
+  --type-h1-size: 38px;
+  --type-h1-line: 41.8px;
+  --type-h1-track: -1.52px;
+  --type-h2-size: 32px;
+  --type-h2-line: 35.2px;
+  --type-h2-track: -1.28px;
+
+  /* Layout, measured from asset.framer.ai (re-measured 2026-10-21 at 1440
+     and 375). Asset pads every section 72px; on desktop the sections also sit
+     48px apart, so content to content is 192px there and 144px on mobile. One
+     padding token reproduces both: 72 on mobile, 96 (72 + 24) on desktop. */
+  --container: 1080px;
+  --container-hero: 920px;
+  --gutter: 16px;
+  --section-y: 72px;
+  --section-head: 32px; /* section header to its content */
+  --head-gap: 24px; /* eyebrow to title block */
+  --head-sub-gap: 20px; /* title to sub */
+  --grid-gap: 16px; /* tiles, plan cards, link grids */
+  --grid-gap-wide: 24px; /* photo cards; two-column split (accordion | panel) */
+
+  /* Glass frame around every mini visual. */
+  --glass-fill: rgb(255 255 255 / 0.18);
+  --glass-edge: rgb(255 255 255 / 0.38);
+  --glass-blur: 10px;
+
+  --duration-fast: 150ms;
+  --duration-base: 240ms;
+  /* Header mega menu, from wise.com: 350 bar and height, 200 panel fade
+     (and its delay), 600 slide when switching tabs. */
+  --duration-nav: 350ms;
+  --duration-nav-short: 200ms;
+  --duration-nav-long: 600ms;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --type-h1-size: 48px;
+    --type-h1-line: 52.8px;
+    --type-h1-track: -1.92px;
+    --type-h2-size: 38px;
+    --type-h2-line: 41.8px;
+    --type-h2-track: -1.52px;
+    --section-y: 96px;
+    --section-head: 64px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-nav: 0ms;
+    --duration-nav-short: 0ms;
+    --duration-nav-long: 0ms;
+  }
+}

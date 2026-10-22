@@ -1124,3 +1124,1212 @@ help, account tips. The legal pages still name Fuspay; review with counsel.
 The Fuspay logo is back in the partner strip and the insurance partners list
 (`public/fusepay-logo.png` restored). Fuspay copy, the "Who operates the
 wallet?" FAQ and the schema provider node stay removed.
+
+## Addendum · 2026-10-21 · New redesign: design system v1
+
+Supersedes the earlier type picks (Manrope/Inter, Archivo display) and the
+crimson/blush/gold palette for the new redesign. Reference page:
+`design-lab/design-system.html` (tokens block at the top of its `<style>`).
+
+- **Direction:** minimal, after asset.framer.ai. Grey page (#F7F7F7), white
+  cards, small radii, wide section spacing. Photos carry the warmth; brand
+  colour is kept for the one action per view.
+- **Type:** Host Grotesk 400/500 only, using the owner's scale: H1 48/52.8/−1.92,
+  H2 38/41.8/−1.52, H3 16/17.6/−0.64 medium, P1 16/24/−0.32, P2 14/21/−0.28,
+  P3 (buttons) 14/16.8/−0.28 medium. On mobile, H1 drops to 38 and H2 to 32,
+  matching Asset's mobile sizes.
+- **Colour:** brand ramp generated in OKLCH from #AE2448 (hue 11.8, held
+  constant), with brand at step 600. Neutrals are pure grey to match #F7F7F7.
+  Only the success and error ramps exist, because the site renders nothing
+  else. Error sits at hue 33.8, 22° from brand, so a crimson button never
+  reads as an error.
+- **Measured pairs:** text #1B1B1B on bg 16.08; secondary #656565 on bg 5.44,
+  on white 5.83, on #E8E8E8 4.76; brand on bg 6.23; white on brand 6.68; white
+  on brand-700 hover 8.46. Grey 400 (#9E9E9E) fails on bg (2.5), so it is never
+  used for text.
+- **Space:** measured from Asset at 1440px wide: 1080 container, 72 section padding
+  (48 on mobile), 64 from heading to content (40 on mobile), 16 card gap, card
+  padding 24/24/32. Radius 2 for cards, 4 for photos, 8 for buttons.
+- **Buttons:** minimum height 44 (Asset's 33px is below a comfortable touch
+  size), with padding 12 × 16.
+- **Photos (Unsplash, hotlinked in design-lab, self-host on build):** hero
+  aL_ZYKJiN9Q, feature panel kF0-RhpHhRA (Lekki bridge), steps 1PgSfwSxXx0 /
+  jCRrhLwAmJ8 / TPT4pevJEmQ, final CTA 9ySEZ-ugtJA. None repeats a photo
+  already on the site.
+
+## Addendum · 2026-10-21 · Brand backgrounds picked (owner)
+
+The owner picked three crimson textures from `design-lab/brand-backgrounds.html`,
+modelled on a green aurora reference. They're self-hosted in
+`public/photos/brand/`:
+- **G1 aurora ribbons** (`bg-aurora-g1.svg/.webp/.jpg`, 2400×1200). Generated
+  from the brand ramp (300–950) with film grain, so it matches #AE2448 exactly.
+  The SVG source is kept so the image can be re-exported at other ratios. The blur
+  filters use a user-space region, because the default region clipped the
+  blur into hard edges.
+- **U2 flowing waves** (`bg-flowing-waves-u2.jpg`), Unsplash e01vA10bv4w.
+- **U3 dark fabric** (`bg-dark-fabric-u3.jpg`), Unsplash ZOUXvXydHRk.
+
+For banners, the final CTA and feature panels. White text goes on the darker
+side, with a left-to-right scrim behind body copy.
+
+Placement on home (wireframe, 2026-10-21). Brand textures sit behind product
+UI, the step cards and plan prices; people photos stay in the hero:
+- **U2** sits behind the switching app screens in "What Omanga does". It replaces
+  the Lekki bridge photo, which moves to spare (for /wallet or /visiting-africa).
+- **U3** is the background of the Popular Gold plan card, with white text over
+  a 35–55% dark scrim and a white "Get Gold" button. The texture marks the
+  recommended plan, so no extra badge colour is needed.
+- **G1** is the final CTA panel behind the app home screen, closest to the
+  aurora reference. The Lagos skyline photo moves to spare.
+- **Steps (owner, 2026-10-21):** the three step cards all use U2, cropped
+  left, centre and right (300% wide), so the row reads as one continuous
+  texture, like img 4's single landscape. The people photos
+  (1PgSfwSxXx0, jCRrhLwAmJ8, TPT4pevJEmQ) move to spare. People photography
+  now appears only in the hero.
+
+## Addendum · 2026-10-21 · Glass frame on mini visuals (owner)
+
+Every mini visual (an app screen inside a card or panel) now sits in a glass
+frame, after an owner reference. The frame is an 8px translucent ring: white at 18%, a 1px white
+edge at 38%, a 10px backdrop blur and the float shadow. Inside it is a white card
+with an 8px radius. The outer radius is 14. Tokens: `--glass-fill`, `--glass-edge`,
+`--glass-blur`, `--radius-glass` (design-lab/design-system.html). It's applied in
+the home wireframe to the three step cards, the "What Omanga does" panel and
+the final CTA. The CTA screen no longer bleeds off the corner; it is centred
+in its frame.
+
+## Addendum · 2026-10-21 · New redesign build setup
+
+The new redesign is built at **/new**, beside the live site. It has its own
+route group, `app/(new-redesign)`, with its own root layout, so it gets its own
+`<html>`, Host Grotesk (`next/font/google`) and stylesheet. The live site
+(`app/(redesign)`, Inter) is untouched. Moving between the two is a full page
+load (separate root layouts, per the Next 16 route-groups docs).
+
+- All new code lives in `new-redesign/` (config, styles, components, content,
+  doc); only route files sit in `app/(new-redesign)`. See
+  `new-redesign/README.md` for the map and cutover steps.
+- The stylesheet uses `source(none)` and scans only `new-redesign/` and its
+  route group. Tailwind's default palette is cleared (`--color-*: initial`), so
+  only the design-system tokens exist.
+- Internal links go through `href()` with `REDESIGN_BASE = "/new"`. At cutover
+  this becomes "" and no component changes.
+- `/new` is `noindex, nofollow` and is not in `config/routes.ts`, so it never
+  enters the sitemap. A "Redesign preview" badge marks every page.
+- `/new` renders the locked v4 home order as placeholders; each one is
+  replaced as its section is built. The hero photo (Unsplash aL_ZYKJiN9Q, a
+  different photo from the live `hero-arms-up.jpg`) is self-hosted in
+  `public/photos/home/`.
+- Verified 2026-10-21: tsc and eslint clean; `next build` lists `/new` as
+  static; live `/` still serves Inter and `index, follow`.
+
+## Addendum · 2026-10-21 · /new hero and header (owner)
+
+**Hero (section 1, built).**
+- Background: deep crimson. brand-950 (#360511) under a fade to near-black at the
+  top. The owner chose it over the sky photo after seeing it while the photo
+  was loading. The photo was removed from the hero and from `public/photos/home`.
+- Contrast: white H1 17.7:1, sub at 90% white 14.3:1, white on the primary
+  button 6.68:1. The button fill against brand-950 is 2.65:1, which is fine
+  because the label identifies it.
+- Height is the viewport (`svh`), clamped to 640–1000px. Each H1 sentence is its own
+  balanced line, so 375px reads "Stay covered / in Nigeria." without an orphan.
+- CTAs: "Open your free wallet" (filled) and "Compare health plans" (white
+  underlined text, Button `onPhoto` variant), keeping one filled action per view.
+
+**Header, after wise.com (owner).** Measured at 1440: a 76px bar, tabs beside
+the logo, Help, Log in and the action on the right. Each tab opens a
+full-width white panel (24px top, 40px bottom) with a featured photo card
+(340px, image 200px) and link columns (240px) under grey headings, each link
+with a tinted icon.
+- Over the hero, the bar is transparent with white text. When a panel is open,
+  it turns white and swaps to the horizontal colour logo
+  (`public/logo-omanga-horizontal.svg`: mark in brand, word in ink, made from the
+  white file because `logo-omanga.svg` is the stacked lockup).
+- The header action is **Download** (owner), replacing "Open your free wallet".
+  Store links are still owner question § 8.6; until they exist it points at
+  `/new#download`, the app row to come.
+- Help moves from the Company menu to the bar's right side (Wise placement).
+  All other locked destinations are unchanged.
+- The panel cards reuse the spare photos: wallet phone, doctor, airport, and the
+  Lagos skyline (`public/photos/nav/`).
+- Behaviour: hover or click opens a panel. A mouse click after hover keeps it open;
+  Enter/Space toggles. Escape closes and returns focus to the tab, and leaving
+  the header closes it. Below 1024px the bar shows the logo, Download and a
+  menu button; the sheet lists every group with icons, then Help, Log in and
+  WhatsApp, with Download pinned at the bottom.
+
+## Addendum · 2026-10-21 · Hero converter, Wise menu motion, mobile Download (owner)
+
+**Converter in the hero.** It sits under the CTAs as a white card inside the
+glass frame, on the crimson.
+- Content: "You add" (amount and GBP/USD/CAD picker), "You get" (naira, read-only
+  `output`, announced politely), and a rate line (1 GBP = ₦…, "Mid-market
+  rate, updated hourly", "₦20 per transfer", "See all rates →").
+- Rates come from `getNgnRates()` in lib/rates.ts, the same hourly public
+  snapshot the live rate pages use.
+- It has no button of its own, so the hero keeps a single filled action.
+- From ₦10,000 up the naira figure drops kobo. Below 768px the NGN chip is
+  the flag only (the code stays for screen readers), so ₦17,799,272 fits at
+  375px.
+- The hero changed from a fixed viewport height to `min-h-svh` and grows with
+  its content, so the converter is never clipped on short screens.
+
+**Mega-menu motion copied from wise.com.** Measured from its stylesheet on
+2026-10-21:
+- The bar's colours and the logo cross-fade over 350ms on
+  `cubic-bezier(0.8, 0.05, 0.2, 0.95)` (`--ease-nav`).
+- The panel area grows from 0 to the panel's measured height over 350ms.
+- The panel fades in over 200ms after a 200ms delay, and fades out over 200ms
+  while the area collapses.
+- Moving between tabs slides the new panel 10px in from that side and fades
+  it over 600ms (it stops moving at 66%).
+- A page dimmer (black 50%, 8px blur) fades in over 350ms.
+- Every panel stays mounted and `inert` while closed so it can be measured.
+  All durations drop to 0 under reduced motion.
+- Checked on /new: the height ran 0 → 41 → 330 → 415px at 0/100/200/350ms, and
+  the panel's opacity started rising at about 200ms.
+
+**Mobile Download.** It now lives only inside the menu sheet, pinned at its foot.
+Below 1024px the bar shows only the logo and the menu button.
+
+## Addendum · 2026-10-21 · Converter: swap and Wise-style currency picker (owner)
+
+- **Swap:** a round 40px button centred on the seam between "You add" and
+  "You get" swaps the two currencies. Picking the currency already on the
+  other side also swaps, so the converter never shows X → X.
+- **Both sides switch:** GBP, USD, CAD and NGN on either side, from the live
+  rate pages' cross matrix (`crossMatrix(getNgnRates())`). The rate line
+  generalises to "1 FROM = {symbol}rate". Rates under 1 show three significant
+  figures (1 CAD = £0.532). More African currencies wait on owner question
+  § 8.5 (which currencies the wallet holds).
+- **Picker** (`new-redesign/components/ui/CurrencyPicker.tsx`), after Wise's
+  "You send exactly" dropdown:
+  - A grey chip (flag, code, chevron) opens a white 340px popover.
+  - The popover has a search field with a 2px ink border ("Type a currency /
+    country"; it matches code, name or country), then an "All currencies"
+    label over a rule, then rows of round flag, code and name.
+  - The selected row is outlined and ticked.
+  - Keyboard: focus moves to the search field, ↑/↓ highlight
+    (`aria-activedescendant`), Enter picks, and Escape closes with focus back
+    on the chip. Clicking outside or tabbing away also closes it.
+- **Mobile (below 768):** the chips show flag and chevron only. The code is in
+  the chip's accessible name and in the rate line, so a seven-figure naira sum
+  fits. The popover anchors to its field and spans it instead of the chip, so
+  it never runs off a 375px screen.
+- The hero lost `overflow-hidden` so the popover can extend past the section.
+
+## Addendum · 2026-10-21 · Design system is the single UI source (owner)
+
+The owner asked that the header's menu cards match the design system's card,
+and that `design-lab/design-system.html` stay the source for all UI.
+- New shared `new-redesign/components/ui/Card.tsx` (`Card`, `PhotoCard`,
+  `CardTitle`) implements the spec exactly: white, a 1px `--color-border`
+  edge, a 2px radius; a 220px photo flush at the top; a body padded 24 / 24 / 32;
+  an H3 led by a 3 × 12 crimson bar; P2 secondary text 8px below; an optional
+  "Explore →" in P3 accent.
+- The menu card had drifted (4px radius, 200px photo, no bar, 6px gaps). It now
+  uses `PhotoCard`, measured on /new at 2px / 220px / 24 24 32 / 3 × 12.
+- UI that existed only in code is now specified on the design system page:
+  the header bar, the menu panel, the currency popover, the `onPhoto` button
+  variant and the nav motion tokens.
+- Rule for the build: new UI is added to the design system page first (or in
+  the same change), and components reuse `Card`, `Button` and `SectionHead`
+  rather than restyling in place.
+
+## Addendum · 2026-10-21 · /new partner strip (section 2, built)
+
+- Follows img 3: a thin white band under the hero (`bg-surface`, 1px bottom
+  rule, padded 40px, 32px on mobile), a centred P2 secondary label "Our
+  partners", and a static row of logos.
+- Partners are the three the live site shows (`content/trust.content.ts`):
+  Phillips HMO, Fuspay (restored by the owner 2026-10-19) and Zira. Logos only.
+  Partner roles are still an open owner question, so there are no captions and
+  no roles in the alt text.
+- The logos are grey at rest (grayscale, 60% opacity, as in img 3) and return
+  to full colour on hover over 240ms. The trademarks themselves are not
+  altered.
+- The live PNGs carry different amounts of built-in whitespace, which made the
+  marks read small and unequal. /new uses trimmed copies in
+  `public/photos/partners/` (the originals are untouched for the live site),
+  sized by optical weight with height = 26 × √(3.7 ÷ aspect): Phillips 20px,
+  Fuspay 26px, Zira 26px, all 85% of that below 768px.
+- No marquee: three logos fit one row at 375px (measured right edge 351px).
+  Revisit if there are more than five partners.
+- The spec was added to design-system.html before the build.
+
+## Addendum · 2026-10-21 · /new "What Omanga does" (section 3, built)
+
+- Follows img 2 and the locked wireframe: eyebrow "What Omanga does", H2 "One
+  app for your money and your health on the trip", sub, then five accordion
+  rows beside an app-screen panel.
+- **Copy change:** the wireframe's sub-line ended "without paying a deposit up
+  front". That is an unconfirmed insurance fact (§ 8.4), so it now ends
+  "through Phillips HMO".
+- **Rows** (title, line, link): Convert at the real rate → Exchange rates;
+  Send for ₦20 → About the wallet; Pay in 50+ African countries → Countries;
+  Health cover from $50 a month → Plans and prices; Get care at a network
+  hospital → Get care now.
+- **Accordion:** one row open, the first open on load. Headers are
+  `h3 > button` with aria-expanded/aria-controls, and closed bodies are inert.
+  The open row is white with an ink border and the 3 × 12 crimson bar; closed
+  rows are `surface-muted`. Rows expand with a grid-rows transition over 240ms.
+- **Panel (from 1024px):** the U2 texture (4px radius, at least 380px tall),
+  with the open row's screen in the glass frame, at most 320px wide. Screens
+  cross-fade with an 8px rise over 240ms. Below 1024px there's no side panel;
+  the screen sits inside the open row on a 260px slice of the texture.
+- **Screens are illustrative app states:** no names, no invented merchants, no
+  speed claims, no "card". The Convert screen uses today's GBP→NGN rate
+  (`getNgnRates`), so it matches the hero converter.
+- The spec was added to design-system.html before the build.
+
+## Addendum · 2026-10-21 · Spacing re-measured from asset.framer.ai (owner)
+
+The owner found the spacing between sections and inside sections too tight.
+Asset was re-measured at 1440 and 375 (computed styles), and /new now
+matches it.
+
+| | Asset | /new before | /new now |
+|---|---|---|---|
+| Section to section, desktop | 72 + 48 gap + 72 = 192 | 144 | 192 (96 + 96) |
+| Section to section, mobile | 72 + 72 = 144 | 96 | 144 (72 + 72) |
+| Header → content | 64 / 32 mobile | 64 / 40 | 64 / 32 |
+| Eyebrow → title, title → sub | 24, 20 | 16, 16 | 24, 20 |
+| Eyebrow marker | 14 × 8 | 10 × 5 | 14 × 8 |
+| Accordion rows apart | 16 / 8 mobile | 8 | 16 / 8 |
+| Accordion row padding | 20·32·20·20 closed, 24 top open, 12 title→text | 14·16 | same as Asset |
+| List ↔ panel | 24 (16 stacked) | 16 | 24 / 16 |
+| Photo card | image 236, body 32/24, gaps 12 | 220, 24/24/32, 8 | same as Asset |
+
+- Asset's sections sit in a parent with a 48px gap on desktop (none on
+  mobile). /new reproduces it with one token: `--section-y` is 96 on desktop
+  and 72 on mobile.
+- New tokens: `--head-gap` 24, `--head-sub-gap` 20, `--grid-gap-wide` 24.
+- Closed accordion rows are a flex button, so the 17.6px H3 sets their height
+  (58px plus the 1px edge) rather than the 24px line box.
+- Checked on /new at 1440: 192 / 24 / 20 / 64 / 16 / 24. At 375: 144 / 32 / 8.
+- design-system.html updated to the same numbers (tokens, Space table, card
+  and accordion specs).
+
+## Addendum · 2026-10-21 · /new "Sorted before you land" (section 4, built)
+
+- Follows img 4 and the wireframe: eyebrow "How it works", H2 "Sorted before
+  you land", sub, then three step cards in an ordered list.
+- **Steps:** Open your free wallet / Add money / Pick your cover. The
+  wireframe's "No Nigerian ID needed [confirm]" is left out until the owner
+  confirms it (§ 8.5).
+- **Cards:** `PhotoCard` (236px image, 32/24 body, crimson-bar title).
+  - The image is one texture, U2, sliced across the three cards with a new
+    `slice` prop (the image at 300% width, offset 0 / −100 / −200%), so the row
+    reads as one continuous picture, as in the owner's 2026-10-21 pick.
+  - Each image holds the step's app screen in the glass frame (82%, at most
+    280px). The add-money screen uses today's GBP rate and labels it "Rate",
+    because "Mid-market rate" doesn't fit the card.
+- **Layout:** three across from 1024px, 24px apart, and stacked below that. At
+  768px a third of the column is 229px, too narrow for the screens.
+- Checked at 375 / 768 / 1024 / 1440: no row overflows and the page width
+  stays at the viewport.
+
+## Addendum · 2026-10-21 · /new Health cover prices (section 5, built)
+
+- Follows the pricing reference and the wireframe: eyebrow "Health cover in
+  Nigeria", H2 "Simple monthly cover for your trip", sub, a trip-length
+  switch, three plan cards, then a footnote and "Compare all plan details →".
+- **Facts and copy** are the live site's approved plan content
+  (`content/insurance-plans.content.ts`): $50 / $85 / $120, Category A /
+  A + B / A + B + C, the included lists and "Buy {plan}" CTAs. The CTAs go to
+  the per-tier Paystack pages (`PLAN_CHECKOUT_URLS`, recurring monthly, read on
+  2026-09-20). "No commitment. Cancel any time." stays as published, not
+  strengthened, while plan terms are open (§ 8.1).
+- **Trip-length switch** (1 month / 3 months): a radiogroup that only
+  multiplies the monthly price ("$255 for 3 months"; "Billed monthly" for one
+  month). No discount is implied.
+- **Cards:** Card radius and border, padded 24 / 24 / 32, 32px between the content
+  and the button, 16px apart (Asset's pricing cards).
+  - Gold is featured: it sits on the U3 dark-fabric texture under a 50–70% scrim
+    (raised from 35–55% because the texture's bright streak passes behind the
+    text), with white text and the white inverse button.
+  - Silver and Diamond use the secondary button, so the hero keeps the page's
+    one crimson primary.
+- **Alignment:** descriptions reserve two lines from 1024px and the title row is
+  pinned to 18px (the "Popular" tag would otherwise add height), so prices
+  and rules line up across the three cards (measured equal at 1440).
+- "Everything in Silver, plus:" introduces the list, so it gets no tick.
+- Three across from 1024px; stacked below that, with Gold first.
+
+## Addendum · 2026-10-21 · /new "Why Omanga" (section 6, built)
+
+- Follows img 5: eyebrow "Why Omanga", H2 "Honest about rates, clear about
+  who does what", sub, six icon tiles in a 3 × 2 grid, then "Is Omanga
+  safe? →" (/safety).
+- **Tile:** Asset's icon card (measured 2026-10-21): padded 24 top and bottom
+  and 20 sides, a 64px icon circle, 24px to the text, 8px from title to
+  description, tiles 16px apart. It's built on our Card (white, 1px border,
+  2px radius). The icon is the shared `NavIcon` at the new `lg` size (64px
+  `accent-subtle` circle, 24px brand-700 icon); `tag` and `chat` were added
+  to the set.
+- **Copy, tightened to confirmed facts:**
+  - "No hidden markup" became "₦20 per transfer, shown before you send"
+    (conversion cost is § 8.5).
+  - "Care, not claims / No pay-then-claim" became "Care through a network /
+    Go to a network hospital and Phillips HMO handles your care" (claims
+    process is § 8.4).
+  - The sub's "every partner named" became "a plain answer to who provides
+    what", since the wallet's operator stays off public pages (owner,
+    2026-10-18).
+- Three columns from 1024px, two from 768px, one below. Checked at all three
+  widths with no overflow.
+
+## Addendum · 2026-10-21 · /new Countries (section 7, built)
+
+- Follows Wise's "works nearly everywhere": eyebrow "Countries", H2 "Omanga
+  works across Africa", sub "Hold, convert and pay in 50+ African countries.",
+  then tabs over a flag-and-link grid and a "See all …" link.
+- **Pay in:** the same 11 African countries the live site shows as its sample
+  of 50+ (`content/coverage.content.ts`). The full list is owner question
+  § 8.5, so there's no inline "show all". "See all 50+ countries" and each
+  country link go to /wallet/countries until per-country pages exist.
+- **Exchange rates:** the live site's three rate pages (pounds, dollars and
+  Canadian dollars to naira → /rates/[pair]), plus "See all exchange rates".
+- **Tabs:** WAI-ARIA tabs with one tab stop, ←/→/Home/End, and each panel
+  labelled by its tab. The selected tab is `accent-subtle` with brand-700 text;
+  the others have a `border-strong` edge, with an 8px radius (no pills, per the
+  button rule).
+- **Grid:** five columns from 1024px, three from 768px, two below, rows 48px
+  apart. Each entry is a 48px flag with a P3 link 16px below it, underlined
+  and turning brand on hover.
+- **New shared `Flag` component.** The flag SVGs are 30 × 24 rounded rectangles
+  in a 32 × 32 box, so a round crop showed transparent edges. `Flag` scales
+  the art 1.4× inside a clipped circle. The currency picker uses it too.
+
+## Addendum · 2026-10-21 · /new FAQ (section 8, built)
+
+- Follows img 6: eyebrow "Questions", H2 "Everything you need before you
+  go", and a sub that ends with a "Chat on WhatsApp" link, then eight
+  questions in two columns.
+- **Every answer is published live-site copy** (payments FAQ, insurance FAQ,
+  safety FAQ), so the section adds no new claims. Three wireframe questions
+  had no approved answer and were swapped for approved ones: "Do I need a
+  Nigerian bank account?" → "What is the Omanga travel wallet?"; "Is health
+  cover required to enter Nigeria?" → "Does Omanga health cover work outside
+  Nigeria?"; "What happens to leftover money?" → "What fees does Omanga
+  charge?". They return once the owner supplies the facts (§ 8.4, § 8.5).
+- **Layout (Asset's FAQ, measured 2026-10-21):** two independent flex columns
+  16px apart, so opening a row only moves its own column (checked: the right
+  column stays at 419px when a left row opens). Rows are 10px apart and padded
+  18/16, with 16px from question to answer. One column below 1024px.
+- **Rows:** `surface-muted`, 8px radius (the accordion-row radius, not Asset's
+  4). The question is P3 and the plus turns into a cross. The answer is P2
+  secondary and opens with the 240ms grid-rows transition. Any number of rows
+  can be open. Each question is `h3 > button` with aria-expanded/aria-controls,
+  and closed answers are inert.
+- No FAQPage schema while /new is noindex; it's added at cutover with
+  `lib/schema.ts`.
+
+## Addendum · 2026-10-21 · /new final CTA and footer (section 9, built). Home complete.
+
+**Final CTA (Asset's CTA, measured 2026-10-21).**
+- A white Card padded 40 (24 on mobile), content at most 400px: eyebrow "Get
+  started", H2 "Land with everything sorted" (the locked closing line), and
+  "Open your free wallet today and add cover when you book your trip."
+- 32px down: the primary "Open your free wallet" (wallet) and "Compare health
+  plans →".
+- Beside it, 16px away, the G1 aurora panel (4px radius, 360px tall; 280px stacked
+  under the card on mobile) with an illustrative app home screen in the glass
+  frame. The split is 58 : 42 from 1024px.
+
+**Footer (Asset's layout, with the sitemap § 5 locked columns).**
+- A white band with a top rule, padded 48 (40 on mobile). Left: the horizontal
+  logo, the live site's blurb, and the app row.
+- Right: Wallet / Health cover / Travel / Company / Transparency / Legal in a
+  3 × 2 grid (two columns on mobile). Headings are P3; links are P2 secondary,
+  12px apart.
+- Under a rule: "Health cover is provided by Phillips HMO. Omanga is not the
+  insurer.", © year, and Instagram.
+- **The app row is `#download`**, the header's Download target. The app isn't in
+  the stores (§ 8.6), so it says so and offers "Open the web wallet". No
+  imitation store badges are drawn (trademark artwork).
+- **Held back until confirmed:** "Licences" (Transparency) and the legal entity,
+  RC number and address in the who's-who block (§ 8.3). Nothing invented.
+- Legal links use the locked `/legal/*` paths, and Fees and Who provides what
+  point at `/wallet#fees` and `/safety#who-provides-what`. All are under /new and
+  resolve as those pages are built.
+
+**Home complete.** All nine locked sections are built. The placeholder
+component is deleted. The page composes sections from a
+`Record<HomeSectionId, …>`, so a missing section is a type error. tsc, eslint and
+`next build` are clean, and /new is static with an hourly revalidate (rates).
+
+## Addendum · 2026-10-21 · Accordion open row: no border (owner)
+
+The open row in "What Omanga does" lost its 1px ink border. It's now set apart
+only by its white fill against the grey closed rows. With no border at all,
+closed rows are 58px, exactly Asset's height. Updated in the design-system spec
+and its sample.
+
+## Addendum · 2026-10-21 · Hero fills the viewport (owner)
+
+The hero is now exactly one screen, full width: `h-svh` with `min-h-fit`, so it
+grows past the screen only when the content can't fit. Its content is centred
+in the space under the 76px header. The fixed spacing (160 top, 64 to the
+converter, 96 bottom) became height-aware clamps: top 76 + clamp(16, 4vh, 48),
+sub → buttons clamp(20, 3.5vh, 32), buttons → converter clamp(24, 5vh, 64),
+bottom clamp(24, 5vh, 64). Measured hero size = viewport at 1440×900,
+2000×1043, 1280×720, 375×812 and 390×844, with the converter fully inside each
+(the tightest is 8px clear at 375×812).
+
+## Addendum · 2026-10-21 · Short section headers lengthened (owner)
+
+The owner found two section headers too short beside the others' two-line
+blocks. The copy was rewritten from approved facts only:
+- **Steps:** "Sorted before you land" / "Set up from home in a few minutes.
+  Everything's ready when you arrive." → "Three steps at home before you fly" /
+  "A few minutes on your phone is all it takes. Your naira and your health
+  cover are ready the moment you land." (The plan is bought before travel and
+  the wallet funded in GBP/USD/CAD, per the approved FAQs.)
+- **Countries:** "Omanga works across Africa" / "Hold, convert and pay in 50+
+  African countries." → "One wallet for 50+ countries across Africa" / "Hold
+  and convert your money, then pay online or in person wherever you travel.
+  Today's naira rates are a tab away."
+- Measured at 1440: all six section headers (sections 3–8) are now two lines of H2
+  and two lines of sub. At 375: two lines of H2 and three of sub. "Land with
+  everything sorted" stays only on the final CTA, so the story's closing line
+  isn't spent earlier on the page.
+
+## Addendum · 2026-10-21 · Menu links without icons (owner)
+
+- The owner kept the new section copy (steps and countries headers).
+- The header's mega-menu links lost their icon circles. They're now text-only
+  P3 rows (10px vertical padding, `surface-muted` hover), still aligned under
+  the column headings. The mobile sheet lists the same links and dropped its
+  icons too, so the two menus match.
+- `icon` is removed from the navigation content. The icon set stays for the
+  Why Omanga tiles, and its name type moved into `NavIcon.tsx`. The
+  design-system spec is updated.
+
+## Hero background: crimson fabric (2026-10-21, live in /new)
+
+- Preview: `design-lab/hero-fabric-bg.html`. Owner asked for an #AE2448 version of
+  miyagami.com's hero background.
+- Miyagami's is a live WebGL shader, not a video: a lit cloth surface with a
+  long diagonal fold that sways in place, a shallower cross fold drifting the
+  other way, a woven dot mesh (~3px) bent by the folds, film grain, and soft
+  focus to the right. We keep the mesh and drop the film grain (owner,
+  2026-10-21). Ours is our own shader that copies that behaviour, not their code.
+- Jitter's MCP can't author shaders, so this is code rather than a Jitter
+  file. Jitter's in-editor shader agent is the route if a Jitter version is
+  wanted.
+- Ramp: shadow brand-950 #360511, base brand-600 #AE2448, highlight brand-400
+  #F46A82, backdrop #6E4A55.
+- Primary button on this background: white fill, #1B1B1B label (owner,
+  2026-10-21), as on Miyagami. A crimson fill blended into the cloth.
+  #1B1B1B on white is 17.3:1.
+- Owner's settings: speed 1, folds 1, texture 0.8, focus 0.8. Built into the
+  /new hero as `HeroFabric.tsx` (shader in `heroFabric.glsl.ts`). It replaces
+  the flat brand-950 and its top shade, and uses the existing `inverse`
+  button. It runs at up to 30 fps, only while on screen, and shows one still
+  frame for reduced motion.
+- Contrast to watch: white sub text on the lightest folds (brand-400) is
+  about 3:1.
+
+## Feature motion scenes (2026-10-21)
+
+- All five "What Omanga does" items play a Jitter scene in place of texture
+  + glass + screen. Source: Jitter file "Omanga — Home page motion", one
+  artboard per card (Wallet, Convert, Spend, Cover, Care).
+- Files in `public/videos/home/`: `wallet-create.mp4` (7s, 0.9 MB),
+  `convert.mp4` (10s, 1.4 MB), `spend.mp4` (11.5s, 1.7 MB), `cover.mp4`
+  (7.6s, 1.0 MB) and `care.mp4` (7.3s, 1.0 MB). All are re-encoded from the
+  Jitter exports to 1080×880 H.264 at about 1.1 Mbps. Each has an end-frame
+  poster `.jpg`. Only the open row's video ever downloads.
+- The scenes name no hospitals (owner question § 8.4) and show no fee or rate
+  for paying abroad (§ 8.5). "$255 for 3 months" is the site's own
+  trip-length sum (monthly price × months).
+- `FeatureVideo.tsx`: muted, looped, inline, `preload="none"`. It plays only
+  while its row is open and on screen, rewinds when the row opens, and keeps
+  the poster for reduced motion. On phones it's zoomed 1.35× so the card
+  stays readable.
+- The scenes bake in today's rates (£1 = ₦1,780.11, $1 = ₦1,330.84), so
+  they'll drift from the live converter. Re-export them if the gap grows.
+
+
+## Feature motion scenes v2 (2026-10-22)
+
+- Owner brief: five distinct scenes, one motion idea each, replacing the
+  five near-identical "glass card on satin" v1 scenes. Jitter artboards
+  `v2 · 01`–`v2 · 05` in "Omanga — Home page motion" (row below v1; v1 kept
+  for reference).
+  - 01 Wallet, convergence: GBP, USD and CAD tokens fly in on curved paths
+    (an X move and a Y move with different easings) into empty wallet slots
+    and become balance rows. 8.6s.
+  - 02 Convert, precision: sell 1.2400 and buy 1.2600 markers separate on a
+    scale, the 1.2500 midpoint resolves between them, then £1,000 → $1,250,
+    a "Review and confirm" button (not pressed) and "Rate updated hourly". 9s.
+  - 03 Spend, travel: Africa outline (our own simplified coastline,
+    equirectangular) masks in, Lagos and Nairobi pins, a payment dot rides
+    a bezier path while the route draws behind it, then "Payment successful"
+    and sparse coverage dots. 9s.
+  - 04 Cover, selection: one selection frame glides Silver → Gold → Diamond,
+    the trip length toggles to 3 months, and it settles on Silver with
+    "$150" (monthly price × months, the site's own rule). 9s.
+  - 05 Care, guided progression: search, a path from "You" to an H pin, a
+    placeholder "Your network hospital" card with "Check your plan category"
+    (no eligibility claim, no hospital name), then three care steps. 9s.
+- Deviations from the brief: canvas stays 1080×880, not 16:9, because the
+  panel beside the accordion is about that shape and the video is
+  object-cover. Brand colour is the design system's #AE2448, not the
+  brief's #73303A. Background is warm neutral #F4F1ED with a soft glow; the
+  U2 satin photo is no longer baked in.
+- Every scene starts and ends on the empty canvas, so the loop doesn't jump.
+- All amounts and rates are illustrative and labelled "Example" where they
+  could be read as live.
+
+## Feature motion v3 · wallet (2026-10-22, approved direction)
+
+- Owner rejected v2. v3 is a real product demo: the U2 satin photo, a white
+  glass-framed card that expands from the centre and collapses at the end, and
+  the "You" cursor making real clicks (USD, CAD, View all balances). Jitter
+  artboard `v3 · 01 Wallet`.
+- Pacing and easing follow claritybusinesstravel.com's "A closer look"
+  section: a camera group pushes in 1.1× towards the chips for the two
+  currency clicks, pulls back for the button and drifts 1.035× on the result.
+  The satin drifts 1 → 1.03 → 1 across the loop. Curves are Béziers taken
+  from Clarity's files: camera (0.71, 0, 0.29, 1), UI moves (0.65, 0, 0.35, 1),
+  arrivals (0.36, 0, 0.03, 1). The loop is 11.6s.
+- Cursor (owner said too slow): moves take 380–700ms on (0.45, 0, 0.1, 1),
+  a quick start and a long settle. Press 80ms, release 180ms.
+- Delivery: a Lottie (vector, 60fps), not MP4, so the panel stays sharp.
+  Export the `v3 · 01 Wallet · Lottie test (transparent)` artboard. It has no
+  satin, because the page already draws the U2 texture behind the panel. It's
+  328 KB, and text and flags are vector shapes.
+  - Use lottie-web's SVG renderer. The canvas renderer drew nothing in
+    testing.
+  - No blur effects in Lottie scenes. A blur on one layer softened the whole
+    card in the SVG renderer, so every blur-slide is now a plain slide and
+    fade.
+- Export from the owner's own browser. Exports from the built-in browser come
+  out watermarked because it isn't signed in to the paid plan.
+- Wired in on /new (2026-10-22): `FeatureLottie.tsx` plays
+  `public/lottie/home/wallet.json` over the panel's U2 texture. It behaves like
+  `FeatureVideo`: it plays only while its row is open and on screen, rewinds
+  when the row opens, loads once the panel is within 400px of the viewport,
+  and holds frame 594 (the all-balances result) for reduced motion. Phones
+  keep the 1.35× zoom. `lottie-web` is pinned at 5.12.2.
+
+## Feature motion v3 · convert (2026-10-22, awaiting approval)
+
+- Artboard `v3 · 02 Convert`, with the same shell, camera and cursor as the
+  wallet. Three interactions: click "You convert" and type £1,000; open the
+  currency menu and pick USD (You get resolves to $1,250.00, the
+  "1 GBP = 1.2500 USD · Midpoint rate" line appears and the button turns from
+  disabled grey to crimson); then "Preview conversion", which opens a review
+  with sell 1.2400, buy 1.2600, midpoint 1.2500, "Rate refreshes every hour"
+  and an unpressed "Confirm conversion".
+- Rates are illustrative and consistent: midpoint = (1.24 + 1.26) / 2, and
+  £1,000 × 1.25 = $1,250.
+- Revised (owner, 2026-10-22): converts USD → NGN. Type $500, pick NGN from
+  the menu (NGN or GBP) and get ₦665,000.00 at a midpoint of ₦1,330.00
+  (sell ₦1,320.00, buy ₦1,340.00). Then Preview conversion, then Confirm
+  conversion, ending on "Conversion complete" (₦665,000.00 is now in your
+  NGN balance) with a Done button. Both "Rate refreshes hourly" notes are
+  removed. The loop is 12.8s; wired in as `public/lottie/home/convert.json`,
+  with frame 760 for reduced motion.
+
+## Feature scenes: no outro (owner, 2026-10-22)
+
+- Scenes don't animate out. They end holding the result (wallet: all
+  balances; convert: success) and the loop restarts on the card expanding
+  from the centre. The camera stays pushed in at the end. The satin still
+  drifts back to scale 1. Wallet is now 10.6s.
+- The phone panel in the accordion is 360px tall from 640px, and Lottie
+  scenes fit (`meet`) rather than cover, because cover cropped the card at
+  tablet widths.
+- Jitter exports one artboard at a time. Lottie copies are
+  `v3 · 0N … · Lottie (transparent)`; rebuild them after editing the main
+  artboard.
+
+## Feature motion v3 · spend (2026-10-22, awaiting approval)
+
+- Modelled on Clarity's "Duty of care" visual (owner reference): a larger card
+  (840×640) titled "Spend" with a "50+ countries" chip, a real map panel and
+  an overlaid list card. Artboard `v3 · 03 Spend`, 11s, no outro.
+- Map: Natural Earth 1:50m admin-0 countries and rivers (public domain,
+  v5.1.2 via jsDelivr), equirectangular, 6.34 px/degree at the continent
+  view. The Gulf of Guinea countries keep fine detail (0.012°); the rest of
+  Africa is simplified to 0.09° and its neighbours to 0.2°, about 3,800
+  points in total. Land #EEEBE7 (neighbours #E6E3DF), sea #C9D5E3, borders
+  and rivers #D2DAE3.
+- Story: the map opens 11.05× zoomed on Lagos and Accra. Two avatars (Tolu
+  in Lagos, Kofi in Accra) are joined by a route, and a "2 payments" list
+  slides in. Click Kofi: the card shows his payment (GH₵180.00, from USD
+  balance, Paid), his avatar gets a crimson ring and a ✓ badge, and the
+  camera pushes in. Click "See where you can pay": the people fade, the map
+  zooms out to the continent, 17 city pins pop in, and the card ends on
+  "50+ countries · Pay online or in person from your wallet balance" with
+  five flags and "+45".
+- Gotcha: a scale animation multiplies the layer's own scale. "Map world"
+  sits at scale 11.05, so its zoom-out runs 1 → 1/11.05, with a move of
+  (−2225.42, −312.68). The zoom uses ease (0.3, 0.85, 0.25, 1) so it feels
+  even: linear scale lingers close in, then snaps at the end.
+- Avatars: Unsplash photos (free licence), cropped to faces. The Lottie
+  embeds them, so nothing is hotlinked on the site. Names, amounts and the
+  payment are illustrative.
+- Revised (owner, 2026-10-22): the owner disliked the zoom-out ending. It
+  now follows Clarity's "Duty of care" sequence, studied frame by frame from
+  their Lottie: the map opens on the whole continent and zooms in (1×→11.05×,
+  ease 0.75, 0, 0.35, 1), then the route, two avatars and the "2 payments"
+  list. The cursor clicks Kofi. The whole map card (now grouped as
+  "Map scene") shrinks to 0.94 and fades, and a new compact card (520×424)
+  grows in from 0.6 at the centre: Kofi · Paid in Accra, Ghana; a LOS → ACC
+  route bar with a ₵ coin travelling along it; Amount GH₵180.00, Paid from USD
+  balance, Status Paid; and a "Share receipt" button the cursor clicks, which
+  fills crimson. The coverage pins and the zoom-out are removed. 10.6s, no
+  outro.
+- Revised again (owner, 2026-10-22): the second card appears instantly on the
+  click, fully built, with no grow-in or staggered build. The wallet model,
+  per the owner: you hold a separate wallet per currency, convert (e.g. USD →
+  NGN) and send naira to anyone. So the list is "Naira sent" (Tolu ₦13,300.00,
+  Kofi ₦8,000.00), the click lands on Tolu, and the card reads "Sent to Tolu ·
+  Lagos, Nigeria", USD → NGN bar, Amount ₦13,300.00, Converted from $10.00
+  USD (₦1,330 midpoint, matching the Convert scene), Status Sent, then Share
+  receipt. 9.4s.
+- Spend wired in (2026-10-22): `public/lottie/home/spend.json`, 9.4s, with
+  frame 556 for reduced motion. Its card is wider than the others, so phones
+  zoom it 1.05× (`phoneZoom`) instead of the 1.35× default.
+
+## Feature motion v3 · health cover (2026-10-22, awaiting approval)
+
+- Artboard `v3 · 04 Cover`: the standard 560×472 card, with the camera and
+  cursor as in Wallet. Silver / Gold / Diamond tabs with a sliding thumb,
+  "Monthly price", "Months in Nigeria" chips (1 / 3 / 6), a "Total for N
+  months" line and Continue. Clicks: Diamond ($120 a month), then Gold ($85),
+  then 3 months (total $255, the site's monthly price × months rule), then
+  Continue. That switches instantly (as the owner wants for second cards) to
+  "Review your cover · Provided by Phillips HMO": Gold, 3 months, $85
+  monthly, $255 total, "Paid monthly from your USD wallet", and an unpressed
+  "Continue to payment". No policy issuance and no coverage claims. 10s, no
+  outro.
+- Cover wired in (2026-10-22): `public/lottie/home/cover.json`, 10s, with
+  frame 590 for reduced motion.
+- Export gotcha: after one download, the built-in browser blocks further
+  downloads from the same tab. Open each export in a fresh tab.
+
+## Feature motion v3 · network hospital (2026-10-22, awaiting approval)
+
+- Artboard `v3 · 05 Care`: the standard card, camera and cursor, with both
+  switches instant (owner rule for second cards). Clicks: the search field
+  ("Search by area"), where it types "Lagos" and "3 network hospitals near
+  Lagos" appear (placeholder names "Network hospital · Ikeja / Lekki / Yaba";
+  two tagged "In your plan", one "Other category"); then Ikeja, which opens
+  "In your plan's category" and the three care steps (Visit the hospital ·
+  Phillips HMO coordinates your care · Get support through your plan); then
+  "Show my cover", which ends on "Your cover · Show this at reception": Gold,
+  Phillips HMO, 3 months, Active. "Phillips HMO handles your care through its
+  network." 10s, no outro.
+- No real hospital names, no member ID and no claim about which categories
+  a plan includes.
+- Care wired in (2026-10-22): `public/lottie/home/care.json`, 10s, with frame
+  590 for reduced motion. All five "What Omanga does" rows now play Lottie
+  scenes, so `FeatureVideo.tsx`, the `video` field and the accordion's MP4
+  branch are removed. `public/videos/home/` (v1 MP4s and posters, about
+  7 MB) is no longer referenced.
+
+## Addendum · 2026-10-22 · /new/wallet hero (section 1, built)
+
+- **Next page is About the wallet** (§ 6.2), at `/new/wallet`. Copy is in
+  `new-redesign/content/wallet.content.ts`.
+- **Owner answers:** in person you pay by transfer, and leftover naira can be
+  converted to dollars. Currencies and fees are still to come. Cards stay
+  unmentioned. Recorded in the research doc §§ 6.2 and 8.
+- **Hero, after Nova (owner: "something simple"):**
+  - The grey page, centred, with no 3D shapes.
+  - Eyebrow link: today's "£1 = ₦… today · See all rates →" from the hourly
+    rate snapshot.
+  - H1 "Travel money, / ready when you land", a sub naming pounds, dollars and
+    Canadian dollars, mid-market rate and transfer, and one primary "Open your
+    free wallet →".
+  - The app's home tab in a phone, cut off by the section's bottom rule.
+- **Phone mockup:** the owner's find, open-design's `mobile-app` seed
+  (Apache-2.0), was ported to `PhoneFrame`. It's pure HTML/SVG (no device
+  artwork to license), scales via `--phone-scale`, and the screen is written in
+  real iPhone points. `AppHomeScreen` rebuilds the app's home tab from the
+  owner's screenshot:
+  - The name becomes "Hi there".
+  - The first row is £100 at today's rate, and times are "Today".
+  - The tab bar isn't drawn, because the real one has a Cards tab (§ 8.2).
+- **Header:** transparent with dark text and the colour logo on every page
+  except home. The home hero keeps white text.
+- Checked at 1440 and 375: no horizontal scroll, phone 312 wide on mobile,
+  home header unchanged. tsc and eslint clean.
+
+## Addendum · 2026-10-22 · Wallet hero phone matches the real app
+
+- The app (omanga-mobile) was run in the iOS simulator. `AppHomeScreen` now
+  uses the app's own specs, read from `src/features/dashboard` and checked
+  against the running home tab:
+  - Inter type and the app's light-theme hex colours.
+  - A 36pt avatar and a 17pt semibold greeting.
+  - A pill chip with an 18pt flag.
+  - The balance at 42pt bold, −1 tracking.
+  - 56pt discs in 80pt columns, with Add money in crimson.
+  - A #FAFAFA transactions card with 16 radius, 40pt marks on #E8E5E6, and
+    15/13pt rows with the rule inset 52.
+  - The Material glyphs the app uses.
+- **Inter is added only as `--font-app`** (not preloaded), for app screens
+  inside the PhoneFrame. The site's typeface is still Host Grotesk alone.
+- Still off the site: the first name and initial (shown as "Hi there" and a
+  person glyph), payees, and the Cards tab.
+
+## Addendum · 2026-10-22 · Wallet hero eyebrow as a pill (owner)
+
+- The rate eyebrow follows the owner's reference: a white pill with a soft
+  shadow (no border), a 6px grey dot, and the label "£1 = ₦… today" in P2 ink.
+- The whole pill links to /rates. "See all rates →" was removed from view and
+  lives in the link's accessible name.
+- Spec updated in design-system.html.
+- Revised the same day (owner): the pill now holds a sentence, "£1 is ₦… at
+  today's mid-market rate." ("£1 is ₦… today." below 640px), and "See all
+  rates →" is back as a P3 accent link inside the pill, after a hairline. It
+  says "is", not "gets you", until the conversion fee is confirmed (§ 8.5).
+- Removed the same day (owner): the wallet hero has no eyebrow at all. It
+  opens on the H1. The rate copy and the pill spec are deleted.
+
+## Addendum · 2026-10-22 · /new/wallet proof strip (section 2, built)
+
+- Follows the owner's reference: a dark `surface-inverse` band straight under
+  the hero, so the cropped phone ends on it.
+  - Four items in a row from 1024px, two columns below.
+  - Each item is an H3 title in white over P1 in `text-inverse-secondary`
+    (9.27:1).
+  - No icons or dividers.
+  - A hidden H2 ("Wallet facts") keeps the heading order.
+- Copy (`walletProof`): "Pay in 50+ countries", "Add from 3 currencies",
+  "₦20 per transfer", "Free to open", each with one line of detail. All four
+  are already stated on the site.
+  - The plan's "6+ currencies" became "3" (GBP, USD and CAD) until the owner
+    confirms the list (§ 8.5).
+- Spec added to design-system.html first. Checked at 1440 and 375 with no
+  horizontal scroll and no console errors. tsc and eslint clean.
+- Revised the same day (owner): the reference was for structure only, so
+  the strip is on the page grey (`bg`) with ink titles and secondary text,
+  not a dark band.
+- **The hero shows the whole phone (owner).** There's no crop and no bottom
+  rule.
+  - The phone is 359 × 776 from 768px and 312 × 675 below.
+  - The screen now runs on to the app's "Coming soon" insurance card, cut by
+    the screen edge as in the app.
+  - The card is drawn from insurance-promo-card.tsx with the app's own photo
+    (Lawrence Crayton, Unsplash; not used elsewhere on the site), copied to
+    `public/photos/wallet/`.
+
+## Addendum · 2026-10-22 · Wallet hero: phone in a satin box (owner)
+
+- After the owner's product-in-a-box reference, the phone now stands in a
+  box of the U2 crimson satin (`bg-flowing-waves-u2.jpg`, the owner's second
+  reference).
+  - The box spans the full content width, with a 4px radius.
+  - It's 600px tall, 440 on mobile.
+  - The phone sits 64px from its top (40 on mobile), and the box's bottom
+    edge cuts it off below the transactions.
+- The proof strip follows under the box, on the page grey, as in the
+  reference.
+- Spec updated in design-system.html. Checked at 1440 and 375 with no
+  horizontal scroll and no console errors. tsc and eslint clean.
+- Revised the same day (owner): the box now runs the home hero's moving
+  crimson fabric (`HeroFabric`, WebGL) in place of the still U2 photo. It has
+  a brand-950 fill until WebGL starts. The fabric already draws only while on
+  screen, caps at 30 fps and holds a still frame under reduced motion.
+- Revised the same day (owner): the phone's black metal bezel is now the
+  design system's glass (the home cards' white 18% fill, 1px white 38% edge,
+  10px backdrop blur, float shadow), so the fabric shows through the rim. The
+  side buttons use the glass edge colour, and the Dynamic Island stays black.
+- Revised the same day (owner): on desktop (1024px and up) the phone sits
+  96px from the top of the box, up from 64. Tablet stays at 64 and mobile at
+  40.
+
+## Addendum · 2026-10-22 · /new/wallet "What you can do" (section 3, built)
+
+- Follows the structure of the owner's reference, on the page grey:
+  - The section header (eyebrow, H2 "Everything your trip money needs, in
+    one app", sub).
+  - Three rows 96px apart (64 on mobile) that alternate the panel left,
+    right, left. On mobile the panel comes first.
+- **Six tiles folded into three rows:**
+  - Add money and hold each currency (→ Countries).
+  - Convert at the mid-market rate (→ Exchange rates).
+  - Send and pay in naira by transfer (→ `/wallet#fees`, section 5, still to
+    be built).
+- **Panels:** the still U2 satin, 4 : 3, with an app card in the glass frame
+  at 76% width. The card is at least 110% of the panel tall, so the bottom
+  edge always cuts it. The still image is on purpose: the page runs one
+  animation, the hero's.
+  - Cards use the app's look (Inter, the app's colours and row scale, shared
+    from `AppUi.tsx` with the hero phone).
+  - "Your wallets" shows GBP, USD, CAD and NGN with illustrative balances.
+    Names are hidden below 640px.
+  - "Review conversion" uses today's rate, with no fee row because the fee is
+    unconfirmed.
+  - "Transactions" shows a paid-by-transfer, a bank send and their ₦20 fees.
+- **Text:** H3 in the H2 style, P1 secondary and a secondary button, so the
+  hero keeps the only primary.
+- **Not used:** the app's code has a mobile-money send option. It's left off
+  the site until the owner confirms it's live.
+- Spec added to design-system.html first. Checked at 1440 and 375 with no
+  horizontal scroll and no console errors. tsc and eslint clean.
+
+## Addendum · 2026-10-22 · Phone frame is the owner's rectangle
+
+- `PhoneFrame` is now the owner's Figma rectangle: 309 × 675, 30px radius,
+  6px solid black stroke outside, with the screen as its fill. The bezel,
+  side buttons and glass are gone. The status bar, Dynamic Island and home
+  indicator are drawn as part of the screen, as a screenshot shows them.
+  Screens are written at 390 × 852 iPhone points and scaled to fit.
+- The wallet hero uses it at full size from 768px (278 × 608 below). Measured
+  on /new/wallet at 1440: 309 × 675, 30px radius, 6px black stroke.
+- Section 4 ("How you pay in person") will place the same frame in the
+  centre with two steps on each side (owner wireframe). Its screens are
+  being storyboarded in Jitter ("Omanga · Pay in person walkthrough"):
+  - Step 1 (5 screens): home, convert, review, PIN, converted.
+  - Step 2 (5 screens): home, recipients, method (bank only), bank details,
+    name checked.
+  - Step 3 (3 screens): amount, review, PIN.
+  - Step 4 (3 screens): sent, receipt, share sheet.
+  The flow is taken from omanga-mobile `src/app/convert` and `src/app/send`.
+- Revised the same day (owner): the frame's 6px border is glass, not black
+  (white 18% fill, 1px white 38% edge, 10px blur, float shadow), and the
+  Dynamic Island is removed. Measured: a 309 × 675 screen inside a 321-wide
+  glass border.
+- Jitter storyboard set up: 16 artboards at 309 × 675, one row per step, each
+  holding the screen's name and contents as a placeholder. File: "Omanga · Pay
+  in person walkthrough" (jitter.video/file/?id=CgV5WOswWoMGKIf1IuNM9067).
+  The screens themselves come next.
+
+## Addendum · 2026-10-22 · Pay-in-person walkthrough: real app screenshots
+
+- All 16 storyboard screens were captured from the real Omanga app on a
+  separate simulator ("Omanga Mock iPhone 17 Pro") running against a local
+  mock backend with placeholder data:
+  - The user is "Ada Doe", with GBP £450 / USD $300 / NGN ₦248,500.
+  - The recipient is "Musa Major" at Moniepoint, 0123456789.
+  - The rate is £1 = ₦1,784.93.
+  - The status bar shows 9:41.
+  - The mock and its notes live outside both repos, in the session scratch
+    folder.
+  - Your own simulator, your session and the omanga-mobile repo were not
+    touched.
+- Files: `design-lab/walkthrough/*.png` (1206 × 2622 originals) and
+  `design-lab/walkthrough/jitter/*.jpg` (618 × 1350, 2× the 309 × 675 frame).
+  The story runs: £100 → ₦178,493 conversion, then ₦8,500 to Musa Major
+  plus a ₦20 fee, then the receipt and share.
+- **App issues found while shooting** (owner to decide; nothing changed in the
+  app):
+  - Convert shows "1 NGN = £0.0006" for GBP → NGN. `formatRate` always writes
+    "1 {target} = {source symbol}{rate}".
+  - The conversion receipt shows "Transaction fee – £0.00", which reads as a
+    free-conversion claim while the fee is unconfirmed.
+  - Conversions are titled "Currency swap" in history.
+  - The amount screen says "Usually arrives in seconds" (a speed claim).
+  - The home screens (1.1, 2.1) show the tab bar's **Cards** tab, which the
+    site can't mention yet.
+- **Incident:** one sign-in attempt reached the live backend before the mock
+  was wired correctly. The app loaded the default bundler on 8081, and a fake
+  number (+234 08000000001) got "OTP Request failed". Fixed by pointing only
+  the mock simulator's app at port 8082 (`RCT_jsLocation`). The bundle was
+  checked to carry the mock URL before anything else was typed.
+- The owner placed all 16 screenshots in the Jitter storyboard, one per
+  frame, each matching its file (checked 2026-10-22). The images sit at
+  278 × 605, inset 15 / 35 inside the 309 × 675 frames, rather than filling
+  them.
+- Revised (owner): every screenshot now fills its frame at 309 × 675, from
+  0, 0 (all 16 checked). The Cards tab still shows on 1.1 and 2.1 and will be
+  covered when those screens are animated.
+
+## Addendum · 2026-10-22 · /new/wallet "How you pay in person" (section 4, built; videos pending)
+
+- **Jitter clips:** four "Clip" artboards (309 × 675) in "Omanga · Pay in
+  person walkthrough", built from the real screenshots.
+  - Each step holds a screen for 1.6s. A soft tap ring (36px, ink at 25%)
+    grows on the button, then the next screen slides in from the right
+    (380ms).
+  - Screens that change in place crossfade (320ms): PIN → converted, bank
+    details → name checked, receipt → share.
+  - A white cover hides the Cards tab on the home screens.
+  - Lengths: steps 1–2 are 8s, steps 3–4 are 4.8s. They're exported as MP4
+    at 2×.
+- **Site:** `WalletPayInPerson` + `WalkthroughPlayer`.
+  - From 1024px the phone frame sits in the centre (bare mode: the clip
+    fills the screen with no drawn status bar), with steps 1–2 on the left
+    and 3–4 on the right.
+  - Each step has a 2px timer track, a number, an H3 and P2. The active step
+    is ink; the rest are at 45%.
+  - The timers run on each clip's known length and restart the video. Then
+    the next step starts, looping after step 4. Clicking a step plays it.
+  - Nothing runs off screen. Under reduced motion nothing autoplays.
+  - Below 1024px the phone (0.85 scale) sits above the stacked steps.
+- **Posters:** each clip's first frame, in `public/photos/wallet/walkthrough/`.
+  The home posters have the Cards tab covered.
+- **Videos still to add:** `public/videos/wallet/pay-step-1.mp4` … `-4.mp4`.
+  Until then the posters show (one expected 404 per step).
+- Spec added to design-system.html first. Checked at 1440 and 375 (timers fill
+  and advance, no horizontal scroll). tsc and eslint clean.
+- Revised the same day (owner): the clips ship as **Lottie, not video**.
+  - All four were exported from Jitter in the owner's signed-in Chrome, so
+    there's no watermark: 309 × 675, 60 fps, screens embedded, 296–504 KB
+    each.
+  - They're at `public/lottie/wallet/pay-step-1.json` … `-4.json` and play
+    with lottie-web's SVG build, like the home feature scenes.
+  - Each step's clip loads when it becomes active, with the poster showing
+    until it's ready.
+  - A fresh load of /new/wallet has no errors or failed requests, and step 1
+    hands over to step 2 after its 8s.
+- Revised the same day (owner): the walkthrough phone has a **solid black 6px
+  bezel**. It uses `PhoneFrame`'s new `bezel="black"`; the default stays
+  glass, so the hero is unchanged. Measured: walkthrough #000 with 6px, hero
+  white 18% with 5px + 1px edge, both 321 wide.
+- The raw screenshots stay local only. `/design-lab/` was already ignored,
+  and `/design-lab/walkthrough/` now has its own named `.gitignore` line.
+- Revised the same day (owner reference): the **active step lifts into a
+  white card** (2px radius, padded 24) with a new `--shadow-raise` token
+  (0 24 48 at 12% plus 0 2 6 at 6%, tinted ink). It fades in over 240ms.
+  Inactive steps keep the same padding, flat at 45%, so nothing shifts as the
+  steps advance. Measured on /new/wallet.
+- Revised the same day (owner): every step has a P3 accent **"Download now →"**
+  link, 20px under its text. It goes to the header's Download target
+  (`/new#download`, the footer app row) until store links exist (§ 8.6). The
+  card is now the `li`, with the step button and the link as siblings, because
+  a link can't nest inside a button.
+
+## Addendum · 2026-10-22 · /new/wallet section 5 (fees) dropped (owner)
+
+- On Mobbin, only Wise shows a dedicated fee table, and it sits on Wise's
+  separate Pricing page. Other apps, and Wise's own homepage, show the fee
+  inside the converter. The owner felt a full table would reveal more than
+  needed while fees aren't settled.
+- The confirmed fees still show: "₦20 per transfer" and "Free to open" in the
+  proof strip, and "What does it cost?" goes in the FAQ (section 11).
+- Links re-pointed:
+  - Section 3's third row: "See all fees" → "See how you pay in person"
+    (`/wallet#pay-in-person`).
+  - Footer Transparency "Fees" → `/wallet#faq` (the FAQ answer, once section
+    11 is built).
+- The research doc § 6.2 marks row 5 as dropped.
+
+## Addendum · 2026-10-22 · /new/wallet rate explainer (section 6, built)
+
+- As wireframed: two columns from 1024px (text first when stacked).
+- **Left:** the header ("The real rate, shown before you convert"), then
+  three points:
+  - what the mid-market rate is;
+  - why a bureau's rate looks different (kept general: no names, no rival
+    rates);
+  - that the app shows the rate and naira amount before you confirm.
+
+  Then "See all rates →" to `/rates`.
+- **Right:** the U2 satin panel with a white rate card in the glass frame:
+  GBP, USD and CAD to NGN at two decimals from the hourly snapshot, plus the
+  snapshot date. It's the site's own UI, not an app screenshot, because the
+  app's review screen prints GBP → NGN backwards.
+- Checked at 1440 (£1 = ₦1,784.93, $1 = ₦1,332.27, C$1 = ₦949.24) and 375
+  with no horizontal scroll. tsc and eslint clean. Spec added to
+  design-system.html first.
+
+## Addendum · 2026-10-22 · /new/wallet countries band (section 7, built)
+
+- As wireframed, kept compact because home has the full directory. It's one
+  white Card: on the left the eyebrow, H2 "Pay in 50+ countries across
+  Africa" and a sub; on the right, overlapping 40px flags with a 2px white
+  ring, a "+39" ink disc and "See all countries →" (`/wallet/countries`).
+- The flags are the 11 countries home names, and "+39" makes up the 50+. The
+  full list is still owner question § 8.5. A visually hidden sentence names
+  the countries; the flags are decorative.
+- Fix: the "+N" disc is `relative`, so it paints above the positioned flags.
+  Before, the "+" sat under South Sudan's flag on mobile.
+- Checked at 1440 and 375 with no horizontal scroll. tsc and eslint clean.
+  Spec added to design-system.html first.
+- Revised the same day (owner):
+  - The band is now **full width**: a white `section` with rules above and
+    below, content in the page column. It's no longer a card.
+  - From 1024px a paired-row grid puts the **flags on the heading's line**
+    and the link on the sub's line. Measured: heading and flags both centred
+    at 209px, sub and link at 264px.
+  - On mobile the flags overlap by 16px, so all twelve fit one row (right
+    edge 320 at 375, no horizontal scroll).
+
+## Addendum · 2026-10-22 · /new/wallet countries, rebuilt as a globe + list (section 7)
+
+- The owner picked Cartesia's "Fluent and native, worldwide" section
+  (mobbin.com/sites/sections/9845df3f-…). It **replaces** the full-width flag
+  band above. Spec: design-system.html § Country globe (it replaced § Country
+  band).
+- Layout: SectionHead, then one bordered card. From 1024px it has two
+  columns, 5fr : 4fr. Left is the globe; right is the "Where you can pay"
+  list (11 rows: flag, name, →) and "See all 50+ countries →"
+  (`/wallet/countries`). On mobile the list stacks under the globe.
+- Asset: searched Magnific first, as the owner asked. "3D Abstract dotted
+  globe" (stock #3078286) was the closest match, Africa-facing, and was
+  downloaded on the owner's Magnific Premium (150 credits, owner approved).
+  The circle was masked out to cut the stock caption and floor shadow, then
+  saved as a transparent 960px WebP:
+  `public/photos/wallet/globe-dots.webp` (378KB).
+  The sphere under it is CSS (white to neutral-100 radial, float shadow), so
+  it follows the tokens.
+- Markers are percentage positions on the image (`at` in
+  wallet.content.ts). They were placed by overlaying test dots on the
+  processed globe. Sierra Leone was moved onto the coast.
+- Motion: the active country cycles every 2.4s. Its marker grows and pings,
+  and a white chip (flag + name) slides beside it. Hovering or focusing a row
+  sets the active country, and the pointer on the list holds the cycle.
+  Reduced motion stops the cycle and the ping.
+- Every row links to the countries page until per-country pages exist.
+- Checked at 1280 and 375 (no horizontal scroll). tsc and eslint clean.
+
+## Addendum · 2026-10-23 · Countries globe, revised (section 7)
+
+- Owner asked for three changes:
+  - **Full-width white section, no card.** WalletCountries renders its own
+    `section.section-y.bg-surface` instead of `Section`. The card border and
+    the column rule are gone.
+  - **No auto-advance.** The 2.4s cycle was removed. Hovering or focusing a
+    row is the only way to pick a country; Nigeria starts picked.
+  - **A real 3D globe that moves slightly and loops**, like the reference.
+- Library: **cobe 2.0.1** (shuding/cobe, MIT, about 5KB, no dependencies).
+  It draws the dotted globe in WebGL. react-globe.gl was ruled out: it pulls
+  in three.js, a 17MB package, for the same look.
+  - cobe v2 has no `onRender`. The component runs its own rAF and calls
+    `globe.update({ phi })`. phi = Africa-facing angle + 0.3·sin(t / 14s · 2π).
+  - The rAF runs only while the canvas is on screen (IntersectionObserver).
+    Under reduced motion the globe stays still.
+  - Markers now use real lat/lng (`location` in wallet.content.ts) in place of
+    the hand-placed percentages.
+  - The chip is pinned to the picked marker with CSS anchor positioning, using
+    cobe's `--cobe-{id}` anchors. Browsers without anchor support hide the
+    chip, and the row highlight still shows the pick.
+- `public/photos/wallet/globe-dots.webp` (the Magnific globe, 150 credits) is
+  no longer used. It's kept in case the owner wants a static fallback.
+- Checked at 1280 (hover moves the chip, globe sways) and 375 (no horizontal
+  scroll). tsc and eslint clean. Spec updated in design-system.html.
+
+## Addendum · 2026-10-23 · /new/wallet leftover naira (section 8, built)
+
+- Built as wireframed. Spec: design-system.html § Leftover converter.
+  - Left: the "Going home" header, three numbered steps and "See today's
+    rates →".
+  - Right: a white card converting a fixed ₦50,000 example into dollars at
+    the live USD rate, from the same hourly snapshot as section 6. At build
+    time that was $37.53 at ₦1,332.
+- A plain card, not the satin panel, so it doesn't repeat section 6 two
+  sections later.
+- Claims stay within the owner's answer: leftover naira can be converted to
+  dollars. Step 3 ("keep them in your dollar wallet") rests on the
+  per-currency wallets and still needs the owner to confirm. Sending dollars
+  to a bank at home is **not** claimed: it's unconfirmed.
+- The footnote date uses non-breaking hyphens, so it doesn't split on mobile.
+- The unused Magnific globe WebP was deleted (owner, 2026-10-23).
+- Checked at 1280 and 375 (no horizontal scroll). tsc and eslint clean.
+- Revised the same day (owner): the card now uses the home hero converter's
+  layout. There are two fields (naira wallet with a strong border over the
+  dollar wallet on surface-muted, H2 amounts, flag + code on the right) with
+  the hero's round convert icon on the seam. Here the icon is decorative, not
+  a swap button. The rate moved to a "Mid-market rate" detail row, so the
+  footnote now reads "Example amount · rate updated hourly · date". The spec
+  was updated.
+
+## Addendum · 2026-10-23 · /new/wallet safe at every step (section 9, built)
+
+- Built as wireframed: section header, three icon Cards (the large NavIcon:
+  lock, list, shield) in a row from 768px, then "Is Omanga safe? →"
+  (`/safety`). Spec: design-system.html § Safety cards.
+- Copy rewritten with the copywriting skill:
+  - Third card: the owner rejected "message us on WhatsApp" for a security
+    point, since a chat app is a support route, not a safeguard. It's now
+    "Your codes stay with you", built from the safety page's approved tips
+    (keep your PIN and codes private; sign in only through the app or
+    omanga.biz). Contact routes stay on /safety.
+  - Second card names what the review screen shows: the rate, the ₦20 fee
+    and who you're paying.
+  - The sub now covers both halves: approve, then see.
+- Open: "Your PIN approves every payment" is [NEW] and needs the owner to
+  confirm that the app asks for a PIN on every payment. Who holds the funds
+  is still left out (unconfirmed; the operator stays off public pages).
+- Checked at 1280 and 375 (no horizontal scroll). tsc and eslint clean.
+- **Dropped the same day (owner):** competitors rarely give safety its own
+  section on a product page. The component, its content and the § Safety
+  cards spec are removed. Safety stays on /safety and in the FAQ (section
+  11). The PIN claim is no longer on the page, so it needs no confirmation.
+
+## Addendum · 2026-10-23 · /new/wallet pair it with cover (section 10, built)
+
+- The owner asked for the home final CTA's UI in place of the crimson banner
+  in the wireframe. The home panel is now one shared component,
+  `new-redesign/components/ui/CtaPanel.tsx`. HomeFinalCta is a thin wrapper
+  around it (it renders the same as before) and WalletCover is a second one.
+- Wallet version:
+  - Eyebrow "Health cover", H2 "Add health cover for your time in Nigeria",
+    and text naming Silver, Gold and Diamond from $50 a month, with Phillips
+    HMO as the provider.
+  - Primary "Compare plans" (/health-cover/plans) and secondary "How health
+    cover works →" (/health-cover).
+  - The panel uses the **U3 dark fabric** with home's "Your plan" screen. U3
+    keeps it apart from the page's closing band, which will use G1 like home.
+  - All facts are approved home copy.
+- Checked at 1280 and 375 (no horizontal scroll). The home final CTA still
+  renders. tsc and eslint clean. The § Final CTA spec now notes the shared
+  component.
+- **Dropped the same day (owner):** insurance pulls a payments page off
+  topic, and the panel read as a final CTA before the FAQ. WalletCover and
+  its content are removed. Health cover becomes one text link in the closing
+  band. `CtaPanel` stays: home uses it, and the wallet closing band will.
+
+## Addendum · 2026-10-23 · /new/wallet FAQ (section 11, built)
+
+- Uses the home FAQ's UI, as the owner asked, so there was no wireframe.
+  `FaqList` now takes `items`: home passes its own questions and the wallet
+  page passes `walletFaq`. Home still shows the same 8 rows.
+- Eight questions, all approved copy, nothing new:
+  - five from content/payments-faq.content.ts;
+  - the wallet half of "Is Omanga safe to use?" from the safety page;
+  - two owner answers from 2026-10-22, worded as sections 4 and 8 put them:
+    pay in person by bank transfer, and convert leftover naira to dollars.
+- Health-cover questions stay on home and /health-cover. The section has
+  `id="faq"`, so the footer's Fees link lands here.
+- Checked at 1280 (rows open) and 375 (no horizontal scroll). tsc and
+  eslint clean.
+
+## Addendum · 2026-10-23 · /new/wallet closing band (section 12, built)
+
+- Uses the shared `CtaPanel` with the G1 aurora, like home's final CTA.
+  - Copy: "Get started", H2 "Your naira, ready before you land", and text
+    on opening in a few minutes (approved home copy), adding pounds or
+    dollars, and paying by transfer.
+  - Primary "Open your free wallet" (WALLET_URL), the page's one filled
+    action.
+  - Secondary "Add health cover for your trip →" (/health-cover/plans) is
+    the only place this page mentions cover.
+- Screen: an illustrative "Your wallet" with balances only (naira, pounds,
+  dollars). There's no cover row and no status line, so the panel stays on
+  payments.
+- The wallet page now runs: hero, proof, features, pay in person, rate,
+  countries, leftover naira, FAQ, closing band. Sections 5, 9 and 10 were
+  dropped.
+- Checked at 375 (no horizontal scroll). tsc and eslint clean.
+
+## Addendum · 2026-10-23 · Hero first paint and pre-commit cleanup
+
+- The owner saw the old dark hero background on first load: the flat
+  brand-950 section fill, which showed while the fabric faded in over 700ms.
+  Changes:
+  - The fill is removed from the home hero section and the wallet hero box.
+  - The fade-in is removed from HeroFabric.
+  - The canvas now carries `bg-brand-600`, the fabric's base colour, so the
+    server HTML opens on the same crimson and the folds draw over it.
+  - Without WebGL, brand-600 stays (white text 6.68:1). HeroFabric itself is
+    kept.
+- Unused-code scan over new-redesign and app/(new-redesign):
+  - No unreferenced files, and no unused exports apart from local type
+    exports.
+  - Both new dependencies (cobe, lottie-web) are in use.
+  - Content keys are all read.
+  - Only two assets are unreferenced: `public/photos/brand/bg-aurora-g1.svg`
+    and `.webp`. They were kept: the SVG is G1's only source file.
+- Removed earlier today: WalletSafety, WalletCover and the Magnific globe.

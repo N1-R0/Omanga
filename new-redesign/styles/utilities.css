@@ -1,0 +1,49 @@
+/* =============================================================================
+   Omanga new redesign — Layout and surface utilities
+   -----------------------------------------------------------------------------
+   The handful of patterns every section repeats, named after the design
+   system so a component reads like the spec.
+   ========================================================================== */
+
+/* 1080 content column with a 16px gutter. */
+@utility container-page {
+  width: 100%;
+  max-width: calc(var(--container) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* 96px above and below every section on desktop, 72 on mobile (Asset). */
+@utility section-y {
+  padding-block: var(--section-y);
+}
+
+/* Section header block: max 480px, then 64px (32 on mobile) to the
+   section's content. Inner gaps (eyebrow 24, sub 20) live in SectionHead. */
+@utility section-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--head-gap);
+  max-width: 480px;
+  margin-bottom: var(--section-head);
+}
+
+@utility grid-gap {
+  gap: var(--grid-gap);
+}
+
+@utility grid-gap-wide {
+  gap: var(--grid-gap-wide);
+}
+
+/* Glass frame: an 8px translucent ring around every mini visual (app screen)
+   over a photo or texture. The white card inside uses rounded-md. */
+@utility glass {
+  padding: 8px;
+  border-radius: var(--radius-glass);
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-edge);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--shadow-float);
+}

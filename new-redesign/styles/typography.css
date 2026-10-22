@@ -1,0 +1,55 @@
+/* =============================================================================
+   Omanga new redesign — Type styles
+   -----------------------------------------------------------------------------
+   The six styles from the owner's specs, as utilities. Components use these
+   and never set font-size, line-height or letter-spacing themselves.
+
+     type-h1  48/52.8 −1.92 regular  (mobile 38/41.8 −1.52)  hero only
+     type-h2  38/41.8 −1.52 regular  (mobile 32/35.2 −1.28)  section titles, plan prices
+     type-h3  16/17.6 −0.64 medium                           card titles
+     type-p1  16/24   −0.32 regular                          body, hero sub
+     type-p2  14/21   −0.28 regular                          card text, nav, eyebrow
+     type-p3  14/16.8 −0.28 medium                           buttons, labels
+   ========================================================================== */
+
+@utility type-h1 {
+  font-size: var(--type-h1-size);
+  line-height: var(--type-h1-line);
+  letter-spacing: var(--type-h1-track);
+  font-weight: 400;
+}
+
+@utility type-h2 {
+  font-size: var(--type-h2-size);
+  line-height: var(--type-h2-line);
+  letter-spacing: var(--type-h2-track);
+  font-weight: 400;
+}
+
+@utility type-h3 {
+  font-size: 16px;
+  line-height: 17.6px;
+  letter-spacing: -0.64px;
+  font-weight: 500;
+}
+
+@utility type-p1 {
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.32px;
+  font-weight: 400;
+}
+
+@utility type-p2 {
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: -0.28px;
+  font-weight: 400;
+}
+
+@utility type-p3 {
+  font-size: 14px;
+  line-height: 16.8px;
+  letter-spacing: -0.28px;
+  font-weight: 500;
+}

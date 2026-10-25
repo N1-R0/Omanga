@@ -19,8 +19,7 @@ import "@/new-redesign/styles/globals.css";
  * config/routes.ts, so the sitemap never lists it.
  *
  * The header is positioned over the top of the page (the home hero). The
- * footer closes every page; its app row is #download, the header's Download
- * target.
+ * footer closes every page.
  */
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

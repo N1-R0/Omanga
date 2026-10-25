@@ -1,7 +1,7 @@
 import type { FeatureScreen } from "@/new-redesign/content/home.content";
 
 /**
- * About the wallet `/wallet`. Structure: research-and-page-structure.md § 6.2.
+ * Payments `/payments` (was `/wallet`). Structure: research-and-page-structure.md § 6.2.
  * Sections are built one at a time, hero first (2026-10-22).
  *
  * Owner answers 2026-10-22: in person you pay by transfer; leftover naira can
@@ -57,7 +57,7 @@ export const walletFeatures = {
       id: "hold",
       title: "Add money and hold each currency",
       text: "Fund a pounds, US dollars or Canadian dollars wallet. Each currency keeps its own balance until you convert it.",
-      cta: { label: "See where it works", path: "/wallet/countries" },
+      cta: { label: "See where it works", path: "/payments/countries" },
     },
     {
       id: "convert",
@@ -69,7 +69,7 @@ export const walletFeatures = {
       id: "send",
       title: "Send and pay in naira by transfer",
       text: "Send to a bank account, or pay a shop, driver or hotel by transfer. Each transfer costs ₦20, and every payment shows in your history.",
-      cta: { label: "See how you pay in person", path: "/wallet#pay-in-person" },
+      cta: { label: "See how you pay in person", path: "/payments#pay-in-person" },
     },
   ],
   cards: {
@@ -118,7 +118,8 @@ export const walletPayInPerson = {
   title: "How you pay at a shop, a hotel or a taxi",
   sub: "You pay by bank transfer from your naira wallet, the way people in Nigeria pay each other every day.",
   /** Under every step (owner). Uses the header's Download target, the footer's app row, until store links exist (§ 8.6). */
-  cta: { label: "Download now" },
+  // Same action as the header: the app isn't in the stores yet (sitemap-v2.md).
+  cta: { label: "Open your free wallet" },
   steps: [
     {
       title: "Have naira ready",
@@ -202,7 +203,7 @@ export const walletCountries = {
     { name: "Republic of the Congo", flag: "/flags/republic-of-congo.svg", location: [-0.23, 15.83] },
     { name: "South Sudan", flag: "/flags/south-sudan.svg", location: [6.88, 31.31] },
   ],
-  cta: { label: "See all 50+ countries", path: "/wallet/countries" },
+  cta: { label: "See all 50+ countries", path: "/payments/countries" },
 } as const;
 
 /**
@@ -292,7 +293,7 @@ export const walletClosing = {
   title: "Your naira, ready before you land",
   text: "Open your free wallet in a few minutes, add pounds or dollars, and pay by transfer from day one.",
   primary: { label: "Open your free wallet" },
-  secondary: { label: "Add health cover for your trip", path: "/health-cover/plans" },
+  secondary: { label: "Add health cover for your trip", path: "/insurance/plans" },
   texture: { src: "/photos/brand/bg-aurora-g1.jpg" },
   screen: {
     kind: "rows",

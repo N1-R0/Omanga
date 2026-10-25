@@ -11,14 +11,14 @@ import { WalletProof } from "@/new-redesign/components/sections/wallet/WalletPro
 import { WalletRates } from "@/new-redesign/components/sections/wallet/WalletRates";
 
 /**
- * About the wallet at /new/wallet (§ 6.2). Sections land one at a time; the
+ * Payments at /new/payments (sitemap-v2.md § C; was /wallet, § 6.2). Sections land one at a time; the
  * hero and the proof strip are built (2026-10-22). Copy lives in new-redesign/content/wallet.content.ts.
  */
 export const metadata: Metadata = {
-  title: "About the wallet",
+  title: "Payments",
 };
 
-export default function WalletPage() {
+export default function PaymentsPage() {
   return (
     <>
       <WalletHero />

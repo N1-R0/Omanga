@@ -251,97 +251,9 @@ Copy rules carried over from `design.md` (unchanged until the owner changes them
 
 ---
 
-## 5. Sitemap and header (LOCKED 2026-10-21)
+## 5. Sitemap, header and footer
 
-Locked by the owner on 2026-10-21. Change only with owner sign-off.
-
-The wallet is for Africans and anyone moving money across Africa (50+
-countries). Health cover is Nigeria only. Navigation is Africa-wide, and
-Nigeria is named only where the product is Nigeria-specific.
-
-### Sitemap
-
-```
-/                                Home
-├── /wallet                      About the wallet
-│   ├── /wallet/countries        Countries
-│   └── /wallet/[country]        Wallet in Ghana, Kenya, Nigeria… (later)
-├── /health-cover                About health cover (Nigeria)
-│   ├── /health-cover/plans      Plans and prices
-│   └── /get-care                Get care now
-├── /how-it-works                How Omanga works
-├── /going-home                  Going home
-├── /visiting-africa             Visiting Africa
-├── /business-trips              Business trips (later)
-├── /rates                       Exchange rates
-│   └── /rates/[pair]            Pounds to naira, Dollars to cedis…
-├── /safety                      Safety  (H1: "Is Omanga safe?")
-├── /about                       About us
-├── /help                        Help
-├── /guides                      Guides
-│   └── /guides/[slug]
-├── /legal/…                     Privacy, Terms, Policy terms, Complaints, Cookies
-└── 404
-
-Redirects (301)
-/payments → /wallet · /insurance → /health-cover · /plans → /health-cover/plans
-/blog → /guides · /contact → /help · /get-started → /
-```
-
-### Global header
-
-```
-[Logo → /]
-
-Wallet ▾
-  ├── About the wallet    → /wallet
-  ├── Countries           → /wallet/countries
-  └── Exchange rates      → /rates
-
-Health cover ▾
-  ├── About health cover  → /health-cover
-  ├── Plans and prices    → /health-cover/plans
-  └── Get care now        → /get-care
-
-Travel ▾
-  ├── Going home          → /going-home
-  ├── Visiting Africa     → /visiting-africa
-  ├── Business trips      → /business-trips
-  └── How Omanga works    → /how-it-works
-
-Guides                    → /guides
-
-Company ▾
-  ├── About us            → /about
-  ├── Safety              → /safety
-  └── Help                → /help
-
-Log in
-[Open your free wallet]
-
-MOBILE
-[Logo]   [Open your free wallet]   [☰]
-```
-
-Label rules (UX writing review, 2026-10-21):
-- Menus are nouns.
-- Only actions are verbs ("Get care now", "Open your free wallet").
-- No questions in the nav.
-- Every label is unique.
-- The mobile menu sheet keeps the same groups, then "Chat on WhatsApp", with the button pinned at the bottom. There is no floating chat bubble.
-
-### Global footer
-1. **Closing CTA band** (it sits just above the footer on every page except legal pages). The story ending is "Land with everything sorted" + "Open your free wallet" + "Compare health plans".
-2. **App row:** store badges, or a QR code on desktop once the native app is live.
-3. **Columns:**
-   - **Wallet:** About the wallet, Countries, Exchange rates.
-   - **Health cover:** About health cover, Plans and prices, Get care now.
-   - **Travel:** Going home, Visiting Africa, Business trips, How Omanga works, Guides.
-   - **Company:** About us, Safety, Help, Complaints, Chat on WhatsApp.
-   - **Transparency:** Fees, Who provides what, Licences (once confirmed).
-   - **Legal:** Privacy, Terms, Policy terms, Cookies.
-4. **Who's-who block:** the legal entity name, RC number and address; "Health cover is provided by Phillips HMO. Omanga is not the insurer."; and the wallet provider line once the owner confirms it.
-5. **Bottom row:** © year, socials, and a language/currency note if needed.
+Moved to `sitemap-v2.md` (LOCKED 2026-10-25). The v1 sitemap from 2026-10-21 has been removed. Where §6 differs from v2 on URLs, page names or which pages exist, v2 wins.
 
 ---
 
@@ -367,7 +279,7 @@ Wise-style countries section. Wireframe: `design-lab/home-wireframe.html`.
 | # | Section | Layout (ref) | Content |
 |---|---|---|---|
 | 0 | Header | Overlaid on the hero photo (img 1) | Global header |
-| 1 | **Hero** | Full-bleed photo, centred H1, sub, CTA (img 1) | "Pay across Africa. Stay covered in Nigeria." Sub: "A free wallet for 50+ African countries, plus monthly health cover for your time in Nigeria. Rate shown before you pay." (Replaces "Pay and stay covered in Nigeria", which made the wallet read Nigeria-only against the §5 rule, 2026-10-21.) "Open your free wallet" + "Compare health plans" |
+| 1 | **Hero** | Full-bleed photo, centred H1, sub, CTA (img 1) | "Pay across Africa. Stay covered in Nigeria." Sub: "A free wallet for 50+ African countries, plus monthly health cover for your time in Nigeria. Rate shown before you pay." (Replaces "Pay and stay covered in Nigeria", which made the wallet read Nigeria-only against the Africa-wide naming rule, 2026-10-21.) "Open your free wallet" + "Compare health plans" |
 | 2 | **Partners** | Thin logo strip (img 3) | Confirmed partners only `[ ]` |
 | 3 | **What Omanga does** | Eyebrow + H2, accordion list left, photo with app screen right (img 2) | Five rows: convert at the real rate, send for ₦20, pay in 50+ African countries, health cover from $50 a month, get care at a network hospital. The screen swaps per row; the converter lives in row 1. Each row links to its sitemap page: /rates, /wallet, /wallet/countries, /health-cover/plans, /get-care. |
 | 4 | **Sorted before you land** | Three photo cards with an app screen on each (img 4) | Approved three steps: open your free wallet, add money, pick your cover |
@@ -376,7 +288,7 @@ Wise-style countries section. Wireframe: `design-lab/home-wireframe.html`.
 | 7 | **Countries** | Wise "works nearly everywhere": H2, pill tabs, flag + underlined link grid, "Show all" | "Omanga works across Africa". Tabs: "Pay in" (country list) and "Exchange rates" (rate pairs → /rates/[pair]). Links → /wallet/countries until /wallet/[country] exists `[ ] country list, §8 Q5` |
 | 8 | **FAQ** | Two-column question grid (img 6) | 8 questions written as search queries |
 | 9 | **Final CTA** | Split card, copy left, app screen right (img 6) | "Land with everything sorted" + CTAs |
-| 10 | Footer | Brand blurb + link columns (img 6) | Global footer as locked in §5: app row, six columns, who's-who block |
+| 10 | Footer | Brand blurb + link columns (img 6) | Global footer as locked in sitemap-v2.md: five columns, disclosure block |
 
 Moved off the home page: the arrival problem (removed), the trip timeline
 (→ /how-it-works), trip-type tiles (→ Travel menu and travel pages), the guides
@@ -576,7 +488,7 @@ Ranked by how much they block the page structures.
 4. **Insurance facts:** exclusions, waiting period, age limits, emergency number, claims process, named hospitals, what A/B/C mean.
 5. **Wallet facts:** which currencies, conversion fee, limits, full country list. *Leftover balance answered 2026-10-22: it can be converted to dollars. Currencies and fees: owner is getting them.*
 6. **Native app:** launch timing, store links, and whether "Log in" belongs in the header.
-7. ~~URL renames~~ Locked 2026-10-21 (see §5).
+7. ~~URL renames~~ Locked 2026-10-25 (see sitemap-v2.md).
 8. **Real stories and quotes:** any customers who would be named?
 9. **Business trips:** in scope now, or later? (Sitemap marks it as later.)
 

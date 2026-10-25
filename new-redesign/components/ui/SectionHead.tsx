@@ -10,9 +10,11 @@ type Props = {
   sub?: ReactNode;
   /** Defaults to h2. The hero uses its own H1 and never this. */
   as?: "h2" | "h3";
+  /** An optional button under the sub (owner, 2026-10-23: health cover § 2). */
+  action?: ReactNode;
 };
 
-export function SectionHead({ eyebrow, title, sub, as: Heading = "h2" }: Props) {
+export function SectionHead({ eyebrow, title, sub, as: Heading = "h2", action }: Props) {
   return (
     <div className="section-head">
       <p className="type-p2 inline-flex items-center gap-2 text-text">
@@ -25,6 +27,7 @@ export function SectionHead({ eyebrow, title, sub, as: Heading = "h2" }: Props) 
         <Heading className="type-h2">{title}</Heading>
         {sub ? <p className="type-p1 text-text-secondary">{sub}</p> : null}
       </div>
+      {action ? <div className="mt-2">{action}</div> : null}
     </div>
   );
 }

@@ -45,20 +45,24 @@ type PhotoCardProps = {
   sizes: string;
   /** Show part `index` of an image split across `of` cards. */
   slice?: { index: number; of: number };
+  /** Overrides the 236px photo height (step cards: 300, owner 2026-10-23). */
+  imageClassName?: string;
+  /** CSS object-position for the photo, to keep a face clear of the overlay. */
+  objectPosition?: string;
   className?: string;
 };
 
-export function PhotoCard({ image, title, text, href, action, overlay, onNavigate, sizes, slice, className }: PhotoCardProps) {
+export function PhotoCard({ image, title, text, href, action, overlay, onNavigate, sizes, slice, imageClassName, objectPosition, className }: PhotoCardProps) {
   const body = (
     <>
-      <span className="relative block h-[236px] overflow-hidden bg-surface-muted">
+      <span className={cx("relative block h-[236px] overflow-hidden bg-surface-muted", imageClassName)}>
         {slice ? (
           // The image is `of` cards wide and shifted left by this card's share.
           <span className="absolute inset-y-0 block" style={{ width: `${slice.of * 100}%`, left: `${-slice.index * 100}%` }}>
             <Image src={image.src} alt={image.alt} fill sizes={sizes} className="object-cover" />
           </span>
         ) : (
-          <Image src={image.src} alt={image.alt} fill sizes={sizes} className="object-cover" />
+          <Image src={image.src} alt={image.alt} fill sizes={sizes} className="object-cover" style={{ objectPosition }} />
         )}
         {overlay}
       </span>

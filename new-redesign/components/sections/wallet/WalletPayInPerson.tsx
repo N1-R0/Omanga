@@ -15,7 +15,7 @@ export function WalletPayInPerson() {
   return (
     <Section id="pay-in-person" label={eyebrow}>
       <SectionHead eyebrow={eyebrow} title={title} sub={sub} />
-      <WalkthroughPlayer steps={steps} label={title} cta={{ label: cta.label, href: navigation.download.href }} />
+      <WalkthroughPlayer steps={steps} label={title} cta={{ label: cta.label, href: navigation.cta.href }} />
     </Section>
   );
 }

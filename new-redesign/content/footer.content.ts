@@ -1,82 +1,69 @@
-import { INSTAGRAM_URL, WALLET_URL, WHATSAPP_URL } from "@/config/site";
+import { INSTAGRAM_URL, WHATSAPP_URL } from "@/config/site";
 import { href } from "@/new-redesign/config/routes";
 
 /**
- * Global footer, LOCKED in new-redesign/doc/research-and-page-structure.md § 5.
+ * Global footer, LOCKED in new-redesign/doc/sitemap-v2.md § C (2026-10-25).
  *
- * Held back until the owner confirms them (§ 8.3, § 8.6):
- *   - "Licences" in Transparency, and the legal entity, RC number and address
- *     in the who's-who block. Nothing is invented in their place.
- *   - Store links in the app row. The app isn't in the stores yet, so the row
- *     says so and offers the web wallet. This row is `#download`, where the
- *     header's Download button lands.
+ * Legal pages keep their live URLs (/terms-of-use, /privacy-policy, …) so no
+ * redirects are needed at cutover.
+ *
+ * Held back until the owner confirms them:
+ *   - The legal entity, RC number, address and licence line in the disclosure.
+ *     Nothing is invented in their place.
+ *   - The app row with store links. It returns once the native app is in the
+ *     stores; until then the header's "Open your free wallet" covers sign-up.
  */
 export type FooterLink = { label: string; href: string; external?: boolean };
 
 export const footer = {
   homeLabel: "Omanga home",
-  blurb: "A multi-currency wallet that works in 50+ African countries, and short-term health cover for your trip to Nigeria.",
-  app: {
-    id: "download",
-    title: "Get the Omanga app",
-    text: "The app isn't in the stores yet. Until then, open your wallet on the web.",
-    action: { label: "Open the web wallet", href: WALLET_URL },
-  },
+  blurb: "A multi-currency wallet that works in 50+ African countries, and health insurance for your trip to Nigeria.",
   columns: [
     {
-      heading: "Wallet",
+      heading: "Payments",
       links: [
-        { label: "About the wallet", href: href("/wallet") },
-        { label: "Countries", href: href("/wallet/countries") },
+        { label: "Payments overview", href: href("/payments") },
         { label: "Exchange rates", href: href("/rates") },
+        { label: "Pounds to naira", href: href("/rates/pounds-to-naira") },
+        { label: "Dollars to naira", href: href("/rates/dollars-to-naira") },
+        { label: "Canadian dollars to naira", href: href("/rates/canadian-dollars-to-naira") },
       ],
     },
     {
-      heading: "Health cover",
+      heading: "Insurance",
       links: [
-        { label: "About health cover", href: href("/health-cover") },
-        { label: "Plans and prices", href: href("/health-cover/plans") },
-        { label: "Get care now", href: href("/get-care") },
-      ],
-    },
-    {
-      heading: "Travel",
-      links: [
-        { label: "Going home", href: href("/going-home") },
-        { label: "Visiting Africa", href: href("/visiting-africa") },
-        { label: "Business trips", href: href("/business-trips") },
-        { label: "How Omanga works", href: href("/how-it-works") },
-        { label: "Guides", href: href("/guides") },
+        { label: "Insurance overview", href: href("/insurance") },
+        { label: "Plans and prices", href: href("/insurance/plans") },
+        { label: "Get care and claims", href: href("/insurance/get-care") },
       ],
     },
     {
       heading: "Company",
       links: [
-        { label: "About us", href: href("/about") },
-        { label: "Safety", href: href("/safety") },
-        { label: "Help", href: href("/help") },
-        { label: "Complaints", href: href("/legal/complaints") },
-        { label: "Chat on WhatsApp", href: WHATSAPP_URL, external: true },
+        { label: "About Omanga", href: href("/about") },
+        { label: "Is Omanga safe?", href: href("/safety") },
+        { label: "Guides", href: href("/guides") },
       ],
     },
     {
-      heading: "Transparency",
+      heading: "Support",
       links: [
-        { label: "Fees", href: href("/wallet#faq") },
-        { label: "Who provides what", href: href("/safety#who-provides-what") },
+        { label: "Help and contact", href: href("/help") },
+        { label: "Chat on WhatsApp", href: WHATSAPP_URL, external: true },
+        { label: "Complaints", href: href("/complaints-procedure") },
       ],
     },
     {
       heading: "Legal",
       links: [
-        { label: "Privacy", href: href("/legal/privacy") },
-        { label: "Terms", href: href("/legal/terms") },
-        { label: "Policy terms", href: href("/legal/policy-terms") },
-        { label: "Cookies", href: href("/legal/cookies") },
+        { label: "Terms of use", href: href("/terms-of-use") },
+        { label: "Privacy policy", href: href("/privacy-policy") },
+        { label: "Insurance policy terms", href: href("/policy-terms") },
+        { label: "Cookie policy", href: href("/cookie-policy") },
       ],
     },
   ] satisfies ReadonlyArray<{ heading: string; links: FooterLink[] }>,
-  whosWho: "Health cover is provided by Phillips HMO. Omanga is not the insurer.",
+  whosWho: "Insurance plans are provided by Phillips HMO. Omanga is not the insurer.",
   copyright: (year: number) => `© ${year} Omanga. All rights reserved.`,
   socials: [{ label: "Instagram", href: INSTAGRAM_URL }],
 } as const;

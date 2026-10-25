@@ -2333,3 +2333,125 @@ blocks. The copy was rewritten from approved facts only:
   - Only two assets are unreferenced: `public/photos/brand/bg-aurora-g1.svg`
     and `.webp`. They were kept: the SVG is G1's only source file.
 - Removed earlier today: WalletSafety, WalletCover and the Magnific globe.
+
+## Addendum · 2026-10-23 · /new/health-cover hero (section 1, built; visual pending)
+
+- **Next page is About health cover** (§ 6.3), at `/new/health-cover`. Copy
+  is in `new-redesign/content/health-cover.content.ts`.
+- **Hero matches the wallet hero (owner):** the same centred H1, sub, one
+  primary action and moving crimson fabric box (HeroFabric), at the same
+  sizes. `HealthHero` copies the markup rather than sharing a component,
+  because the two stages will hold different visuals.
+- **The box is empty for now (owner).** It holds no phone. Its visual is
+  planned with the owner next.
+- Copy:
+  - H1 "Travel health insurance / for your trip to Nigeria". This keeps the
+    live page's SEO heading (keyword pass 2026-10-18), not the plan's
+    "Health cover for your trip to Nigeria".
+  - The sub restates approved facts: Phillips HMO, Nigeria only, from $50 a
+    month, and hospital care, diagnostics and emergency evacuation.
+  - Primary "Compare health plans →" goes to `/new/health-cover/plans`,
+    which 404s until § 6.4 is built.
+- Still blocked: sections 6 (Good to know) and 7 (Hospitals) wait on the
+  § 8.4 insurance facts.
+- Checked at 1440 and 375 (no horizontal scroll, no console errors). tsc and
+  eslint clean.
+
+## Addendum · 2026-10-23 · Health cover hero visual (Jitter, draft for review)
+
+- The owner's storyboard and motion brief are built in Jitter: file
+  "Omanga · Health cover hero", artboard "Health cover · How it works".
+  It's 1080 × 600, the hero box's size at 1440, and it runs 20s.
+- **Story (customer side only):** pick Gold → secure checkout (name, email,
+  trip dates typed) → Pay $85 → spinner → "Payment confirmed" and "Policy
+  created" → "My cover" dashboard: "Cover active", masked policy number, the
+  digital ID card (flips to its back) and hospitals in the plan → the card
+  blurs and shrinks away, back to the bare background.
+- **Left out on purpose:** the Omanga and Phillips HMO admin dashboards
+  (internal tools, and the float balance stays off public pages). The
+  owner's idea of linking cover to the Omanga balance is a portal product
+  decision, and it would mention cards (§ 8.2).
+- **Deviations from the brief:**
+  - No image was attached, so the background is a still of the site's own
+    HeroFabric, captured at the hero box's size. It's the bottom layer,
+    named so it can be hidden for a transparent Lottie that plays over the
+    live fabric.
+  - Hospital rows show area, city and category only, with no hospital names.
+    Invented names could read as real partners, and the named list is still
+    owed (§ 8.4).
+  - Jitter has no 3D rotate, so the ID card flip squeezes the front to zero
+    width and opens the back from zero.
+  - Type is Host Grotesk with the v3 "You" cursor, so it matches the home
+    scenes. The masked numbers use Inter, because Host Grotesk's bullet dots
+    are too small.
+- Demo data: "Ada Bello", ada@example.com, "12 Dec – 9 Jan". The back of the
+  ID card shows only approved facts: Gold, Nigeria only, Phillips HMO.
+- Mobile: the box is 440 tall. With the Lottie set to cover, the 440-wide
+  card fits the visible middle (about 468 of the 1080). That's checked by
+  arithmetic only, not yet on the page.
+- Revised the same day (owner):
+  - The white card sits in the home scenes' **glass frame**: 8px of white
+    18% with a 1px white 38% edge, radius 14 outside and 8 inside. The frame
+    follows every card resize.
+  - The "You" tag is **black** (#1B1B1B), the pointer's colour, not crimson.
+- **Exported and placed:** a transparent Lottie with the background hidden,
+  downloaded from the owner's signed-in Chrome (no watermark), 1080 × 600,
+  60 fps, 612 KB. It's at `public/lottie/health-cover/how-it-works.json`.
+  - HealthHero plays it with `FeatureLottie` over the live HeroFabric. The
+    film keeps its 1080 × 600 frame at the box's full height, centred, so a
+    phone crops only the empty sides.
+  - Reduced motion holds frame 864, the dashboard.
+- Checked at 1440 and 375 (no horizontal scroll). tsc and eslint clean.
+
+## Addendum · 2026-10-23 · /new/health-cover what this is and isn't (section 2, built)
+
+- Built as wireframed. Spec: design-system.html § Is / isn't cards.
+  - The section header ("What this is", "Health cover for your time in
+    Nigeria"), then two equal cards from 768px, stacked below with "is"
+    first.
+  - "What it is" is a white Card with green checks. "What it isn't" sits on
+    surface-muted with grey crosses, so the pair contrasts without warning
+    colours.
+- Fixes the audit's search-intent mismatch: people looking for travel
+  insurance out of Nigeria land on this page.
+- Copy (`healthScope`):
+  - The three "is" lines and "Cover outside Nigeria" are approved site copy:
+    Nigeria only, monthly with no commitment, Phillips HMO's own network, and
+    the FAQ's outside-Nigeria answer.
+  - The owner confirmed two new lines on 2026-10-23: it isn't travel
+    insurance (no flights, luggage or cancelled trips), and it isn't a visa
+    or entry requirement.
+- The section has `id="scope"`. Checked at 1440 and 375 (no horizontal
+  scroll, no console errors). tsc and eslint clean.
+- Revised the same day (owner):
+  - The hero's primary now reads **"Get insurance plan →"**, replacing the
+    site-wide "Compare health plans" on this page only.
+  - Section 2 has a primary **"Compare insurance plans →"** under its sub.
+    `SectionHead` takes an optional `action`, placed 32px under the title
+    block. Both buttons go to /new/health-cover/plans.
+
+## Addendum · 2026-10-23 · /new "How it works" step cards: photos (owner)
+
+- After the owner's reference, each step card now has its **own people
+  photo**. This replaces the U2 texture sliced across the row. The photos
+  are from Unsplash, self-hosted in `public/photos/steps/`, and not used
+  anywhere else on the site:
+  - Step 1: a woman in headphones smiling at her phone (nBiJoRbVHmA).
+  - Step 2: a man smiling at his phone (NfJIA8X91gg).
+  - Step 3: a mother and daughter laughing in warm light (558JeoJkeMM,
+    cropped on the faces).
+  - The earlier spare photos (1PgSfwSxXx0, jCRrhLwAmJ8, TPT4pevJEmQ)
+    weren't reused, because the header menu already shows them. A beach
+    family photo was tried for step 3 and dropped: its faces sat under
+    the glass.
+- **Compact glass card** over the photo's lower part, replacing the full app
+  screen: a bold title with a muted meta, a rule, then one row.
+  - Step 1: "Create account · 1 of 3", Email, you@example.com.
+  - Step 2: "Add money · £200.00", You get ₦…, at today's GBP rate.
+  - Step 3: "Your plan · Gold", Price, $85 / month.
+- The photos are 300px tall, up from 236. `PhotoCard` takes
+  `imageClassName` and `objectPosition` for this. Spec updated in
+  design-system.html § Step cards.
+- **Home hero (owner):** the secondary button now reads "Get insurance
+  plan", replacing "Compare health plans".
+- Checked at 1440 and 375 (no horizontal scroll). tsc and eslint clean.

@@ -41,7 +41,8 @@ export const homeHero = {
   title: ["Pay across Africa.", "Stay covered in Nigeria."],
   sub: "A free wallet for 50+ African countries, plus monthly health cover for your time in Nigeria. Rate shown before you pay.",
   primary: { label: "Open your free wallet" },
-  secondary: { label: "Compare health plans", path: "/health-cover/plans" },
+  // Owner, 2026-10-23: was "Compare health plans".
+  secondary: { label: "Get insurance plan", path: "/insurance/plans" },
 } as const;
 
 /**
@@ -163,7 +164,7 @@ export const homeFeatures = {
     {
       title: "Open a free multi-currency wallet",
       text: "Sign up with your email in a few minutes, then fund it in pounds, dollars or Canadian dollars. Hold 6+ currencies in one place.",
-      link: { label: "See how the wallet works", path: "/wallet" },
+      link: { label: "See how the wallet works", path: "/payments" },
       lottie: { src: "/lottie/home/wallet.json", stillFrame: 594 },
       screen: {
         kind: "rows",
@@ -186,7 +187,7 @@ export const homeFeatures = {
     {
       title: "Spend in 50+ African countries",
       text: "Pay online or in person from your wallet balance, from Lagos to Nairobi.",
-      link: { label: "See the countries", path: "/wallet/countries" },
+      link: { label: "See the countries", path: "/payments/countries" },
       // Its card is wider (the map), so phones zoom it less than the 1.35× default.
       lottie: { src: "/lottie/home/spend.json", stillFrame: 556, phoneZoom: 1.05 },
       screen: {
@@ -203,7 +204,7 @@ export const homeFeatures = {
     {
       title: "Health cover from $50 a month",
       text: "Pick Silver, Gold or Diamond and pay monthly for the months you're in Nigeria. Phillips HMO provides the cover.",
-      link: { label: "Compare plans", path: "/health-cover/plans" },
+      link: { label: "Compare plans", path: "/insurance/plans" },
       lottie: { src: "/lottie/home/cover.json", stillFrame: 590 },
       screen: {
         kind: "rows",
@@ -218,7 +219,7 @@ export const homeFeatures = {
     {
       title: "Fall ill? Go to a network hospital",
       text: "Visit a Phillips HMO hospital in your plan's category. Phillips HMO handles your care through its network.",
-      link: { label: "Get care now", path: "/get-care" },
+      link: { label: "Get care now", path: "/insurance/get-care" },
       lottie: { src: "/lottie/home/care.json", stillFrame: 590 },
       screen: {
         kind: "rows",
@@ -248,41 +249,37 @@ export const homeSteps = {
   // before travel, wallet funded in GBP/USD/CAD).
   title: "Three steps at home before you fly",
   sub: "A few minutes on your phone is all it takes. Your naira and your health cover are ready the moment you land.",
+  // [CHANGED, 2026-10-23] Owner reference: each card has its own Unsplash
+  // photo (self-hosted, not used elsewhere on the site) with a compact app
+  // card in the glass frame over its lower half, replacing the U2 texture
+  // sliced across the row. Photos: nBiJoRbVHmA, NfJIA8X91gg, 558JeoJkeMM (cropped on the faces).
   steps: [
     {
       title: "Open your free wallet",
       text: "Sign up with your email in a few minutes.",
-      screen: {
-        kind: "rows",
-        title: "Create your account",
-        rows: [
-          ["Step", "1 of 3"],
-          ["Email", "you@example.com"],
-        ],
-        status: "Continue",
-      },
+      image: { src: "/photos/steps/step-1-wallet.jpg", alt: "Woman in headphones smiling at her phone", position: "50% 15%" },
+      card: { title: "Create account", meta: "1 of 3", label: "Email", value: "you@example.com" },
     },
     {
       title: "Add money",
       text: "Fund in pounds, dollars or Canadian dollars at the rate you see.",
-      // "Rate" rather than "Mid-market rate": the step card is too narrow for both.
-      screen: { kind: "convert", title: "Add money", rateLabel: "Rate" },
+      image: { src: "/photos/steps/step-2-money.jpg", alt: "Man smiling as he uses his phone", position: "50% 10%" },
+      // `value: null`: the naira amount for £200 at today's GBP rate.
+      card: { title: "Add money", meta: "£200.00", label: "You get", value: null },
     },
     {
       title: "Pick your cover",
       text: "Choose a plan for the months you're away.",
-      screen: {
-        kind: "rows",
-        title: "Your plan",
-        rows: [
-          ["Plan", "Gold"],
-          ["Price", "$85 / month"],
-        ],
-        status: "Cover active",
-      },
+      image: { src: "/photos/steps/step-3-family.jpg", alt: "Mother and daughter laughing together outdoors", position: "50% 50%" },
+      card: { title: "Your plan", meta: "Gold", label: "Price", value: "$85 / month" },
     },
-  ] satisfies ReadonlyArray<{ title: string; text: string; screen: FeatureScreen }>,
-  texture: { src: "/photos/brand/bg-flowing-waves-u2.jpg", alt: "" },
+  ] satisfies ReadonlyArray<{
+    title: string;
+    text: string;
+    image: { src: string; alt: string; position: string };
+    card: { title: string; meta: string; label: string; value: string | null };
+  }>,
+  addAmount: 200,
 } as const;
 
 /**
@@ -340,7 +337,7 @@ export const homePrices = {
   ],
   featuredTexture: "/photos/brand/bg-dark-fabric-u3.jpg",
   footnote: "No commitment. Cancel any time. Every plan also includes telemedicine, roaming across Nigeria and the app.",
-  link: { label: "Compare all plan details", path: "/health-cover/plans" },
+  link: { label: "Compare all plan details", path: "/insurance/plans" },
 } as const;
 
 /**
@@ -373,8 +370,8 @@ export const homeWhy = {
  * "Pay in" lists the same 11 African countries the live site shows as its
  * sample of 50+ (content/coverage.content.ts COVERAGE_FLAGS). The full list is
  * owner question § 8.5, so there's no inline "show all": the link goes to
- * /wallet/countries, the page that will hold it. Each country links there too
- * until /wallet/[country] pages exist (sitemap § 5 marks them later).
+ * /payments/countries, the page that will hold it. Each country links there too
+ * until /payments/[country] pages exist (sitemap-v2.md marks them later).
  *
  * "Exchange rates" lists the live site's three rate pages (content/rates.content.ts).
  */
@@ -400,8 +397,8 @@ export const homeCountries = {
         ["Sierra Leone", "sierra-leone"],
         ["South Africa", "south-africa"],
         ["South Sudan", "south-sudan"],
-      ].map(([name, flag]) => ({ label: `Pay in ${name}`, flag: `/flags/${flag}.svg`, path: "/wallet/countries" })),
-      more: { label: "See all 50+ countries", path: "/wallet/countries" },
+      ].map(([name, flag]) => ({ label: `Pay in ${name}`, flag: `/flags/${flag}.svg`, path: "/payments/countries" })),
+      more: { label: "See all 50+ countries", path: "/payments/countries" },
     },
     {
       id: "rates",
@@ -478,7 +475,7 @@ export const homeFinalCta = {
   title: "Land with everything sorted",
   text: "Open your free wallet today and add cover when you book your trip.",
   primary: { label: "Open your free wallet" },
-  secondary: { label: "Compare health plans", path: "/health-cover/plans" },
+  secondary: { label: "Compare health plans", path: "/insurance/plans" },
   texture: { src: "/photos/brand/bg-aurora-g1.jpg" },
   screen: {
     kind: "rows",

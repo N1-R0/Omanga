@@ -33,7 +33,7 @@ import { navigation, type NavMenu } from "@/new-redesign/content/navigation.cont
  * Tabs open on hover and on click. Escape closes and returns focus to the tab;
  * leaving the header with the pointer or with focus also closes.
  *
- * Below 1024: logo and a menu button. Download lives inside the menu sheet
+ * Below 1024: logo and a menu button. The primary action lives inside the menu sheet
  * (owner), pinned at its foot, after every group, Help, Log in and WhatsApp.
  */
 const menus = navigation.items;
@@ -188,8 +188,8 @@ export function Header() {
               {/* White over the crimson fabric hero, like the hero's primary
                   (owner, 2026-10-21); back to the brand fill when the bar
                   turns white with a menu open. */}
-              <Button href={navigation.download.href} variant={dark ? "primary" : "inverse"}>
-                {navigation.download.label}
+              <Button href={navigation.cta.href} external variant={dark ? "primary" : "inverse"}>
+                {navigation.cta.label}
               </Button>
             </span>
             <button
@@ -319,7 +319,7 @@ function MobileSheet({ onClose }: { onClose: () => void }) {
       </nav>
 
       <div className="container-page shrink-0 border-t border-border py-4 [&_a]:w-full">
-        <Button href={navigation.download.href}>{navigation.download.label}</Button>
+        <Button href={navigation.cta.href} external>{navigation.cta.label}</Button>
       </div>
     </div>
   );

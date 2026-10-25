@@ -166,7 +166,7 @@ const paymentsMeta: PageMetaContent = {
   // converts GBP/USD to naira, so the title names it. No "card" (Omanga has none).
   title: "Travel Money Wallet: Pounds and Dollars to Naira | Omanga",
   // [CHANGED, 2026-10-14] UX copy pass: names the ₦20 fee and "send money"; ~155 characters with "50+".
-  description: `A free travel money wallet: change pounds, dollars or CAD to naira at the mid-market rate, send money for ₦20 and spend in ${COUNTRIES_SERVED_DISPLAY} African countries.`,
+  description: `A free travel money wallet: change pounds, dollars or CAD to naira, see the rate before you confirm, and spend in ${COUNTRIES_SERVED_DISPLAY} African countries.`,
   path: "/payments",
 };
 

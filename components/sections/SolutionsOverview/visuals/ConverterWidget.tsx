@@ -139,17 +139,10 @@ export function ConverterWidget({
           <FactRow
             icon={<RateIcon />}
             label="Exchange rate"
-            value="Mid-market, before you confirm"
+            value="Shown before you confirm"
           />
-          {/* Wise's fees row: label, plain-language line, amount as a link. Only
-              confirmed facts (payments FAQ): ₦20 per transfer; the link opens
-              the fee answer. Conversion fees are unconfirmed, so no "total". */}
-          <FactRow
-            icon={<ReceiptIcon />}
-            label="Transfer fee"
-            value="Charged per transfer"
-            trailing={{ label: "₦20", href: "/payments#payments-faq-heading" }}
-          />
+          {/* [CHANGED, 2026-10-25] Owner: no fee amounts, rate source or
+              refresh timing on the site, so the transfer-fee row is gone. */}
         </div>
 
         <div className="grid pt-1">
@@ -249,22 +242,6 @@ function RateIcon() {
       aria-hidden
     >
       <path d="M4 8h13l-3-3M20 16H7l3 3" />
-    </svg>
-  );
-}
-
-function ReceiptIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className="size-5"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.75}
-      aria-hidden
-    >
-      <path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3z" />
-      <path d="M9 8h6M9 12h6" />
     </svg>
   );
 }

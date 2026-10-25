@@ -53,7 +53,7 @@ export const paymentsHeroContent: PaymentsHeroContent = {
   // "Travel money for your trip to Africa", "Land in Africa with your money
   // ready". Was "One wallet for your travel money across Africa".
   heading: "Travel money, ready when you land in Africa",
-  intro: `Fund it from USD, GBP or CAD, convert at the mid-market rate and spend in ${COUNTRIES_SERVED_DISPLAY} African countries. Transfers cost ₦20.`,
+  intro: `Fund it from USD, GBP or CAD, see the rate before you convert and spend in ${COUNTRIES_SERVED_DISPLAY} African countries.`,
 
   /*
     [DRIFT, narrowed] The site had three labels in circulation for one action:

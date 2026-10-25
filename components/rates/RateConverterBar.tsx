@@ -150,7 +150,7 @@ export function RateConverterBar({
             })}
           </p>
           <p className="font-sans text-small text-secondary">
-            Mid-market rate, {updated}. Transfers cost ₦20.
+            Reference rate, {updated}. Your exact rate is shown before you confirm.
           </p>
         </div>
         <div className="flex flex-wrap gap-fluid-2">

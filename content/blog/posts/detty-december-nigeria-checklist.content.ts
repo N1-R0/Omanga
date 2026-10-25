@@ -109,7 +109,7 @@ export const dettyDecemberChecklistPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "The Omanga wallet is built for this. You fund it from USD, GBP or CAD at the mid-market rate and see the rate before you confirm. Once you're there, you spend from your balance online or in person. ",
+            "The Omanga wallet is built for this. You fund it from USD, GBP or CAD and see the rate before you confirm. Once you're there, you spend from your balance online or in person. ",
             { text: "Explore the wallet", href: "/payments" },
             ".",
           ],

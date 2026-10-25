@@ -93,9 +93,8 @@ const WITH_OMANGA: ComparisonGroup = {
     // [CHANGED, 2026-10-14] UX copy pass: named provider, the ₦20 fee
     // (confirmed by the owner), cover limited to Nigeria.
     `A wallet that works in ${COUNTRIES_SERVED_DISPLAY} African countries`,
-    "The mid-market rate, shown before you confirm",
+    "The rate, shown before you confirm",
     "Health cover in Nigeria from Phillips HMO's hospital network",
-    "₦20 per transfer, with no markup hidden in the rate",
     "Your wallet and health cover in one account",
   ],
 } as const;

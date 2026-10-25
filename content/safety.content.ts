@@ -40,7 +40,7 @@ export const safetyContent = {
   pillars: [
     {
       heading: "You see the rate before you pay",
-      body: "Conversions use the mid-market rate, shown before you confirm. Transfers cost ₦20. Opening the wallet is free.",
+      body: "You see the rate before you confirm a conversion. Opening the wallet is free.",
     },
     {
       heading: "A Nigerian HMO provides your cover",
@@ -73,7 +73,7 @@ export const safetyFaq: readonly FaqItem[] = [
   {
     question: "Is Omanga safe to use?",
     answer:
-      "You see the mid-market rate before you confirm a conversion, and transfers cost a flat ₦20. Health cover comes from Phillips HMO, a Nigerian health maintenance organisation (HMO). Keep your PIN and one-time codes private, and contact us if something looks wrong.",
+      "You see the rate before you confirm a conversion. Health cover comes from Phillips HMO, a Nigerian health maintenance organisation (HMO). Keep your PIN and one-time codes private, and contact us if something looks wrong.",
   },
   {
     question: "Who provides Omanga's health cover?",

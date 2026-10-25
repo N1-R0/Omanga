@@ -42,8 +42,8 @@ const PAYMENTS_FEATURES: readonly DeepDiveFeature[] = [
   {
     id: "exchange-rates",
     label: "Exchange rates",
-    heading: "The real rate, before you convert",
-    body: "Every conversion uses the mid-market rate, refreshed hourly. You see it before you confirm.",
+    heading: "The rate, before you convert",
+    body: "Every conversion shows you the rate and what you'll get before you confirm.",
   },
   {
     id: "the-wallet",

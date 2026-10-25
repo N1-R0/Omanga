@@ -35,7 +35,7 @@ export const plansCtaContent: CtaContent = {
   // shared ones ask the reader to choose a plan while this button opens the
   // wallet. Wallet facts only (owner-confirmed); no cancel claim.
   heading: "Keep your plan and your money in one account",
-  intro: `Open a free wallet, fund it from USD, GBP or CAD and spend in ${COUNTRIES_SERVED_DISPLAY} African countries. Transfers cost ₦20.`,
+  intro: `Open a free wallet, fund it from USD, GBP or CAD and spend in ${COUNTRIES_SERVED_DISPLAY} African countries.`,
   action: {
     // [CHANGED, 2026-10-10] The home hero's label for the same destination, resolving the drift noted above.
     label: "Open your free wallet",

@@ -336,7 +336,7 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "Most of the money visitors lose, they lose at the conversion. The Omanga wallet is built to fix that part. You fund it from USD, GBP or CAD at the mid-market rate, based on public market data and refreshed hourly. You see the rate before you confirm. Then you spend from your balance online or in person across ",
+            "Most of the money visitors lose, they lose at the conversion. The Omanga wallet is built to fix that part. You fund it from USD, GBP or CAD and see the rate before you confirm. Then you spend from your balance online or in person across ",
             COUNTRIES_SERVED_DISPLAY,
             " African countries, Nigeria included.",
           ],
@@ -346,7 +346,7 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
           content: [
             // [CHANGED, 2026-10-14] UX copy pass: named the ₦20 fee instead of "no
             // hidden fees"; removed 24/7 wallet support (not owner-confirmed).
-            "The wallet is free to open and holds 6+ currencies, with no minimums. Transfers cost ₦20. ",
+            "The wallet is free to open and holds 6+ currencies, with no minimums. ",
             { text: "Explore the wallet", href: "/payments" },
             ".",
           ],
@@ -401,7 +401,7 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
       {
         question: "What is the mid-market exchange rate?",
         answer:
-          "It is the midpoint between the buy and sell prices of a currency: the rate you see on Google or in financial news. The Omanga wallet converts at the mid-market rate, refreshed hourly, and shows you the rate before you confirm.",
+          "It is the midpoint between the buy and sell prices of a currency: the rate you see on Google or in financial news. The Omanga wallet shows you its rate before you confirm, so you can compare.",
       },
     ],
   },
@@ -409,7 +409,7 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
     label: "Explore the wallet",
     href: "/payments",
     prompt: [
-      "Fund your wallet from USD, GBP or CAD at the mid-market rate. Spend online or in person across ",
+      "Fund your wallet from USD, GBP or CAD. Spend online or in person across ",
       COUNTRIES_SERVED_DISPLAY,
       " African countries. Free to open.",
     ],

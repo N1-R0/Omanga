@@ -59,8 +59,8 @@ export const accountFeaturesContent: AccountFeaturesContent = {
         },
         {
           icon: "convert",
-          heading: "Convert at the real rate",
-          body: "Every conversion uses the mid-market rate, refreshed hourly. You see it before you confirm.",
+          heading: "See the rate before you convert",
+          body: "Every conversion shows you the rate and what you'll get before you confirm.",
         },
         {
           icon: "spend",

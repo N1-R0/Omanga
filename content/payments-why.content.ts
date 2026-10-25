@@ -80,7 +80,7 @@ const WITHOUT_OMANGA: ComparisonGroup = {
     "A bank card from home that gets declined abroad",
     "An exchange-rate markup you only find on your statement",
     "A separate account or app for each currency",
-    "Transfer fees and minimum amounts",
+    "Minimum amounts before you can add money",
     "A different way to pay in each country on your trip",
   ],
 } as const;
@@ -101,10 +101,10 @@ const WITH_OMANGA: ComparisonGroup = {
     // [CHANGED, 2026-10-14] UX copy pass: names the ₦20 fee instead of "no
     // hidden fees"; numerals; "wallet" as the one body noun.
     "One wallet for spending across Africa",
-    "The mid-market rate, from public market data, refreshed hourly",
+    "The rate shown before you convert",
     "6+ currencies held, sent and received in one wallet",
     // [CHANGED, 2026-10-18] Owner: unconfirmed free-transfer claim removed.
-    "₦20 per transfer and no minimums",
+    "Free to open, with no minimums",
     `Spend in ${COUNTRIES_SERVED_DISPLAY} African countries`,
   ],
 } as const;

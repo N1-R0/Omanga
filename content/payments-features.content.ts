@@ -128,7 +128,7 @@ const FEATURES: readonly [PaymentsFeature, PaymentsFeature, PaymentsFeature] = [
     id: "rates",
     // [CHANGED, 2026-10-14] UX copy pass: names the rate; "see the rate before
     // you confirm" is left to the shared deep dive to cut repetition.
-    heading: "Convert at the mid-market rate",
+    heading: "See the rate before you convert",
   },
   {
     id: "coverage",
@@ -174,8 +174,9 @@ const METRICS: readonly PaymentsMetric[] = [
     // read as an insurance claim and health cover is Nigeria-only. Plain support claim.
     // [CHANGED, 2026-10-18] Owner: 24/7 support unconfirmed. Replaced
     // with the confirmed fee.
-    term: "₦20 per transfer",
-    description: "One flat fee to send money. Opening the wallet is free.",
+    // [CHANGED, 2026-10-25] Owner: no fee amounts on the site.
+    term: "Free to open",
+    description: "Open your wallet at no cost and add money when you need it.",
   },
 ] as const;
 
@@ -185,7 +186,7 @@ export const paymentsFeaturesContent: PaymentsFeaturesContent = {
   eyebrow: "Multi-currency wallet",
   heading: "Hold, convert and spend in one place",
   intro:
-    "Add money before you fly, convert it at the mid-market rate, then pay at a market stall in Accra or online at home.",
+    "Add money before you fly, convert it to naira, then pay at a market stall in Accra or online at home.",
   features: FEATURES,
   // [CHANGED, 2026-10-14] UX copy pass: names the product the figures describe.
   metricsLabel: "The wallet in numbers",

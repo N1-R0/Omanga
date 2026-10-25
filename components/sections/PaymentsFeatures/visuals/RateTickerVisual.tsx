@@ -56,7 +56,7 @@ export function RateTickerVisual({ rates }: RateTickerVisualProps) {
       <div className="pf-ticker pf-surface">
         <p className="pf-ticker-head">
           <span className="pf-live-dot" data-motion="loop" />
-          Mid-market rates
+          Today&rsquo;s rates
         </p>
 
         {rates.map((row) => {
@@ -98,7 +98,7 @@ export function RateTickerVisual({ rates }: RateTickerVisualProps) {
         })}
 
         <p className="pf-ticker-foot">
-          Sourced from public market data, refreshed hourly.
+          Your exact rate is shown before you confirm.
         </p>
       </div>
     </FeatureArtBox>

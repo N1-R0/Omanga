@@ -188,7 +188,7 @@ export const solutionsContent: SolutionsOverviewContent = {
   },
   payments: {
     heading: "Omanga Payment Solutions",
-    body: "Hold 6+ currencies, top up from USD, GBP or CAD, and convert at the mid-market rate.",
+    body: "Hold 6+ currencies, top up from USD, GBP or CAD, and see the rate before you convert.",
     action: PAYMENTS_ACTION,
     primaryAction: { label: "Open your free wallet", href: WALLET_URL, isExternal: true },
     image: PAYMENTS_IMAGE,

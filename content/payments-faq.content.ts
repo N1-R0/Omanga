@@ -20,7 +20,8 @@ export const PAYMENTS_FAQ_HEADING_ID = "payments-faq-heading";
  */
 export const PAYMENTS_FEES_ANSWER =
   // [CHANGED, 2026-10-18] Owner: "free between Omanga accounts" is unconfirmed, so it's out.
-  "Opening an Omanga wallet is free. Each transfer costs ₦20, and there are no minimums.";
+  // [CHANGED, 2026-10-25] Owner: no fee amounts on the site.
+  "Opening an Omanga wallet is free, and there are no minimums. You see any charge in the app before you confirm.";
 
 export const paymentsFaqContent: FaqContent = {
   // [CHANGED, 2026-10-14] UX copy pass: shorter.
@@ -37,7 +38,7 @@ export const paymentsFaqContent: FaqContent = {
       // [CHANGED, 2026-10-14] UX copy pass: verb-first; "see the rate before you
       // confirm" is left to the shared deep dive. Shown on home (index 1).
       answer:
-        "Add money from USD, GBP or CAD, with no minimum amount. Omanga converts it at the mid-market rate.",
+        "Add money from USD, GBP or CAD, with no minimum amount. You see the rate before you convert.",
     },
     {
       // [CHANGED, 2026-10-14] Was "Does Omanga charge hidden fees?" answered
@@ -46,13 +47,8 @@ export const paymentsFaqContent: FaqContent = {
       question: "What fees does Omanga charge?",
       answer: PAYMENTS_FEES_ANSWER,
     },
-    {
-      question: "What exchange rate does Omanga use?",
-      // [CHANGED, 2026-10-14] UX copy pass: dropped "no markup", which implied
-      // conversion is free (unconfirmed), and a repeat of "see the rate first".
-      answer:
-        "Omanga uses the mid-market rate: the midpoint between buying and selling prices, taken from public market data and refreshed hourly.",
-    },
+    // [REMOVED, 2026-10-25] "What exchange rate does Omanga use?" Owner: the
+    // rate source and refresh timing aren't public information.
     {
       question: "Where can I spend money with Omanga?",
       answer: `You can spend from your Omanga wallet in ${COUNTRIES_SERVED_DISPLAY} African countries, online or in person.`,
@@ -63,7 +59,7 @@ export const paymentsFaqContent: FaqContent = {
       // mid-market conversion. [NEW] copy, needs sign-off.
       question: "How do I change pounds or dollars to naira?",
       answer:
-        "Add pounds, dollars or Canadian dollars to your Omanga wallet, then convert them to naira in the app at the mid-market rate. You see the rate before you confirm.",
+        "Add pounds, dollars or Canadian dollars to your Omanga wallet, then convert them to naira in the app. You see the rate before you confirm.",
     },
     // [REMOVED, 2026-10-18] "Who operates the Omanga wallet?" Owner: the
     // wallet's operating partner isn't public information.

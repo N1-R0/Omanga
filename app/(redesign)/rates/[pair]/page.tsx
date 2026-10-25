@@ -138,7 +138,7 @@ export default async function RatePage(props: PageProps<"/rates/[pair]">) {
             caption={copy.matrixCaption}
           />
           <p className="font-sans text-small text-secondary">
-            Mid-market rate, {updated}.
+            Reference rate, {updated}. Your exact rate is shown in the app before you confirm.
           </p>
         </div>
       </V2Section>
@@ -171,17 +171,6 @@ export default async function RatePage(props: PageProps<"/rates/[pair]">) {
             ))}
           </ol>
 
-          <div className="flex flex-col gap-fluid-2 border-t border-border-hairline pt-fluid-6">
-            <h2 className="font-sans text-h3">{copy.midMarketHeading}</h2>
-            {copy.midMarketBody.map((line) => (
-              <p
-                key={line}
-                className="font-sans text-main text-secondary measure-body"
-              >
-                {line}
-              </p>
-            ))}
-          </div>
 
           <nav
             aria-labelledby={`${headingId}-other`}

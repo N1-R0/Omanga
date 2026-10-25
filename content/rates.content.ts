@@ -64,7 +64,7 @@ export function rateMeta(pair: RatePair): PageMetaContent {
   return {
     // "Pounds to Naira Today: GBP to NGN Exchange Rate | Omanga"
     title: `${titleCase(pair.plural)} to Naira Today: ${pair.code} to NGN Rate | Omanga`,
-    description: `Today's ${pair.plural} to naira rate at the mid-market price, plus a ${pair.code} to NGN converter. Change ${pair.plural} to naira in a free Omanga wallet.`,
+    description: `Today's ${pair.plural} to naira rate, plus a ${pair.code} to NGN converter. Change ${pair.plural} to naira in a free Omanga wallet.`,
     path: `/rates/${pair.slug}`,
   };
 }
@@ -76,7 +76,7 @@ export function rateCopy(pair: RatePair) {
     // [CHANGED, 2026-10-18] The M1 matrix (owner pick) replaces the two
     // amount tables. The R2 chart was added and then removed the same day.
     matrixHeading: "Naira, dollar and pound rates today",
-    matrixCaption: `Mid-market rates between US dollars, British pounds, Canadian dollars and Nigerian naira, including naira to ${pair.plural}`,
+    matrixCaption: `Reference rates between US dollars, British pounds, Canadian dollars and Nigerian naira, including naira to ${pair.plural}`,
     stepsHeading: `Change ${pair.plural} to naira with Omanga`,
     steps: [
       {
@@ -85,20 +85,17 @@ export function rateCopy(pair: RatePair) {
       },
       {
         heading: "Convert to naira",
-        body: "Convert at the mid-market rate. You see the rate before you confirm.",
+        body: "Convert in the app. You see the rate before you confirm.",
       },
       {
         heading: "Spend or send",
-        body: `Pay in Nigeria or send money for ₦20. Your wallet works in ${COUNTRIES_SERVED_DISPLAY} African countries.`,
+        body: `Pay in Nigeria or send money to a bank account. Your wallet works in ${COUNTRIES_SERVED_DISPLAY} African countries.`,
       },
     ],
-    midMarketHeading: "What is the mid-market rate?",
-    midMarketBody: [
-      "The mid-market rate is the midpoint between the price banks buy and sell a currency at. It's the rate you see on Google or Reuters.",
-      "Bureaux de change and card providers often add a margin on top of it. Omanga converts at the mid-market rate, so you can check our rate yourself.",
-    ],
+    // [REMOVED, 2026-10-25] "What is the mid-market rate?" Owner: the rate
+    // source and refresh timing aren't public information.
     sourceNote:
-      "Reference rate from public market data, checked every hour. Your exact rate is shown in the Omanga app before you confirm.",
+      "Reference rate only. Your exact rate is shown in the Omanga app before you confirm.",
     otherRatesHeading: "Other naira rates",
     faqHeading: `${capitalise(pair.plural)} to naira: common questions`,
   };
@@ -115,21 +112,16 @@ export function rateFaq(pair: RatePair, rate: number, date: string): FaqItem[] {
   return [
     {
       question: `How much is ${pair.symbol}1 in naira today?`,
-      answer: `${pair.symbol}1 is ${naira(rate)} at the mid-market rate (${date}).`,
+      answer: `${pair.symbol}1 is ${naira(rate)} at the reference rate (${date}).`,
     },
     {
       question: `How much is ${pair.symbol}100 in naira?`,
-      answer: `${pair.symbol}100 is ${naira(rate * 100)} at today's mid-market rate (${date}).`,
-    },
-    {
-      question: `What rate does Omanga use to change ${pair.plural} to naira?`,
-      answer:
-        "Omanga converts at the mid-market rate: the midpoint between buying and selling prices, from public market data. You see the rate before you confirm.",
+      answer: `${pair.symbol}100 is ${naira(rate * 100)} at today's reference rate (${date}).`,
     },
     {
       question: "Is this the rate I get?",
       answer:
-        "This page shows the mid-market reference rate. Your exact rate is shown in the Omanga app before you confirm a conversion.",
+        "This page shows a reference rate. Your exact rate is shown in the Omanga app before you confirm a conversion.",
     },
   ];
 }

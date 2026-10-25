@@ -65,7 +65,7 @@ export const paymentsCtaContent: CtaContent = {
   // intro shows the fee and names the regulator next to the CTA (Wise model).
   heading: "Get your travel money ready before you fly",
   // [CHANGED, 2026-10-18] Owner: who runs the wallet behind the scenes is not public information.
-  intro: "Free to open, no minimums, ₦20 per transfer.",
+  intro: "Free to open, with no minimums.",
   action: {
     label: "Open your free wallet",
     href: WALLET_URL,

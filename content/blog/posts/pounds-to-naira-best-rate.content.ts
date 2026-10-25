@@ -160,7 +160,7 @@ export const poundsToNairaBestRatePost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "With an Omanga wallet you add pounds, then convert them to naira at the mid-market rate. You see the rate before you confirm, so you know exactly what you'll get. Transfers cost ₦20, and the wallet is free to open. It also works in ",
+            "With an Omanga wallet you add pounds, then convert them to naira. You see the rate before you confirm, so you know exactly what you'll get. The wallet is free to open. It also works in ",
             COUNTRIES_SERVED_DISPLAY,
             " African countries if Nigeria isn't your only stop. ",
             { text: "Explore the wallet", href: "/payments" },
@@ -176,7 +176,7 @@ export const poundsToNairaBestRatePost: BlogPost = {
       {
         question: "What is the best way to change pounds to naira?",
         answer:
-          "Compare any offer with the mid-market rate and look at how many naira you receive after fees. Avoid airport bureaux for large amounts and always pay in naira, not pounds. A wallet that converts at the mid-market rate, like Omanga, shows you the rate before you confirm.",
+          "Compare any offer with the mid-market rate and look at how many naira you receive after fees. Avoid airport bureaux for large amounts and always pay in naira, not pounds. A wallet like Omanga shows you the rate before you confirm.",
       },
       {
         question: "Is it better to pay in pounds or naira in Nigeria?",
@@ -186,7 +186,7 @@ export const poundsToNairaBestRatePost: BlogPost = {
       {
         question: "Where can I check the pounds to naira rate today?",
         answer:
-          "Omanga's pounds to naira page shows today's mid-market rate and a converter. The mid-market rate is also the one you see on Google.",
+          "Omanga's pounds to naira page shows today's reference rate and a converter.",
       },
       {
         question: "Why is the rate I get lower than the rate on Google?",
@@ -199,7 +199,7 @@ export const poundsToNairaBestRatePost: BlogPost = {
     label: "See today's rate",
     href: "/rates/pounds-to-naira",
     prompt: [
-      "Check today's pounds to naira rate, then convert at the mid-market rate in a free Omanga wallet.",
+      "Check today's pounds to naira rate, then convert in a free Omanga wallet.",
     ],
   },
 };

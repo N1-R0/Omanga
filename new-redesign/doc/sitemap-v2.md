@@ -173,20 +173,18 @@ Mobile: [Logo] [Open your free wallet] [☰]. The menu sheet uses the same group
 
 ### Pages and sections
 
-**Home `/`**
+**Home `/`** (updated 2026-10-25, as built at /new; full detail in `home-structure-v2.md` § 3)
 *Purpose:* explain both products in seconds and send each visitor to the one they need.
-1. Hero: pay and stay covered in Nigeria (two CTAs)
-2. Pay like a local. Get care if you need it. (two product cards, each linking to its page)
-3. See the rate before you convert (live converter, ₦20 transfer fee)
-4. Ready before you fly (three steps)
-5. Who looks after your money and your cover (named provider, link to Safety)
-6. Questions before you travel (at most 5)
-7. Closing band: land with everything sorted
+1. Hero: Pay across Africa. Stay covered in Nigeria. (two CTAs)
+2. Partners strip
+3. Your money and your health, sorted for the trip (Payments card, metrics, Insurance card)
+4. Set up at home before you fly (three steps)
+5. Why Omanga (kept from the earlier preview)
+6. Countries (kept from the earlier preview)
+7. FAQ
+8. Closing band: land with everything sorted
 
-*Removed from Home:*
-- The partner strip (merged into 5).
-- "Everything your trip needs" (it duplicated 2).
-- The country pill cloud (moves to Payments).
+*Removed from Home:* "What Omanga does" and the health-cover prices section (both replaced by 3). No fee amounts, rate source or refresh timing anywhere (owner, 2026-10-25).
 
 **Payments `/payments`**
 *Purpose:* show how you hold, convert and pay in Africa, and what it costs.

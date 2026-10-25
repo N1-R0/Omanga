@@ -5,8 +5,10 @@ import { homePartners } from "@/new-redesign/content/home.content";
 /**
  * 2 · Partner strip (img 3; design system § Partner strip).
  *
- * A thin white band right under the hero: a centred P2 label, then the logos
- * in a static row. They're grey at rest, as in the reference, and return to
+ * A thin band right under the hero, on the page's grey (owner, 2026-10-25:
+ * no white background or rule): a centred P2 label, then the logos in a
+ * static row. The supplied PNGs have solid white grounds, so they're
+ * multiply-blended, which drops the white into the grey. They're grey at rest, as in the reference, and return to
  * their own colours on hover, so the supplied trademarks are never altered,
  * only toned.
  *
@@ -17,7 +19,7 @@ export function HomePartners() {
   const { label, logos } = homePartners;
 
   return (
-    <section id="partners" aria-labelledby="partners-label" className="border-b border-border bg-surface py-8 md:py-10">
+    <section id="partners" aria-labelledby="partners-label" className="bg-bg py-8 md:py-10">
       <div className="container-page flex flex-col items-center gap-5 text-center">
         <p id="partners-label" className="type-p2 text-text-secondary">
           {label}
@@ -32,7 +34,7 @@ export function HomePartners() {
                 height={logo.height}
                 sizes="160px"
                 style={{ ["--logo-h" as string]: `${logo.display}px` }}
-                className="h-[calc(var(--logo-h)*0.85)] w-auto opacity-60 grayscale transition-[filter,opacity] duration-[var(--duration-base)] ease-standard hover:opacity-100 hover:grayscale-0 md:h-(--logo-h)"
+                className="h-[calc(var(--logo-h)*0.85)] w-auto opacity-60 mix-blend-multiply grayscale transition-[filter,opacity] duration-[var(--duration-base)] ease-standard hover:opacity-100 hover:grayscale-0 md:h-(--logo-h)"
               />
             </li>
           ))}

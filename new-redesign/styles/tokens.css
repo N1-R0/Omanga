@@ -81,9 +81,11 @@
   /* ---- Type --------------------------------------------------------------- */
   --font-sans: var(--font-host-grotesk), ui-sans-serif, system-ui, sans-serif;
 
-  /* ---- Radius: small and quiet ------------------------------------------- */
-  --radius-xs: 2px; /* cards, plan cards, tiles */
-  --radius-sm: 4px; /* photos, textures */
+  /* ---- Radius ------------------------------------------------------------ */
+  /* [CHANGED, 2026-10-25] Owner: cards are 16px (were 2), and photo boxes
+     inside them 12px (were 4) so they nest inside the card's corner. */
+  --radius-xs: 16px; /* cards, plan cards, tiles */
+  --radius-sm: 12px; /* photos, textures */
   --radius-md: 8px; /* buttons, inputs, accordion rows, mini-visual cards */
   --radius-glass: 14px; /* glass frame: inner 8 + 8px ring, minus the 1px edge */
 

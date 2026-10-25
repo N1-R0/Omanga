@@ -13,7 +13,8 @@ import { cx } from "@/lib/cx";
  *   onPhoto    text only in white, the secondary action beside a primary on a
  *              photo (keeps one filled button per view).
  *
- * Min height 44, padding 12 × 16, radius 8 (never fully rounded). A link is
+ * Min height 44, padding 12 × 20, fully rounded ([CHANGED, 2026-10-25] owner:
+ * buttons are pills from now on; they were radius 8). A link is
  * rendered when `href` is given, otherwise a <button>.
  */
 type Variant = "primary" | "secondary" | "ghost" | "inverse" | "onPhoto";
@@ -27,7 +28,7 @@ const VARIANT: Record<Variant, string> = {
 };
 
 const BASE =
-  "type-p3 inline-flex min-h-11 items-center justify-center rounded-md px-4 py-3 transition-colors duration-[var(--duration-fast)] ease-standard disabled:cursor-not-allowed disabled:bg-surface-muted disabled:text-neutral-500";
+  "type-p3 inline-flex min-h-11 items-center justify-center rounded-full px-5 py-3 transition-colors duration-[var(--duration-fast)] ease-standard disabled:cursor-not-allowed disabled:bg-surface-muted disabled:text-neutral-500";
 
 type Props = {
   children: ReactNode;

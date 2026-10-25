@@ -17,7 +17,7 @@ import type { FeatureScreen } from "@/new-redesign/content/home.content";
  */
 export const walletHero = {
   title: ["Travel money,", "ready when you land"],
-  sub: "Add pounds, dollars or Canadian dollars, convert them at the mid-market rate, and pay in naira by transfer.",
+  sub: "Add pounds, dollars or Canadian dollars, convert them to naira, and pay by transfer.",
   primary: { label: "Open your free wallet" },
 } as const;
 
@@ -31,8 +31,8 @@ export const walletProof = {
   label: "Wallet facts",
   items: [
     { title: "Pay in 50+ countries", text: "One wallet for trips across Africa, wherever you land." },
-    { title: "Add from 3 currencies", text: "Pounds, US dollars or Canadian dollars, converted at the mid-market rate." },
-    { title: "₦20 per transfer", text: "One flat fee each time you send naira to a bank account." },
+    { title: "Add from 3 currencies", text: "Pounds, US dollars or Canadian dollars, converted when you choose." },
+    { title: "Free to open", text: "No cost to open, and no minimum to add." },
     { title: "Free to open", text: "No minimum to add, so start with what your trip needs." },
   ],
 } as const;
@@ -61,14 +61,14 @@ export const walletFeatures = {
     },
     {
       id: "convert",
-      title: "Convert at the mid-market rate",
+      title: "See the rate before you convert",
       text: "See the rate and the naira amount before you confirm, then the naira lands in your naira wallet.",
       cta: { label: "See today's rates", path: "/rates" },
     },
     {
       id: "send",
       title: "Send and pay in naira by transfer",
-      text: "Send to a bank account, or pay a shop, driver or hotel by transfer. Each transfer costs ₦20, and every payment shows in your history.",
+      text: "Send to a bank account, or pay a shop, driver or hotel by transfer. Every payment shows in your history.",
       cta: { label: "See how you pay in person", path: "/payments#pay-in-person" },
     },
   ],
@@ -89,16 +89,15 @@ export const walletFeatures = {
       gbp: 100,
       rate: "Rate",
       to: "You get",
-      note: "Mid-market rate, updated hourly",
+      note: "Shown before you confirm",
       action: "Convert",
     },
     send: {
       title: "Transactions",
       rows: [
         { title: "Paid by transfer", time: "1:40pm • Today", amount: "-₦8,500" },
-        { title: "Transfer fee", time: "1:40pm • Today", amount: "-₦20" },
         { title: "Sent to a bank account", time: "8:50am • Today", amount: "-₦15,000" },
-        { title: "Transfer fee", time: "8:50am • Today", amount: "-₦20" },
+        { title: "Converted from GBP", time: "8:30am • Today", amount: "+₦180,000" },
       ],
     },
   },
@@ -137,7 +136,7 @@ export const walletPayInPerson = {
     },
     {
       title: "Check the name, then send",
-      text: "See who you're paying before you confirm with your PIN. Each transfer costs ₦20.",
+      text: "See who you're paying before you confirm with your PIN.",
       lottie: "/lottie/wallet/pay-step-3.json",
       poster: "/photos/wallet/walkthrough/step-3.jpg",
       ms: 4800,
@@ -153,29 +152,29 @@ export const walletPayInPerson = {
 } as const;
 
 /**
- * 6 · Rate honesty (wireframe approved 2026-10-22): what the mid-market rate
- * is, why a bureau's rate looks different, and that the app shows the rate
- * before you confirm. Kept general: no bureau named, no rival rates quoted.
- * The card reads the same hourly snapshot as the hero and the rate pages.
+ * 6 · The rate (wireframe approved 2026-10-22). [CHANGED, 2026-10-25] Owner:
+ * the rate source, refresh timing and fee amounts aren't public, so the
+ * section now says only that the app shows the rate before you confirm, plus
+ * today's reference rates.
  */
 export const walletRates = {
   eyebrow: "The rate",
-  title: "The real rate, shown before you convert",
-  sub: "Omanga converts at the mid-market rate, the midpoint between what banks buy and sell a currency for.",
+  title: "See the rate before you convert",
+  sub: "Check today's rate any time, then see exactly how many naira you'll get before anything moves.",
   points: [
-    { title: "What the mid-market rate is", text: "The rate you see when you look it up online, with nothing added on top." },
-    { title: "Why a bureau's rate looks different", text: "Bureaus and street changers add a margin to the rate, so you get fewer naira for each pound or dollar." },
+    { title: "Today's rate, up front", text: "Check pounds, dollars and Canadian dollars against the naira whenever you like." },
+    { title: "No minimum", text: "Convert as little or as much as you need." },
     { title: "You see it before you confirm", text: "The app shows the rate and the naira you'll get on the review screen, before anything moves." },
   ],
   cta: { label: "See all rates", path: "/rates" },
   card: {
-    title: "Today's mid-market rates",
+    title: "Today's rates",
     rows: [
       { code: "GBP", label: "£1", flag: "/flags/united-kingdom.svg" },
       { code: "USD", label: "$1", flag: "/flags/united-states.svg" },
       { code: "CAD", label: "C$1", flag: "/flags/canada.svg" },
     ],
-    note: (date: string | null) => (date ? `Updated hourly · ${date}` : "Updated hourly"),
+    note: (date: string | null) => (date ? `Reference rates · ${date}` : "Reference rates"),
   },
 } as const;
 
@@ -223,8 +222,8 @@ export const walletLeftover = {
     naira: 50000,
     from: { name: "Naira wallet", flag: "/flags/nigeria.svg" },
     to: { name: "Dollar wallet", flag: "/flags/united-states.svg" },
-    rateLabel: "Mid-market rate",
-    note: (date: string | null) => (date ? `Example amount · rate updated hourly · ${date}` : "Example amount · rate updated hourly"),
+    rateLabel: "Rate",
+    note: (date: string | null) => (date ? `Example amount · ${date}` : "Example amount"),
   },
 } as const;
 
@@ -251,19 +250,15 @@ export const walletFaq = {
     },
     {
       q: "What fees does Omanga charge?",
-      a: "Opening an Omanga wallet is free. Each transfer costs ₦20, and there are no minimums.",
-    },
-    {
-      q: "What exchange rate does Omanga use?",
-      a: "Omanga uses the mid-market rate: the midpoint between buying and selling prices, taken from public market data and refreshed hourly.",
+      a: "Opening an Omanga wallet is free, and there are no minimums. You see any charge in the app before you confirm.",
     },
     {
       q: "How do I change pounds or dollars to naira?",
-      a: "Add pounds, dollars or Canadian dollars to your Omanga wallet, then convert them to naira in the app at the mid-market rate. You see the rate before you confirm.",
+      a: "Add pounds, dollars or Canadian dollars to your Omanga wallet, then convert them to naira in the app. You see the rate before you confirm.",
     },
     {
       q: "How do I pay in person in Nigeria?",
-      a: "Pay by bank transfer from your naira wallet. Ask for the seller's bank and account number, check the name the app shows, then confirm with your PIN. Each transfer costs ₦20.",
+      a: "Pay by bank transfer from your naira wallet. Ask for the seller's bank and account number, check the name the app shows, then confirm with your PIN.",
     },
     {
       q: "What happens to my naira when I leave?",
@@ -275,7 +270,7 @@ export const walletFaq = {
     },
     {
       q: "Is Omanga safe to use?",
-      a: "You see the mid-market rate before you confirm a conversion, and transfers cost a flat ₦20. Keep your PIN and one-time codes private, and contact us if something looks wrong.",
+      a: "You see the rate before you confirm a conversion. Keep your PIN and one-time codes private, and contact us if something looks wrong.",
     },
   ],
 } as const;
@@ -325,7 +320,6 @@ export const walletAppHome = {
   converted: { title: "Converted from GBP", time: "9:12am • Today", gbp: 100 },
   rows: [
     { title: "Sent to a bank account", time: "8:50am • Today", amount: -15000 },
-    { title: "Transfer fee", time: "8:50am • Today", amount: -20 },
   ],
   /** The app's "Coming soon" row (insurance-promo-card.tsx), verbatim. */
   promo: {

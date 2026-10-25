@@ -15,6 +15,10 @@
 @import "./utilities.css";
 @import "./animations.css";
 
+/* Scroll-pinned sections (home steps, 2026-10-25): only on screens wide and
+   tall enough to hold the whole pinned section in one view. */
+@custom-variant pin (@media (min-width: 1024px) and (min-height: 800px));
+
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;

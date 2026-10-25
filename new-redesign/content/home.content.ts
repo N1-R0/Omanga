@@ -7,10 +7,9 @@
  */
 export type HomeSectionId =
   | "hero"
+  | "products"
   | "partners"
-  | "what-omanga-does"
   | "steps"
-  | "prices"
   | "why-omanga"
   | "countries"
   | "faq"
@@ -23,10 +22,14 @@ export const homeSections: ReadonlyArray<{
   ref: string;
 }> = [
   { id: "hero", label: "Hero", ref: "img 1" },
+  // Owner, 2026-10-25: the partners strip sits right after the hero.
   { id: "partners", label: "Partners", ref: "img 3" },
-  { id: "what-omanga-does", label: "What Omanga does", ref: "img 2" },
+  // Home structure v2 §§ 3–4 in one section (owner, 2026-10-25): a centred
+  // head over the Payments card and the Insurance card.
+  { id: "products", label: "Payments and insurance", ref: "owner card" },
+  // [REMOVED, 2026-10-25] "what-omanga-does": owner, it repeated "products".
   { id: "steps", label: "Sorted before you land", ref: "img 4" },
-  { id: "prices", label: "Health cover prices", ref: "pricing ref" },
+  // [REMOVED, 2026-10-25] "prices": the Insurance card in "products" replaces it.
   { id: "why-omanga", label: "Why Omanga", ref: "img 5" },
   { id: "countries", label: "Countries", ref: "Wise" },
   { id: "faq", label: "FAQ", ref: "img 6" },
@@ -43,32 +46,117 @@ export const homeHero = {
   primary: { label: "Open your free wallet" },
   // Owner, 2026-10-23: was "Compare health plans".
   secondary: { label: "Get insurance plan", path: "/insurance/plans" },
+  // Owner pick, 2026-10-25 (shortlist no. 1): replaces the moving fabric.
+  // Unsplash 88sSfA6YG9o by Khamkéo (@mahkeo), Unsplash License; self-hosted
+  // and not used anywhere else on the site. Decorative, so no alt text.
+  photo: { src: "/photos/home/hero-sky.jpg", position: "60% 40%" },
 } as const;
 
 /**
- * Hero converter (owner, 2026-10-21): under the CTAs, a white card in the
- * glass frame. Mid-market rates from lib/rates.ts (public daily snapshot,
- * revalidated hourly), the same source as the live site's rate pages.
+ * 3 · Payments and insurance (home structure v2 §§ 3–4, owner 2026-10-25):
+ * one section, a centred head (eyebrow, H2, sub, after the owner's
+ * "Send Money Anywhere" reference) over two product cards.
  */
-export const heroConverter = {
-  // [CHANGED, 2026-10-21] Owner: content follows Wise's converter: a heading
-  // and one-line sub, the two amounts, then label/value rows (Wise's
-  // "Arrives" and "Total fees"), then a link. Only confirmed facts:
-  //   - "You add", not Wise's "exactly": whether converting costs anything
-  //     is owner question § 8.5.
-  //   - No "Guaranteed for" rate lock, no "Arrives" (no speed claims) and no
-  //     "You could save" (no comparison claims).
-  title: "Convert at the real rate",
-  sub: "See the mid-market rate before you confirm.",
-  youAdd: "You add",
-  youGet: "Your wallet gets",
-  swapLabel: "Swap currencies",
-  defaultAmount: 200,
+export const homeProducts = {
+  eyebrow: "What you get",
+  title: "Your money and your health, sorted for the trip",
+  sub: "Convert and pay across Africa, and get insurance in Nigeria from Phillips HMO.",
   /**
-   * The four currencies the live rate pages already cover (lib/rates.ts
-   * crossMatrix). More African currencies wait on owner question § 8.5
-   * (which currencies the wallet holds).
+   * Metrics strip between the Payments and Insurance cards (owner,
+   * 2026-10-25, after a "Growing every day" reference). Approved facts only:
+   * the reference's user and transaction counts have no Omanga figure
+   * behind them, so the three are the wallet's reach, its currencies and the
+   * plan count. The label avoids a growth claim.
    */
+  metricsLabel: "At a glance",
+  metrics: [
+    { value: "50", suffix: "+", label: "African countries to pay in" },
+    { value: "6", suffix: "+", label: "Currencies in one wallet" },
+    { value: "3", suffix: "", label: "Insurance plans from Phillips HMO" },
+  ],
+} as const;
+
+/**
+ * 4 · Insurance (home structure v2 § 4), owner 2026-10-25: two cards side
+ * by side, after the owner's "Trusted Across Borders / AI Money Manager"
+ * reference, so the pair reads as the Payments card inverted.
+ *   - Left, a photo card: the title and sub over the photo's foot, the plans
+ *     as white pill buttons, the picked plan's price on the right.
+ *   - Right, a white card: a small plan summary drawn as app UI in the
+ *     middle, and the plan's name and description at the foot.
+ * The pills drive the price and the whole right card. Gold starts picked
+ * (the featured plan).
+ *
+ * Plan names, prices, descriptions, categories and inclusions come from
+ * `homePrices`, the same figures the live plans page shows. "Insurance", not
+ * "health cover", as the category (owner naming). Nothing on claims or
+ * deposits (owner question § 8.4). The summary UI names no person and
+ * quotes no chat: it's the plan's own facts.
+ */
+export const homeInsurance = {
+  eyebrow: "Insurance",
+  title: "Insurance plans for your time in Nigeria",
+  sub: "Go to a hospital in your plan's network and Phillips HMO handles your care.",
+  plansLabel: "Plans",
+  perMonth: "/ month",
+  /**
+   * The white half's chat, one Jitter Lottie per plan (owner, 2026-10-25):
+   * the customer's question pops in, Omanga types, the reply lists three
+   * inclusions, then the plan row pops in as a second Omanga message. File
+   * "Omanga — Home insurance chat", artboards "Insurance chat · {plan}".
+   * `stillFrame` is the settled frame shown with reduced motion.
+   */
+  chats: {
+    Silver: { src: "/lottie/home/insurance-chat-silver.json", stillFrame: 360 },
+    Gold: { src: "/lottie/home/insurance-chat-gold.json", stillFrame: 360 },
+    Diamond: { src: "/lottie/home/insurance-chat-diamond.json", stillFrame: 360 },
+  } as Record<string, FeatureLottie>,
+  hospitals: (access: string) => `${access} hospitals`,
+  planTitle: (plan: string) => `${plan} plan`,
+  cta: (plan: string) => `Get ${plan}`,
+  path: "/insurance/plans",
+  // Owner's pick, 2026-10-25: Unsplash _t15AWPJNmg by Sandisk (Unsplash
+  // License), self-hosted, not used anywhere else on the site. Decorative.
+  photo: { src: "/photos/home/insurance-phone-friends.jpg", position: "60% 30%" },
+} as const;
+
+/**
+ * 3 · Payments card (home structure v2 § 3), in "products".
+ *
+ * [CHANGED, 2026-10-25] Owner: no rate source ("mid-market"), no refresh
+ * timing and no fee amounts anywhere on the site. The title, the fact cards
+ * (₦20, Hourly) and the rate note are gone for that reason.
+ *
+ * Layout (owner, 2026-10-25): the phone on the left, the head on the right;
+ * on mobile the head comes first, then the whole phone, as on LemFi's
+ * international-money-transfer page. The screen follows the owner's card
+ * reference: "You convert" and "You get" halves with the rate pill on the
+ * seam, a card of three plain facts, then one button. The facts replace the
+ * reference's delivery, speed and fee rows, which Omanga can't state.
+ *
+ * "You convert", not Wise's "exactly": whether converting costs anything is
+ * owner question § 8.5. Four currencies, the ones lib/rates.ts crossMatrix
+ * covers; more wait on § 8.5.
+ */
+export const homeRates = {
+  eyebrow: "Payments",
+  title: "Convert your money, then pay across Africa",
+  sub: "Hold pounds, dollars or Canadian dollars, convert to naira when you need it, and see the rate before you confirm.",
+  // Owner, 2026-10-25: the phone stands in a photo box. Unsplash PdGBci-4jR8
+  // (Alessio Soggetti), self-hosted, not used anywhere else on the site.
+  photo: { src: "/photos/home/rates-mountains.jpg", position: "50% 60%" },
+  screen: {
+    title: "Convert",
+    youConvert: "You convert",
+    youGet: "You get",
+    facts: [
+      { icon: "bank", text: "Pay by bank transfer" },
+      { icon: "eye", text: "Rate shown before you confirm" },
+      { icon: "wallet", text: "Free to open" },
+    ],
+    cta: "Convert money",
+  },
+  defaultAmount: 200,
   currencies: [
     { code: "GBP", name: "British pound", country: "United Kingdom", symbol: "£", flag: "/flags/united-kingdom.svg" },
     { code: "USD", name: "US dollar", country: "United States", symbol: "$", flag: "/flags/united-states.svg" },
@@ -82,12 +170,6 @@ export const heroConverter = {
     empty: "No currency matches",
     chooseLabel: (side: string, code: string) => `${side} currency, ${code}. Change`,
   },
-  rateLabel: "Exchange rate",
-  rateNote: "Mid-market, updated hourly",
-  feeLabel: "Transfer fee",
-  fee: "₦20 flat",
-  feeNote: "To any Nigerian bank account",
-  link: { label: "See all rates", path: "/rates" },
 } as const;
 
 /**
@@ -159,7 +241,7 @@ export type FeatureScreen =
 export const homeFeatures = {
   eyebrow: "What Omanga does",
   title: "One app for your money and your health on the trip",
-  sub: "Hold and convert your money at the real rate, pay across Africa, and get care in Nigeria through Phillips HMO.",
+  sub: "Hold and convert your money, pay across Africa, and get care in Nigeria through Phillips HMO.",
   items: [
     {
       title: "Open a free multi-currency wallet",
@@ -179,7 +261,7 @@ export const homeFeatures = {
     },
     {
       title: "Convert money at the best rates",
-      text: "Exchange pounds, dollars or Canadian dollars at the midpoint between buying and selling prices. Check it before you confirm. It refreshes every hour.",
+      text: "Exchange pounds, dollars or Canadian dollars for naira, and check the rate before you confirm.",
       link: { label: "Check today's rate", path: "/rates" },
       lottie: { src: "/lottie/home/convert.json", stillFrame: 760 },
       screen: { kind: "convert" },
@@ -234,7 +316,7 @@ export const homeFeatures = {
     },
   ] satisfies ReadonlyArray<{ title: string; text: string; link: { label: string; path: string }; lottie?: FeatureLottie; screen: FeatureScreen }>,
   texture: { src: "/photos/brand/bg-flowing-waves-u2.jpg", width: 2400, height: 1350 },
-  convertScreen: { title: "Convert", add: "You add", get: "You get", rate: "Mid-market rate", amount: 200 },
+  convertScreen: { title: "Convert", add: "You add", get: "You get", rate: "Rate", amount: 200 },
 } as const;
 
 /**
@@ -244,42 +326,42 @@ export const homeFeatures = {
  */
 export const homeSteps = {
   eyebrow: "How it works",
-  // [CHANGED, 2026-10-21] Owner: heading and sub were too short beside the
-  // other sections' two-line blocks. Facts from the approved FAQ (plan bought
-  // before travel, wallet funded in GBP/USD/CAD).
-  title: "Three steps at home before you fly",
-  sub: "A few minutes on your phone is all it takes. Your naira and your health cover are ready the moment you land.",
-  // [CHANGED, 2026-10-23] Owner reference: each card has its own Unsplash
-  // photo (self-hosted, not used elsewhere on the site) with a compact app
-  // card in the glass frame over its lower half, replacing the U2 texture
-  // sliced across the row. Photos: nBiJoRbVHmA, NfJIA8X91gg, 558JeoJkeMM (cropped on the faces).
+  // [CHANGED, 2026-10-25] Home structure v2 § 4 title. The sub drops "ready
+  // the moment you land": when cover starts is unconfirmed (§ 8.1).
+  title: "Set up at home before you fly",
+  sub: "A few minutes on your phone is all it takes. Your wallet is funded and your plan is picked before you leave.",
+  // Journey rail ends (owner-approved wireframe, design-lab/home-steps-v2.html).
+  from: "Home",
+  to: "Lagos",
+  /** How far the middle card (and the rail's middle stop) sits below the others, px. */
+  dip: 40,
+  /**
+   * [CHANGED, 2026-10-25] Owner-approved wireframe: each card is a white
+   * Card whose top well shows a slice of the Payments card's mountain photo
+   * (Unsplash PdGBci-4jR8; owner asked for it here too), cut in three so the
+   * row reads as one landscape, with a small app screen floating on it.
+   * Nothing on rates, fees or speed.
+   */
+  photo: "/photos/home/rates-mountains.jpg",
   steps: [
     {
       title: "Open your free wallet",
       text: "Sign up with your email in a few minutes.",
-      image: { src: "/photos/steps/step-1-wallet.jpg", alt: "Woman in headphones smiling at her phone", position: "50% 15%" },
-      card: { title: "Create account", meta: "1 of 3", label: "Email", value: "you@example.com" },
+      screen: { kind: "signup", title: "Create account", label: "Email", value: "you@example.com", action: "Continue" },
     },
     {
       title: "Add money",
-      text: "Fund in pounds, dollars or Canadian dollars at the rate you see.",
-      image: { src: "/photos/steps/step-2-money.jpg", alt: "Man smiling as he uses his phone", position: "50% 10%" },
-      // `value: null`: the naira amount for £200 at today's GBP rate.
-      card: { title: "Add money", meta: "£200.00", label: "You get", value: null },
+      text: "Fund in pounds, dollars or Canadian dollars, and convert when you're ready.",
+      screen: { kind: "add", title: "Add money", wallet: "GBP wallet", flag: "/flags/united-kingdom.svg", amount: "£200", action: "Add money" },
     },
     {
-      title: "Pick your cover",
-      text: "Choose a plan for the months you're away.",
-      image: { src: "/photos/steps/step-3-family.jpg", alt: "Mother and daughter laughing together outdoors", position: "50% 50%" },
-      card: { title: "Your plan", meta: "Gold", label: "Price", value: "$85 / month" },
+      title: "Pick your insurance plan",
+      text: "Choose Silver, Gold or Diamond from Phillips HMO.",
+      screen: { kind: "plan", title: "Your plan", plans: ["Silver", "Gold", "Diamond"], picked: "Gold", row: "Gold · $85 / month", sub: "Category A + B hospitals" },
     },
-  ] satisfies ReadonlyArray<{
-    title: string;
-    text: string;
-    image: { src: string; alt: string; position: string };
-    card: { title: string; meta: string; label: string; value: string | null };
-  }>,
-  addAmount: 200,
+  ],
+  stepOf: (n: number, total: number) => `${n} of ${total}`,
+  cta: { label: "Open your free wallet" },
 } as const;
 
 /**
@@ -354,8 +436,8 @@ export const homeWhy = {
   title: "Honest about rates, clear about who does what",
   sub: "Every number shown before you pay, and a plain answer to who provides what.",
   tiles: [
-    { icon: "rate", title: "Mid-market rate", text: "Refreshed hourly and shown before you confirm." },
-    { icon: "tag", title: "One flat fee", text: "₦20 per transfer, shown before you send." },
+    { icon: "rate", title: "Rate shown first", text: "See the rate before you confirm a conversion." },
+    { icon: "tag", title: "Pay by transfer", text: "Pay shops, drivers and hotels in naira by bank transfer." },
     { icon: "wallet", title: "No minimum", text: "Free to open. Add as little as you like." },
     { icon: "care", title: "Care through a network", text: "Go to a network hospital and Phillips HMO handles your care." },
     { icon: "info", title: "Who's who", text: "Phillips HMO provides the cover. Omanga isn't the insurer." },
@@ -439,16 +521,12 @@ export const homeFaq = {
       a: "Omanga's travel health insurance for Nigeria costs $50 a month on Silver, $85 on Gold and $120 on Diamond. There's no commitment, and you can cancel any time.",
     },
     {
-      q: "What exchange rate does Omanga use?",
-      a: "Omanga uses the mid-market rate: the midpoint between buying and selling prices, taken from public market data and refreshed hourly.",
-    },
-    {
       q: "Does Omanga health cover work outside Nigeria?",
       a: "No. Omanga health cover applies in Nigeria only. Your Omanga wallet works in 50+ African countries, but your health cover doesn't.",
     },
     {
       q: "Is Omanga safe to use?",
-      a: "You see the mid-market rate before you confirm a conversion, and transfers cost a flat ₦20. Health cover comes from Phillips HMO, a Nigerian health maintenance organisation (HMO). Keep your PIN and one-time codes private, and contact us if something looks wrong.",
+      a: "You see the rate before you confirm a conversion. Health cover comes from Phillips HMO, a Nigerian health maintenance organisation (HMO). Keep your PIN and one-time codes private, and contact us if something looks wrong.",
     },
     {
       q: "How does health insurance work in Nigeria?",
@@ -460,7 +538,7 @@ export const homeFaq = {
     },
     {
       q: "What fees does Omanga charge?",
-      a: "Opening an Omanga wallet is free. Each transfer costs ₦20, and there are no minimums.",
+      a: "Opening an Omanga wallet is free, and there are no minimums. You see any charge in the app before you confirm.",
     },
   ],
 } as const;
@@ -476,7 +554,11 @@ export const homeFinalCta = {
   text: "Open your free wallet today and add cover when you book your trip.",
   primary: { label: "Open your free wallet" },
   secondary: { label: "Compare health plans", path: "/insurance/plans" },
-  texture: { src: "/photos/brand/bg-aurora-g1.jpg" },
+  // [CHANGED, 2026-10-25] Owner: new image for the closing panel. Unsplash
+  // KB9r_hTzyeQ by Johny Goerend (Unsplash License), a plane wing over clouds
+  // at dawn, self-hosted, not used anywhere else on the site. Was the
+  // crimson aurora texture.
+  texture: { src: "/photos/home/final-cta-wing.jpg" },
   screen: {
     kind: "rows",
     title: "Home",

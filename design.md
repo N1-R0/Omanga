@@ -2455,3 +2455,295 @@ blocks. The copy was rewritten from approved facts only:
 - **Home hero (owner):** the secondary button now reads "Get insurance
   plan", replacing "Compare health plans".
 - Checked at 1440 and 375 (no horizontal scroll). tsc and eslint clean.
+
+## Addendum · 2026-10-25 · No rate source, refresh timing or fee amounts (owner)
+
+- The owner wants none of these disclosed anywhere, on the live site or /new:
+  - the rate source ("mid-market", "real rate", "midpoint", "public market
+    data");
+  - how often the rate changes ("hourly", "refreshed every hour");
+  - fee amounts ("₦20 per transfer", "flat fee").
+- What may still be said: "see the rate before you confirm", "free to open",
+  "no minimums", and "you see any charge in the app before you confirm".
+- Rate pages label their figure "Reference rate, {date}", with the note that
+  your exact rate is shown in the app.
+- Removed outright:
+  - the "What exchange rate does Omanga use?" FAQ (payments, home, wallet);
+  - the rate pages' "What is the mid-market rate?" block and FAQ;
+  - the transfer-fee row in the home converter widget;
+  - the "Transfer fee −₦20" rows in the drawn app screens.
+- **Blog posts:** they keep general advice that names the mid-market rate as
+  a benchmark for readers (pounds-to-naira, $100, Detty December). Every
+  claim that Omanga uses it, refreshes it or charges ₦20 is gone. Remove the
+  general advice too if the owner wants.
+- **Not changed:** comments, schema derive from the edited copy
+  (`PAYMENTS_FEES_ANSWER`), and the docs in new-redesign/doc.
+
+## Addendum · 2026-10-25 · /new home § 3 "Convert your money, then pay across Africa" (owner)
+
+- **Order:** hero, partners (the owner moved the strip back right after the
+  hero), then this section.
+- **Layout:** the phone on the left and the head on the right from 1024px.
+  Below that the head comes first, then the whole phone, as on LemFi's
+  international-money-transfer page on mobile. The phone is shown whole, not
+  cropped.
+- **Right column:** eyebrow, H2 and sub, a rule, LemFi's globe line ("Pay in
+  50+ African countries"), and a "See today's rates" link.
+- **Phone:** the shared `PhoneFrame`, with the black bezel and
+  `decorative={false}`, because the converter in it works. The screen
+  (`RateConvertScreen`) follows the owner's card reference:
+  - "You convert" and "You get" halves with a dark rate pill on the seam;
+  - a card of three facts (pay by bank transfer, rate shown before you
+    confirm, free to open), replacing the reference's speed and fee rows;
+  - "Convert money" pinned to the foot of the screen, going to the web
+    wallet.
+- **Picker and figures:**
+  - `CurrencyPicker` takes `trigger="plain"` (no fill, 28px flag, large
+    code).
+  - Long figures step down from 38 to 32 to 28pt so a seven-figure naira sum
+    fits.
+  - `HeroConverter` is deleted, and its copy moved to `homeRates`.
+- Checked at 1440 and 375 (no horizontal scroll). Typing and switching
+  currencies both work. tsc and eslint clean.
+
+## Addendum · 2026-10-25 · /new home § 3: card and photo box (owner)
+
+- **Reference:** the owner's "Seamless Payments" card. The section is now one
+  white `Card`, padded 12px (16 from 768px).
+  - **Left (from 1024px):** a photo box holding the phone.
+  - **Right:** the head, vertically centred in its half.
+  - **Below 1024px:** the head first, then the box.
+- **Photo:** misty blue mountains, Unsplash PdGBci-4jR8 by Alessio Soggetti,
+  self-hosted at `public/photos/home/rates-mountains.jpg` (1800px) and not
+  used anywhere else.
+- **Phone:**
+  - It uses the glass bezel, because the owner removed the black one.
+  - It stands 48px down (40 on mobile) and is cut by the box's 4px-radius
+    bottom edge.
+  - The box is 640px tall (540 on mobile), so the "You get" currency list
+    stays inside it.
+  - "Convert money" now sits right under the facts rather than pinned to
+    the foot, so the crop doesn't hide it.
+- Checked at the pane's desktop width and at 375 (no horizontal scroll).
+  tsc and eslint clean.
+
+## Addendum · 2026-10-25 · /new home § 3: box on the right, wide phone (owner)
+
+- **Order:** the head is now on the left and the photo box on the right
+  (from 1024px). Below 1024px the head still comes first.
+- **Phone:** after LemFi's phone (owner: "wide, not long"), it's drawn large
+  and only its top shows:
+  - Scale is 1.2 from 1024px (383px wide), 1.05 from 768px and 0.9 below.
+  - The box's bottom edge cuts it a little under "Convert money".
+  - The box is 710px tall (650 / 550), the least that keeps the "You get"
+    currency list inside it.
+- **Screen:** compacted so the button sits in the visible top. The halves and
+  the facts card are padded 20pt, and the button is 56pt tall.
+
+## Addendum · 2026-10-25 · /new home § 3: head only, phone lower (owner)
+
+- **Head:** the rule, the "Pay in 50+ African countries" globe line and the
+  "See today's rates" link are removed. The left half is now eyebrow, H2 and
+  sub only.
+- **Phone:** it stands lower in the box, so "Convert money" ends about 20px
+  above the box's bottom edge (about 30 on mobile).
+  - Top offsets: 118px from 1024px, 130 from 768px, 100 below.
+  - Box heights: 710, 650 and 562px.
+- **Pickers:** `CurrencyPicker` takes `searchable={false}`, which drops the
+  search field. The list then takes focus and the arrow keys. The phone's
+  pickers use it: with four currencies the field only added height, and
+  without it the list ends above the button, inside the crop.
+
+## Addendum · 2026-10-25 · /new home: "Payments and insurance" in one section (owner)
+
+- **One section (`HomeProducts`, id `products`):** structure v2's sections 3
+  and 4 now share it.
+  - **Head:** centred, after the owner's "Send Money Anywhere" reference. The
+    eyebrow is "What you get"; the H2 is "Your money and your health, sorted
+    for the trip"; the sub is two lines.
+  - **Cards:** the Payments card, then the Insurance card, 16px apart. Both
+    card titles are H3s.
+- **Payments card:** unchanged, now `PaymentsCard` (it was `HomeRates`).
+- **Insurance card (`InsuranceCard`):** after the owner's "Trusted Across
+  Borders" reference, a full photo card.
+  - **Photo:** Unsplash eosyJcVFHq4 by Ato Aikins, self-hosted at
+    `public/photos/home/insurance-friends.jpg` and not used anywhere else.
+  - **Shape:** 4px radius, 580px tall (520 / 560), with a dark fade from the
+    foot.
+  - **Bottom left:** the title, the sub, and the plans as pill buttons
+    (Silver, Gold, Diamond; a radio group, Gold picked first). The picked
+    pill is solid white; the others are white outlines.
+  - **Bottom right:** the picked plan's price ("$85 / month"), its hospital
+    category and "Get Gold →" to the plans page. This text changes with the
+    pill. Below 768px it sits under the pills.
+  - Prices and categories come from `homePrices`.
+- **Old prices section:** "prices" (`HomePrices`) is off the home page,
+  because the Insurance card replaces it. `HomePrices` and `PlanCards` stay
+  in the code for the plans page.
+- **Note:** the old "What Omanga does" section further down is still in the
+  page order, and it overlaps this one. It goes when the later v2 sections
+  are built.
+
+## Addendum · 2026-10-25 · /new home "Payments and insurance": smaller phone, two insurance cards, metrics (owner)
+
+- **Phone scaled down (the section ran too long):**
+  - Scale 1 from 1024px, 0.95 from 768px, 0.85 below.
+  - The photo box is 566 / 540 / 486px; the Payments card is about 600px
+    tall on desktop.
+  - "Convert money" ends about 24px above the box edge, and the "You get"
+    list still fits inside.
+- **Insurance, after the owner's two-card reference:** a photo card and a
+  white card side by side from 1024px, each as tall as the Payments card
+  (598px; 572 from 768px). They stack below 1024px. This replaces the single
+  full-width photo card.
+  - **Photo card:** the H3 "Insurance plans for your time in Nigeria", the
+    sub, the plan pills (radio group, Gold first) and the picked plan's
+    price on the right.
+  - **White card:** the picked plan's facts drawn as app UI in the centre: a
+    grey "What's included" bubble (first three items), "Provided by Phillips
+    HMO", and a crimson-tint row with price and hospitals. Below that sit
+    "{Plan} plan", its description and "Get {Plan} →". The whole card
+    changes with the pill.
+- **Metrics strip:** between the Payments card and the Insurance cards,
+  after the owner's "Growing every day" reference.
+  - An "At a glance" label, then three H1-sized figures with hairline
+    dividers: 50+ African countries to pay in, 6+ currencies in one wallet,
+    3 insurance plans from Phillips HMO.
+  - The reference's user and transaction counts are left out, because Omanga
+    has no figures for them. The label avoids a growth claim.
+
+## Addendum · 2026-10-25 · /new home Insurance white card: chat animation (owner)
+
+- **Where:** Jitter file "Omanga — Home insurance chat", artboard "Insurance
+  chat" (440 × 392, white, 7.6s loop). It animates the white card's centre
+  UI as a chat.
+- **Sequence:**
+  1. The customer's dark bubble slides in from the right ("Which plan gives
+     me a private ward?", labelled "You").
+  2. Omanga's avatar (the crimson marker) and a grey typing bubble pop in,
+     and three dots pulse twice.
+  3. The typing bubble grows into the reply bubble, and "What's included"
+     and the three Gold items rise in line by line, then "Provided by
+     Phillips HMO".
+  4. The Gold card lifts in; its shield badge grows and the check fades on.
+  5. Everything fades to white at 6.9–7.3s, so the loop restarts cleanly.
+- **Style:** Host Grotesk, the card's own colours (#E8E8E8 bubble, #FEF2F3
+  row, #AE2448), customer right and Omanga left. No bounce: slowdown and
+  smooth easings.
+- **Customer question:** it's illustrative copy, picked so the Gold reply
+  answers it. It names no person.
+- **Not yet on the site:** the card still shows the static UI. To ship,
+  export the Lottie to `public/lottie/home/insurance-chat.json` and play it
+  in the card's centre with the existing `FeatureLottie` player (SVG build).
+  The plan pills currently change the static UI, so pick one before
+  shipping: keep the chat Gold-only, or make one export per plan.
+
+## Addendum · 2026-10-25 · Radius rules, insurance card merged, chats live (owner)
+
+- **Radius (owner, from now on):**
+  - Buttons are pills: `Button` uses `rounded-full`, padding 12 × 20.
+  - Cards are 16px: `--radius-xs` changed from 2 to 16.
+  - Photo boxes inside cards are 12px: `--radius-sm` changed from 4 to 12.
+  - design-system.html still shows the old radii and needs updating.
+- **Insurance is one white parent Card, like Payments:** the photo box with
+  the plan pills sits on the left, and the chat half on the right (below
+  1024px the photo comes first).
+  - The chat half plays the picked plan's Lottie
+    (`public/lottie/home/insurance-chat-{silver,gold,diamond}.json`; 440 ×
+    360, 60fps, 456 frames) through `FeatureLottie`, remounted from frame 0
+    on each plan change.
+  - With reduced motion it holds frame 360, the settled chat.
+  - Under it sit the plan name, description and buy link; the price and
+    hospitals are in an sr-only line.
+- **Photo:** the owner's pick, Unsplash _t15AWPJNmg by Sandisk, at
+  `public/photos/home/insurance-phone-friends.jpg`. It replaces the earlier
+  pick, which is deleted.
+- **Jitter chats** (file "Omanga — Home insurance chat", one artboard per
+  plan):
+  - The customer's bubble now pops in (grow from 0.85) instead of sliding.
+  - "Provided by Phillips HMO" is removed.
+  - The plan row is a second Omanga message that pops in without typing.
+  - Each plan has its own question and three inclusions from `homePrices`.
+- **Export:** exported one artboard at a time from Chrome, because batch
+  export needs a paid Jitter plan.
+
+## Addendum · 2026-10-25 · /new home § 4 "Set up at home before you fly" (owner-approved wireframe)
+
+- **Wireframe:** `design-lab/home-steps-v2.html`, a hi-fi mock, approved by
+  the owner with two additions: the plane moves with the scroll, and the
+  cards use the mountain photo.
+- **Head:** centred eyebrow "How it works", the H2, and a sub that drops
+  "ready the moment you land", because when cover starts is unconfirmed
+  (§ 8.1).
+- **Journey rail (`StepsRail`, from 1024px only):**
+  - "Home" sits on the left and "Lagos" on the right, with a dashed line and
+    a stop over each card's centre.
+  - The plane's position follows the scroll: progress runs 0 to 1 as the
+    rail moves from 85% to 40% of the viewport height.
+  - It draws a crimson trail. Each stop fills crimson with a white number
+    once the plane reaches it.
+  - With reduced motion it sits at the end with every stop filled.
+- **Cards:** three white `Card`s. Each top well (240px, 12px radius) shows a
+  third of `rates-mountains.jpg` (`background-size` 300%, positions
+  0/50/100%), so the row reads as one landscape. This repeats the Payments
+  photo, as the owner asked.
+- **Mini app screens:** "Create account" with the email field, "Add money"
+  with "GBP wallet £200", and "Your plan" with the Gold pill and the Gold
+  row. There are no rates or fees.
+- **Mobile:** below 1024px the cards stack and each title carries its
+  number.
+- **CTA:** a pill "Open your free wallet" to the web wallet.
+- **Old steps:** their photos (`public/photos/steps/`) are no longer used
+  on the home page.
+
+## Addendum · 2026-10-25 · /new home: "What Omanga does" removed (owner)
+
+- **Removed:** "What Omanga does" (`HomeFeatures`, the accordion with the
+  Lottie scenes) is off the home page, because it repeated "Payments and
+  insurance".
+- **Deleted:** `HomeFeatures.tsx` and `FeatureAccordion.tsx`, which nothing
+  else used.
+- **Kept:** `FeatureScreen`, `FeatureLottie` and `homeFeatures`, which the
+  CTA panel, the wallet page, the health hero and the insurance chat still
+  use.
+- **Order now:** hero, partners, products, steps, why-omanga, countries,
+  faq, final-cta.
+
+## Addendum · 2026-10-25 · /new home § 4 steps: pinned scroll, curved dotted path, glass (owner)
+
+- **Structure docs updated:** `home-structure-v2.md` § 3 and the Home entry
+  in `sitemap-v2.md` now match the page, with the earlier sections kept (Why
+  Omanga, Countries, FAQ, closing band) at the owner's call.
+- **Pinned scroll:**
+  - Applies on screens at least 1024 × 800 (new `pin` custom variant in
+    globals.css). There the section is 260vh tall and its content sticks to
+    the viewport.
+  - Scrolling through the extra height flies the plane from Home to Lagos,
+    and the page moves on once it lands.
+  - Smaller screens scroll normally, and the rail falls back to the
+    viewport-position progress.
+- **Path:** dotted (2px round dots, 7px pitch). The travelled part is dark
+  grey (neutral-700) and the rest light grey (border-strong). The crimson
+  trail is gone; the stops still fill crimson with white numbers.
+- **Curve:** the middle card sits 40px lower (`homeSteps.dip`), and the path
+  curves down to its stop and back up. The plane turns with the curve's
+  tangent.
+- **CTA and spacing:** the CTA moved under the sub. There's more space (64px)
+  between the head and the rail.
+- **Visuals:**
+  - Each mini screen now sits in the glass frame (24px outer, 16px inner
+    card).
+  - Scaled down: wells are 200px (were 240), screens 72% wide up to 260px,
+    with type about 1px smaller.
+- **Note:** `dip` lives in content, not in StepsRail, because a server
+  component can't import a constant from a "use client" file.
+
+## Addendum · 2026-10-25 · /new home closing panel image (owner)
+
+- **Image:** the closing CTA's panel now shows a plane wing over clouds at
+  dawn, Unsplash KB9r_hTzyeQ by Johny Goerend (Unsplash License),
+  self-hosted at `public/photos/home/final-cta-wing.jpg` (1600px) and not
+  used anywhere else.
+- **Replaces:** the crimson aurora texture.
+- **Unchanged:** the "Home" app card stays in the glass frame on top.
+- **Status:** the owner marked the home page done after this change.

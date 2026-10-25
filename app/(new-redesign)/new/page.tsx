@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 
 import { HomeCountries } from "@/new-redesign/components/sections/home/HomeCountries";
 import { HomeFaq } from "@/new-redesign/components/sections/home/HomeFaq";
-import { HomeFeatures } from "@/new-redesign/components/sections/home/HomeFeatures";
 import { HomeFinalCta } from "@/new-redesign/components/sections/home/HomeFinalCta";
 import { HomeHero } from "@/new-redesign/components/sections/home/HomeHero";
 import { HomePartners } from "@/new-redesign/components/sections/home/HomePartners";
-import { HomePrices } from "@/new-redesign/components/sections/home/HomePrices";
+import { HomeProducts } from "@/new-redesign/components/sections/home/HomeProducts";
 import { HomeSteps } from "@/new-redesign/components/sections/home/HomeSteps";
 import { HomeWhy } from "@/new-redesign/components/sections/home/HomeWhy";
 import { homeSections, type HomeSectionId } from "@/new-redesign/content/home.content";
@@ -23,10 +22,9 @@ export const metadata: Metadata = {
 
 const SECTIONS: Record<HomeSectionId, () => React.ReactNode> = {
   hero: HomeHero,
+  products: HomeProducts,
   partners: HomePartners,
-  "what-omanga-does": HomeFeatures,
   steps: HomeSteps,
-  prices: HomePrices,
   "why-omanga": HomeWhy,
   countries: HomeCountries,
   faq: HomeFaq,

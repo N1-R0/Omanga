@@ -17,8 +17,10 @@ import { cx } from "@/lib/cx";
  * scaled to fit, so app screens written for the hero phone keep their sizes.
  *
  * `--phone-scale` sizes the frame (1 = 309 × 675). The border stays 6px at any
- * scale. The parent crops it when only the top shows. Decorative: the screen
- * is an illustrative app state, hidden from assistive tech.
+ * scale. The parent crops it when only the top shows. Decorative by default:
+ * the screen is an illustrative app state, hidden from assistive tech. Pass
+ * `decorative={false}` when the screen holds working controls (the home
+ * converter), so they stay reachable.
  *
  * The status bar SVGs come from the open-design `mobile-app` seed
  * (github.com/nexu-io/open-design, Apache-2.0).
@@ -34,6 +36,7 @@ export function PhoneFrame({
   time = "9:41",
   bare = false,
   bezel = "glass",
+  decorative = true,
 }: {
   children: ReactNode;
   /** Sets `--phone-scale` (e.g. "[--phone-scale:0.9] lg:[--phone-scale:1]"). */
@@ -45,10 +48,11 @@ export function PhoneFrame({
   /** "glass" (default, the hero) or "black": the owner's original 6px solid
    *  black stroke, used by the pay-in-person walkthrough (owner, 2026-10-22). */
   bezel?: "glass" | "black";
+  decorative?: boolean;
 }) {
   return (
     <div
-      aria-hidden
+      aria-hidden={decorative || undefined}
       className={cx(
         "relative shrink-0 rounded-[36px] shadow-float",
         bezel === "glass"
@@ -68,7 +72,7 @@ export function PhoneFrame({
             className="absolute top-0 left-0 flex origin-top-left flex-col text-text"
             style={{ width: SCREEN_W, height: SCREEN_H, transform: `scale(calc(${FRAME_W / SCREEN_W} * var(--phone-scale, 1)))` }}
           >
-            <div className="flex h-[54px] shrink-0 items-start justify-between px-[30px] pt-[19px] text-[15px] font-medium tracking-[-0.01em] tabular-nums">
+            <div aria-hidden className="flex h-[54px] shrink-0 items-start justify-between px-[30px] pt-[19px] text-[15px] font-medium tracking-[-0.01em] tabular-nums">
               <span>{time}</span>
               <span className="inline-flex items-center gap-1.5 fill-current">
                 <svg viewBox="0 0 17 11" className="h-[11px] w-[17px]">
@@ -89,7 +93,7 @@ export function PhoneFrame({
             </div>
             <div className="min-h-0 flex-1 overflow-hidden">{children}</div>
             {/* Home indicator, always the last thing on the screen. */}
-            <div className="relative h-7 shrink-0">
+            <div aria-hidden className="relative h-7 shrink-0">
               <span className="absolute bottom-2 left-1/2 h-[5px] w-[134px] -translate-x-1/2 rounded-full bg-text opacity-85" />
             </div>
           </div>

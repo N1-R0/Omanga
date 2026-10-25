@@ -19,12 +19,6 @@ export type DeepDiveProduct = {
   readonly preview?: ImageAsset;
 };
 
-export type DeepDiveContent = {
-  readonly heading: string;
-  readonly intro: string;
-  readonly products: readonly [DeepDiveProduct, DeepDiveProduct];
-};
-
 // [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged. (PAYMENTS_FEATURES only.)
 const PAYMENTS_FEATURES: readonly DeepDiveFeature[] = [
   {
@@ -144,14 +138,3 @@ export const holidayInsuranceProduct: DeepDiveProduct = {
   tabLabel: "Health cover",
   features: INSURANCE_FEATURES,
 } as const;
-
-export const deepDiveContent: DeepDiveContent = {
-  heading: "Everything in your Omanga account",
-  // The Figma reads "the wallet, the card and the three insurance plans"; the approved
-  // document drops "the card", and copy outranks the frame.
-  intro: "The wallet and the three health plans, feature by feature.",
-  products: [omangaPaymentsProduct, holidayInsuranceProduct],
-} as const;
-
-/** Shared so the `h2` and the section's `aria-labelledby` cannot drift apart. */
-export const DEEP_DIVE_HEADING_ID = "deep-dive-heading";

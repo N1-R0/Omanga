@@ -1,8 +1,6 @@
 // [CHANGED, 2026-10-10] Locked copy rewritten on the owner's instruction ("do it perfectly"): hype words and US spellings removed, meaning kept.
 // [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import { heroPosterContent } from "@/content/hero.content";
-import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
-import type { Eyebrow, ImageAsset } from "@/types/content.types";
 
 /**
  * About hero content — spec § 2.
@@ -60,68 +58,6 @@ import type { Eyebrow, ImageAsset } from "@/types/content.types";
 // [CHANGED, 2026-10-14] UX copy pass: was "Travel payments and health insurance
 // for Africa". Health cover applies in Nigeria only, so the h1 names Nigeria.
 const HEADING = "Money and health cover for your trip to Nigeria";
-
-// [CHANGED, 2026-10-14] UX copy pass: was "Omanga Integrated Destination
-// Services is an online platform…". Says who we are, what we do and where each
-// product applies (wallet = 50+ countries, health cover = Nigeria).
-const INTRO = `Omanga is a Lagos company for anyone visiting Nigeria. One account gives you a wallet you can spend in ${COUNTRIES_SERVED_DISPLAY} African countries and short-term health cover for your time in Nigeria.`;
-
-export type AboutHeroContent = {
-  readonly eyebrow: Eyebrow;
-  readonly heading: string;
-  readonly intro: string;
-  readonly image: ImageAsset;
-};
-
-export const aboutHeroContent: AboutHeroContent = {
-  eyebrow: "About",
-  heading: HEADING,
-  intro: INTRO,
-  /**
-   * [SUBSTITUTED] Not the asset § 2 names.
-   *
-   * § 2 asks for "Omanga's existing Lagos skyline asset" and § 3.1 asks for the
-   * same photograph as the `og:image`. There is no skyline asset in `public/`,
-   * and § 2 assigns it the full-bleed transition slot rather than this one — the
-   * screenshot's right-hand box is a slot § 2 does not have at all, so no asset
-   * is specified for it.
-   *
-   * `explore africa.jpg` is used instead: an existing, unused Omanga asset, and
-   * the only one in the library that carries the continent's culture and people
-   * rather than a product. That is the argument this section makes — "we combine
-   * deep local expertise" — and it is the same ground § 6's People / Passion /
-   * Partnership cards stand on.
-   *
-   * [RENAMED] Supplied as `explore africa.jpg`. The space in the filename means
-   * the URL carries `%20`, which is legal but is the kind of path that gets
-   * mangled by a CDN rule or a copy-paste. Worth renaming to
-   * `about-hero-celebration.jpg` in the same pass that re-exports it.
-   *
-   * [FLAGGED] 5824 × 3264 and 4.3MB — about nine times the width it renders at.
-   * `next/image` protects the browser; the repository still carries the weight.
-   *
-   * [QUESTION] It is a 16:9 landscape source in a square box, so `object-cover`
-   * crops roughly a quarter off each side. The subject sits centre-frame so the
-   * crop holds, but a square-ish re-export would stop the framing depending on
-   * that.
-   */
-  image: {
-    /**
-     * `alt` is not empty, unlike the homepage hero's. That image is a full-bleed
-     * background behind copy that already says everything it says; this one is a
-     * distinct element beside prose that describes a company rather than a
-     * place, so it gets a short description.
-     *
-     * It describes what is visible and claims no location: nothing in the source
-     * documents identifies the city, and naming one would be an invented fact in
-     * an attribute nobody proofreads.
-     */
-    src: "/explore africa.jpg",
-    alt: "Musicians and dancers performing in a street draped with festival bunting",
-    width: 5824,
-    height: 3264,
-  },
-} as const;
 
 /**
  * The heading's id.

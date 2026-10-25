@@ -137,26 +137,6 @@ export const heroPosterContent = {
 } as const;
 
 /**
- * [ADDED, 2026-10-18] The home hero after the owner's centred wireframe
- * (`HeroVideoReveal`): same h1, line and actions as the poster, plus a looping
- * airport clip. Unsplash hosts no free video, so the clip comes from Pexels
- * (free licence), self-hosted under public/: "A woman walking at an
- * airport", pexels.com/video/8044790 (owner pick 2026-10-18, replacing
- * 8044821), the 1920x1080 25fps file, 4.7 MB. The poster is Pexels' own
- * still of the same clip. Not re-encoded (no ffmpeg on hand); a smaller
- * encode would help mobile data.
- */
-export const heroVideoContent = {
-  heading: heroPosterContent.heading,
-  intro: heroPosterContent.intro,
-  actions: heroPosterContent.actions,
-  video: {
-    src: "/hero-airport.mp4",
-    poster: "/hero-airport-poster.jpg",
-  },
-} as const;
-
-/**
  * [ADDED, 2026-10-18] The inset photo-card home hero (`HeroCard`, owner
  * wireframe "Desktop - 2"). Same copy; the photo is the insurance hero's
  * (public/insurance-hero-sky.jpg), reused on the owner's instruction.

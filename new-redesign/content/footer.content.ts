@@ -23,7 +23,6 @@ export const footer = {
       heading: "Payments",
       links: [
         { label: "Payments overview", href: href("/payments") },
-        { label: "Exchange rates", href: href("/rates") },
         { label: "Pounds to naira", href: href("/rates/pounds-to-naira") },
         { label: "Dollars to naira", href: href("/rates/dollars-to-naira") },
         { label: "Canadian dollars to naira", href: href("/rates/canadian-dollars-to-naira") },
@@ -34,7 +33,7 @@ export const footer = {
       links: [
         { label: "Insurance overview", href: href("/insurance") },
         { label: "Plans and prices", href: href("/insurance/plans") },
-        { label: "Get care and claims", href: href("/insurance/get-care") },
+        { label: "Claims", href: href("/insurance/get-care") },
       ],
     },
     {

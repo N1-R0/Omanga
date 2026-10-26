@@ -1,1 +1,0 @@
-export { ConsentPreferencesLink } from "./ConsentPreferencesLink";

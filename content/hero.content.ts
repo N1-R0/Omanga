@@ -135,17 +135,3 @@ export const heroPosterContent = {
     height: 1600,
   },
 } as const;
-
-/**
- * [ADDED, 2026-10-18] The inset photo-card home hero (`HeroCard`, owner
- * wireframe "Desktop - 2"). Same copy; the photo is the insurance hero's
- * (public/insurance-hero-sky.jpg), reused on the owner's instruction.
- */
-export const heroCardContent = {
-  heading: heroPosterContent.heading,
-  intro: heroPosterContent.intro,
-  actions: heroPosterContent.actions,
-  image: { src: "/insurance-hero-sky.jpg", alt: "" },
-} as const;
-
-export const HERO_HEADING_ID = "hero-heading" as const;

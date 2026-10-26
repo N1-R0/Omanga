@@ -33,7 +33,7 @@ const BASE =
 type Props = {
   children: ReactNode;
   variant?: Variant;
-} & ({ href: string; external?: boolean } | { href?: undefined; type?: "button" | "submit"; disabled?: boolean });
+} & ({ href: string; external?: boolean } | { href?: undefined; type?: "button" | "submit"; disabled?: boolean; onClick?: () => void });
 
 export function Button(props: Props) {
   const { children, variant = "primary" } = props;
@@ -52,7 +52,7 @@ export function Button(props: Props) {
   }
 
   return (
-    <button type={props.type ?? "button"} disabled={props.disabled} className={className}>
+    <button type={props.type ?? "button"} disabled={props.disabled} onClick={props.onClick} className={className}>
       {children}
     </button>
   );

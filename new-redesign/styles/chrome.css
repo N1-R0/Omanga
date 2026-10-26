@@ -1,0 +1,54 @@
+/* =============================================================================
+   New header, footer and cookie banner on the old pages (cutover, 2026-10-26)
+   -----------------------------------------------------------------------------
+   Imported by app/(redesign)/layout.tsx, before the old stylesheet. It builds
+   only what those pieces use (the layout and consent components, the Button
+   and their content) with this design's tokens and utilities.
+
+   Every utility is scoped under `[data-chrome]`, the wrapper the old layout
+   puts around them. Both systems emit classes such as `.hidden` and `.flex`;
+   scoped, these win inside the wrapper (higher specificity) and never reach
+   the old pages' content, whose own responsive classes still work.
+
+   The two systems also share seven token names (--radius-xs/sm/md,
+   --font-sans, --ease-standard, --breakpoint-md/lg). The old stylesheet loads
+   last, so the old pages keep their values; the chrome components use literal
+   radii instead of those tokens.
+
+   Delete this file, and its import, with the last old page.
+   ========================================================================== */
+
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@source "../components/layout";
+@source "../components/consent";
+@source "../components/ui/Button.tsx";
+@source "../content/navigation.content.ts";
+@source "../content/footer.content.ts";
+
+@import "./tokens.css";
+@import "./typography.css";
+@import "./utilities.css";
+@import "./animations.css";
+
+@layer utilities {
+  [data-chrome] {
+    @tailwind utilities source(none);
+  }
+}
+
+/* The new body type, which the old pages' body doesn't carry. */
+[data-chrome] {
+  font-family: var(--font-host-grotesk), ui-sans-serif, system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.32px;
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Unlayered, so it outranks the old stylesheet's heading font rule. */
+[data-chrome] :is(h1, h2, h3) {
+  font-family: inherit;
+}

@@ -1,39 +1,32 @@
 import type { Metadata, Viewport } from "next";
 
-import { ConsentManager } from "@/components/consent/ConsentManager";
 import { ConsentProvider } from "@/components/consent/ConsentProvider";
 import { ConsentedAnalytics } from "@/components/consent/ConsentedAnalytics";
-import { Footer } from "@/components/layout/Footer";
-import { Header } from "@/components/layout/Header";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { fontVariables } from "@/config/fonts";
+import { fontVariables as chromeFontVariables } from "@/new-redesign/config/fonts";
+import { Footer } from "@/new-redesign/components/layout/Footer";
+import { ConsentPreferences } from "@/new-redesign/components/consent/ConsentPreferences";
+import { CookieBanner } from "@/new-redesign/components/consent/CookieBanner";
+import { Header } from "@/new-redesign/components/layout/Header";
 import { BRAND_COLOR, SITE_NAME, SITE_URL } from "@/config/site";
-import { footerContent, formatCopyright } from "@/content/footer.content";
-import { navigationContent } from "@/content/navigation.content";
 import { MAIN_CONTENT_ID, SKIP_LINK_LABEL } from "@/content/site.content";
+// The header and footer's styles first, so the old stylesheet wins where the
+// two share a token name (new-redesign/styles/chrome.css).
+import "@/new-redesign/styles/chrome.css";
 import "@/styles/globals.css";
 
 /**
- * Root layout for the redesign.
+ * Root layout for the pages not yet rebuilt in the new design (about, plans,
+ * safety, contact, blog, rates, get-started and the legal pages). They keep
+ * the old design system for their content, under the new design's header and
+ * footer (cutover, 2026-10-26). Home, Payments and Insurance use
+ * app/(new-redesign)/layout.tsx.
  *
- * This is one of two root layouts. There is deliberately no `app/layout.tsx`:
- * that is what allows `(redesign)` and `(legacy)` to own separate `<html>`
- * shells, separate fonts and separate stylesheets, so the old design system
- * cannot leak into the new one. Navigating between the two groups triggers a
- * full page load; that goes away when `(legacy)` is deleted.
- *
- * Phase 2 adds the three landmarks that were missing: the skip link, the header
- * and the footer. The shared chrome lives here rather than in each page, per
- * "shared chrome in `layout.tsx`; pages hold section composition only" — which
- * is also what guarantees exactly one of each landmark per document.
- *
- * Content is read here and passed down as props. No layout component reaches
- * into a content module itself, so every user-facing string in the chrome is
- * traceable to one import in one file.
- *
- * Still outstanding for a later phase: `loading.tsx` and `error.tsx` for this
- * segment, and stub routes for the fourteen footer destinations flagged
- * `isRoutePending` in `content/footer.content.ts`.
+ * This is one of two root layouts; there is deliberately no app/layout.tsx,
+ * so each owns its `<html>`, fonts and stylesheet. When a page is rebuilt it
+ * moves to app/(new-redesign); when the last one has, this layout, the old
+ * stylesheet and new-redesign/styles/chrome.css go.
  */
 
 export const metadata: Metadata = {
@@ -88,33 +81,15 @@ export const viewport: Viewport = {
 export default function RedesignRootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  /**
-   * The copyright year is resolved at render. project-context.md lists the
-   * hardcoded year as a P0 defect on the current site.
-   *
-   * These routes render statically, so the year is fixed at build time — correct
-   * for a site that redeploys, but worth knowing that a build left untouched
-   * across New Year will show the previous year.
-   */
-  const copyright = formatCopyright(new Date().getFullYear());
-
   return (
-    <html lang="en" className={fontVariables}>
+    <html lang="en" className={`${fontVariables} ${chromeFontVariables}`}>
       {/*
         A flex column with `main` taking the remaining space, so a short page
         still puts the footer at the bottom of the viewport rather than halfway
         up it.
       */}
-      {/*
-        `pt-header` reserves the bar's height.
-
-        `Header` is `fixed` rather than `sticky` — see its own note for why, in
-        short: sticky elements lag the scroll by a frame under Lenis and visibly
-        jitter. Fixed takes it out of flow, so the space it used to occupy has to
-        come from somewhere, and one declaration here is cheaper than every page
-        compensating for a bar floating above it.
-      */}
-      <body className="flex min-h-full flex-col pt-header">
+      {/* `pt-header` reserves the 76px bar: the header is absolute, over the page top. */}
+      <body className="relative flex min-h-full flex-col pt-header">
         {/*
           Wraps everything, because two different consumers need the same
           decision: `ConsentedAnalytics` at the end of this body, and the Google
@@ -132,23 +107,10 @@ export default function RedesignRootLayout({
         */}
           <SkipLink label={SKIP_LINK_LABEL} targetId={MAIN_CONTENT_ID} />
 
-          {/*
-          [REMOVED, 2026-10-15] Lenis wheel smoothing (owner request: plain
-          scrolling, like Revolut). The page scrolls natively; in-page anchors
-          still glide via `scroll-behavior: smooth` (globals.css), which is
-          off under reduced motion.
-        */}
-
-          <Header
-            items={navigationContent.items}
-            action={navigationContent.action}
-            menuAction={navigationContent.menuAction}
-            landmarkLabel={navigationContent.landmarkLabel}
-            wordmark={SITE_NAME}
-            homeLabel={navigationContent.homeLabel}
-            openLabel={navigationContent.menuOpenLabel}
-            closeLabel={navigationContent.menuCloseLabel}
-          />
+          {/* The new design's chrome; `data-chrome` scopes its styles (new-redesign/styles/chrome.css). */}
+          <div data-chrome style={{ display: "contents" }}>
+            <Header opaque />
+          </div>
 
           {/*
           The `main` landmark lives in the layout, not in each page, so there
@@ -163,22 +125,12 @@ export default function RedesignRootLayout({
             {children}
           </main>
 
-          <Footer
-            columns={footerContent.columns}
-            brandParagraph={footerContent.brandParagraph}
-            contact={footerContent.contact}
-            socialLinks={footerContent.socialLinks}
-            copyright={copyright}
-            wordmark={SITE_NAME}
-            homeLabel={navigationContent.homeLabel}
-          />
+          <div data-chrome style={{ display: "contents" }}>
+            <Footer />
+            <CookieBanner />
+            <ConsentPreferences />
+          </div>
 
-          {/*
-          Last in the body, so the banner and dialog come after the page's own
-          content in the tab order. Both are `fixed`, so this does not affect
-          where they paint.
-        */}
-          <ConsentManager />
 
           {/*
           Was a bare `<SpeedInsights />`, which loaded for everyone regardless of

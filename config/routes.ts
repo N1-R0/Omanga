@@ -5,6 +5,9 @@ import { RATE_PAIRS } from "@/content/rates.content";
 /** Last content change on the marketing pages (2026-10-18 copy pass). */
 const MARKETING_UPDATED = "2026-10-18";
 
+/** Home, Payments and Insurance went live in the new design (2026-10-26). */
+const REDESIGN_LIVE = "2026-10-26";
+
 /**
  * The site's public routes, in one place.
  *
@@ -49,10 +52,10 @@ export type PublicRoute = {
 };
 
 const MARKETING_ROUTES: readonly PublicRoute[] = [
-  { path: "/", priority: 1, lastModified: MARKETING_UPDATED },
-  { path: "/insurance", priority: 0.7, lastModified: MARKETING_UPDATED },
+  { path: "/", priority: 1, lastModified: REDESIGN_LIVE },
+  { path: "/insurance", priority: 0.7, lastModified: REDESIGN_LIVE },
   { path: "/plans", priority: 0.7, lastModified: MARKETING_UPDATED },
-  { path: "/payments", priority: 0.7, lastModified: MARKETING_UPDATED },
+  { path: "/payments", priority: 0.7, lastModified: REDESIGN_LIVE },
   { path: "/get-started", priority: 0.7, lastModified: MARKETING_UPDATED },
   { path: "/about", priority: 0.7, lastModified: MARKETING_UPDATED },
   { path: "/contact", priority: 0.7, lastModified: MARKETING_UPDATED },

@@ -109,6 +109,8 @@ This document covers structure only. Section titles are working titles that stat
 
 ## C. Proposed sitemap
 
+> Live 2026-10-26: `/`, `/payments` and `/insurance` are in the new design. The other pages stay in the old design at their current URLs until rebuilt; the new header and footer link to them through `href()` (`new-redesign/config/routes.ts`). The 301s below land as each page is rebuilt.
+
 ### Hierarchy
 ```
 /                                   Home                            LAUNCH

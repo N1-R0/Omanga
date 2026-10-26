@@ -333,11 +333,6 @@
   /* [CHANGED, 2026-10-15] Geist 500, as Revolut's buttons. Was Inter 600. */
   --text-button--font-weight: var(--font-weight-medium);
 
-  /* No role here for the product visuals' type. Their sizes are authored against
-     a fixed 491-wide canvas and scale with the card's art box rather than with
-     the viewport, so they cannot be expressed as clamps in this scale. They live
-     in `styles/product-visuals.css`, which explains why. */
-
   /* ===========================================================================
      SPACING
      design.md § 3
@@ -545,9 +540,9 @@
      together. */
   --spacing-parallax-overscan: 4rem; /* 64 */
 
-  /* Header height. The one fixed height in the system, justified because the
-     header is a bar of controls rather than a container of content. */
-  --spacing-header: 4rem; /* 64 */
+  /* Header height: the new design's 76px bar, which these pages wear since the
+     cutover (2026-10-26). `pt-header` reserves it; SkyHero runs up under it. */
+  --spacing-header: 4.75rem; /* 76 */
 
   /* Footer brand column, then four equal link columns.
      `minmax(0, 1fr)` rather than a bare `1fr`: a bare `1fr` has an automatic
@@ -681,12 +676,8 @@
      Wide gaps so a layer can be inserted without a renumber, and only as many
      rungs as the page actually needs. Exposed as utilities in utilities.css.
      ========================================================================= */
-  --z-base: 0;
   --z-raised: 10; /* card art, decorative offsets */
   --z-scrim: 20; /* photography scrim */
-  --z-overlay-content: 30; /* text sitting above a scrim */
-  --z-header: 40; /* sticky header */
-  --z-menu: 50; /* mobile nav panel */
   --z-skip-link: 60; /* must clear everything when focused */
 
   /* ===========================================================================

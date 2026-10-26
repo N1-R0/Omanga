@@ -6,16 +6,22 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import { cx } from "@/lib/cx";
+import { NavIcon } from "@/new-redesign/components/layout/NavIcon";
 import { Button } from "@/new-redesign/components/ui/Button";
-import { PhotoCard } from "@/new-redesign/components/ui/Card";
 import { href } from "@/new-redesign/config/routes";
 import { navigation, type NavMenu } from "@/new-redesign/content/navigation.content";
 
 /**
  * Global header, after wise.com (owner, 2026-10-21). Measured from Wise at
  * 1440: a 76px bar, tabs beside the logo, Help, Log in and the action on the
- * right, and a full-width white panel (24px top, 40px bottom) holding a
- * featured photo card and grouped link columns.
+ * right.
+ *
+ * [CHANGED, 2026-10-26] The panel follows Ramp's menu (owner reference): a
+ * column-width white card hanging from the bar, rounded at the foot. On the
+ * left, labelled groups side by side, each link an icon tile, its name and a
+ * one-line description. On the right, a grey "Featured" column with the
+ * photo, title and line. It was a full-width sheet with a photo card and
+ * plain text columns.
  *
  * Motion is Wise's too (styles/animations.css): the bar's colours and the
  * logo cross-fade over 350ms on Wise's curve; the panel area grows from 0 to
@@ -33,6 +39,12 @@ import { navigation, type NavMenu } from "@/new-redesign/content/navigation.cont
  * Tabs open on hover and on click. Escape closes and returns focus to the tab;
  * leaving the header with the pointer or with focus also closes.
  *
+ * `opaque` (the old pages' layout) keeps the bar white with a hairline: their
+ * photo heroes run up under it with white text, so a clear bar would vanish.
+ *
+ * Radii are literal, not the radius tokens: the header also sits on the old
+ * pages, whose stylesheet redefines those tokens (styles/chrome.css).
+ *
  * Below 1024: logo and a menu button. The primary action lives inside the menu sheet
  * (owner), pinned at its foot, after every group, Help, Log in and WhatsApp.
  */
@@ -40,7 +52,7 @@ const menus = navigation.items;
 
 type Motion = "from-start" | "from-end" | undefined;
 
-export function Header() {
+export function Header({ opaque = false }: { opaque?: boolean }) {
   const [open, setOpen] = useState<number | null>(null);
   // The last panel shown, kept so the area can collapse around it on close.
   const [shown, setShown] = useState<number | null>(null);
@@ -52,7 +64,7 @@ export function Header() {
   const pathname = usePathname();
   const solid = open !== null;
   // Only the home hero is dark; every other page's top is light.
-  const dark = solid || pathname !== href("/");
+  const dark = solid || opaque || pathname !== href("/");
 
   /** Open tab `i`, or close with null. Sets the slide direction when moving
    *  between tabs; the first open only fades. */
@@ -123,10 +135,10 @@ export function Header() {
         onBlur={(e) => {
           if (!e.currentTarget.contains(e.relatedTarget as Node)) show(null);
         }}
-        className={cx("absolute inset-x-0 top-0 z-40", navColor, solid ? "bg-surface text-text" : dark ? "text-text" : "text-text-inverse")}
+        className={cx("absolute inset-x-0 top-0 z-40", navColor, solid || opaque ? "bg-surface text-text" : dark ? "text-text" : "text-text-inverse", opaque && !solid && "border-b border-border")}
       >
         <div className="container-page flex h-19 items-center gap-6">
-          <Link href={href("/")} aria-label={navigation.homeLabel} className="relative shrink-0 rounded-xs">
+          <Link href={href("/")} aria-label={navigation.homeLabel} className="relative shrink-0 rounded-[16px]">
             {/* Both logos are stacked and cross-faded, standing in for Wise's fill transition. */}
             <Image src="/logo-omanga-white.svg" alt="" width={110} height={31} priority className={cx(navColor, "transition-opacity", dark ? "opacity-0" : "opacity-100")} />
             <Image src="/logo-omanga-horizontal.svg" alt="" width={110} height={31} priority className={cx("absolute inset-0 transition-opacity duration-[var(--duration-nav)] ease-nav", dark ? "opacity-100" : "opacity-0")} />
@@ -136,7 +148,7 @@ export function Header() {
             <ul className="flex items-center gap-1">
               {menus.map((item, i) => {
                 const tabClass = cx(
-                  "type-p3 inline-flex items-center rounded-md px-3 py-2",
+                  "type-p3 inline-flex items-center rounded-[8px] px-3 py-2",
                   navColor,
                   open === i
                     ? "bg-accent-subtle text-brand-700"
@@ -176,7 +188,7 @@ export function Header() {
                 key={l.label}
                 href={l.href}
                 className={cx(
-                  "type-p3 hidden rounded-md px-3 py-2 lg:inline-flex",
+                  "type-p3 hidden rounded-[8px] px-3 py-2 lg:inline-flex",
                   navColor,
                   dark ? "text-text hover:bg-surface-muted" : "text-text-inverse hover:bg-neutral-0/15",
                 )}
@@ -194,7 +206,7 @@ export function Header() {
             </span>
             <button
               type="button"
-              className="inline-flex size-11 items-center justify-center rounded-md lg:hidden"
+              className="inline-flex size-11 items-center justify-center rounded-[8px] lg:hidden"
               aria-label={navigation.menuOpenLabel}
               aria-expanded={sheet}
               aria-controls="mobile-menu"
@@ -208,8 +220,7 @@ export function Header() {
         {/* Panel area: grows to the active panel's height (Wise's viewport). */}
         <div
           className={cx(
-            "absolute inset-x-0 top-full hidden overflow-hidden bg-surface text-text transition-[height,box-shadow] duration-[var(--duration-nav)] ease-nav lg:block",
-            solid && "shadow-float",
+            "absolute inset-x-0 top-full hidden overflow-hidden text-text transition-[height] duration-[var(--duration-nav)] ease-nav lg:block",
           )}
           style={{ height: solid && shown !== null ? (heights[shown] ?? 0) : 0 }}
         >
@@ -241,32 +252,42 @@ export function Header() {
 function Panel({ menu, onNavigate }: { menu: NavMenu; onNavigate: () => void }) {
   const { feature, columns } = menu;
   return (
-    <div className="container-page flex gap-10 pt-6 pb-10">
-      <PhotoCard
-        image={feature.image}
-        title={feature.title}
-        text={feature.text}
-        href={feature.href}
-        action={navigation.exploreLabel}
-        onNavigate={onNavigate}
-        sizes="340px"
-        className="w-[340px] shrink-0"
-      />
-
-      {columns.map((col) => (
-        <div key={col.heading} className="w-[240px]">
-          <p className="type-p2 border-b border-border pb-4 text-text-secondary">{col.heading}</p>
-          <ul className="mt-4 flex flex-col gap-1">
-            {col.links.map((l) => (
-              <li key={l.href}>
-                <Link href={l.href} onClick={onNavigate} className="type-p3 -mx-3 flex rounded-md px-3 py-2.5 hover:bg-surface-muted">
-                  {l.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+    // Bottom padding leaves room for the card's shadow inside the clipped area.
+    <div className="container-page pb-8">
+      <div className="flex overflow-hidden rounded-b-[16px] border border-t-0 border-border bg-surface shadow-float">
+        <div className="flex flex-1 gap-8 p-8">
+          {columns.map((col) => (
+            <div key={col.heading} className="min-w-0 flex-1">
+              <p className="text-[12px] leading-none font-medium tracking-[0.08em] text-text-secondary uppercase">{col.heading}</p>
+              <ul className="mt-5 flex flex-col gap-2">
+                {col.links.map((l) => (
+                  <li key={l.href}>
+                    <Link href={l.href} onClick={onNavigate} className="-mx-2 flex items-center gap-3.5 rounded-[12px] p-2 transition-colors hover:bg-surface-muted">
+                      <NavIcon name={l.icon} size="tile" />
+                      <span className="flex flex-col">
+                        <span className="type-p3 text-text">{l.label}</span>
+                        <span className="type-p2 text-text-secondary">{l.text}</span>
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
-      ))}
+
+        <div className="w-[320px] shrink-0 border-l border-border bg-surface-muted p-8">
+          <p className="text-[12px] leading-none font-medium tracking-[0.08em] text-text-secondary uppercase">{navigation.featuredLabel}</p>
+          <Link href={feature.href} onClick={onNavigate} className="group mt-5 block">
+            <span className="relative block aspect-[16/9] overflow-hidden rounded-[12px]">
+              {/* Eager: the panel sits clipped at height 0, so a lazy image never starts loading. */}
+              <Image src={feature.image.src} alt={feature.image.alt} fill sizes="256px" loading="eager" className="object-cover transition-transform duration-[var(--duration-base)] group-hover:scale-[1.03]" />
+            </span>
+            <span className="type-p3 mt-5 block text-text">{feature.title}</span>
+            <span className="type-p2 mt-1 block text-text-secondary">{feature.text}</span>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
@@ -281,7 +302,7 @@ function MobileSheet({ onClose }: { onClose: () => void }) {
         <Link href={href("/")} aria-label={navigation.homeLabel} onClick={onClose}>
           <Image src="/logo-omanga-horizontal.svg" alt="" width={110} height={31} />
         </Link>
-        <button ref={closeRef} type="button" className="inline-flex size-11 items-center justify-center rounded-md" aria-label={navigation.menuCloseLabel} onClick={onClose}>
+        <button ref={closeRef} type="button" className="inline-flex size-11 items-center justify-center rounded-[8px]" aria-label={navigation.menuCloseLabel} onClick={onClose}>
           <CloseIcon />
         </button>
       </div>

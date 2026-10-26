@@ -2974,3 +2974,46 @@ eyebrow, title, sub parts, items); Payments passes `walletFaq`, Insurance
 cover and how HMO care works. `HealthClosing` is the shared `CtaPanel` with
 "Get insurance plan" as the primary, the wallet as the text link, the home
 mountain photo and an illustrative Gold plan screen.
+
+### Header menu after Ramp (2026-10-26)
+
+Owner reference: Ramp's Products menu. The panel is now a column-width white
+card hanging from the bar (rounded at the foot, shadow, hairline under the
+bar), with labelled groups side by side on the left, each link a 44px grey
+icon tile (`NavIcon size="tile"`), its name and one approved-fact line, and
+a grey "Featured" column on the right with the photo, title and line. The
+featured photo loads eagerly, because the clipped panel never scrolls it
+into view. Bar, motion, dimmer and the mobile sheet are unchanged.
+
+### Cutover: the new design goes live (2026-10-26)
+
+Owner: put home, Payments and Insurance live, keep the other pages in the old
+design with the new header and footer, and trim the old design system to what
+those pages still use.
+
+- Home, Payments and Insurance moved from `/new/*` to `/`, `/payments` and
+  `/insurance` in `app/(new-redesign)`; the old versions are deleted. `/new` is
+  gone, and so are the preview badge and `noindex`.
+- They carry the old pages' keyword-tested titles and descriptions
+  (`new-redesign/content/seo.content.ts`, owner naming applied) and the same
+  structured data, plus each page's FAQ as `FAQPage`.
+- Links use sitemap-v2 paths; `href()`'s `LIVE_PATHS` sends the pages not yet
+  rebuilt to their live URLs (`/insurance/plans` to `/plans`, `/guides` to
+  `/blog`, `/help` to `/contact`), and the two with no page yet to the nearest
+  one (`/rates` to pounds to naira, claims to the policy terms). The menu's
+  Rates group lists the three rate pages; "Get care and claims" is "Claims".
+- The old layout renders the new header (opaque, because the old heroes run
+  under it with white text), footer, cookie banner and preferences. Their
+  styles come from `new-redesign/styles/chrome.css`, scoped under a
+  `data-chrome` wrapper so the two systems' same-named classes don't fight.
+  The seven shared token names keep their old values, so these components use
+  literal radii.
+- The cookie banner, preferences dialog and footer "Cookie preferences" were
+  rebuilt in the new design and replace the old ones on every page; consent
+  is shared across both designs. The 404 is rebuilt in the new design.
+- Removed: the old home, Payments and Insurance pages, the old header,
+  footer, navigation and consent UI, 83 files they alone used, unused exports,
+  `styles/product-visuals.css` and the old header utilities and z-index
+  tokens, and the unreferenced images (3D masters, device frames, old app
+  screens). Home's FAQ now uses the shared `FaqSection`. The old header-height
+  token is 76px, the new bar's height.

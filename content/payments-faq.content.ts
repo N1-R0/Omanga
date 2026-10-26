@@ -11,7 +11,6 @@ import type { FaqContent } from "@/types/blog.types";
  * phrased the way people search them, and each answer names Omanga so the
  * brand is attached to the answer wherever it is quoted.
  */
-export const PAYMENTS_FAQ_HEADING_ID = "payments-faq-heading";
 
 /**
  * The fee answer, exported so the wallet's structured data

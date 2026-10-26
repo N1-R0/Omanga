@@ -36,29 +36,6 @@
 }
 
 /* -----------------------------------------------------------------------------
-   Entrance
-   Applied by a parent that observes intersection. The element is visible by
-   default and only *animates* when opted in, so a failed or absent script
-   leaves readable content rather than a blank page.
-
-   `--motion-index` lets the parent stagger siblings at 80ms without any
-   per-child timing values in the component.
-   -------------------------------------------------------------------------- */
-@utility animate-entrance {
-  animation: var(--animate-entrance);
-  animation-play-state: paused;
-  /* The benchmark's 200ms hold, plus this element's place in the stagger. */
-  animation-delay: calc(
-    var(--motion-entrance-delay) + var(--motion-index, 0) *
-      var(--motion-stagger-step)
-  );
-
-  &[data-visible="true"] {
-    animation-play-state: running;
-  }
-}
-
-/* -----------------------------------------------------------------------------
    Marquee
    The partner strip drifts horizontally on narrow screens, where three logos
    cannot sit in one row without shrinking past legibility.
@@ -157,38 +134,6 @@
   transition-property: opacity, transform;
   transition-duration: var(--duration-emphasis);
   transition-timing-function: var(--ease-standard);
-}
-
-/* -----------------------------------------------------------------------------
-   Menu / dropdown reveal
-   [MEASURED from the structural benchmark] Its menu panels open over 300ms on
-   `outCirc`, wiping downward while fading in.
-
-   [DEVIATES IN TECHNIQUE, NOT IN EFFECT] The benchmark animates `height`
-   (1px -> 185px, its Webflow `STYLE_SIZE` action). That is a layout-triggering
-   property, which rule 1 of the motion system forbids outright and which the
-   polish brief's performance section also rules out. `clip-path` produces the
-   same downward wipe on the compositor, costs no layout, and — unlike a height
-   animation — does not need the panel's height to be known in advance.
-
-   Paired with `opacity` and a short `translateY` so the panel arrives rather
-   than merely uncovering. `transform` is listed for the translate; no size or
-   position property appears here.
-   -------------------------------------------------------------------------- */
-@utility transition-menu {
-  transition-property: clip-path, opacity, transform;
-  transition-duration: var(--duration-emphasis);
-  transition-timing-function: var(--ease-dropdown);
-}
-
-/* The closed and open ends of the wipe, named so neither is written as an
-   arbitrary `clip-path-[...]` at a call site. */
-@utility menu-collapsed {
-  clip-path: inset(0 0 100% 0);
-}
-
-@utility menu-expanded {
-  clip-path: inset(0 0 0 0);
 }
 
 /* -----------------------------------------------------------------------------

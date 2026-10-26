@@ -1,44 +1,45 @@
-# New redesign
+# New design
 
-Built at **/new** beside the live site. The live pages in `app/(redesign)` keep
-serving `/` until cutover. One page at a time: the home page is finished and
-approved before the next page starts.
+Live since 2026-10-26 for home (`/`), Payments (`/payments`) and Insurance
+(`/insurance`). Every other page is still the old design in `app/(redesign)`,
+wearing this design's header, footer and cookie banner. Pages are rebuilt one
+at a time and replace their old version.
 
 ## Where things are
 
 | Path | What |
 |---|---|
-| `app/(new-redesign)/layout.tsx` | Root layout: own `<html>`, Host Grotesk, this folder's stylesheet, `noindex`, Header and Footer |
-| `app/(new-redesign)/new/page.tsx` | Home, composed from sections in the locked order |
-| `new-redesign/config/routes.ts` | `REDESIGN_BASE` and `href()`; every internal link goes through it |
+| `app/(new-redesign)/layout.tsx` | Root layout: own `<html>`, Host Grotesk, this folder's stylesheet, header, footer, cookie banner, consented analytics |
+| `app/(new-redesign)/page.tsx` | Home, composed from sections in the locked order |
+| `app/not-found.tsx` | The 404, in this design |
+| `new-redesign/config/routes.ts` | `href()`: every internal link goes through it; `LIVE_PATHS` sends pages not yet rebuilt to their old URLs |
 | `new-redesign/config/fonts.ts` | Host Grotesk 400/500 via `next/font/google` (self-hosted at build) |
-| `new-redesign/styles/` | `tokens.css` (colour, radius, shadow, breakpoints), `typography.css` (`type-h1`…`type-p3`), `utilities.css` (`container-page`, `section-y`, `section-head`, `glass`) |
-| `new-redesign/components/ui/` | Primitives: `Button`, `Card`/`PhotoCard`, `Section`, `SectionHead`, `CurrencyPicker` |
-| `new-redesign/components/sections/home/` | One component per home section |
-| `new-redesign/content/` | All copy. `home.content.ts` holds the locked section order; `navigation.content.ts` and `footer.content.ts` hold the global chrome |
+| `new-redesign/styles/` | `tokens.css`, `typography.css` (`type-h1`…`type-p3`), `utilities.css` (`container-page`, `section-y`, `section-head`, `glass`), `animations.css`; `chrome.css` styles the header and footer on the old pages |
+| `new-redesign/components/ui/` | Primitives: `Button`, `Card`, `Section`, `SectionHead`, `FaqSection`, `ProofStrip`, `CtaPanel`, `CurrencyPicker` |
+| `new-redesign/components/layout/`, `consent/` | Header, footer, cookie banner and preferences |
+| `new-redesign/components/sections/` | One component per section |
+| `new-redesign/content/` | All copy, plus `seo.content.ts` for page titles and descriptions |
 | `new-redesign/doc/` | Research, sitemap (locked) and page structures |
-| `public/photos/nav/`, `public/photos/brand/` | Self-hosted menu-card photos and brand textures (G1, U2, U3) |
 
-References: `design-lab/design-system.html` (tokens and components),
-`design-lab/home-wireframe.html` (locked home layout), and `design.md`
-(decisions).
+References: `design-lab/design-system.html` (tokens and components) and
+`design.md` (decisions).
 
 ## Rules
 
 - Use only the token classes. Tailwind's default colours are switched off.
 - Type comes from `type-*` utilities only. Use one filled primary button per view.
-- Buttons have an 8px radius, never fully rounded.
+- Buttons are pills; cards have a 16px radius, photos inside them 12px.
 - Every mini visual over a photo or texture sits in `glass`.
 - Copy lives in `content/`, not in components.
-- `design-lab/design-system.html` is the single UI source. Any new piece of UI
-  goes on that page first (or in the same change). Reuse `Card`/`PhotoCard`,
-  `Button` and `SectionHead`; never restyle a card in place.
+- The header, footer and consent components also render on the old pages, so
+  they use literal radii, not the radius tokens (see `styles/chrome.css`).
 
-## Cutover (when every page is approved)
+## Rebuilding an old page
 
-1. Move `app/(new-redesign)/new/*` up to `app/(new-redesign)/`, and delete
-   `app/(redesign)` (or the pages being replaced).
-2. Set `REDESIGN_BASE = ""`.
-3. Remove `robots: noindex` from the layout and delete `PreviewBadge`.
-4. Add the new paths to `config/routes.ts` so the sitemap lists them.
-5. Add 301s for the renamed URLs in sitemap § 5.
+1. Build it in `app/(new-redesign)` at its sitemap-v2 path, with metadata from
+   `lib/seo.ts` and structured data from `lib/schema.ts`.
+2. Delete the old page in `app/(redesign)` and anything only it used.
+3. If the URL changes, delete its line in `LIVE_PATHS` and add a 301 from the
+   old URL in `next.config.ts`; update `config/routes.ts` for the sitemap.
+4. With the last old page gone, delete `app/(redesign)`, `styles/`,
+   `new-redesign/styles/chrome.css` and the old `components/` and `content/`.

@@ -5,10 +5,10 @@ import { SectionHead } from "@/new-redesign/components/ui/SectionHead";
 
 /**
  * FAQ section (design system § FAQ): the home FAQ's UI with each page's own
- * questions. Payments and Insurance share it (owner, 2026-10-26: reuse the
+ * questions. Home, Payments and Insurance share it (owner, 2026-10-26: reuse the
  * Payments UI). The sub ends with a WhatsApp link. `id="faq"` is where the
- * footer's Fees link lands. No FAQPage schema while /new is noindex, as on
- * home.
+ * footer's Fees link lands. Each page emits its questions as FAQPage
+ * structured data (new-redesign/content/seo.content.ts).
  */
 type Props = {
   eyebrow: string;

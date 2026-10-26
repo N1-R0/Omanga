@@ -1,5 +1,4 @@
-import { CONTACT_EMAIL } from "@/config/site";
-import type { CallToAction, LinkTarget } from "@/types/content.types";
+import type { CallToAction } from "@/types/content.types";
 
 /**
  * Global content — strings that appear on more than one page.
@@ -58,18 +57,6 @@ export const PRIMARY_CTA: CallToAction = {
   label: "Get started",
   href: "/get-started",
   emphasis: "primary",
-} as const;
-
-/**
- * Contact link, built from the configured address.
- *
- * project-context.md lists a broken `mailto:info@omanga.biz` as a P0 defect to
- * fix in this build. Composing it here means there is one place it can be
- * wrong.
- */
-export const CONTACT_LINK: LinkTarget = {
-  label: CONTACT_EMAIL,
-  href: `mailto:${CONTACT_EMAIL}`,
 } as const;
 
 /**
@@ -147,17 +134,6 @@ export const COUNTRIES_SERVED_DISPLAY = `${COUNTRIES_SERVED}+` as const;
  * string that renders.
  */
 export const FORBIDDEN_COPY_TERMS = ["card", "cards"] as const;
-
-/**
- * Anchor for the live exchange-rate section on `/payments`.
- *
- * Lives here rather than in `services.content.ts` because it has two owners in
- * different route groups — the homepage service card links to it, and the legacy
- * payments page renders it. A constant in a shared module is what stops the link
- * and its target drifting apart, which is exactly how `/insurance#coverage` ended
- * up pointing at a page with no coverage section on it.
- */
-export const PAYMENTS_RATES_ANCHOR = "rates" as const;
 
 /**
  * The "Can't find your answer?" line under every FAQ heading (site-wide FAQ

@@ -55,5 +55,3 @@ export const insuranceCtaContent: CtaContent = {
   },
   graphic: ctaContent.graphic,
 } as const;
-
-export const INSURANCE_CTA_HEADING_ID = "insurance-cta-heading" as const;

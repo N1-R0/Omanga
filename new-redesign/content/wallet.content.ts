@@ -19,6 +19,10 @@ export const walletHero = {
   title: ["Travel money,", "ready when you land"],
   sub: "Add pounds, dollars or Canadian dollars, convert them to naira, and pay by transfer.",
   primary: { label: "Open your free wallet" },
+  // Owner, 2026-10-25: the stage is a full-width photo band. Unsplash
+  // mqO0Rf-PUMs by Paul Pastourmatzis (Unsplash License), layered blue ridges
+  // in mist, self-hosted, not used anywhere else on the site. Decorative.
+  photo: { src: "/photos/wallet/hero-ridges.jpg", position: "50% 55%" },
 } as const;
 
 /**
@@ -32,150 +36,11 @@ export const walletProof = {
   items: [
     { title: "Pay in 50+ countries", text: "One wallet for trips across Africa, wherever you land." },
     { title: "Add from 3 currencies", text: "Pounds, US dollars or Canadian dollars, converted when you choose." },
-    { title: "Free to open", text: "No cost to open, and no minimum to add." },
+    // [CHANGED, 2026-10-25] Owner: the first "Free to open" (left by the fee
+    // cleanup) repeated the second; it's now the pay-by-transfer fact.
+    { title: "Pay by transfer", text: "Pay shops, drivers and hotels in naira, the way Nigeria pays." },
     { title: "Free to open", text: "No minimum to add, so start with what your trip needs." },
   ],
-} as const;
-
-/**
- * 3 · What you can do (owner reference, 2026-10-22): a section header, then
- * three rows that alternate a satin panel with an app card and the text. The
- * plan's six tiles fold into three rows: add and hold, convert, send and pay
- * (paying in person is a transfer, owner 2026-10-22).
- *
- * The cards are illustrative app states in the app's own words: no names, no
- * merchants. The convert card uses today's rate. No fee row on it, since the
- * conversion fee is unconfirmed (§ 8.5). The third row's link goes to the pay-in-person
- * walkthrough (section 4); the fees section was dropped (owner, 2026-10-22).
- */
-export const walletFeatures = {
-  eyebrow: "What you can do",
-  title: "Everything your trip money needs, in one app",
-  sub: "Add money before you fly, convert when you're ready, and pay in naira by transfer when you land.",
-  rows: [
-    {
-      id: "hold",
-      title: "Add money and hold each currency",
-      text: "Fund a pounds, US dollars or Canadian dollars wallet. Each currency keeps its own balance until you convert it.",
-      cta: { label: "See where it works", path: "/payments/countries" },
-    },
-    {
-      id: "convert",
-      title: "See the rate before you convert",
-      text: "See the rate and the naira amount before you confirm, then the naira lands in your naira wallet.",
-      cta: { label: "See today's rates", path: "/rates" },
-    },
-    {
-      id: "send",
-      title: "Send and pay in naira by transfer",
-      text: "Send to a bank account, or pay a shop, driver or hotel by transfer. Every payment shows in your history.",
-      cta: { label: "See how you pay in person", path: "/payments#pay-in-person" },
-    },
-  ],
-  cards: {
-    hold: {
-      title: "Your wallets",
-      meta: "4 currencies",
-      wallets: [
-        { code: "GBP", name: "British pound", flag: "/flags/united-kingdom.svg", balance: "£450.00" },
-        { code: "USD", name: "US dollar", flag: "/flags/united-states.svg", balance: "$300.00" },
-        { code: "CAD", name: "Canadian dollar", flag: "/flags/canada.svg", balance: "C$0.00" },
-        { code: "NGN", name: "Nigerian naira", flag: "/flags/nigeria.svg", balance: "₦248,500" },
-      ],
-    },
-    convert: {
-      title: "Review conversion",
-      from: "You convert",
-      gbp: 100,
-      rate: "Rate",
-      to: "You get",
-      note: "Shown before you confirm",
-      action: "Convert",
-    },
-    send: {
-      title: "Transactions",
-      rows: [
-        { title: "Paid by transfer", time: "1:40pm • Today", amount: "-₦8,500" },
-        { title: "Sent to a bank account", time: "8:50am • Today", amount: "-₦15,000" },
-        { title: "Converted from GBP", time: "8:30am • Today", amount: "+₦180,000" },
-      ],
-    },
-  },
-} as const;
-
-/**
- * 4 · How you pay in person (owner wireframe, 2026-10-22): the phone in the
- * centre plays each step's clip, two steps either side. In person you pay by
- * bank transfer (owner, 2026-10-22). The clips are real app screens recorded
- * against a local mock with placeholder data, cut in Jitter ("Omanga · Pay in
- * person walkthrough") and exported as Lottie (screens embedded). `ms` is each
- * clip's length; the step timers run on it.
- * Each poster is the clip's first frame.
- */
-export const walletPayInPerson = {
-  eyebrow: "Paying in person",
-  title: "How you pay at a shop, a hotel or a taxi",
-  sub: "You pay by bank transfer from your naira wallet, the way people in Nigeria pay each other every day.",
-  /** Under every step (owner). Uses the header's Download target, the footer's app row, until store links exist (§ 8.6). */
-  // Same action as the header: the app isn't in the stores yet (sitemap-v2.md).
-  cta: { label: "Open your free wallet" },
-  steps: [
-    {
-      title: "Have naira ready",
-      text: "Convert from your pounds or dollars wallet before you pay.",
-      lottie: "/lottie/wallet/pay-step-1.json",
-      poster: "/photos/wallet/walkthrough/step-1.jpg",
-      ms: 8000,
-    },
-    {
-      title: "Ask for their account",
-      text: "Type their bank and account number. The app checks the name with their bank.",
-      lottie: "/lottie/wallet/pay-step-2.json",
-      poster: "/photos/wallet/walkthrough/step-2.jpg",
-      ms: 8000,
-    },
-    {
-      title: "Check the name, then send",
-      text: "See who you're paying before you confirm with your PIN.",
-      lottie: "/lottie/wallet/pay-step-3.json",
-      poster: "/photos/wallet/walkthrough/step-3.jpg",
-      ms: 4800,
-    },
-    {
-      title: "Show the receipt",
-      text: "Share the receipt as an image or a PDF, so they can see the payment.",
-      lottie: "/lottie/wallet/pay-step-4.json",
-      poster: "/photos/wallet/walkthrough/step-4.jpg",
-      ms: 4800,
-    },
-  ],
-} as const;
-
-/**
- * 6 · The rate (wireframe approved 2026-10-22). [CHANGED, 2026-10-25] Owner:
- * the rate source, refresh timing and fee amounts aren't public, so the
- * section now says only that the app shows the rate before you confirm, plus
- * today's reference rates.
- */
-export const walletRates = {
-  eyebrow: "The rate",
-  title: "See the rate before you convert",
-  sub: "Check today's rate any time, then see exactly how many naira you'll get before anything moves.",
-  points: [
-    { title: "Today's rate, up front", text: "Check pounds, dollars and Canadian dollars against the naira whenever you like." },
-    { title: "No minimum", text: "Convert as little or as much as you need." },
-    { title: "You see it before you confirm", text: "The app shows the rate and the naira you'll get on the review screen, before anything moves." },
-  ],
-  cta: { label: "See all rates", path: "/rates" },
-  card: {
-    title: "Today's rates",
-    rows: [
-      { code: "GBP", label: "£1", flag: "/flags/united-kingdom.svg" },
-      { code: "USD", label: "$1", flag: "/flags/united-states.svg" },
-      { code: "CAD", label: "C$1", flag: "/flags/canada.svg" },
-    ],
-    note: (date: string | null) => (date ? `Reference rates · ${date}` : "Reference rates"),
-  },
 } as const;
 
 /**
@@ -206,25 +71,27 @@ export const walletCountries = {
 } as const;
 
 /**
- * 8 · Leftover naira (owner, 2026-10-22: leftover naira can be converted to
- * dollars). Only that is claimed: nothing about sending dollars back to a
- * bank at home, which is unconfirmed. Step 3 rests on the per-currency
- * wallets: converted dollars sit in the dollar wallet.
+ * 3 · How it works (owner, 2026-10-25): one step walkthrough for the whole
+ * trip, replacing "What you can do", "Paying in person" and "Going home",
+ * which repeated each other. Each step plays its own Jitter Lottie (file
+ * "Omanga — Payments how it works", one artboard per step, vector screens
+ * rebuilt from the app, not screenshots) while its timer fills; `ms` is the
+ * Lottie's length and `stillFrame` its settled frame for reduced motion.
+ * Example amounts at example rates; no fees, no names (the payee's name is
+ * a placeholder bar), no funding method.
  */
-export const walletLeftover = {
-  eyebrow: "Going home",
-  title: "Naira left when you fly home? Turn it into dollars",
-  sub: "Convert what you didn't spend before you leave, at the rate the app shows you before you confirm.",
-  steps: ["Open your naira wallet", "Convert to dollars at today's rate", "Keep them in your dollar wallet for the next trip"],
-  cta: { label: "See today's rates", path: "/rates" },
-  card: {
-    label: "Converting what's left",
-    naira: 50000,
-    from: { name: "Naira wallet", flag: "/flags/nigeria.svg" },
-    to: { name: "Dollar wallet", flag: "/flags/united-states.svg" },
-    rateLabel: "Rate",
-    note: (date: string | null) => (date ? `Example amount · ${date}` : "Example amount"),
-  },
+export const walletHowItWorks = {
+  eyebrow: "How it works",
+  title: "From home to Nigeria, and back again",
+  sub: "Add money before you fly, convert when you're ready, pay by transfer in Nigeria, and turn what's left into dollars when you leave.",
+  steps: [
+    { title: "Add money", text: "Fund a pounds, dollars or Canadian dollars wallet before you fly. There's no minimum.", lottie: "/lottie/wallet/how-1.json", ms: 5000, stillFrame: 288 },
+    { title: "Convert to naira", text: "Pick an amount and see the rate and the naira you'll get before you confirm.", lottie: "/lottie/wallet/how-2.json", ms: 6000, stillFrame: 348 },
+    { title: "Pay by transfer", text: "Pay a shop, a driver or a hotel. Enter their account, check the name, then send.", lottie: "/lottie/wallet/how-3.json", ms: 6000, stillFrame: 348 },
+    { title: "Going home", text: "Convert what's left into dollars and keep them in your dollar wallet for the next trip.", lottie: "/lottie/wallet/how-4.json", ms: 6000, stillFrame: 348 },
+  ],
+  // The home page's mountain photo (owner, 2026-10-25: every container uses it).
+  photo: "/photos/home/rates-mountains.jpg",
 } as const;
 
 /**
@@ -289,7 +156,9 @@ export const walletClosing = {
   text: "Open your free wallet in a few minutes, add pounds or dollars, and pay by transfer from day one.",
   primary: { label: "Open your free wallet" },
   secondary: { label: "Add health cover for your trip", path: "/insurance/plans" },
-  texture: { src: "/photos/brand/bg-aurora-g1.jpg" },
+  // [CHANGED, 2026-10-25] Owner: the home page's mountain photo, not the
+  // crimson aurora texture.
+  texture: { src: "/photos/home/rates-mountains.jpg" },
   screen: {
     kind: "rows",
     title: "Your wallet",
@@ -299,32 +168,4 @@ export const walletClosing = {
       ["Dollars", "$40.00"],
     ],
   } satisfies FeatureScreen,
-} as const;
-
-/**
- * The app home screen in the hero phone, rebuilt from the Omanga app's home
- * tab (owner screenshot, 2026-10-22). An illustrative state: no names, no
- * merchants, relative times so it never dates. The real tab bar has a
- * "Cards" tab, which the site can't mention yet (§ 8.2); the crop ends above
- * it, and it isn't drawn.
- */
-export const walletAppHome = {
-  greeting: "Hi there",
-  currency: "NGN",
-  balance: 248500,
-  updated: "Last updated just now",
-  actions: ["Add money", "Send", "Convert", "More"],
-  transactionsLabel: "Transactions",
-  seeAll: "See all",
-  /** The first row's amount is £100 at today's rate. */
-  converted: { title: "Converted from GBP", time: "9:12am • Today", gbp: 100 },
-  rows: [
-    { title: "Sent to a bank account", time: "8:50am • Today", amount: -15000 },
-  ],
-  /** The app's "Coming soon" row (insurance-promo-card.tsx), verbatim. */
-  promo: {
-    heading: "Coming soon",
-    title: "Insurance from $50 a month",
-    image: { src: "/photos/wallet/app-insurance-promo.webp", width: 690, height: 523 },
-  },
 } as const;

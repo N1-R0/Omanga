@@ -186,15 +186,19 @@ Mobile: [Logo] [Open your free wallet] [☰]. The menu sheet uses the same group
 
 *Removed from Home:* "What Omanga does" and the health-cover prices section (both replaced by 3). No fee amounts, rate source or refresh timing anywhere (owner, 2026-10-25).
 
-**Payments `/payments`**
-*Purpose:* show how you hold, convert and pay in Africa, and what it costs.
-1. Hero: travel money, ready when you land (converter, CTA)
-2. Hold, convert and pay (three capabilities only: fund in USD/GBP/CAD, convert at the mid-market rate, pay by transfer)
-3. What it costs (free to open, ₦20 per transfer, rate shown before you confirm)
-4. Where you can pay (50+ African countries, with a link to the full list once it exists)
-5. Set up in three steps
-6. Payments questions
-7. Closing band
+**Payments `/payments`** (revised again and approved by the owner 2026-10-25; applied at /new/payments)
+*Purpose:* show how you hold, convert and pay across Africa, in the order a trip runs.
+
+Research, 2026-10-25 (Wise multi-currency account, Monzo travel, LemFi accounts): account pages run 6 to 8 sections. A repetition audit found converting shown four times, pay by transfer four times and adding money three times across "What you can do", "Paying in person" and "Going home", so those three became one walkthrough.
+
+1. Hero: Travel money, ready when you land (the converter in a frosted box)
+2. Proof strip: 50+ countries, add from 3 currencies, pay by transfer, free to open
+3. How it works: From home to Nigeria, and back again (four-step walkthrough: add money, convert to naira, pay by transfer, going home)
+4. Pay in 50+ countries across Africa (globe and list)
+5. Wallet questions, answered
+6. Closing band: your naira, ready before you land
+
+*Removed:* "See the rate before you convert", "What you can do", "How you pay at a shop, a hotel or a taxi" (the screenshot prototype) and "Naira left when you fly home?". Their content lives in How it works.
 
 **Exchange rates `/rates`**
 *Purpose:* the parent page for rate searches, and a quick check of today's naira rates.
@@ -211,15 +215,22 @@ Mobile: [Logo] [Open your free wallet] [☰]. The menu sheet uses the same group
 4. Questions about this rate (unique to the pair)
 5. Other naira rates
 
-**Insurance `/insurance`**
-*Purpose:* explain what the cover is, who provides it and how care works, so the visitor is ready to choose a plan.
-1. Hero: health insurance for your trip to Nigeria (CTA: compare plans)
-2. What every plan includes (shared benefits only)
-3. How you get care in Nigeria (steps at the hospital)
-4. Who provides your cover (Phillips HMO and Omanga's role)
-5. Good to know before you buy (Nigeria only, length of cover, extending; exclusions and waiting period once confirmed)
-6. Insurance questions
-7. Closing band: choose your plan
+**Insurance `/insurance`** (revised and approved by the owner 2026-10-26; building at /new/insurance)
+*Purpose:* explain what the cover is, show the three plans, show how care works and who provides it, so the visitor is ready to buy.
+
+Research, 2026-10-26 (SafetyWing Nomad Insurance, World Nomads UK; Genki's page 404s): both put the plans and prices second or third, right after a short reassurance block, then what's covered, then help or emergency contact, a short FAQ (4 to 5) and a closing CTA. Neither sells by feature lists alone: the plan cards do the selling, and the reassurance answers "can I trust this abroad".
+
+1. Hero: Travel health insurance for your trip to Nigeria (built; buy-flow Lottie), then the Payments-style proof strip with insurance facts (owner, 2026-10-26)
+2. What it is and what it isn't (built; Nigeria only, not travel insurance, not an entry requirement)
+3. Choose your plan (built; Vercel layout): Silver, Gold and Diamond at a glance, each with its price and a buy link; full comparison on Plans and prices
+4. What every plan includes (built; Superpower grouped panel): the shared benefits only
+5. ~~How you get care in Nigeria (step walkthrough, the Payments format: pick a plan, your cover in the app, go to a network hospital and Phillips HMO handles your care)~~ (dropped by the owner 2026-10-26: not needed)
+6. ~~Who provides your cover (Phillips HMO as provider, Omanga's role, WhatsApp support, link to Is Omanga safe?)~~ (skipped by the owner 2026-10-26; the provider question moves into the FAQ)
+7. Insurance questions (built; the Payments FAQ UI)
+8. Closing band: choose your plan (built; the Payments closing UI)
+
+*Not a separate section:* "Good to know before you buy". Nigeria-only and not-travel-insurance already live in section 2; exclusions, waiting periods and age limits join the FAQ once confirmed (§ 8.4).
+*Copy fixes in the built sections:* "Health cover" becomes "Insurance" as the category (owner naming); "Cancel any time" comes out until confirmed (§ 8.1; the home page already leaves it out).
 
 **Plans and prices `/insurance/plans`**
 *Purpose:* compare the three plans and buy one.

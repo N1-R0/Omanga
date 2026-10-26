@@ -2747,3 +2747,230 @@ blocks. The copy was rewritten from approved facts only:
 - **Replaces:** the crimson aurora texture.
 - **Unchanged:** the "Home" app card stays in the glass frame on top.
 - **Status:** the owner marked the home page done after this change.
+
+## Addendum · 2026-10-25 · /new home Why Omanga: Vizcom layout (owner pick)
+
+- **Reference:** Vizcom's impact cards (Mobbin section 39a1103e), chosen from
+  six grid and horizontal options. Kept in our light style.
+- **Head:** eyebrow, H2 and sub on the left. "Is Omanga safe?" moved from a
+  text link to a secondary pill button on the right; below 768px it sits
+  under the sub.
+- **Cards:** six white `Card`s, 3 × 2 from 1024px, 2 columns from 768px,
+  stacked below.
+  - A bare crimson line icon (new `NavIcon` size `bare`, no tinted circle)
+    sits at the top.
+  - The point is in large type at the foot (26px, 30px from 768px), with
+    one P2 line under it.
+  - Heights: 280px from 768px, 184px below.
+- **Copy:** unchanged.
+
+## Addendum · 2026-10-25 · /new/payments hero: full-width photo band (owner)
+
+- **Stage:** now a full-width band, edge to edge with no radius, outside the
+  content column. It was a column-wide 4px box of the moving crimson fabric
+  (HeroFabric).
+- **Photo:** layered blue ridges in mist, Unsplash mqO0Rf-PUMs by Paul
+  Pastourmatzis (Unsplash License), self-hosted at
+  `public/photos/wallet/hero-ridges.jpg` (2400px) and not used anywhere
+  else. It sits in the same family as the home page's mountain photo
+  without repeating it.
+- **Unchanged:** the phone (glass bezel, app home screen), its offsets, and
+  the 600 / 440px band heights.
+- **Still awaiting owner approval:** the Payments structure in
+  `sitemap-v2.md` (remove WalletRates, fix the proof strip's repeated "Free
+  to open").
+
+## Addendum · 2026-10-25 · /new/payments hero: converter box (owner)
+
+- **Converter, no phone:** the hero's phone (glass bezel with the app home
+  screen) is replaced by the home page's working converter in a frosted box,
+  after the owner's converter reference.
+  - The box is `RateConvertScreen variant="card"`: translucent white, blurred,
+    32px radius, white edge, float shadow. The inner cards are a little
+    whiter.
+  - There's no "Convert" title. The box is up to 440px wide and shown whole.
+  - The owner rejected the phone format.
+  - In the box version, the figures shrink with the viewport (min of the
+    usual size and 6.4–8vw) so they stay whole at 375px.
+- **Photo box:** back to the content width (the full-width band was tried
+  and reverted the same day). Radius is 12px (the photo radius, which was
+  4px), padding 80px (32 on mobile), with the ridges photo.
+- **Deleted:** `AppHomeScreen` and `walletAppHome`, which nothing used once
+  the phone went.
+- **Still awaiting owner approval:** the Payments structure in
+  `sitemap-v2.md` (remove WalletRates, fix the proof strip's repeated "Free
+  to open").
+
+## Addendum · 2026-10-25 · /new/payments structure applied (owner approved)
+
+- **Removed:** "See the rate before you convert" (WalletRates, plus the
+  `walletRates` content). Its title repeated the second "What you can do"
+  item.
+- **Proof strip:** the first of two "Free to open" items is now "Pay by
+  transfer".
+- **Page order:** hero, proof strip, what you can do, paying in person,
+  countries, going home, FAQ, closing. `sitemap-v2.md` is marked approved.
+
+## Addendum · 2026-10-25 · /new/payments container photos (owner)
+
+- **Photo swap:** every texture container on the Payments page now uses the
+  home page's mountain photo (`/photos/home/rates-mountains.jpg`, Unsplash
+  PdGBci-4jR8).
+  - The three "What you can do" panels were the U2 satin. Each now shows a
+    different crop (20/55/85% across), so they don't look identical.
+  - The closing CTA panel was the crimson aurora.
+- **Unchanged:** the hero keeps its own ridges photo, and the pay-in-person
+  walkthrough keeps its people photos.
+
+## Addendum · 2026-10-25 · /new/payments "Going home": step walkthrough (owner)
+
+- **Reference:** the owner's "Your Wealth. Your Rules." layout. The head sits
+  above, the steps on the left as white Cards, and a photo box with the
+  animated app on the right. It replaces the static converter card and the
+  numbered list.
+- **Player:** `StepWalkthrough`, new, sharing nothing with the pay-in-person
+  player, which the owner will redo.
+  - The active step opens to show its line and a crimson timer bar along its
+    foot. When the bar fills (the step's `ms`), the next step starts, looping
+    after the last. Clicking a step jumps to it.
+  - Timer and Lottie restart together, so text, bar and motion stay in sync.
+  - It pauses off screen. Reduced motion shows the settled frame and a full
+    bar.
+- **Animation:** Jitter file "Omanga — Going home walkthrough", one artboard
+  per step (560 × 760, transparent, 60fps). Each was exported as Lottie from
+  Chrome to `public/lottie/wallet/going-home-{1,2,3}.json`.
+  1. Open your naira wallet (5s): the phone settles in, the camera zooms to
+     the ₦50,000 balance, pans to Convert, a tap, the Convert screen slides
+     in.
+  2. Convert to dollars (6s): zoom to the amount as it types up to ₦50,000,
+     a pan to "Into", and $37.18 grows in; then out, a tap on Continue, the
+     review slides in, and a tap on Convert now.
+  3. Keep them for the next trip (5.5s): Converted slides in, a zoom to
+     $37.18 as the Completed badge pops, then out, and the USD wallet home
+     slides in with a zoom to $37.18.
+- **Screens:** rebuilt as vector UI (Inter, the app's colours) from the
+  app's own screens, not screenshots.
+  - Left out: names (it says "Hi there"), fees, transfer-fee rows and the
+    Cards tab.
+  - The example rate (1 USD = ₦1,345) is shown with no source or timing.
+- **Photo box:** the home mountain photo, 12px radius, 600px tall (560 from
+  768px, 460 below).
+
+## Addendum · 2026-10-25 · /new/payments "How it works" replaces three sections (owner approved)
+
+- **Repetition audit:** converting appeared 4×, pay by transfer 4×, add and
+  hold 3×, 50+ countries 2× and free to open 2×. "What you can do",
+  "Paying in person" (the screenshot prototype) and "Going home" were three
+  slices of one trip.
+- **New section:** one "How it works" (`WalletHowItWorks`, id
+  `how-it-works`) in the Going home step-walkthrough format
+  (`StepWalkthrough`), with four steps.
+  - **Steps:** add money, convert to naira, pay by transfer, going home.
+  - **Head:** "From home to Nigeria, and back again".
+- **Animations:** Jitter file "Omanga — Payments how it works", one
+  560 × 760 transparent artboard per step, 60fps. Each was exported as
+  Lottie from Chrome to `public/lottie/wallet/how-{1..4}.json` (300/360/360/
+  360 frames).
+  1. **Add money:** the GBP wallet at £0.00, a tap on Add money, £200 typed,
+     Add, then the wallet at £200.00 with a "Money added" row. No funding
+     method is named.
+  2. **Convert to naira:** a tap on Convert, £100 typed, ₦179,852 grows in
+     under "Into", Continue, the review, then Convert now.
+  3. **Pay by transfer:** a tap on Send, bank details with the account
+     number typed, "Name checked" (the name is a placeholder bar, no
+     invented person), Continue, ₦8,500 typed, Send, then Sent.
+  4. **Going home:** a tap on Convert, ₦50,000 to $37.18 pre-filled with a
+     zoom to the dollars, Continue, Converted with the badge, then the
+     dollar wallet with a zoom to $37.18.
+- **Screens:** vector UI rebuilt from the app (Inter, the app's colours),
+  never screenshots. No fees, names, Cards tab or speed claims. Example
+  rates are shown with no source or timing.
+- **Deleted:** WalletFeatures, WalletPayInPerson, WalkthroughPlayer, the
+  WalletLeftover component (renamed WalletHowItWorks), their content, the
+  pay-step Lotties, the walkthrough photos, the going-home Lotties (now step
+  4), and the orphaned app-insurance-promo.webp and bg-aurora-g1.jpg.
+- **Page:** hero, proof strip, how it works, countries, FAQ, closing (six
+  sections). `sitemap-v2.md` is updated.
+
+## Addendum · 2026-10-26 · /new/payments How it works: head beside the box (owner)
+
+- **Head moved:** the eyebrow, H2 and sub now sit at the top of the
+  walkthrough's left column, beside the photo box. The step tabs and timer
+  bars sit at the column's foot.
+- **Mechanism:** `StepWalkthrough` takes a `head` slot. Its left column is a
+  justify-between flex with a 24px gap on desktop, so the last step ends
+  level with the box's bottom edge (both 646px at 1280 × 860).
+- **Below 1024px:** head, then steps, then the box.
+- **Fills the viewport** (owner, 2026-10-26): from 1024px the section is
+  `min-h-svh`, content centred, with 48px top and bottom padding. The photo
+  box is `max(600px, 100svh − 96px)` tall, so at 1280 × 860 it runs 48 to
+  812px and the last step ends level with it. The Lottie grows with the box.
+
+## Addendum · 2026-10-26 · /new/insurance structure approved, copy fixes (owner)
+
+- **Structure:** the Insurance page structure in `sitemap-v2.md` is approved
+  (8 sections: hero, what it is and isn't, choose your plan, what every plan
+  includes, how you get care, who provides your cover, questions, closing).
+- **Copy fixes in "What this is":**
+  - The H2 is "Insurance for your time in Nigeria" (was "Health cover…").
+  - "your health cover doesn't" became "your insurance doesn't".
+  - "No commitment. Cancel any time." is out until confirmed (§ 8.1). The
+    line now reads "Pay month by month while you're in Nigeria, from $50 a
+    month". Monthly is confirmed by the Paystack monthly subscriptions.
+- **Still on the home page:** "Cancel any time" remains in the home FAQ
+  answer to "How much is travel insurance for Nigeria?". That is
+  unconfirmed live-site copy, left for the owner to decide.
+
+### Insurance hero photo (2026-10-26)
+
+The moving crimson fabric behind the Insurance hero is replaced by a still
+photo: Unsplash z2BCD8Bgd9M (Fabrizio Conti, Unsplash License), a deep blue
+mountain range, self-hosted at `public/photos/insurance/hero-range.jpg`
+(2200px, q78) and framed at 50% 70%. Owner picked it from a contact sheet
+after turning down a pale misty photo and the Payments ridges. `HeroFabric`
+and its shader are deleted as unused.
+
+### Insurance § 3 Choose your plan (2026-10-26)
+
+Owner picked Vercel's pricing section (Mobbin 1671eb10). `HealthPlans` sets
+the three plans as columns of one bordered panel split by hairlines; Gold is
+the only white column, with a dark "Popular" tab on the panel's top edge
+(inline beside the name below 1024px) and the one filled button. Buttons go
+straight to each plan's Paystack page. A foot row links to /insurance/plans.
+Plan data is `homePrices.plans` from the home content, so names, prices and
+benefits have one source. Vercel's metrics row is left out: there are no
+confirmed numbers to put in it.
+
+### Insurance proof strip (2026-10-26)
+
+Owner asked for the Payments proof strip under the Insurance hero too, with
+insurance facts. `WalletProof` became the shared `ui/ProofStrip` (props: id,
+label, items); Payments passes `walletProof`, Insurance passes `healthProof`
+(from $50 a month, Phillips HMO, emergency evacuation on every plan,
+telemedicine and roaming on every plan; all approved facts).
+
+### Insurance § 4 What every plan includes (2026-10-26)
+
+Owner picked Superpower Health Gap's grouped panel (Mobbin 0fa649f3).
+`HealthIncludes`: a muted frame around one white bordered card, a label row,
+then three columns split by hairlines (Hospital care, Tests and medicines,
+Care as you travel), each benefit a crimson line icon, a medium title and one
+secondary line. The eight items are only the shared benefits (Silver's five
+plus telemedicine, roaming and the app from the home plans footnote). "The
+app" reads as "your Omanga account" because the native app hasn't shipped.
+
+### Insurance § 5 dropped (2026-10-26)
+
+Owner: no need for § 5 How you get care in Nigeria (the step walkthrough).
+§ 4 What every plan includes stays; the page goes from it to Who provides
+your cover.
+
+### Insurance § 6 skipped, § 7 and § 8 built (2026-10-26)
+
+Owner skipped § 6 Who provides your cover and asked for § 7 and § 8 in the
+Payments page's UI. `WalletFaq` became the shared `ui/FaqSection` (props:
+eyebrow, title, sub parts, items); Payments passes `walletFaq`, Insurance
+`healthFaq`. Because § 5 and § 6 are gone, the FAQ answers who provides the
+cover and how HMO care works. `HealthClosing` is the shared `CtaPanel` with
+"Get insurance plan" as the primary, the wallet as the text link, the home
+mountain photo and an illustrative Gold plan screen.

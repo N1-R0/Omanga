@@ -1,20 +1,23 @@
 import { href } from "@/new-redesign/config/routes";
+import Image from "next/image";
+
 import { FeatureLottie } from "@/new-redesign/components/sections/home/FeatureLottie";
-import { HeroFabric } from "@/new-redesign/components/sections/home/HeroFabric";
 import { Button } from "@/new-redesign/components/ui/Button";
 import { healthHero } from "@/new-redesign/content/health-cover.content";
 
 /**
- * 1 · Health cover hero (owner, 2026-10-23): the wallet hero's layout, so the
+ * 1 · Insurance hero (owner, 2026-10-23): the Payments hero's layout, so the
  * two product pages read as a pair. The grey page, everything centred: the
- * H1, the sub, one primary action, then the same box of moving crimson
- * fabric (HeroFabric) at the same sizes (600px tall, 440 below 768).
+ * H1, the sub, one primary action, then a photo box at the same sizes (600px
+ * tall, 440 below 768). Owner, 2026-10-26: the photo is a deep blue mountain
+ * range, a sibling of the Payments hero's ridges; it replaced the moving
+ * crimson fabric.
  *
  * The box holds no phone: it plays the how-cover-works film instead
  * (owner's storyboard, 2026-10-23).
  */
 export function HealthHero() {
-  const { title, sub, primary, scene } = healthHero;
+  const { title, sub, primary, scene, photo } = healthHero;
 
   return (
     <section aria-labelledby="health-hero-title" className="bg-bg">
@@ -39,7 +42,7 @@ export function HealthHero() {
             height and is centred, so narrow boxes crop its empty sides, not
             the card (the card is 456 wide, inside the 468 a 375 phone shows). */}
         <div className="relative isolate mt-14 h-[440px] w-full overflow-hidden rounded-sm md:mt-16 md:h-[600px]">
-          <HeroFabric />
+          <Image src={photo.src} alt="" fill priority sizes="(min-width: 1112px) 1080px, 100vw" className="-z-10 object-cover" style={{ objectPosition: photo.position }} />
           <FeatureLottie
             scene={scene}
             active

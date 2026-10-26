@@ -1,31 +1,30 @@
+import Image from "next/image";
+
 import { WALLET_URL } from "@/config/site";
-import { getNgnRates } from "@/lib/rates";
-import { HeroFabric } from "@/new-redesign/components/sections/home/HeroFabric";
-import { AppHomeScreen } from "@/new-redesign/components/sections/wallet/AppHomeScreen";
+import { crossMatrix, getNgnRates } from "@/lib/rates";
+import { RateConvertScreen } from "@/new-redesign/components/sections/home/RateConvertScreen";
 import { Button } from "@/new-redesign/components/ui/Button";
-import { PhoneFrame } from "@/new-redesign/components/ui/PhoneFrame";
 import { walletHero } from "@/new-redesign/content/wallet.content";
 
 /**
  * 1 · Wallet hero, after the Nova reference (owner, 2026-10-22, "something
  * simple"): the grey page, everything centred: the H1, the sub, one primary
- * action, then a box of the home hero's moving crimson fabric (HeroFabric,
- * owner 2026-10-22; it replaced the still U2 satin) with the phone standing
- * in it, cut off by the box's bottom edge (owner, 2026-10-22, after
- * a product-in-a-photo-box reference). The proof strip sits under the box. No 3D shapes beside the phone
- * (owner dropped 3D assets on 2026-10-15).
+ * action, then a column-wide photo box (owner, 2026-10-25: misty blue
+ * ridges, replacing the moving crimson fabric) with the converter box on
+ * it. The proof strip sits under it. No 3D shapes (owner dropped 3D
+ * assets on 2026-10-15).
  *
  * The header sits over this hero with dark text (Header reads the route).
  *
  * No eyebrow: the rate pill was tried and removed by the owner (2026-10-22).
  *
- * Box: the full content width, 4px radius (the texture radius), 600px tall
- * (440 below 768). Phone: the owner's 309 × 675 frame at full size from 768px
- * (278 × 608 below), so the box shows the balance, the actions and the
- * transactions before the edge.
+ * Photo box: the content width, 12px radius, 48px padding (80 from 768px). On it, the
+ * home page's working converter in a frosted box, no phone (owner,
+ * 2026-10-25, after a converter reference; it replaced the phone with the
+ * app home screen), up to 440px wide and shown whole.
  */
 export async function WalletHero() {
-  const { title, sub, primary } = walletHero;
+  const { title, sub, primary, photo } = walletHero;
   const { rates } = await getNgnRates();
 
   return (
@@ -46,16 +45,15 @@ export async function WalletHero() {
           </Button>
         </div>
 
-        {/* The stage: the home hero's moving crimson fabric in a 4px-radius box,
-            the phone standing in it from 96px down on desktop (64 on
-            tablet, 40 on mobile) and cut by the box's bottom edge. No fill
-            of its own (owner, 2026-10-23): HeroFabric paints brand-600 until
-            WebGL draws. */}
-        <div className="relative isolate mt-14 flex h-[440px] w-full justify-center overflow-hidden rounded-sm pt-10 md:mt-16 md:h-[600px] md:pt-16 lg:pt-24">
-          <HeroFabric />
-          <PhoneFrame className="[--phone-scale:0.9] md:[--phone-scale:1]">
-            <AppHomeScreen gbpToNgn={rates.GBP} />
-          </PhoneFrame>
+        {/* The stage: a column-wide photo box (12px radius, the photo radius)
+            with the converter box centred on it. Owner, 2026-10-25: the photo
+            replaced the moving crimson fabric; a full-width band was tried
+            and reverted the same day. */}
+        <div className="relative isolate mt-14 flex w-full justify-center overflow-hidden rounded-sm px-2 py-8 md:mt-16 md:px-4 md:py-20">
+          <Image src={photo.src} alt="" fill priority sizes="(min-width: 1112px) 1080px, 100vw" className="-z-10 object-cover" style={{ objectPosition: photo.position }} />
+          <div className="w-full max-w-[440px]">
+            <RateConvertScreen matrix={crossMatrix(rates)} variant="card" />
+          </div>
         </div>
       </div>
     </section>

@@ -3,12 +3,10 @@ import type { Metadata } from "next";
 import { WalletHero } from "@/new-redesign/components/sections/wallet/WalletHero";
 import { WalletClosing } from "@/new-redesign/components/sections/wallet/WalletClosing";
 import { WalletCountries } from "@/new-redesign/components/sections/wallet/WalletCountries";
-import { WalletFaq } from "@/new-redesign/components/sections/wallet/WalletFaq";
-import { WalletFeatures } from "@/new-redesign/components/sections/wallet/WalletFeatures";
-import { WalletLeftover } from "@/new-redesign/components/sections/wallet/WalletLeftover";
-import { WalletPayInPerson } from "@/new-redesign/components/sections/wallet/WalletPayInPerson";
-import { WalletProof } from "@/new-redesign/components/sections/wallet/WalletProof";
-import { WalletRates } from "@/new-redesign/components/sections/wallet/WalletRates";
+import { WalletHowItWorks } from "@/new-redesign/components/sections/wallet/WalletHowItWorks";
+import { FaqSection } from "@/new-redesign/components/ui/FaqSection";
+import { ProofStrip } from "@/new-redesign/components/ui/ProofStrip";
+import { walletFaq, walletProof } from "@/new-redesign/content/wallet.content";
 
 /**
  * Payments at /new/payments (sitemap-v2.md § C; was /wallet, § 6.2). Sections land one at a time; the
@@ -22,13 +20,10 @@ export default function PaymentsPage() {
   return (
     <>
       <WalletHero />
-      <WalletProof />
-      <WalletFeatures />
-      <WalletPayInPerson />
-      <WalletRates />
+      <ProofStrip id="wallet-proof" {...walletProof} />
+      <WalletHowItWorks />
       <WalletCountries />
-      <WalletLeftover />
-      <WalletFaq />
+      <FaqSection {...walletFaq} />
       <WalletClosing />
     </>
   );

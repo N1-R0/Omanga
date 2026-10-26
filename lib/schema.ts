@@ -427,7 +427,19 @@ export function buildPlanProducts(
       "@type": "Product",
       name: `Omanga ${plan.name} Holiday Insurance`,
       description: plan.description,
-      brand: { "@id": ORGANIZATION_ID },
+      /*
+        [FIXED, 2026-10-26] Search Console, merchant listings: "Missing field
+        image" (critical) and "Invalid object type for field brand" on all
+        three plans. There is no per-plan picture, so each carries the site's
+        share image. `brand` is a named `Brand`; an `@id` reference to the
+        Organization isn't an accepted type there.
+
+        Left out on purpose, though Search Console suggests them:
+        `shippingDetails` (nothing ships) and `hasMerchantReturnPolicy` (the
+        refund and cancellation terms aren't confirmed, § 8.1).
+      */
+      image: absoluteUrl("/og.png"),
+      brand: { "@type": "Brand", name: "Omanga" },
       category: "Travel health insurance",
       offers: {
         "@type": "Offer",

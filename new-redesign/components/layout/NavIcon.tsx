@@ -19,7 +19,10 @@ export type NavIconName =
  * The shared line-icon set, drawn on a 20px grid with a 1.6 stroke, in an
  * `accent-subtle` circle. `lg` (64px circle, 24px icon) leads the icon tiles
  * (Asset's icon card); `sm` (32px circle, 18px icon) is kept for small rows.
- * The header menu used `sm` until the owner removed menu icons (2026-10-21). Decorative: the text beside it names the thing.
+ * The header menu used `sm` until the owner removed menu icons (2026-10-21).
+ * `bare` (2026-10-25) is the 24px icon alone in the text colour, no circle,
+ * for the Why Omanga cards (Vizcom reference). Decorative: the text beside it
+ * names the thing.
  */
 const PATHS: Record<NavIconName, string> = {
   wallet: "M3 6.5A2.5 2.5 0 0 1 5.5 4H15v3M3 6.5V15a2 2 0 0 0 2 2h11a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H5.5A2.5 2.5 0 0 1 3 6.5Zm11 5h.01",
@@ -39,8 +42,15 @@ const PATHS: Record<NavIconName, string> = {
   chat: "M4 4.5h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H9l-4 3v-3H4a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1Zm3 5h.01m3 0h.01m3 0h.01",
 };
 
-export function NavIcon({ name, size = "sm" }: { name: NavIconName; size?: "sm" | "lg" }) {
-  const px = size === "lg" ? 24 : 18;
+export function NavIcon({ name, size = "sm" }: { name: NavIconName; size?: "sm" | "lg" | "bare" }) {
+  const px = size === "sm" ? 18 : 24;
+  if (size === "bare") {
+    return (
+      <svg aria-hidden width={px} height={px} viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+        <path d={PATHS[name]} />
+      </svg>
+    );
+  }
   return (
     <span aria-hidden className={`inline-flex shrink-0 items-center justify-center rounded-full bg-accent-subtle text-brand-700 ${size === "lg" ? "size-16" : "size-8"}`}>
       <svg width={px} height={px} viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">

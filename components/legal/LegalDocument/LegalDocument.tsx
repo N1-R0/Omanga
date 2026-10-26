@@ -47,17 +47,17 @@ export function LegalDocument({ content }: LegalDocumentProps) {
   const effective = new Date(content.effectiveDate);
 
   return (
-    <article className="bg-surface-page text-ink focus-ring-on-light section-rhythm">
+    <article className="bg-bg text-text  section-y">
       <Container>
-        <div className="flex flex-col gap-fluid-8">
-          <header className="flex flex-col gap-fluid-3">
-            <p className="font-sans text-h6 text-brand">{content.eyebrow}</p>
+        <div className="flex flex-col gap-16">
+          <header className="flex flex-col gap-4">
+            <p className="font-sans type-h3 text-accent-text">{content.eyebrow}</p>
 
-            <h1 className="font-sans text-h1 measure-heading">
+            <h1 className="font-sans type-h1 max-w-[30ch]">
               {content.title}
             </h1>
 
-            <p className="font-sans text-large text-secondary measure-body">
+            <p className="font-sans type-p1 opacity-80 max-w-[70ch]">
               {content.summary}
             </p>
 
@@ -68,7 +68,7 @@ export function LegalDocument({ content }: LegalDocumentProps) {
               locale: a legal effective date read as 08/28 in one country and
               28/08 in another is the kind of ambiguity this page exists to avoid.
             */}
-            <p className="font-sans text-small text-secondary">
+            <p className="font-sans type-p2 opacity-80">
               Effective from{" "}
               <time dateTime={content.effectiveDate}>
                 {effective.toLocaleDateString("en-GB", DATE_FORMAT)}
@@ -77,7 +77,7 @@ export function LegalDocument({ content }: LegalDocumentProps) {
           </header>
 
           {content.intro !== undefined && (
-            <div className="flex flex-col gap-fluid-4">
+            <div className="flex flex-col gap-6">
               {content.intro.map((block, index) => (
                 <LegalBlock key={index} block={block} />
               ))}
@@ -86,22 +86,22 @@ export function LegalDocument({ content }: LegalDocumentProps) {
 
           <LegalContents sections={content.sections} />
 
-          <div className="flex flex-col gap-fluid-7">
+          <div className="flex flex-col gap-12">
             {content.sections.map((section) => (
               <section
                 key={section.id}
                 id={section.id}
                 aria-labelledby={`${section.id}-heading`}
                 /*
-                  `scroll-mt-header` clears the fixed header when an in-page link
+                  `scroll-mt-19` clears the fixed header when an in-page link
                   jumps here. Without it the heading lands underneath the bar and
                   the reader arrives looking at the paragraph below it.
                 */
-                className="flex scroll-mt-header flex-col gap-fluid-4"
+                className="flex scroll-mt-19 flex-col gap-6"
               >
                 <h2
                   id={`${section.id}-heading`}
-                  className="font-sans text-h3 measure-heading"
+                  className="font-sans type-h3 max-w-[30ch]"
                 >
                   {section.heading}
                 </h2>
@@ -115,11 +115,11 @@ export function LegalDocument({ content }: LegalDocumentProps) {
                     key={subsection.id}
                     id={subsection.id}
                     aria-labelledby={`${subsection.id}-heading`}
-                    className="flex scroll-mt-header flex-col gap-fluid-3"
+                    className="flex scroll-mt-19 flex-col gap-4"
                   >
                     <h3
                       id={`${subsection.id}-heading`}
-                      className="font-sans text-h5 measure-heading"
+                      className="font-sans type-h3 max-w-[30ch]"
                     >
                       {subsection.heading}
                     </h3>

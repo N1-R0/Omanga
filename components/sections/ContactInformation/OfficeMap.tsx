@@ -60,7 +60,7 @@ import { MapFrame } from "./MapFrame";
  * corners take it.
  */
 const FRAME_CLASS =
-  "h-image-band w-full overflow-hidden rounded-md bg-surface-light";
+  "h-[clamp(22.5rem,44.974vw,42.5rem)] w-full overflow-hidden rounded-xs bg-surface";
 
 export type OfficeMapProps = {
   content: OfficeMapContent;
@@ -154,7 +154,7 @@ export function OfficeMap({ content, address }: OfficeMapProps) {
               the chat channel's identifier and there is no invitation to dial it.
               See `WHATSAPP_NUMBER_DISPLAY` for the `[VERIFY]` on its digits.
             */}
-            <span className="inline-flex items-center gap-fluid-1">
+            <span className="inline-flex items-center gap-2">
               <WhatsAppMark size="sm" tone="light" />
 
               <TextLink href={WHATSAPP_URL} tone="light" isExternal>

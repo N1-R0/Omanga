@@ -19,13 +19,13 @@ import type { Measure, TextRole } from "@/types/ui.types";
 
 const ROLE_CLASS: Readonly<Record<TextRole, string>> = {
   /** 22 → 28. Prose that is the subject of its own band, not an intro to one. */
-  prose: "font-sans text-prose",
+  prose: "font-sans type-p1",
   /** 18 → 20. Section intros — the paragraph directly under a section heading. */
-  lead: "font-sans text-large",
+  lead: "font-sans type-p1",
   /** 16 → 18. The document default. */
-  body: "font-sans text-main",
+  body: "font-sans type-p1",
   /** 14 → 16. Helper lines, footer links, legal and metadata. */
-  small: "font-sans text-small",
+  small: "font-sans type-p2",
 } as const;
 
 /**
@@ -41,9 +41,9 @@ const ROLE_CLASS: Readonly<Record<TextRole, string>> = {
 type BodyMeasure = Extract<Measure, "body" | "narrow" | "feature" | "none">;
 
 const MEASURE_CLASS: Readonly<Record<BodyMeasure, string>> = {
-  body: "measure-body",
-  narrow: "measure-narrow",
-  feature: "measure-feature",
+  body: "max-w-[70ch]",
+  narrow: "max-w-[60ch]",
+  feature: "max-w-[45ch]",
   none: "",
 } as const;
 
@@ -81,7 +81,7 @@ export function Text({
       className={cx(
         ROLE_CLASS[role],
         MEASURE_CLASS[measure],
-        isSecondary && "text-secondary",
+        isSecondary && "opacity-80",
       )}
     >
       {children}

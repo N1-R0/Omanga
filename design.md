@@ -3017,3 +3017,80 @@ those pages still use.
   tokens, and the unreferenced images (3D masters, device frames, old app
   screens). Home's FAQ now uses the shared `FaqSection`. The old header-height
   token is 76px, the new bar's height.
+
+### Get Started removed (2026-10-26)
+
+Owner: delete the pages the sitemap drops. Sitemap v2 removes only
+`/get-started`.
+
+- `/get-started` is deleted and 301s to `/`; it is out of the XML sitemap.
+- Removed with it: its five sections, `TrustPartners`, their content modules,
+  the Fuspay and Zira logo files, and the Get Started form's validation and
+  email template. `/api/enquiry` now accepts only the Contact form and rejects
+  a submission without its form-kind field.
+- The old pages' closing band (`PRIMARY_CTA`) was "Get started" →
+  `/get-started`; it is now "Open your free wallet" → the wallet, as in the
+  new header. The Detty December guide's CTA goes to home.
+
+### Old design system removed (2026-10-26)
+
+Owner: delete the old design system, put the old pages on the new one, and
+give every old page the new FAQ and final CTA; page UIs are redesigned after.
+
+- `styles/` (old tokens, type, utilities), `new-redesign/styles/chrome.css`,
+  the old root layout and the old fonts are deleted. Every page now uses
+  `app/(new-redesign)/layout.tsx` and the one stylesheet.
+- The old pages moved to `app/(new-redesign)/(not-rebuilt)` (URLs
+  unchanged). Its layout pads them by the header height, since the header is
+  absolute and these pages weren't built to run under it.
+- Their components' classes were mapped to the new tokens: colours by role
+  (ink → text, light surface → surface, brand → accent), the old type scale to
+  `type-h1`…`type-p3` (old h3–h6 all become `type-h3`), fluid spacing to fixed
+  steps at its desktop value, `tablet:`/`desktop:` to `md:`/`lg:`, radii to the
+  new rule (cards 16, fields 8). Expect some sections to look rough until
+  their page is redesigned.
+- FAQ: `FaqSection` on about, plans, contact, safety, rates and guides (guide
+  FAQs moved out of the article column). Closing: `CtaPanel` everywhere —
+  home's on about, contact, safety and the blog; the wallet's on rates; on
+  Plans the wallet panel with the old Plans line, since its own insurance
+  panel would link to itself. Legal pages have neither.
+- The old `Faq`, `CTA`, `SkipLink`, `Object3D`, their content, the header's
+  `opaque` mode and the unused images (`public/3d`, the CTA line art, the
+  vertical logo) are gone.
+
+### Rate pages: hero and the compact converter (2026-10-26)
+
+Owner: a horizontal hero on white, text on the left, and on the right the
+mountain photo as the converter's container, with a new small-scale
+converter in a glass frame. The same converter goes on the Payments hero next.
+
+- `Converter` (new-redesign/components/ui): Mobbin research on OKX Convert,
+  Uniswap and Wise. Two grey panels ("You convert", "You get"), each the
+  amount and a currency chip, a round swap button on the seam, the rate with
+  its reference date, one full-width primary button to the web wallet. White
+  card (16px). GBP/USD/CAD/NGN cross matrix; it opens on the page's currency.
+- `RateHero`: white section, two columns from 1024 (stacked below), photo
+  box 12px radius; the photo clips itself so the currency list can open past
+  it. The section runs under the absolute header so the white reaches the top.
+- The old `RateConverterBar` and its `CurrencyPicker` are deleted.
+
+### Payments hero: the compact converter (2026-10-26)
+
+Owner: use the rate pages' compact converter on the Payments hero.
+
+- `WalletHero` now shows `Converter` in the same glass frame, on the same
+  photo box. The photo clips itself so the currency list can open past it.
+- `RateConvertScreen` lost its frosted-card variant (only Payments used it);
+  it is the home phone screen only.
+- The hero has two filled "Open your free wallet" buttons in one view (the
+  hero's and the converter's). Owner, 2026-10-26: keep both, an exception to
+  the one-primary-per-view rule for this hero.
+
+### Payments hero: full-width photo band (2026-10-26, experiment)
+
+Owner: try the mountain box at the full page width; if it works, the
+Insurance hero gets the same. The band now spans the viewport with no radius
+and the converter stays centred on it. Reverted the same day (owner): back to
+the content-width box with a 12px radius from 768px; below 768 it runs edge
+to edge with square corners (owner). The Insurance hero's and the rate pages'
+photo boxes do the same.

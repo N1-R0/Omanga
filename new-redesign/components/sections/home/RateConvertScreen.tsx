@@ -26,14 +26,11 @@ import { homeRates as copy } from "@/new-redesign/content/home.content";
  *
  * The button goes to the web wallet: converting happens there, not here.
  *
- * `variant="card"` (owner, 2026-10-25, Payments hero) drops the phone screen
- * and its "Convert" title: the same parts sit in a frosted box (translucent
- * white, blurred, 32px radius) on the photo, after the owner's converter
- * reference, with the inner cards a little whiter than the box.
+ * Home only. The Payments hero used a frosted-card variant of this until
+ * 2026-10-26, when the compact `Converter` replaced it.
  */
 type Props = {
   matrix: Readonly<Record<MatrixCurrency, Readonly<Record<MatrixCurrency, number>>>>;
-  variant?: "screen" | "card";
 };
 
 const nf = (decimals: number) => new Intl.NumberFormat("en-GB", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
@@ -54,9 +51,8 @@ const FACT_ICONS = {
     "M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z",
 } as const;
 
-export function RateConvertScreen({ matrix, variant = "screen" }: Props) {
-  const card = variant === "card";
-  const inner = card ? { background: "rgb(255 255 255 / 0.82)", boxShadow: "inset 0 0 0 1px rgb(255 255 255 / 0.6)" } : { background: APP.card, boxShadow: `inset 0 0 0 1px ${APP.hairline}` };
+export function RateConvertScreen({ matrix }: Props) {
+  const inner = { background: APP.card, boxShadow: `inset 0 0 0 1px ${APP.hairline}` };
   const [amount, setAmount] = useState("1,000");
   const [from, setFrom] = useState<MatrixCurrency>("GBP");
   const [to, setTo] = useState<MatrixCurrency>("NGN");
@@ -94,21 +90,16 @@ export function RateConvertScreen({ matrix, variant = "screen" }: Props) {
   const figure = "min-w-0 flex-1 truncate text-right font-semibold tracking-[-0.03em] tabular-nums";
   const got = valid ? `${symbolOf(to)}${money(value * rate)}` : "—";
   /** Step the size down for long figures (seven-figure naira) so they fit beside the picker. */
-  const sizeFor = (text: string) => {
-    const px = text.length <= 7 ? 38 : text.length <= 9 ? 32 : 28;
-    // The box isn't scaled like the phone screen, so on narrow screens its
-    // figures shrink with the viewport to stay whole.
-    return card ? `min(${px}px, ${text.length <= 7 ? 8 : text.length <= 9 ? 7 : 6.4}vw)` : px;
-  };
+  const sizeFor = (text: string) => (text.length <= 7 ? 38 : text.length <= 9 ? 32 : 28);
 
   return (
     <div
-      className={card ? "flex w-full flex-col rounded-[32px] border border-[#fff]/70 bg-[#fff]/55 p-3 text-left shadow-float backdrop-blur-xl md:p-4" : "flex h-full flex-col bg-[#fff] px-4 pt-2 text-left"}
+      className="flex h-full flex-col bg-[#fff] px-4 pt-2 text-left"
       style={{ color: APP.text }}
     >
-      {card ? null : <p className="text-center text-[17px] font-semibold">{s.title}</p>}
+      <p className="text-center text-[17px] font-semibold">{s.title}</p>
 
-      <div className={card ? "relative rounded-[24px]" : "relative mt-6 rounded-[24px]"} style={inner}>
+      <div className="relative mt-6 rounded-[24px]" style={inner}>
         <div className={half}>
           <label htmlFor={amountId} className={label} style={{ color: APP.tertiary }}>
             {s.youConvert}
@@ -167,7 +158,7 @@ export function RateConvertScreen({ matrix, variant = "screen" }: Props) {
         </div>
       </div>
 
-      <ul className={card ? "mt-3 flex flex-col gap-5 rounded-[24px] px-5 py-5" : "mt-4 flex flex-col gap-5 rounded-[24px] px-5 py-5"} style={inner}>
+      <ul className="mt-4 flex flex-col gap-5 rounded-[24px] px-5 py-5" style={inner}>
         {s.facts.map((f) => (
           <li key={f.text} className="flex items-center gap-3.5 text-[18px] font-medium">
             <svg aria-hidden viewBox="0 0 24 24" width="22" height="22" className="shrink-0 fill-current">

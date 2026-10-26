@@ -10,7 +10,6 @@ import { Button } from "@/new-redesign/components/ui/Button";
  * and Reject side by side with equal weight, Manage opening the preferences.
  * A white corner card from 1024px, a bar across the foot below.
  *
- * Radii are literal: it also renders on the old pages (styles/chrome.css).
  */
 export function CookieBanner() {
   const { isReady, record, acceptAll, rejectAll, openPreferences } = useConsent();

@@ -24,7 +24,7 @@ const DIRECTION_CLASS: Readonly<Record<Direction, string>> = {
   column: "flex-col",
   row: "flex-row",
   // Mobile-first: the narrow layout is the default, the wider one is additive.
-  "column-to-row": "flex-col tablet:flex-row",
+  "column-to-row": "flex-col md:flex-row",
 } as const;
 
 /** Cross-axis alignment. */

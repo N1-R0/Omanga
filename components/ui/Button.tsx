@@ -117,7 +117,7 @@ export type ButtonProps =
  * ink-inversion hover.
  */
 const BASE_CLASS =
-  "inline-flex items-center justify-center gap-fluid-1 whitespace-nowrap font-heading hit-area focus-ring " +
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap  min-h-11 min-w-11  " +
   "transition-[background-color,color,border-color,opacity,transform] duration-300 ease-[cubic-bezier(0.15,0.5,0.5,1)] " +
   "active:scale-[0.98] motion-reduce:active:scale-100";
 
@@ -127,8 +127,8 @@ const BASE_CLASS =
  */
 const SIZE_CLASS: Readonly<Record<ButtonSize, { text: string; shape: string }>> =
   {
-    main: { text: "text-button", shape: "h-11 px-6" },
-    compact: { text: "text-small", shape: "h-9 px-4" },
+    main: { text: "type-p3", shape: "h-11 px-6" },
+    compact: { text: "type-p2", shape: "h-9 px-4" },
   } as const;
 
 /**
@@ -150,24 +150,24 @@ const HOVER = "hover:opacity-85";
 
 const VARIANT_CLASS: Readonly<Record<ButtonVariant, Record<Tone, string>>> = {
   primary: {
-    light: `bg-brand text-on-dark ${HOVER}`,
-    dark: `bg-brand text-on-dark ${HOVER}`,
-    brand: `bg-surface-page text-brand ${HOVER}`,
+    light: `bg-accent text-text-inverse ${HOVER}`,
+    dark: `bg-accent text-text-inverse ${HOVER}`,
+    brand: `bg-bg text-accent-text ${HOVER}`,
   },
   secondary: {
-    light: `border-2 border-ink text-ink ${HOVER}`,
-    dark: `border-2 border-on-dark bg-white/10 text-on-dark ${HOVER}`,
-    brand: `border-2 border-on-dark bg-white/10 text-on-dark ${HOVER}`,
+    light: `border-2 border-text text-text ${HOVER}`,
+    dark: `border-2 border-text-inverse bg-neutral-0/10 text-text-inverse ${HOVER}`,
+    brand: `border-2 border-text-inverse bg-neutral-0/10 text-text-inverse ${HOVER}`,
   },
   white: {
-    light: `bg-surface-page text-ink ${HOVER}`,
-    dark: `bg-surface-page text-ink ${HOVER}`,
-    brand: `bg-surface-page text-ink ${HOVER}`,
+    light: `bg-bg text-text ${HOVER}`,
+    dark: `bg-bg text-text ${HOVER}`,
+    brand: `bg-bg text-text ${HOVER}`,
   },
   text: {
-    light: "text-brand hover:text-ink",
-    dark: "text-on-dark hover:text-secondary",
-    brand: "text-on-dark hover:text-secondary",
+    light: "text-accent-text hover:text-text",
+    dark: "text-text-inverse hover:opacity-80",
+    brand: "text-text-inverse hover:opacity-80",
   },
 } as const;
 
@@ -176,7 +176,7 @@ const VARIANT_CLASS: Readonly<Record<ButtonVariant, Record<Tone, string>>> = {
  * disabled state looks identical wherever it appears.
  */
 const DISABLED_CLASS =
-  "bg-disabled-surface text-disabled-ink border-transparent hover:bg-disabled-surface hover:opacity-100 active:scale-100";
+  "bg-neutral-200 text-neutral-400 border-transparent hover:bg-neutral-200 hover:opacity-100 active:scale-100";
 
 export function Button(props: ButtonProps) {
   const {
@@ -192,7 +192,7 @@ export function Button(props: ButtonProps) {
 
   // The text variant carries no fill or border, so a fixed box would push it
   // out of alignment with the copy column it sits under.
-  const shape = variant === "text" ? "rounded-pill" : cx("rounded-pill", padding);
+  const shape = variant === "text" ? "rounded-full" : cx("rounded-full", padding);
 
   if (props.as === "link") {
     const { href, isExternal = false } = props;
@@ -236,7 +236,7 @@ export function Button(props: ButtonProps) {
           the spinner cannot change the button's width mid-submission. */}
       {isLoading ? <Spinner /> : trailingIcon}
       {isLoading && (
-        <span role="status" className="visually-hidden">
+        <span role="status" className="sr-only">
           {loading.label}
         </span>
       )}

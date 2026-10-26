@@ -62,7 +62,7 @@ import { BackLink, TalkForm } from "./TalkForm";
  */
 
 const PANEL_CLASS =
-  "rounded-md bg-surface-light px-fluid-4 py-fluid-6 text-ink focus-ring-on-light";
+  "rounded-xs bg-surface px-6 py-10 text-text ";
 
 export type OptionsPanelProps = {
   content: ContactOptionsContent;

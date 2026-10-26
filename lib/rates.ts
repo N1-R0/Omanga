@@ -100,3 +100,15 @@ export function crossMatrix(
     ]),
   ) as Record<MatrixCurrency, Record<MatrixCurrency, number>>;
 }
+
+/** A rate snapshot's ISO date as "26 October 2026", or null. */
+export function formatRateDate(iso: string | null): string | null {
+  return iso === null
+    ? null
+    : new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        timeZone: "UTC",
+      });
+}

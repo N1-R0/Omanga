@@ -110,7 +110,7 @@ import type { ImageAsset } from "@/types/content.types";
  * a click.
  */
 const IMAGE_BASE_CLASS =
-  "pointer-events-none absolute hidden w-[45%] desktop:block";
+  "pointer-events-none absolute hidden w-[45%] lg:block";
 
 /** Top-anchored, hung 24% off the left edge. Node: `inset[0, …, −360]`. */
 const LEFT_IMAGE_CLASS = "left-[-24%] top-0 rotate-[-4deg]";
@@ -150,7 +150,7 @@ const IMAGE_SIZES = "(min-width: 64rem) 45vw, 1px";
  * band's layout decision: `Heading` and `Text` take no `className`, and a
  * primitive that could choose its own alignment could choose the wrong one.
  */
-const COPY_CLASS = "mx-auto text-center desktop:w-1/2";
+const COPY_CLASS = "mx-auto text-center lg:w-1/2";
 
 export type AboutStoryProps = {
   content: AboutStoryContent;
@@ -168,7 +168,7 @@ export function AboutStory({ content, headingId }: AboutStoryProps) {
         clip is what keeps that true at every width, not only the narrow ones
         where the images are hidden.
       */
-      className="section-rhythm relative overflow-hidden bg-ink text-on-dark focus-ring-on-dark"
+      className="section-y relative overflow-hidden bg-surface-inverse text-text-inverse "
     >
       <FlankingImage
         image={content.images.left}
@@ -215,7 +215,7 @@ export function AboutStory({ content, headingId }: AboutStoryProps) {
                   nobody sees, and naming the smallest one is the honest
                   declaration of a heading that is deliberately not competing.
                 */}
-                <div className="visually-hidden">
+                <div className="sr-only">
                   <Heading id={headingId} level="h2" role="label">
                     {content.heading}
                   </Heading>

@@ -34,7 +34,7 @@ export function Container({ children, as = "div" }: ContainerProps) {
   const Element = as;
 
   return (
-    <Element className="page-gutter mx-auto w-full max-w-content">
+    <Element className="container-page">
       {children}
     </Element>
   );

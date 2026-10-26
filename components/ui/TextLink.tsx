@@ -19,11 +19,11 @@ import type { Tone } from "@/types/ui.types";
  */
 
 const TONE_CLASS: Readonly<Record<Tone, string>> = {
-  light: "text-brand hover:text-brand-hover",
+  light: "text-accent-text hover:text-accent-hover",
   // On dark and brand surfaces the link inherits the surrounding colour;
   // hover dims rather than recolours, since there is no lighter brand step.
-  dark: "text-on-dark hover:text-secondary",
-  brand: "text-on-dark hover:text-secondary",
+  dark: "text-text-inverse hover:opacity-80",
+  brand: "text-text-inverse hover:opacity-80",
 } as const;
 
 export type TextLinkProps = {
@@ -45,7 +45,7 @@ export function TextLink({
   isExternal = false,
 }: TextLinkProps) {
   const className = cx(
-    "font-sans text-main focus-ring transition-standard",
+    "font-sans type-p1  transition duration-[var(--duration-fast)] ease-standard",
     TONE_CLASS[tone],
   );
 

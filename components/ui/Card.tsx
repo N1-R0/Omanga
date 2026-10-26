@@ -63,15 +63,15 @@ type CardVariant =
  * plates are symmetrical in both the design file and the benchmark.
  */
 const VARIANT_CLASS: Readonly<Record<CardVariant, string>> = {
-  "product-primary": "rounded-sm bg-brand px-fluid-4 pt-fluid-4 pb-fluid-5 text-on-dark",
+  "product-primary": "rounded-xs bg-accent px-6 pt-6 pb-8 text-text-inverse",
   "product-secondary":
-    "rounded-sm bg-surface-light px-fluid-4 pt-fluid-4 pb-fluid-5 text-ink",
+    "rounded-xs bg-surface px-6 pt-6 pb-8 text-text",
   comparison:
-    "rounded-md border border-border-subtle bg-ink-elevated p-fluid-5 text-on-dark",
+    "rounded-xs border border-neutral-0/10 bg-neutral-900 p-8 text-text-inverse",
   "comparison-emphasis":
-    "rounded-md border-emphasis border-brand bg-ink-elevated p-fluid-5 text-on-dark",
-  stat: "rounded-sm bg-surface-light p-fluid-3 text-ink",
-  "media-plate": "rounded-md bg-surface-light",
+    "rounded-xs border-2 border-accent bg-neutral-900 p-8 text-text-inverse",
+  stat: "rounded-xs bg-surface p-4 text-text",
+  "media-plate": "rounded-xs bg-surface",
 } as const;
 
 export type CardProps = {
@@ -118,7 +118,7 @@ export function Card({
       what made the art read as part of the copy rather than as the card's
       subject. The copy block below keeps 24 for its own rows.
     */
-    <div className={cx("flex h-full flex-col gap-fluid-5", VARIANT_CLASS[variant])}>
+    <div className={cx("flex h-full flex-col gap-8", VARIANT_CLASS[variant])}>
       {media}
 
       {/*
@@ -149,7 +149,7 @@ export function Card({
           groups here rather than one gap value doing both jobs — which is also
           what keeps the action from reading as one more line of copy.
         */
-        <div className={cx("flex flex-col gap-fluid-5", hasMedia && "mt-auto")}>
+        <div className={cx("flex flex-col gap-8", hasMedia && "mt-auto")}>
           {/*
             The eyebrow and the action are wrapped; the heading and body are not.
 
@@ -165,7 +165,7 @@ export function Card({
             two: `heading` and `body` need to fill the card so their text wraps
             at the card's edge rather than at its longest word.
           */}
-          <div className="flex flex-col gap-fluid-3">
+          <div className="flex flex-col gap-4">
             {eyebrow !== undefined && <div>{eyebrow}</div>}
             {heading}
             {body}

@@ -12,8 +12,8 @@ export type V2SectionProps = {
 };
 
 const RHYTHM = {
-  default: "section-rhythm",
-  tight: "section-rhythm-tight",
+  default: "section-y",
+  tight: "section-y",
   none: "",
 } as const;
 
@@ -26,13 +26,13 @@ const RHYTHM = {
 export function V2Section({
   labelledBy,
   children,
-  className = "bg-surface-page text-ink",
+  className = "bg-bg text-text",
   rhythm = "default",
 }: V2SectionProps) {
   return (
     <section
       aria-labelledby={labelledBy}
-      className={cx("relative focus-ring-on-light", RHYTHM[rhythm], className)}
+      className={cx("relative ", RHYTHM[rhythm], className)}
     >
       <Container>{children}</Container>
     </section>

@@ -66,11 +66,11 @@ const SURFACE: Readonly<Record<"featured" | "standard", Surface>> = {
     popular" tag.
   */
   featured: {
-    card: "bg-brand text-on-dark focus-ring-on-dark",
+    card: "bg-accent text-text-inverse ",
     tone: "brand",
   },
   standard: {
-    card: "bg-surface-light text-ink focus-ring-on-light",
+    card: "bg-surface text-text ",
     tone: "light",
   },
 } as const;
@@ -100,7 +100,7 @@ export function PlanCard({
       className={cx(
         // 40 padding and 32 between blocks, both from the frame and both landing
         // on the top end of a fluid step.
-        "flex h-full flex-col gap-fluid-5 rounded-sm p-fluid-6",
+        "flex h-full flex-col gap-8 rounded-xs p-10",
         surface.card,
       )}
     >
@@ -124,8 +124,8 @@ export function PlanCard({
           is no primitive for a large non-heading figure. Worth extracting if a
           third caller appears.
         */}
-        <div className="flex items-baseline gap-fluid-1">
-          <p className="font-sans text-h3">{formatPrice(plan.price)}</p>
+        <div className="flex items-baseline gap-2">
+          <p className="font-sans type-h3">{formatPrice(plan.price)}</p>
 
           <Text role="body" as="span" isSecondary>
             {`/${labels.billingPeriod}`}
@@ -157,9 +157,9 @@ export function PlanCard({
             <strong>{labels.includedHeading}</strong>
           </Text>
 
-          <ul role="list" className="flex flex-col gap-fluid-3">
+          <ul role="list" className="flex flex-col gap-4">
             {plan.included.map((item) => (
-              <li key={item} className="flex items-start gap-fluid-2">
+              <li key={item} className="flex items-start gap-3">
                 {/*
                   The mark carries no colour of its own and inherits the
                   surface's text colour — which is what keeps it legible on the

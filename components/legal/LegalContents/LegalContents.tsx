@@ -26,22 +26,22 @@ export function LegalContents({ sections }: LegalContentsProps) {
   return (
     <nav
       aria-labelledby="legal-contents-heading"
-      className="flex flex-col gap-fluid-3 border-y border-border-hairline py-fluid-4"
+      className="flex flex-col gap-4 border-y border-border py-6"
     >
       <h2
         id="legal-contents-heading"
-        className="font-sans text-h6 text-secondary"
+        className="font-sans type-h3 opacity-80"
       >
         On this page
       </h2>
 
-      <ol className="grid gap-fluid-2 tablet:grid-cols-2">
+      <ol className="grid gap-3 md:grid-cols-2">
         {sections.map((section) => (
           <li key={section.id}>
             <a
               href={`#${section.id}`}
               data-underline
-              className="font-sans text-main text-brand focus-ring transition-standard hover:text-brand-hover"
+              className="font-sans type-p1 text-accent-text  transition duration-[var(--duration-fast)] ease-standard hover:text-accent-hover"
             >
               {section.heading}
             </a>

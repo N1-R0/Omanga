@@ -129,7 +129,7 @@ This document covers structure only. Section titles are working titles that stat
 ├── /terms-of-use, /privacy-policy, /policy-terms, /complaints-procedure, /cookie-policy   LAUNCH (URLs unchanged)
 └── 404
 
-Removed: /get-started → 301 to /
+Removed: /get-started → 301 to / (done 2026-10-26)
 ```
 
 ### Primary navigation

@@ -175,14 +175,14 @@ export function InsuranceInclusions({
                   alternative — `index === 4` — would silently leave the sixth
                   item spanning half a row it no longer ends.
 
-                  `max-tablet:` because two-up is the mobile layout only. At
+                  `` because two-up is the mobile layout only. At
                   tablet the grid is still two columns but reverts to `Grid`'s
                   own behaviour, and at desktop it is three, where five items
                   divide 3 + 2 and there is no orphan to span.
                 */
                 className={cx(
                   isFinalOrphan(index, content.inclusions.length) &&
-                    "max-tablet:col-span-2",
+                    "max-md:col-span-2",
                 )}
               >
                 <InclusionItem inclusion={inclusion} termLevel={TERM_LEVEL} />

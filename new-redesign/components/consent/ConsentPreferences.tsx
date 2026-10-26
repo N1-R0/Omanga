@@ -17,7 +17,6 @@ import { Button } from "@/new-redesign/components/ui/Button";
  * locked on), Save, Accept all and Reject all, Escape or the scrim to close,
  * focus returned on close.
  *
- * Radii are literal: it also renders on the old pages (styles/chrome.css).
  */
 export function ConsentPreferences() {
   const { isPreferencesOpen } = useConsent();

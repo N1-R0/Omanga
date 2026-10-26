@@ -49,9 +49,9 @@ import { cx } from "@/lib/cx";
  * result with one more declaration.
  */
 const BASE_CLASS =
-  "relative w-full px-fluid-5 py-fluid-5 text-left font-sans text-h5 hit-area focus-ring transition-standard desktop:flex-1";
+  "relative w-full px-8 py-8 text-left font-sans type-h3 min-h-11 min-w-11  transition duration-[var(--duration-fast)] ease-standard lg:flex-1";
 
-const DIVIDER_CLASS = "border-b border-border-subtle";
+const DIVIDER_CLASS = "border-b border-neutral-0/10";
 
 /**
  * Only the label's colour changes here. The fill is the indicator below, so the
@@ -61,11 +61,11 @@ const DIVIDER_CLASS = "border-b border-border-subtle";
  * `text-on-dark-muted` at rest is the same resting treatment `ProductTab` uses,
  * so an unselected tab reads the same on both pages.
  */
-const ACTIVE_LABEL_CLASS = "text-on-dark";
-const INACTIVE_LABEL_CLASS = "text-on-dark-muted hover:text-on-dark";
+const ACTIVE_LABEL_CLASS = "text-text-inverse";
+const INACTIVE_LABEL_CLASS = "text-text-inverse-secondary hover:text-text-inverse";
 
 /** Above the indicator, so the fill slides behind the word rather than over it. */
-const LABEL_CLASS = "relative z-raised";
+const LABEL_CLASS = "relative z-10";
 
 export type ImpactTabProps = {
   id: string;
@@ -118,7 +118,7 @@ export function ImpactTab({
             [CHANGED, 2026-10-18] No longer slides between rows (was a shared
             `layoutId`); site animations removed on the owner's request.
           */
-          className="absolute inset-0 bg-brand"
+          className="absolute inset-0 bg-accent"
         />
       )}
       <span className={LABEL_CLASS}>{label}</span>

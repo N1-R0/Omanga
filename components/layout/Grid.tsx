@@ -38,10 +38,10 @@ type Columns = 2 | 3 | 4 | 12;
  * get squeezed below a readable width at 768.
  */
 const COLUMNS_CLASS: Readonly<Record<Columns, string>> = {
-  2: "tablet:grid-cols-2",
-  3: "tablet:grid-cols-2 desktop:grid-cols-3",
-  4: "tablet:grid-cols-2 desktop:grid-cols-4",
-  12: "desktop:grid-cols-12",
+  2: "md:grid-cols-2",
+  3: "md:grid-cols-2 lg:grid-cols-3",
+  4: "md:grid-cols-2 lg:grid-cols-4",
+  12: "lg:grid-cols-12",
 } as const;
 
 /**

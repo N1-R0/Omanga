@@ -75,7 +75,7 @@ import { SupportBlock } from "./SupportBlock";
  * it needs no `order` anywhere.
  */
 const LAYOUT_CLASS =
-  "grid grid-cols-1 items-center gap-fluid-7 desktop:grid-cols-2 desktop:gap-fluid-8";
+  "grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16";
 
 export type ContactHeroProps = {
   content: ContactHeroContent;
@@ -103,7 +103,7 @@ export function ContactHero({
   return (
     <section
       aria-labelledby={headingId}
-      className="section-rhythm flex items-center bg-surface-page text-ink focus-ring-on-light tablet:min-h-hero-compact"
+      className="section-y flex items-center bg-bg text-text  md:min-h-[clamp(27rem,18.429rem+17.857vw,34.5rem)]"
     >
       <Container>
         <div className={LAYOUT_CLASS}>

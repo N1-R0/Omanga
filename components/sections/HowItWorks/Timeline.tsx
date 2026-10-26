@@ -52,10 +52,10 @@ export function Timeline({ steps }: TimelineProps) {
       rail spans exactly the list — from the first marker's row to the last — and
       the heading block above it is untouched.
     */
-    <div className="relative mx-auto max-w-timeline">
+    <div className="relative mx-auto max-w-[68.75rem]">
       <TimelineConnector />
 
-      <ol role="list" className="flex flex-col gap-fluid-7 desktop:gap-fluid-8">
+      <ol role="list" className="flex flex-col gap-12 lg:gap-16">
         {steps.map((step, index) => (
           <TimelineItem
             key={step.id}

@@ -57,16 +57,16 @@ import type { Tone } from "@/types/ui.types";
  */
 
 const TONE_LABEL_CLASS: Readonly<Record<Tone, string>> = {
-  light: "text-ink",
-  dark: "text-on-dark",
-  brand: "text-on-dark",
+  light: "text-text",
+  dark: "text-text-inverse",
+  brand: "text-text-inverse",
 } as const;
 
 /** Measured in `Field`: ink is 18.1:1 on the page, white 6.70:1 on brand. */
 const TONE_MESSAGE_CLASS: Readonly<Record<Tone, string>> = {
-  light: "text-ink",
-  dark: "text-on-dark",
-  brand: "text-on-dark",
+  light: "text-text",
+  dark: "text-text-inverse",
+  brand: "text-text-inverse",
 } as const;
 
 /**
@@ -78,7 +78,7 @@ const TONE_MESSAGE_CLASS: Readonly<Record<Tone, string>> = {
  * and forced-colours support all come for free, and a custom-drawn radio would
  * mean reimplementing all three.
  */
-const RADIO_CLASS = "size-5 shrink-0 cursor-pointer accent-brand focus-ring";
+const RADIO_CLASS = "size-5 shrink-0 cursor-pointer accent-accent ";
 
 export type RadioOption = {
   readonly value: string;
@@ -151,7 +151,7 @@ export function RadioGroup({
       */
       tabIndex={-1}
       disabled={isDisabled}
-      className="m-0 flex min-w-0 flex-col gap-fluid-1 border-0 p-0 focus-ring"
+      className="m-0 flex min-w-0 flex-col gap-2 border-0 p-0 "
     >
       {/*
         `legend` rather than a styled `div` with `aria-labelledby`. It is the only
@@ -160,13 +160,13 @@ export function RadioGroup({
       */}
       <legend
         id={legendId}
-        className={cx("font-sans text-small", TONE_LABEL_CLASS[tone])}
+        className={cx("font-sans type-p2", TONE_LABEL_CLASS[tone])}
       >
-        {label} <span className="text-secondary">({requirementNote})</span>
+        {label} <span className="opacity-80">({requirementNote})</span>
       </legend>
 
       {description !== undefined && (
-        <p id={descriptionId} className="font-sans text-small text-secondary">
+        <p id={descriptionId} className="font-sans type-p2 opacity-80">
           {description}
         </p>
       )}
@@ -174,10 +174,10 @@ export function RadioGroup({
       {/*
         A row that wraps. Three short labels sit on one line at any sensible
         width, and wrapping rather than stacking keeps the group reading as one
-        question. `gap-fluid-4` between options and `gap-fluid-2` inside each
+        question. `gap-6` between options and `gap-3` inside each
         pairing is the system's "adjacent controls" and "icon to label" pair.
       */}
-      <div className="flex flex-wrap gap-fluid-4 pt-fluid-1">
+      <div className="flex flex-wrap gap-6 pt-2">
         {options.map((option) => {
           const optionId = `${id}-${option.value}`;
 
@@ -186,7 +186,7 @@ export function RadioGroup({
               key={option.value}
               htmlFor={optionId}
               className={cx(
-                "flex cursor-pointer items-center gap-fluid-2 font-sans text-small",
+                "flex cursor-pointer items-center gap-3 font-sans type-p2",
                 TONE_LABEL_CLASS[tone],
               )}
             >
@@ -218,7 +218,7 @@ export function RadioGroup({
         <p
           id={errorId}
           role="alert"
-          className={cx("font-sans text-small", TONE_MESSAGE_CLASS[tone])}
+          className={cx("font-sans type-p2", TONE_MESSAGE_CLASS[tone])}
         >
           {error}
         </p>

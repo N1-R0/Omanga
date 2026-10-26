@@ -39,7 +39,7 @@
  * `isRoutePending`, and this page's § 6 is now a real destination for it.
  *
  * § 1 also specifies `USD ▾` and `Log in` beside an `Open Free Account` header
- * CTA. Not applied: the primary stays `Get Started` → `/get-started`, and the
+ * CTA. Not applied: the primary stays the site's single primary CTA, and the
  * currency indicator and account link remain the two open content blockers
  * recorded in `navigation.content.ts`.
  */

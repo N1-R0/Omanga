@@ -76,9 +76,9 @@ export type FieldProps = {
  * `--color-brand` is 6.70:1. Both clear AA for text.
  */
 const TONE_MESSAGE_CLASS: Readonly<Record<Tone, string>> = {
-  light: "text-ink",
-  dark: "text-on-dark",
-  brand: "text-on-dark",
+  light: "text-text",
+  dark: "text-text-inverse",
+  brand: "text-text-inverse",
 } as const;
 
 export function Field({
@@ -93,14 +93,14 @@ export function Field({
   const { descriptionId, errorId } = fieldIds(id);
 
   return (
-    <div className="flex flex-col gap-fluid-1">
-      <label htmlFor={id} className="font-sans text-small">
+    <div className="flex flex-col gap-2">
+      <label htmlFor={id} className="font-sans type-p2">
         {label}{" "}
-        <span className="text-secondary">({requirementNote})</span>
+        <span className="opacity-80">({requirementNote})</span>
       </label>
 
       {description !== undefined && (
-        <p id={descriptionId} className="font-sans text-small text-secondary">
+        <p id={descriptionId} className="font-sans type-p2 opacity-80">
           {description}
         </p>
       )}
@@ -121,7 +121,7 @@ export function Field({
         <p
           id={errorId}
           role="alert"
-          className={cx("font-sans text-small", TONE_MESSAGE_CLASS[tone])}
+          className={cx("font-sans type-p2", TONE_MESSAGE_CLASS[tone])}
         >
           {error}
         </p>

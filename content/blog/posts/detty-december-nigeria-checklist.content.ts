@@ -229,9 +229,9 @@ export const dettyDecemberChecklistPost: BlogPost = {
     ],
   },
   cta: {
-    // [CHANGED, 2026-10-14] UX copy pass: says what happens on /get-started.
+    // [CHANGED, 2026-10-26] /get-started is gone; home shows both products.
     label: "Choose what to set up",
-    href: "/get-started",
+    href: "/",
     // [CHANGED, 2026-10-14] UX copy pass: "in one Omanga account" not confirmed.
     prompt: ["A wallet for your spending and health cover for your time in Nigeria."],
   },

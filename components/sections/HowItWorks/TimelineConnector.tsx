@@ -64,10 +64,10 @@ import { cx } from "@/lib/cx";
  * utility for why it is `clip-path` and not `overflow: hidden`.
  */
 const RAIL_CLASS =
-  "clip-rail pointer-events-none absolute inset-y-0 left-0 flex w-rail flex-col items-center desktop:left-1/2 desktop:-translate-x-1/2";
+  "[clip-path:inset(0)] pointer-events-none absolute inset-y-0 left-0 flex w-8 flex-col items-center lg:left-1/2 lg:-translate-x-1/2";
 
 // `w-0.75` is 3px from the 4px spacing base, not an arbitrary value.
-const BASE_CLASS = "h-full w-0.75 bg-surface-light";
+const BASE_CLASS = "h-full w-0.75 bg-surface";
 
 /**
  * The fill. Brand over the rail's own #F6F6F6, which is the benchmark's
@@ -85,9 +85,9 @@ const BASE_CLASS = "h-full w-0.75 bg-surface-light";
  * stops a 1px seam of unfaded rail showing at fractional device pixel ratios.
  */
 const FADE_CLASS = "absolute h-16 w-1";
-const FADE_TOP_CLASS = "top-0 bg-linear-to-b from-surface-page to-transparent";
+const FADE_TOP_CLASS = "top-0 bg-linear-to-b from-bg to-transparent";
 const FADE_BOTTOM_CLASS =
-  "bottom-0 bg-linear-to-t from-surface-page to-transparent";
+  "bottom-0 bg-linear-to-t from-bg to-transparent";
 
 export function TimelineConnector() {
   return (

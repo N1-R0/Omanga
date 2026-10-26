@@ -56,19 +56,19 @@ import type { Tone } from "@/types/ui.types";
  * mean reimplementing focus, indeterminate state and forced-colours support.
  */
 const BOX_CLASS =
-  "mt-0.5 size-5 shrink-0 cursor-pointer accent-brand focus-ring";
+  "mt-0.5 size-5 shrink-0 cursor-pointer accent-accent ";
 
 const TONE_BOX_CLASS: Readonly<Record<Tone, string>> = {
-  light: "text-ink",
-  dark: "text-on-dark",
-  brand: "text-on-dark",
+  light: "text-text",
+  dark: "text-text-inverse",
+  brand: "text-text-inverse",
 } as const;
 
 /** Measured in `Field`: ink is 18.1:1 on the page, white 6.70:1 on brand. */
 const TONE_MESSAGE_CLASS: Readonly<Record<Tone, string>> = {
-  light: "text-ink",
-  dark: "text-on-dark",
-  brand: "text-on-dark",
+  light: "text-text",
+  dark: "text-text-inverse",
+  brand: "text-text-inverse",
 } as const;
 
 export type CheckboxProps = {
@@ -114,7 +114,7 @@ export function Checkbox({
   const hasError = error !== undefined;
 
   return (
-    <div className="flex flex-col gap-fluid-1">
+    <div className="flex flex-col gap-2">
       {/*
         The label wraps the row, so the box and the sentence are one target and
         `htmlFor` is not needed — a wrapping label is associated implicitly, and
@@ -123,7 +123,7 @@ export function Checkbox({
       <label
         htmlFor={id}
         className={cx(
-          "flex cursor-pointer items-start gap-fluid-2 font-sans text-small",
+          "flex cursor-pointer items-start gap-3 font-sans type-p2",
           TONE_BOX_CLASS[tone],
         )}
       >
@@ -151,10 +151,10 @@ export function Checkbox({
         visitor is agreeing to — a `(required)` inside a consent statement changes
         what the statement appears to say.
       */}
-      <p className="font-sans text-small text-secondary">({requirementNote})</p>
+      <p className="font-sans type-p2 opacity-80">({requirementNote})</p>
 
       {description !== undefined && (
-        <p id={descriptionId} className="font-sans text-small text-secondary">
+        <p id={descriptionId} className="font-sans type-p2 opacity-80">
           {description}
         </p>
       )}
@@ -169,7 +169,7 @@ export function Checkbox({
         <p
           id={errorId}
           role="alert"
-          className={cx("font-sans text-small", TONE_MESSAGE_CLASS[tone])}
+          className={cx("font-sans type-p2", TONE_MESSAGE_CLASS[tone])}
         >
           {error}
         </p>

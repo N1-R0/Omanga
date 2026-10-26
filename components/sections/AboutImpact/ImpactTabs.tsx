@@ -73,13 +73,13 @@ import { ImpactTab } from "./ImpactTab";
  * panel and each row is sized by its own padding instead.
  */
 const TAB_LIST_CLASS =
-  "flex flex-col border-b border-border-subtle desktop:col-span-4 desktop:h-full desktop:border-b-0";
+  "flex flex-col border-b border-neutral-0/10 lg:col-span-4 lg:h-full lg:border-b-0";
 
 const PANEL_COLUMN_CLASS =
-  "p-fluid-6 desktop:col-span-8 desktop:border-l desktop:border-border-subtle";
+  "p-10 lg:col-span-8 lg:border-l lg:border-neutral-0/10";
 
 const CONTAINER_CLASS =
-  "grid grid-cols-1 overflow-hidden rounded-sm bg-ink-elevated desktop:grid-cols-12";
+  "grid grid-cols-1 overflow-hidden rounded-xs bg-neutral-900 lg:grid-cols-12";
 
 /** All three panels occupy the same cell, so the box is as tall as the tallest. */
 const PANEL_STACK_CLASS = "grid";

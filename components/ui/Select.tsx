@@ -34,14 +34,14 @@ import type { Tone } from "@/types/ui.types";
  */
 
 const BASE_CONTROL_CLASS =
-  "min-h-12 w-full font-sans text-main focus-ring transition-standard";
+  "min-h-12 w-full font-sans type-p1  transition duration-[var(--duration-fast)] ease-standard";
 
 const TONE_CONTROL_CLASS: Readonly<Record<Tone, string>> = {
   light:
-    "rounded-sm border border-border-field bg-surface-light px-fluid-3 py-fluid-2 text-ink disabled:bg-inactive-surface disabled:text-disabled-ink",
-  dark: "border-b border-on-dark bg-ink py-fluid-2 text-on-dark disabled:text-disabled-ink",
+    "rounded-xs border border-border-strong bg-surface px-4 py-3 text-text disabled:bg-surface-muted disabled:text-neutral-400",
+  dark: "border-b border-text-inverse bg-surface-inverse py-3 text-text-inverse disabled:text-neutral-400",
   brand:
-    "border-b border-on-dark bg-brand py-fluid-2 text-on-dark disabled:text-disabled-ink",
+    "border-b border-text-inverse bg-accent py-3 text-text-inverse disabled:text-neutral-400",
 } as const;
 
 export type SelectOption = {

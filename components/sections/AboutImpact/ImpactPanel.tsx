@@ -25,9 +25,9 @@ import type { ImpactPillar } from "@/content/about-impact.content";
  */
 
 const LAYOUT_CLASS =
-  "grid grid-cols-1 items-center gap-fluid-6 desktop:grid-cols-12";
-const MEDIA_CELL_CLASS = "desktop:col-span-4";
-const COPY_CELL_CLASS = "desktop:col-start-6 desktop:col-span-7";
+  "grid grid-cols-1 items-center gap-10 lg:grid-cols-12";
+const MEDIA_CELL_CLASS = "lg:col-span-4";
+const COPY_CELL_CLASS = "lg:col-start-6 lg:col-span-7";
 
 /**
  * Four of twelve columns inside a panel that is eight of twelve of a container
@@ -76,7 +76,7 @@ export function ImpactPanel({ pillar }: ImpactPanelProps) {
           {pillar.heading}
         </Heading>
 
-        <div className="pt-fluid-5">
+        <div className="pt-8">
           {/*
             `measure="feature"` (45ch) — the documented cap for copy inside a
             column. § 6's statements are 15 to 19 words, so it engages only on the

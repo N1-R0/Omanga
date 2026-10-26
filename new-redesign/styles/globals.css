@@ -1,14 +1,16 @@
 /* =============================================================================
    Omanga new redesign — Global stylesheet
    -----------------------------------------------------------------------------
-   Imported only by app/(new-redesign)/layout.tsx. The live site's stylesheet
-   (styles/globals.css) never sees these files, and this one never scans the
-   live site's components, so neither design system can leak into the other.
+   The site's only stylesheet (the old design system was deleted 2026-10-26).
+   It scans the pages, this folder and the older shared components in
+   components/, which were moved onto these tokens.
    ========================================================================== */
 
 @import "tailwindcss" source(none);
 @source "..";
 @source "../../app/(new-redesign)";
+@source "../../app/not-found.tsx";
+@source "../../components";
 
 @import "./tokens.css";
 @import "./typography.css";
@@ -24,6 +26,9 @@
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
     scroll-behavior: smooth;
+    /* `clip`, not `hidden`: stops a stray wide child widening the page
+       without creating a scroll container, so sticky elements still work. */
+    overflow-x: clip;
   }
 
   @media (prefers-reduced-motion: reduce) {

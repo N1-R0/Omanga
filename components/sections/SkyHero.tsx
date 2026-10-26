@@ -63,7 +63,7 @@ export function SkyHero({
   return (
     <section
       aria-labelledby={headingId}
-      className="focus-ring-on-dark relative isolate -mt-header flex min-h-[42rem] pt-header overflow-hidden text-on-dark desktop:min-h-[clamp(32rem,72svh,46rem)] desktop:items-center"
+      className="relative isolate flex min-h-[42rem] overflow-hidden text-text-inverse lg:min-h-[clamp(32rem,72svh,46rem)] lg:items-center"
     >
       {/*
             Sky sampled from the photo's left edge (top #3a6d98, bottom
@@ -79,7 +79,7 @@ export function SkyHero({
             left-aligned copy (cover-cropping the whole card cannot move her:
             the photo already spans the card's width).
           */}
-      <div className="absolute inset-x-0 top-[50%] bottom-0 -z-20 [mask-image:linear-gradient(to_bottom,transparent,black_12%)] desktop:inset-y-0 desktop:top-0 desktop:left-auto desktop:w-[50%] desktop:[mask-image:linear-gradient(to_right,transparent,black_22%)]">
+      <div className="absolute inset-x-0 top-[50%] bottom-0 -z-20 [mask-image:linear-gradient(to_bottom,transparent,black_12%)] lg:inset-y-0 lg:top-0 lg:left-auto lg:w-[50%] lg:[mask-image:linear-gradient(to_right,transparent,black_22%)]">
         <Image
           src={image.src}
           alt={image.alt}
@@ -95,27 +95,27 @@ export function SkyHero({
       {/* Keeps white type readable on the sky without dulling the subject. */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-gradient-to-b from-black/25 to-transparent to-50% desktop:bg-gradient-to-r desktop:from-black/20 desktop:to-40%"
+        className="absolute inset-0 -z-10 bg-gradient-to-b from-neutral-950/25 to-transparent to-50% lg:bg-gradient-to-r lg:from-neutral-950/20 lg:to-40%"
       />
 
       <Container>
         <div
           className={cx(
-            "grid gap-fluid-6 py-fluid-8",
+            "grid gap-10 py-16",
             aside !== undefined &&
-              "desktop:grid-cols-[minmax(0,1fr)_minmax(0,27rem)] desktop:items-center desktop:gap-fluid-8",
+              "lg:grid-cols-[minmax(0,1fr)_minmax(0,27rem)] lg:items-center lg:gap-16",
           )}
         >
           <div
             className={cx(
-              "flex flex-col gap-fluid-4",
-              aside === undefined && "desktop:max-w-[54%]",
+              "flex flex-col gap-6",
+              aside === undefined && "lg:max-w-[54%]",
             )}
           >
             <h1
               id={headingId}
               className={cx(
-                "max-w-[17ch] font-heading leading-[0.98] font-semibold tracking-[-0.03em] text-balance",
+                "max-w-[17ch]  leading-[0.98] font-semibold tracking-[-0.03em] text-balance",
                 /* A narrower column beside the panel, so the h1 steps down. */
                 aside === undefined
                   ? "text-[clamp(2.75rem,1.9rem+3.6vw,5.25rem)]"
@@ -124,10 +124,10 @@ export function SkyHero({
             >
               {heading}
             </h1>
-            <p className="max-w-[34ch] font-sans text-main text-on-dark/90">
+            <p className="max-w-[34ch] font-sans type-p1 text-text-inverse/90">
               {intro}
             </p>
-            <div className="flex flex-wrap gap-fluid-2 pt-fluid-1">
+            <div className="flex flex-wrap gap-3 pt-2">
               {actions.map((action) => (
                 <Button
                   key={action.label}
@@ -144,11 +144,11 @@ export function SkyHero({
               ))}
             </div>
             {helper ? (
-              <p className="font-sans text-small text-on-dark/80">{helper}</p>
+              <p className="font-sans type-p2 text-text-inverse/80">{helper}</p>
             ) : null}
           </div>
           {aside !== undefined ? (
-            <div className="text-ink desktop:justify-self-end desktop:w-full">
+            <div className="text-text lg:justify-self-end lg:w-full">
               {aside}
             </div>
           ) : null}

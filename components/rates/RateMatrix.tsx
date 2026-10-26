@@ -42,17 +42,17 @@ export function RateMatrix({
   caption: string;
 }) {
   return (
-    <div className="overflow-x-auto rounded-[1.5rem] bg-surface-page">
+    <div className="overflow-x-auto rounded-[1.5rem] bg-bg">
       <table className="w-full min-w-[34rem] text-left">
         <caption className="sr-only">{caption}</caption>
         <thead>
-          <tr className="border-b border-border-hairline">
-            <td className="p-fluid-4" />
+          <tr className="border-b border-border">
+            <td className="p-6" />
             {CODES.map((code) => (
               <th
                 key={code}
                 scope="col"
-                className="p-fluid-4 font-sans text-small font-semibold"
+                className="p-6 font-sans type-p2 font-semibold"
               >
                 <span className="inline-flex items-center gap-2">
                   <Flag code={code} />
@@ -62,27 +62,27 @@ export function RateMatrix({
             ))}
           </tr>
         </thead>
-        <tbody className="font-sans text-main tabular-nums">
+        <tbody className="font-sans type-p1 tabular-nums">
           {CODES.map((from) => {
             const pair = RATE_PAIRS.find((p) => p.code === from);
             return (
               <tr
                 key={from}
                 className={cx(
-                  "border-b border-border-hairline last:border-b-0",
-                  from === current && "bg-surface-light",
+                  "border-b border-border last:border-b-0",
+                  from === current && "bg-surface",
                 )}
               >
                 <th
                   scope="row"
-                  className="p-fluid-4 font-sans text-small font-semibold whitespace-nowrap"
+                  className="p-6 font-sans type-p2 font-semibold whitespace-nowrap"
                 >
                   <span className="inline-flex items-center gap-2">
                     <Flag code={from} />
                     {pair ? (
                       <Link
                         href={`/rates/${pair.slug}`}
-                        className="underline underline-offset-4 hover:text-secondary focus-ring"
+                        className="underline underline-offset-4 hover:opacity-80 "
                       >
                         1 {from}
                       </Link>
@@ -95,7 +95,7 @@ export function RateMatrix({
                   <td
                     key={to}
                     className={cx(
-                      "p-fluid-4",
+                      "p-6",
                       to === "NGN" && from !== "NGN" && "font-semibold",
                     )}
                   >
@@ -118,7 +118,7 @@ function Flag({ code }: { code: MatrixCurrency }) {
       alt=""
       width={20}
       height={20}
-      className="size-5 rounded-pill object-cover"
+      className="size-5 rounded-full object-cover"
     />
   );
 }

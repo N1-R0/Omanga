@@ -1,6 +1,4 @@
 import { BRAND_COLOR, INK_COLOR, SITE_NAME } from "@/config/site";
-import { getStartedEnquiryContent } from "@/content/get-started-enquiry.content";
-import type { EnquirySubmission } from "@/lib/enquiry";
 
 /**
  * The enquiry notification email — subject, plain-text body and HTML body.
@@ -50,19 +48,6 @@ const FONT_STACK =
 const NOT_PROVIDED = "Not provided";
 
 /**
- * [GENERALISED] This module rendered exactly one form's email. The Contact page's
- * `Talk to us` form needs the same shell with different rows, and duplicating a
- * table-layout HTML email is how two templates end up differing in a client
- * nobody tests in.
- *
- * So the shell, the escaping, the row renderers and the preview-text trick are
- * shared, and each form supplies a `title`, its rows and a source label.
- * `composeEnquiryEmail` keeps its exact previous behaviour and output — it is now
- * a thin caller of `composeFormEmail` — so the Get Started form is untouched.
- */
-const GET_STARTED_TITLE = "New Get Started Enquiry";
-
-/**
  * Escapes a submitted value for interpolation into markup.
  *
  * The security control of this module, and new with the HTML body: the plain
@@ -83,21 +68,6 @@ function escapeHtml(value: string): string {
     .replace(/'/g, "&#39;");
 }
 
-/**
- * The label for a submitted `needs` value, resolved through the same option list
- * the dropdown renders — so the email reads "Not sure yet" rather than
- * `not-sure`, and the two cannot drift apart. An unrecognised value falls back
- * to itself: it is sanitised and capped, so printing it is safe, and seeing the
- * raw value tells whoever reads the enquiry more than a blank would.
- */
-function needsLabel(value: string): string {
-  return (
-    getStartedEnquiryContent.needsOptions.find(
-      (option) => option.value === value,
-    )?.label ?? value
-  );
-}
-
 export type Row = {
   readonly label: string;
   readonly value: string;
@@ -116,24 +86,6 @@ export type Row = {
    */
   readonly isMultiline?: boolean;
 };
-
-function rowsFor(submission: EnquirySubmission): readonly Row[] {
-  return [
-    { label: "Name", value: submission.name, isOptional: false },
-    {
-      label: "Email",
-      value: submission.email,
-      isOptional: false,
-      href: `mailto:${submission.email}`,
-    },
-    { label: "Destination", value: submission.destination, isOptional: true },
-    {
-      label: "What they need",
-      value: submission.needs === "" ? "" : needsLabel(submission.needs),
-      isOptional: true,
-    },
-  ];
-}
 
 function renderTextRow({ label, value, isOptional }: Row): string {
   const suffix = isOptional ? " (optional)" : "";
@@ -281,21 +233,4 @@ export function composeFormEmail(email: FormEmail): EnquiryEmail {
     text: renderText(email),
     html: renderHtml(email),
   };
-}
-
-/**
- * The Get Started form's email. Behaviour and output are unchanged — this is the
- * same subject, the same rows and the same shell it produced before the shell
- * was shared.
- */
-export function composeEnquiryEmail(
-  submission: EnquirySubmission,
-): EnquiryEmail {
-  return composeFormEmail({
-    title: GET_STARTED_TITLE,
-    rows: rowsFor(submission),
-    replyName: submission.name,
-    previewValue: submission.destination,
-    sourceLabel: "Get Started form",
-  });
 }

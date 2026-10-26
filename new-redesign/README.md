@@ -1,9 +1,11 @@
 # New design
 
-Live since 2026-10-26 for home (`/`), Payments (`/payments`) and Insurance
-(`/insurance`). Every other page is still the old design in `app/(redesign)`,
-wearing this design's header, footer and cookie banner. Pages are rebuilt one
-at a time and replace their old version.
+The site's only design system since 2026-10-26. Home (`/`), Payments
+(`/payments`) and Insurance (`/insurance`) are built in it. The other pages
+(about, plans, safety, contact, blog, rates, legal) sit in
+`app/(new-redesign)/(not-rebuilt)`: their sections were moved onto these
+tokens and they share the new FAQ and closing panel, but their own sections
+still need redesigning, one page at a time.
 
 ## Where things are
 
@@ -14,7 +16,10 @@ at a time and replace their old version.
 | `app/not-found.tsx` | The 404, in this design |
 | `new-redesign/config/routes.ts` | `href()`: every internal link goes through it; `LIVE_PATHS` sends pages not yet rebuilt to their old URLs |
 | `new-redesign/config/fonts.ts` | Host Grotesk 400/500 via `next/font/google` (self-hosted at build) |
-| `new-redesign/styles/` | `tokens.css`, `typography.css` (`type-h1`…`type-p3`), `utilities.css` (`container-page`, `section-y`, `section-head`, `glass`), `animations.css`; `chrome.css` styles the header and footer on the old pages |
+| `new-redesign/styles/` | `tokens.css`, `typography.css` (`type-h1`…`type-p3`), `utilities.css` (`container-page`, `section-y`, `section-head`, `glass`), `animations.css` |
+| `app/(new-redesign)/(not-rebuilt)/` | Pages not yet redesigned; its layout starts them below the header |
+| `components/`, `content/` | The older pages' sections and copy, on the new tokens |
+| `new-redesign/content/old-pages.content.ts` | Those pages' FAQ sub lines and the Plans closing panel |
 | `new-redesign/components/ui/` | Primitives: `Button`, `Card`, `Section`, `SectionHead`, `FaqSection`, `ProofStrip`, `CtaPanel`, `CurrencyPicker` |
 | `new-redesign/components/layout/`, `consent/` | Header, footer, cookie banner and preferences |
 | `new-redesign/components/sections/` | One component per section |
@@ -31,15 +36,11 @@ References: `design-lab/design-system.html` (tokens and components) and
 - Buttons are pills; cards have a 16px radius, photos inside them 12px.
 - Every mini visual over a photo or texture sits in `glass`.
 - Copy lives in `content/`, not in components.
-- The header, footer and consent components also render on the old pages, so
-  they use literal radii, not the radius tokens (see `styles/chrome.css`).
 
-## Rebuilding an old page
+## Rebuilding a page in `(not-rebuilt)`
 
 1. Build it in `app/(new-redesign)` at its sitemap-v2 path, with metadata from
    `lib/seo.ts` and structured data from `lib/schema.ts`.
-2. Delete the old page in `app/(redesign)` and anything only it used.
+2. Delete the old page and the `components/` and `content/` files only it used.
 3. If the URL changes, delete its line in `LIVE_PATHS` and add a 301 from the
    old URL in `next.config.ts`; update `config/routes.ts` for the sitemap.
-4. With the last old page gone, delete `app/(redesign)`, `styles/`,
-   `new-redesign/styles/chrome.css` and the old `components/` and `content/`.

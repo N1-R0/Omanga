@@ -47,8 +47,8 @@ function PostCard({ post, readLabel, titleLevel: Title, isFeatured }: CardProps)
   return (
     <article
       className={cx(
-        "group relative flex h-full w-full flex-col overflow-hidden rounded-sm bg-surface-light",
-        isFeatured && "tablet:grid tablet:grid-cols-2",
+        "group relative flex h-full w-full flex-col overflow-hidden rounded-xs bg-surface",
+        isFeatured && "md:grid md:grid-cols-2",
       )}
     >
       {/*
@@ -56,12 +56,12 @@ function PostCard({ post, readLabel, titleLevel: Title, isFeatured }: CardProps)
         text column's height instead of holding 4:3, which left a gap under it.
         The image is taken out of flow so it cannot set the row height itself.
       */}
-      <div className={cx("overflow-hidden", isFeatured && "tablet:h-full")}>
+      <div className={cx("overflow-hidden", isFeatured && "md:h-full")}>
         <div
           className={cx(
-            "transition-standard group-hover:scale-[1.03]",
+            "transition duration-[var(--duration-fast)] ease-standard group-hover:scale-[1.03]",
             isFeatured &&
-              "tablet:h-full tablet:[&>div]:aspect-auto tablet:[&>div]:h-full tablet:[&_img]:absolute tablet:[&_img]:inset-0",
+              "md:h-full md:[&>div]:aspect-auto md:[&>div]:h-full md:[&_img]:absolute md:[&_img]:inset-0",
           )}
         >
           <Media
@@ -76,35 +76,35 @@ function PostCard({ post, readLabel, titleLevel: Title, isFeatured }: CardProps)
 
       <div
         className={cx(
-          "flex flex-1 flex-col gap-fluid-3 p-fluid-4",
-          isFeatured && "tablet:justify-center tablet:p-fluid-6",
+          "flex flex-1 flex-col gap-4 p-6",
+          isFeatured && "md:justify-center md:p-10",
         )}
       >
         {/* [CHANGED, 2026-10-14] UX copy pass: category shown with the site's nouns. */}
-        <p className="font-sans text-small text-brand">
+        <p className="font-sans type-p2 text-accent-text">
           {BLOG_CATEGORY_LABELS[post.category]} · {post.readingMinutes} min read
         </p>
 
-        <Title className={cx("font-sans", isFeatured ? "text-h3" : "text-h5")}>
+        <Title className={cx("font-sans", isFeatured ? "type-h3" : "type-h3")}>
           <Link
             href={`/blog/${post.slug}`}
-            className="focus-ring after:absolute after:inset-0"
+            className=" after:absolute after:inset-0"
           >
             {post.title}
           </Link>
         </Title>
 
-        <p className="font-sans text-main text-secondary">{post.summary}</p>
+        <p className="font-sans type-p1 opacity-80">{post.summary}</p>
 
         {/*
-          `text-secondary` sits on the date only: it fades by opacity, so on the
+          `opacity-80` sits on the date only: it fades by opacity, so on the
           row it also faded the brand-coloured label below 4.5:1 (Lighthouse).
         */}
-        <p className="mt-auto flex items-center justify-between gap-fluid-3 pt-fluid-2 font-sans text-small">
-          <time dateTime={post.publishedDate} className="text-secondary">
+        <p className="mt-auto flex items-center justify-between gap-4 pt-3 font-sans type-p2">
+          <time dateTime={post.publishedDate} className="opacity-80">
             {new Date(post.publishedDate).toLocaleDateString("en-GB", DATE_FORMAT)}
           </time>
-          <span aria-hidden="true" className="text-brand">
+          <span aria-hidden="true" className="text-accent-text">
             {readLabel} →
           </span>
         </p>
@@ -123,7 +123,7 @@ export function BlogPostList({
   const grid = isFeatured ? rest : posts;
 
   return (
-    <div className="flex flex-col gap-fluid-5">
+    <div className="flex flex-col gap-8">
       {isFeatured && featured !== undefined && (
         <PostCard
           post={featured}
@@ -134,7 +134,7 @@ export function BlogPostList({
       )}
 
       {grid.length > 0 && (
-        <ul className="grid gap-fluid-5 tablet:grid-cols-2 desktop:grid-cols-3">
+        <ul className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {grid.map((post) => (
             <li key={post.slug} className="flex">
               <PostCard

@@ -64,14 +64,14 @@ type InputType = "text" | "email" | "tel" | "url";
  * measurement.
  */
 const BASE_CONTROL_CLASS =
-  "min-h-12 w-full font-sans text-main focus-ring transition-standard placeholder:text-secondary";
+  "min-h-12 w-full font-sans type-p1  transition duration-[var(--duration-fast)] ease-standard placeholder:text-text-secondary";
 
 const TONE_CONTROL_CLASS: Readonly<Record<Tone, string>> = {
   light:
-    "rounded-sm border bg-surface-light px-fluid-3 py-fluid-2 text-ink disabled:bg-inactive-surface disabled:text-disabled-ink",
-  dark: "border-b bg-transparent py-fluid-2 text-on-dark disabled:text-disabled-ink",
+    "rounded-xs border bg-surface px-4 py-3 text-text disabled:bg-surface-muted disabled:text-neutral-400",
+  dark: "border-b bg-transparent py-3 text-text-inverse disabled:text-neutral-400",
   brand:
-    "border-b bg-transparent py-fluid-2 text-on-dark disabled:text-disabled-ink",
+    "border-b bg-transparent py-3 text-text-inverse disabled:text-neutral-400",
 } as const;
 
 /**
@@ -82,9 +82,9 @@ const TONE_CONTROL_CLASS: Readonly<Record<Tone, string>> = {
 const TONE_BORDER_CLASS: Readonly<
   Record<Tone, { readonly resting: string; readonly error: string }>
 > = {
-  light: { resting: "border-border-field", error: "border-error" },
-  dark: { resting: "border-on-dark", error: "border-on-dark" },
-  brand: { resting: "border-on-dark", error: "border-on-dark" },
+  light: { resting: "border-border-strong", error: "border-error-text" },
+  dark: { resting: "border-text-inverse", error: "border-text-inverse" },
+  brand: { resting: "border-text-inverse", error: "border-text-inverse" },
 } as const;
 
 export type InputProps = {

@@ -57,12 +57,12 @@ export function PlanSwitcher({ rows, plans, label }: PlanSwitcherProps) {
   return (
     <div>
       {/* Pinned while the card is read; the page fill keeps rows from showing through. */}
-      <div className="sticky top-0 z-raised bg-surface-page py-3">
+      <div className="sticky top-0 z-10 bg-bg py-3">
         <div
           role="tablist"
           aria-label={label}
           onKeyDown={onKeyDown}
-          className="grid grid-cols-3 rounded-pill bg-surface-light p-1 ring-1 ring-border-hairline"
+          className="grid grid-cols-3 rounded-full bg-surface p-1 ring-1 ring-border"
         >
           {plans.map((item, index) => {
             const selected = index === active;
@@ -77,8 +77,8 @@ export function PlanSwitcher({ rows, plans, label }: PlanSwitcherProps) {
                 tabIndex={selected ? 0 : -1}
                 onClick={() => setActive(index)}
                 className={cx(
-                  "hit-area rounded-pill py-2.5 font-sans text-small font-semibold transition-standard focus-ring",
-                  selected ? "bg-surface-page text-ink shadow-[0_1px_4px_rgb(0_0_0/0.12)]" : "text-secondary",
+                  "min-h-11 min-w-11 rounded-full py-2.5 font-sans type-p2 font-semibold transition duration-[var(--duration-fast)] ease-standard ",
+                  selected ? "bg-bg text-text shadow-[0_1px_4px_rgb(0_0_0/0.12)]" : "opacity-80",
                 )}
               >
                 {item.name}
@@ -95,13 +95,13 @@ export function PlanSwitcher({ rows, plans, label }: PlanSwitcherProps) {
         className="mt-2"
       >
         <p className="flex items-baseline gap-2 font-sans">
-          <span className="font-heading text-[2.25rem] font-extrabold leading-none tracking-[-0.03em]">
+          <span className=" text-[2.25rem] font-extrabold leading-none tracking-[-0.03em]">
             {priceRow?.[key]}
           </span>
-          <span className="text-small text-secondary">a month · {plan.name}</span>
+          <span className="type-p2 opacity-80">a month · {plan.name}</span>
         </p>
 
-        <dl className="mt-4 overflow-hidden rounded-[1rem] border border-border-hairline">
+        <dl className="mt-4 overflow-hidden rounded-[1rem] border border-border">
           {benefitRows.map((row, index) => {
             const value = row[key];
             return (
@@ -109,24 +109,24 @@ export function PlanSwitcher({ rows, plans, label }: PlanSwitcherProps) {
                 key={row.label}
                 className={cx(
                   "flex items-start justify-between gap-4 px-4 py-3.5",
-                  index > 0 && "border-t border-border-hairline",
+                  index > 0 && "border-t border-border",
                 )}
               >
-                <dt className="font-sans text-small text-secondary">{row.label}</dt>
-                <dd className="text-right font-sans text-small font-semibold">
+                <dt className="font-sans type-p2 opacity-80">{row.label}</dt>
+                <dd className="text-right font-sans type-p2 font-semibold">
                   {value === undefined ? (
                     <>
                       {/*
                         A blank cell in the table, shown the same way: the data
                         does not say "not covered", only that nothing is listed.
                       */}
-                      <span aria-hidden="true" className="font-normal text-secondary">—</span>
+                      <span aria-hidden="true" className="font-normal opacity-80">—</span>
                       <span className="sr-only">Not listed</span>
                     </>
                   ) : value === INCLUDED ? (
                     <span className="inline-flex items-center gap-1.5">
                       {/* Green on the tick only: the token fails contrast as text. */}
-                      <span className="inline-flex text-success">
+                      <span className="inline-flex text-success-text">
                         <Check size="sm" />
                       </span>
                       {INCLUDED}

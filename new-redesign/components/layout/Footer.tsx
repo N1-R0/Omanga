@@ -14,7 +14,6 @@ import { footer } from "@/new-redesign/content/footer.content";
  * who provides what, then ©, Cookie preferences and socials.
  *
  * The year is read at render; these pages are static, so it's fixed at build.
- * It also closes the old pages, hence the literal radius (styles/chrome.css).
  */
 export function Footer() {
   const year = new Date().getFullYear();

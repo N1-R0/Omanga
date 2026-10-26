@@ -324,7 +324,7 @@ export function TalkForm({ backHref, headingId }: TalkFormProps) {
     <Stack gap="lg" align="start">
       <BackLink href={backHref} label={content.backLabel} />
 
-      <div ref={headingRef} tabIndex={-1} className="focus-ring">
+      <div ref={headingRef} tabIndex={-1}>
         <Heading id={headingId} level="h2" role="feature" measure="none">
           {content.heading}
         </Heading>
@@ -396,7 +396,7 @@ export function TalkForm({ backHref, headingId }: TalkFormProps) {
           it looks at anything else.
 
           Both are outside the `Stack` so neither can open a gap in the layout: a
-          `visually-hidden` element inside a flex column still counts as a child
+          `sr-only` element inside a flex column still counts as a child
           and still gets a gap on either side.
 
           Three attributes carry the honeypot's accessibility and all three are
@@ -411,7 +411,7 @@ export function TalkForm({ backHref, headingId }: TalkFormProps) {
             value={CONTACT_FORM_KIND}
           />
 
-          <div className="visually-hidden" aria-hidden="true">
+          <div className="sr-only" aria-hidden="true">
             <input
               id={`${ENQUIRY_HONEYPOT_FIELD}-contact`}
               name={ENQUIRY_HONEYPOT_FIELD}
@@ -434,13 +434,13 @@ export function TalkForm({ backHref, headingId }: TalkFormProps) {
                 ref={summaryRef}
                 tabIndex={-1}
                 role="alert"
-                className="focus-ring rounded-sm border border-border-hairline p-fluid-3"
+                className=" rounded-xs border border-border p-4"
               >
                 <Text role="small">{content.errorSummaryLabel}</Text>
 
                 <ul
                   role="list"
-                  className="mt-fluid-1 flex flex-col gap-fluid-1"
+                  className="mt-2 flex flex-col gap-2"
                 >
                   {summaryFields.map((field) => (
                     <li key={field}>
@@ -689,7 +689,7 @@ export function BackLink({ href, label }: { href: string; label: string }) {
     <Link
       href={href}
       scroll={false}
-      className="inline-flex items-center gap-fluid-1 font-sans text-small text-brand focus-ring transition-standard hover:text-ink"
+      className="inline-flex items-center gap-2 font-sans type-p2 text-accent-text  transition duration-[var(--duration-fast)] ease-standard hover:text-text"
     >
       {/*
         The arrow is rotated rather than a second glyph. design.md § 9: "Arrows

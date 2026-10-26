@@ -78,7 +78,7 @@ export function ContactInfoCard({ card }: ContactInfoCardProps) {
           what this surface needs — the inverted white version belongs on the
           hero's brand fill.
         */
-        <span className="inline-flex items-center gap-fluid-1">
+        <span className="inline-flex items-center gap-2">
           {card.hasWhatsAppMark === true && (
             <WhatsAppMark size="sm" tone="light" />
           )}

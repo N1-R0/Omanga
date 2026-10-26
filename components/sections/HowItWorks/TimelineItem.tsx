@@ -60,7 +60,7 @@ export type TimelineStep = {
  */
 
 const ITEM_CLASS =
-  "grid grid-cols-timeline-narrow items-start gap-fluid-3 desktop:grid-cols-timeline desktop:gap-fluid-7";
+  "grid grid-cols-[2rem_minmax(0,1fr)] items-start gap-4 lg:grid-cols-[minmax(0,1fr)_2rem_minmax(0,1fr)] lg:gap-12";
 
 /**
  * The marker's cell. Always the rail column — column 1 narrow, column 2 wide.
@@ -72,7 +72,7 @@ const ITEM_CLASS =
  * failure this restructure exists to remove. Flex centring is understood
  * everywhere.
  */
-const MARKER_CELL_CLASS = "col-start-1 flex justify-center desktop:col-start-2";
+const MARKER_CELL_CLASS = "col-start-1 flex justify-center lg:col-start-2";
 
 /**
  * The copy's cell, per side.
@@ -86,12 +86,12 @@ const MARKER_CELL_CLASS = "col-start-1 flex justify-center desktop:col-start-2";
  */
 const SIDE_CLASS: Readonly<Record<TimelineSide, string>> = {
   start:
-    "col-start-2 desktop:col-start-1 desktop:justify-self-end desktop:text-right",
-  end: "col-start-2 desktop:col-start-3 desktop:justify-self-start desktop:text-left",
+    "col-start-2 lg:col-start-1 lg:justify-self-end lg:text-right",
+  end: "col-start-2 lg:col-start-3 lg:justify-self-start lg:text-left",
 } as const;
 
 /** The measure every step's copy caps at, on both sides. */
-const TRACK_CLASS = "max-w-track";
+const TRACK_CLASS = "max-w-[30.375rem]";
 
 export type TimelineItemProps = {
   step: TimelineStep;
@@ -118,7 +118,7 @@ export function TimelineItem({ step, side, index }: TimelineItemProps) {
           <Heading id={`${step.id}-heading`} level="h3" role="step">
             {step.heading}
           </Heading>
-          <div className="pt-fluid-3">
+          <div className="pt-4">
             <Text role="body" isSecondary>
               {step.body}
             </Text>

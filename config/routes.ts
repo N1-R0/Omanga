@@ -56,7 +56,6 @@ const MARKETING_ROUTES: readonly PublicRoute[] = [
   { path: "/insurance", priority: 0.7, lastModified: REDESIGN_LIVE },
   { path: "/plans", priority: 0.7, lastModified: MARKETING_UPDATED },
   { path: "/payments", priority: 0.7, lastModified: REDESIGN_LIVE },
-  { path: "/get-started", priority: 0.7, lastModified: MARKETING_UPDATED },
   { path: "/about", priority: 0.7, lastModified: MARKETING_UPDATED },
   { path: "/contact", priority: 0.7, lastModified: MARKETING_UPDATED },
   // [ADDED, 2026-10-18] "Is Omanga safe?"

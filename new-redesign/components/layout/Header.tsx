@@ -39,12 +39,6 @@ import { navigation, type NavMenu } from "@/new-redesign/content/navigation.cont
  * Tabs open on hover and on click. Escape closes and returns focus to the tab;
  * leaving the header with the pointer or with focus also closes.
  *
- * `opaque` (the old pages' layout) keeps the bar white with a hairline: their
- * photo heroes run up under it with white text, so a clear bar would vanish.
- *
- * Radii are literal, not the radius tokens: the header also sits on the old
- * pages, whose stylesheet redefines those tokens (styles/chrome.css).
- *
  * Below 1024: logo and a menu button. The primary action lives inside the menu sheet
  * (owner), pinned at its foot, after every group, Help, Log in and WhatsApp.
  */
@@ -52,7 +46,7 @@ const menus = navigation.items;
 
 type Motion = "from-start" | "from-end" | undefined;
 
-export function Header({ opaque = false }: { opaque?: boolean }) {
+export function Header() {
   const [open, setOpen] = useState<number | null>(null);
   // The last panel shown, kept so the area can collapse around it on close.
   const [shown, setShown] = useState<number | null>(null);
@@ -64,7 +58,7 @@ export function Header({ opaque = false }: { opaque?: boolean }) {
   const pathname = usePathname();
   const solid = open !== null;
   // Only the home hero is dark; every other page's top is light.
-  const dark = solid || opaque || pathname !== href("/");
+  const dark = solid || pathname !== href("/");
 
   /** Open tab `i`, or close with null. Sets the slide direction when moving
    *  between tabs; the first open only fades. */
@@ -135,7 +129,7 @@ export function Header({ opaque = false }: { opaque?: boolean }) {
         onBlur={(e) => {
           if (!e.currentTarget.contains(e.relatedTarget as Node)) show(null);
         }}
-        className={cx("absolute inset-x-0 top-0 z-40", navColor, solid || opaque ? "bg-surface text-text" : dark ? "text-text" : "text-text-inverse", opaque && !solid && "border-b border-border")}
+        className={cx("absolute inset-x-0 top-0 z-40", navColor, solid ? "bg-surface text-text" : dark ? "text-text" : "text-text-inverse")}
       >
         <div className="container-page flex h-19 items-center gap-6">
           <Link href={href("/")} aria-label={navigation.homeLabel} className="relative shrink-0 rounded-[16px]">

@@ -62,9 +62,9 @@ import type { Tone } from "@/types/ui.types";
  * Pending design confirmation.
  */
 const TONE_CLASS: Readonly<Record<Tone, string>> = {
-  light: "bg-surface-light border-border-hairline text-ink",
-  dark: "bg-overlay-soft border-border-subtle text-on-dark",
-  brand: "bg-overlay-soft border-border-subtle text-on-dark",
+  light: "bg-surface border-border text-text",
+  dark: "bg-neutral-0/10 border-neutral-0/10 text-text-inverse",
+  brand: "bg-neutral-0/10 border-neutral-0/10 text-text-inverse",
 } as const;
 
 export type BadgeProps = {
@@ -76,7 +76,7 @@ export function Badge({ children, tone }: BadgeProps) {
   return (
     <span
       className={cx(
-        "inline-flex items-center rounded-pill border px-fluid-3 py-fluid-1 font-sans text-button",
+        "inline-flex items-center rounded-full border px-4 py-2 font-sans type-p3",
         TONE_CLASS[tone],
       )}
     >

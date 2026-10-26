@@ -44,7 +44,7 @@
  * is what makes the ring do its job.
  */
 const MARKER_CLASS =
-  "pointer-events-none relative z-raised mt-5 size-4 shrink-0 rounded-pill bg-ink shadow-rail-break";
+  "pointer-events-none relative z-10 mt-5 size-4 shrink-0 rounded-full bg-surface-inverse shadow-[0_0_0_8px_var(--color-bg)]";
 
 export function TimelineMarker() {
   return <span aria-hidden className={MARKER_CLASS} />;

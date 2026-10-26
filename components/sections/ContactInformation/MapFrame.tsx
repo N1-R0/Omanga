@@ -37,7 +37,7 @@ import { OFFICE_MAP_EMBED_URL } from "@/config/site";
 const FRAME_CLASS = "size-full border-0";
 
 const PLACEHOLDER_CLASS =
-  "flex size-full flex-col items-center justify-center gap-fluid-3 p-fluid-4 text-center";
+  "flex size-full flex-col items-center justify-center gap-4 p-6 text-center";
 
 export function MapFrame({ title }: { title: string }) {
   const { hasConsent, save, decisions } = useConsent();
@@ -58,9 +58,9 @@ export function MapFrame({ title }: { title: string }) {
 
   return (
     <div className={PLACEHOLDER_CLASS}>
-      <div className="flex flex-col gap-fluid-1">
-        <p className="font-sans text-h6 text-ink">{mapPlaceholder.heading}</p>
-        <p className="font-sans text-small text-secondary measure-narrow">
+      <div className="flex flex-col gap-2">
+        <p className="font-sans type-h3 text-text">{mapPlaceholder.heading}</p>
+        <p className="font-sans type-p2 opacity-80 max-w-[60ch]">
           {mapPlaceholder.body}
         </p>
       </div>

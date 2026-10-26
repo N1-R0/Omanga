@@ -5,7 +5,6 @@ import { BlogPostList } from "@/components/blog/BlogPostList";
 import { LegalBlock } from "@/components/legal/LegalBlock";
 import { LegalContents } from "@/components/legal/LegalContents";
 import { LegalRichText } from "@/components/legal/LegalRichText";
-import { FaqList } from "@/components/sections/Faq";
 import { Button } from "@/components/ui/Button";
 import { Media } from "@/components/ui/Media";
 import { BLOG_CATEGORY_LABELS } from "@/content/blog";
@@ -37,7 +36,6 @@ const DATE_FORMAT: Intl.DateTimeFormatOptions = {
   day: "numeric",
 };
 
-const FAQ_HEADING_ID = "article-faq-heading";
 const CTA_PROMPT_ID = "article-cta-prompt";
 const RELATED_HEADING_ID = "article-related-heading";
 
@@ -50,7 +48,7 @@ export function BlogArticle({
   const published = new Date(post.publishedDate);
 
   return (
-    <article className="bg-surface-page text-ink focus-ring-on-light section-rhythm">
+    <article className="bg-bg text-text  section-y">
       <Container>
         {/*
           [CHANGED, 2026-10-09] One centred reading column (the body measure,
@@ -59,43 +57,43 @@ export function BlogArticle({
           full-width container. The related-articles row below breaks back out
           to the container width — three cards do not fit in 70ch.
         */}
-        <div className="flex flex-col gap-fluid-8">
-          <div className="mx-auto flex w-full flex-col gap-fluid-8 measure-body">
-            <header className="flex flex-col gap-fluid-3">
+        <div className="flex flex-col gap-16">
+          <div className="mx-auto flex w-full flex-col gap-16 max-w-[70ch]">
+            <header className="flex flex-col gap-4">
               {/*
                 [CHANGED, 2026-10-14] UX copy pass: the trail ends at "Blog".
                 It used to end at the category marked aria-current="page",
                 which told screen readers the category was this page.
               */}
               <nav aria-label="Breadcrumb">
-                <ol className="flex flex-wrap gap-fluid-2 font-sans text-small text-secondary">
+                <ol className="flex flex-wrap gap-3 font-sans type-p2 opacity-80">
                   <li>
-                    <Link href="/" className="focus-ring hover:text-brand">
+                    <Link href="/" className=" hover:text-accent-text">
                       Home
                     </Link>
                     <span aria-hidden="true"> ›</span>
                   </li>
                   <li>
-                    <Link href="/blog" className="focus-ring hover:text-brand">
+                    <Link href="/blog" className=" hover:text-accent-text">
                       Blog
                     </Link>
                   </li>
                 </ol>
               </nav>
 
-              <p className="font-sans text-small text-brand">
+              <p className="font-sans type-p2 text-accent-text">
                 {BLOG_CATEGORY_LABELS[post.category]}
               </p>
 
-              <h1 className="font-sans text-h1 measure-heading">
+              <h1 className="font-sans type-h1 max-w-[30ch]">
                 {post.title}
               </h1>
 
-              <p className="font-sans text-large text-secondary measure-body">
+              <p className="font-sans type-p1 opacity-80 max-w-[70ch]">
                 {post.summary}
               </p>
 
-              <p className="font-sans text-small text-secondary">
+              <p className="font-sans type-p2 opacity-80">
                 By Omanga ·{" "}
                 <time dateTime={post.publishedDate}>
                   {published.toLocaleDateString("en-GB", DATE_FORMAT)}
@@ -110,7 +108,7 @@ export function BlogArticle({
             Unsplash CDN delivers, so nothing is cropped a second time. The
             Unsplash credit sits underneath as a caption.
           */}
-            <figure className="flex flex-col gap-fluid-2">
+            <figure className="flex flex-col gap-3">
               <Media
                 image={post.image}
                 ratio="landscape"
@@ -121,13 +119,13 @@ export function BlogArticle({
               />
 
               {post.imageCredit !== undefined && (
-                <figcaption className="font-sans text-small text-secondary">
+                <figcaption className="font-sans type-p2 opacity-80">
                   Photo by{" "}
                   <a
                     href={post.imageCredit.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="focus-ring underline hover:text-brand"
+                    className=" underline hover:text-accent-text"
                   >
                     {post.imageCredit.name}
                   </a>{" "}
@@ -136,7 +134,7 @@ export function BlogArticle({
               )}
             </figure>
 
-            <div className="flex flex-col gap-fluid-4">
+            <div className="flex flex-col gap-6">
               {post.intro.map((block, index) => (
                 <LegalBlock key={index} block={block} />
               ))}
@@ -144,17 +142,17 @@ export function BlogArticle({
 
             <LegalContents sections={post.sections} />
 
-            <div className="flex flex-col gap-fluid-7">
+            <div className="flex flex-col gap-12">
               {post.sections.map((section) => (
                 <section
                   key={section.id}
                   id={section.id}
                   aria-labelledby={`${section.id}-heading`}
-                  className="flex scroll-mt-header flex-col gap-fluid-4"
+                  className="flex scroll-mt-19 flex-col gap-6"
                 >
                   <h2
                     id={`${section.id}-heading`}
-                    className="font-sans text-h3 measure-heading"
+                    className="font-sans type-h3 max-w-[30ch]"
                   >
                     {section.heading}
                   </h2>
@@ -166,22 +164,6 @@ export function BlogArticle({
               ))}
             </div>
 
-            {post.faq !== undefined && (
-              <section
-                aria-labelledby={FAQ_HEADING_ID}
-                className="flex flex-col gap-fluid-4"
-              >
-                <h2
-                  id={FAQ_HEADING_ID}
-                  className="font-sans text-h3 measure-heading"
-                >
-                  {post.faq.heading}
-                </h2>
-
-                <FaqList items={post.faq.items} />
-              </section>
-            )}
-
             {/*
               [CHANGED, 2026-10-14] UX copy pass: the box had a heading and a
               button with the same text (`cta.label`). The prompt now names the
@@ -189,9 +171,9 @@ export function BlogArticle({
             */}
             <section
               aria-labelledby={CTA_PROMPT_ID}
-              className="flex flex-col items-start gap-fluid-4 rounded-sm bg-surface-light p-fluid-5"
+              className="flex flex-col items-start gap-6 rounded-xs bg-surface p-8"
             >
-              <p id={CTA_PROMPT_ID} className="font-sans text-h5 measure-heading">
+              <p id={CTA_PROMPT_ID} className="font-sans type-h3 max-w-[30ch]">
                 <LegalRichText content={post.cta.prompt} />
               </p>
 
@@ -209,11 +191,11 @@ export function BlogArticle({
           {related.length > 0 && (
             <section
               aria-labelledby={RELATED_HEADING_ID}
-              className="flex flex-col gap-fluid-4 border-t border-border-hairline pt-fluid-7"
+              className="flex flex-col gap-6 border-t border-border pt-12"
             >
               <h2
                 id={RELATED_HEADING_ID}
-                className="font-sans text-h3 measure-heading"
+                className="font-sans type-h3 max-w-[30ch]"
               >
                 {relatedHeading}
               </h2>

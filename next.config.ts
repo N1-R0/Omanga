@@ -122,6 +122,8 @@ const nextConfig: NextConfig = {
         destination: "/blog/how-far-does-100-dollars-go-in-nigeria",
         permanent: true,
       },
+      // Sitemap v2: the Get Started page is removed (2026-10-26).
+      { source: "/get-started", destination: "/", permanent: true },
     ];
   },
 

@@ -29,9 +29,9 @@ import type { Tone } from "@/types/ui.types";
  * the CTA band is the only brand-filled section.
  */
 const TONE_SURFACE: Readonly<Record<Tone, string>> = {
-  light: "bg-surface-page text-ink focus-ring-on-light",
-  dark: "bg-ink text-on-dark focus-ring-on-dark",
-  brand: "bg-brand text-on-dark focus-ring-on-dark",
+  light: "bg-bg text-text ",
+  dark: "bg-surface-inverse text-text-inverse ",
+  brand: "bg-accent text-text-inverse ",
 } as const;
 
 /**
@@ -51,11 +51,11 @@ const TONE_SURFACE: Readonly<Record<Tone, string>> = {
 type Rhythm = "default" | "tight" | "loose";
 
 const RHYTHM_CLASS: Readonly<Record<Rhythm, string>> = {
-  default: "section-rhythm",
+  default: "section-y",
   /** A strip rather than a section — the partner logos. */
-  tight: "section-rhythm-tight",
+  tight: "section-y",
   /** The page's one full-bleed emphasis band — the closing CTA. */
-  loose: "section-rhythm-loose",
+  loose: "section-y",
 } as const;
 
 export type SectionProps = {

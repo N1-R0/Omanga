@@ -10,9 +10,9 @@ import type { LegalBlock as LegalBlockValue } from "@/types/legal.types";
  * introduced in a content module and silently render as nothing.
  */
 
-const PROSE_CLASS = "font-sans text-main text-ink measure-body";
+const PROSE_CLASS = "font-sans type-p1 text-text max-w-[70ch]";
 
-const LIST_CLASS = "flex flex-col gap-fluid-2 font-sans text-main text-ink";
+const LIST_CLASS = "flex flex-col gap-3 font-sans type-p1 text-text";
 
 /**
  * Callouts are set apart with a rule and an inset rather than a tinted panel.
@@ -24,11 +24,11 @@ const LIST_CLASS = "flex flex-col gap-fluid-2 font-sans text-main text-ink";
  * is in words.
  */
 const CALLOUT_CLASS =
-  "flex flex-col gap-fluid-1 border-l-2 pl-fluid-3 measure-body";
+  "flex flex-col gap-2 border-l-2 pl-4 max-w-[70ch]";
 
 const CALLOUT_TONE = {
-  confirm: "border-brand",
-  note: "border-border-subtle",
+  confirm: "border-accent",
+  note: "border-neutral-0/10",
 } as const;
 
 const TABLE_WRAPPER_CLASS = "w-full overflow-x-auto";
@@ -36,10 +36,10 @@ const TABLE_WRAPPER_CLASS = "w-full overflow-x-auto";
 const TABLE_CLASS = "w-full min-w-[46rem] border-collapse text-left";
 
 const CELL_CLASS =
-  "border-b border-border-hairline py-fluid-2 pr-fluid-3 align-top font-sans text-small text-ink";
+  "border-b border-border py-3 pr-4 align-top font-sans type-p2 text-text";
 
 const HEAD_CELL_CLASS =
-  "border-b border-ink py-fluid-2 pr-fluid-3 text-left align-bottom font-sans text-h6 text-ink";
+  "border-b border-text py-3 pr-4 text-left align-bottom font-sans type-h3 text-text";
 
 const COOKIE_COLUMNS = [
   "Cookie or storage",
@@ -77,8 +77,8 @@ export function LegalBlock({ block }: LegalBlockProps) {
           */
         >
           {block.items.map((item, index) => (
-            <li key={index} className="flex gap-fluid-2 measure-body">
-              <span aria-hidden="true" className="shrink-0 text-secondary">
+            <li key={index} className="flex gap-3 max-w-[70ch]">
+              <span aria-hidden="true" className="shrink-0 opacity-80">
                 {block.style === "number" ? `${index + 1}.` : "—"}
               </span>
               <span>
@@ -92,11 +92,11 @@ export function LegalBlock({ block }: LegalBlockProps) {
 
     case "definitions":
       return (
-        <dl className="flex flex-col gap-fluid-3 measure-body">
+        <dl className="flex flex-col gap-4 max-w-[70ch]">
           {block.items.map((item) => (
-            <div key={item.term} className="flex flex-col gap-fluid-1">
-              <dt className="font-sans text-h6 text-ink">{item.term}</dt>
-              <dd className="font-sans text-main text-secondary">
+            <div key={item.term} className="flex flex-col gap-2">
+              <dt className="font-sans type-h3 text-text">{item.term}</dt>
+              <dd className="font-sans type-p1 opacity-80">
                 <LegalRichText content={item.description} />
               </dd>
             </div>
@@ -120,7 +120,7 @@ export function LegalBlock({ block }: LegalBlockProps) {
           tabIndex={0}
         >
           <table className={TABLE_CLASS}>
-            <caption className="visually-hidden">{block.caption}</caption>
+            <caption className="sr-only">{block.caption}</caption>
             <thead>
               <tr>
                 {COOKIE_COLUMNS.map((column) => (
@@ -152,8 +152,8 @@ export function LegalBlock({ block }: LegalBlockProps) {
     case "note":
       return (
         <div className={`${CALLOUT_CLASS} ${CALLOUT_TONE[block.kind]}`}>
-          <p className="font-sans text-h6 text-ink">{block.title}</p>
-          <p className="font-sans text-small text-secondary">
+          <p className="font-sans type-h3 text-text">{block.title}</p>
+          <p className="font-sans type-p2 opacity-80">
             <LegalRichText content={block.content} />
           </p>
         </div>

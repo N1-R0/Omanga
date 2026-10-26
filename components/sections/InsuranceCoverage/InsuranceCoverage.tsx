@@ -49,7 +49,7 @@ export function InsuranceCoverage({
   headingId,
 }: InsuranceCoverageProps) {
   return (
-    <div id={content.anchorId} className="scroll-mt-header">
+    <div id={content.anchorId} className="scroll-mt-19">
       <Section labelledBy={headingId} tone={SECTION_TONE}>
         <Stack gap="4xl">
           <Reveal index={0}>
@@ -71,10 +71,10 @@ export function InsuranceCoverage({
               [CHANGED, 2026-10-10] Phones get the plan switcher (pick P1); the
               table is tablet and up, where it fits without sideways scrolling.
             */}
-            <div className="tablet:hidden">
+            <div className="md:hidden">
               <PlanSwitcher rows={content.rows} plans={plans} label={content.tableLabel} />
             </div>
-            <div className="hidden tablet:block">
+            <div className="hidden md:block">
               <ComparisonTable
                 rows={content.rows}
                 plans={plans}

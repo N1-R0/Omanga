@@ -7,8 +7,7 @@ import {
   validateContactEnquiry,
 } from "@/lib/contact-enquiry";
 import { composeContactEnquiryEmail } from "@/lib/contact-enquiry-email";
-import { isHoneypotFilled, validateEnquiry } from "@/lib/enquiry";
-import { composeEnquiryEmail } from "@/lib/enquiry-email";
+import { isHoneypotFilled } from "@/lib/enquiry";
 import type { EnquiryEmail } from "@/lib/enquiry-email";
 import { createRateLimiter } from "@/lib/rate-limit";
 
@@ -106,23 +105,6 @@ export const maxDuration = 30;
  * instance. A limiter constructed inside the handler would start empty on every
  * request and permit everything.
  */
-/*
-  [NOTE] One bucket for the endpoint, now that two forms post to it. Five contact
-  enquiries therefore exhaust the Get Started form's quota for the same address,
-  and the reverse.
-
-  Left shared deliberately. Keying the bucket per form would mean reading the body
-  to learn which form sent it, and that inverts the ordering this handler is built
-  around — "rate limit: cheapest check, and the one that has to run before any work
-  is done on behalf of a caller flooding the endpoint". Trading the abuse guard's
-  position for a quota split matters far less than it costs: five submissions from
-  one address in an hour is already generous for either form, and a visitor who
-  legitimately files five contact enquiries is not about to open a wallet in the
-  same hour.
-
-  If it ever bites, the fix is a second limiter keyed on address alone with a
-  higher combined ceiling — not moving the body parse above this.
-*/
 const checkRateLimit = createRateLimiter({
   limit: 5,
   windowMs: 60 * 60 * 1000,
@@ -281,10 +263,8 @@ async function deliver(
  * A validated submission reduced to the two things delivery needs, or the fields
  * that failed.
  *
- * This is what lets one handler serve two forms without a cast. Each branch below
- * narrows its own validator's result, so the submission type never has to be
- * widened or asserted — the handler downstream sees only a composed email and a
- * reply address and knows nothing about which form produced them.
+ * The handler downstream sees only a composed email and a reply address and
+ * knows nothing about the form that produced them.
  */
 type Prepared =
   | {
@@ -295,37 +275,23 @@ type Prepared =
   | { readonly isValid: false; readonly invalidFields: readonly string[] };
 
 /**
- * Routes a submission to its form's validator and email template.
+ * Validates a submission and composes its email.
  *
- * A hidden field rather than a second endpoint: every guard in the handler — the
- * limiter, the body parse, the honeypot, the 503 when mail is unconfigured, the
- * response codes — is identical for both forms, and so is the SMTP transport and
- * its connection pool. See `FORM_KIND_FIELD` for the full reasoning.
- *
- * Absent means the Get Started form, so that form's existing requests are
- * unchanged and it needed no edit. An unrecognised value falls through to the
- * same default, which is the safe direction: a validator rejects a submission it
- * cannot read rather than accepting one it should not.
+ * Only the Contact form posts here now: the Get Started form went with its page
+ * (2026-10-26). The form-kind field is still checked, so anything that does
+ * not say it is the Contact form is rejected rather than read as one.
  */
 function prepare(values: FormData): Prepared {
-  if (values.get(FORM_KIND_FIELD) === CONTACT_FORM_KIND) {
-    const validation = validateContactEnquiry(values);
-
-    return validation.isValid
-      ? {
-          isValid: true,
-          email: composeContactEnquiryEmail(validation.data),
-          replyTo: validation.data.email,
-        }
-      : { isValid: false, invalidFields: validation.invalidFields };
+  if (values.get(FORM_KIND_FIELD) !== CONTACT_FORM_KIND) {
+    return { isValid: false, invalidFields: [FORM_KIND_FIELD] };
   }
 
-  const validation = validateEnquiry(values);
+  const validation = validateContactEnquiry(values);
 
   return validation.isValid
     ? {
         isValid: true,
-        email: composeEnquiryEmail(validation.data),
+        email: composeContactEnquiryEmail(validation.data),
         replyTo: validation.data.email,
       }
     : { isValid: false, invalidFields: validation.invalidFields };

@@ -20,12 +20,12 @@ import type { Gap } from "@/types/ui.types";
  * `Section` all own it equally.
  */
 export const GAP_CLASS: Readonly<Record<Gap, string>> = {
-  xs: "gap-fluid-1", // 6  → 8   icon to label
-  sm: "gap-fluid-2", // 10 → 12  adjacent controls
-  md: "gap-fluid-3", // 14 → 16  rows in a list
-  lg: "gap-fluid-4", // 20 → 24  card padding, heading to body
-  xl: "gap-fluid-5", // 28 → 32  card art to copy
-  "2xl": "gap-fluid-6", // 32 → 40  card grid gap
-  "3xl": "gap-fluid-7", // 36 → 48  major intra-section gap
-  "4xl": "gap-fluid-8", // 40 → 64  heading block to content block
+  xs: "gap-2", // 6  → 8   icon to label
+  sm: "gap-3", // 10 → 12  adjacent controls
+  md: "gap-4", // 14 → 16  rows in a list
+  lg: "gap-6", // 20 → 24  card padding, heading to body
+  xl: "gap-8", // 28 → 32  card art to copy
+  "2xl": "gap-10", // 32 → 40  card grid gap
+  "3xl": "gap-12", // 36 → 48  major intra-section gap
+  "4xl": "gap-16", // 40 → 64  heading block to content block
 } as const;

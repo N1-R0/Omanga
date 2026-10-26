@@ -1,5 +1,5 @@
 // [CHANGED, 2026-10-14] UX copy pass (design.md § Home UX copy pass): Material form copy, matching
-// get-started-enquiry.content.ts. No reply time is promised (none is confirmed).
+// the old Get Started form. No reply time is promised (none is confirmed).
 import { CONTACT_EMAIL, WHATSAPP_URL } from "@/config/site";
 import {
   CONTACT_FIELDS,
@@ -123,7 +123,7 @@ const CUSTOMER_OPTIONS: readonly FormOption[] = CUSTOMER_VALUES.map((value) => (
  *
  * The one shape that lets approved copy carry an anchor without becoming markup:
  * three fields the component assembles, rather than a string with a tag in it.
- * The same type `get-started-enquiry.content.ts` uses for its outcome messages.
+ * The form's outcome messages use it.
  */
 export type LinkedMessage = {
   readonly lead: string;

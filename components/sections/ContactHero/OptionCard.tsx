@@ -48,7 +48,7 @@ import { CONTACT_ENQUIRY_PARAM } from "@/content/contact-options.content";
  * is "colour change only" — so this is that fallback promoted to the default.
  */
 const CARD_CLASS =
-  "group flex items-center justify-between gap-fluid-4 rounded-sm bg-brand p-fluid-4 text-on-dark focus-ring transition-standard hover:bg-ink";
+  "group flex items-center justify-between gap-6 rounded-xs bg-accent p-6 text-text-inverse  transition duration-[var(--duration-fast)] ease-standard hover:bg-surface-inverse";
 
 /**
  * `shrink-0` because the circle is a fixed 48 beside a paragraph that wraps —
@@ -58,7 +58,7 @@ const CARD_CLASS =
  * once the card's fill has inverted to ink, so the arrow never disappears.
  */
 const CIRCLE_CLASS =
-  "flex size-12 shrink-0 items-center justify-center rounded-pill bg-surface-page text-brand transition-standard group-hover:text-ink";
+  "flex size-12 shrink-0 items-center justify-center rounded-full bg-bg text-accent-text transition duration-[var(--duration-fast)] ease-standard group-hover:text-text";
 
 export type OptionCardProps = {
   option: ContactOption;
@@ -112,7 +112,7 @@ export function OptionCard({ option, path }: OptionCardProps) {
           the system uses a padding step instead — the same call `TimelineItem`
           and `ImpactPanel` make.
         */}
-        <span className="block pt-fluid-3">
+        <span className="block pt-4">
           <Text role="body" as="span" measure="none">
             {option.body}
           </Text>

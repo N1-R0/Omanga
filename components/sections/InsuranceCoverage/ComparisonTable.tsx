@@ -59,27 +59,27 @@ import { cx } from "@/lib/cx";
   bottom edge reaches it, so the tier row leaves with the table rather than
   travelling on down the page. No scroll listener is involved.
 
-  `top-0` rather than `top-header`: the site's bar hides on scroll down, so
+  `top-0` rather than `top-19`: the site's bar hides on scroll down, so
   offsetting by its height would leave a 64px gap above the tier row for the
   whole time the table is in view.
 
-  `tablet:` rather than unconditional, for the reason the wrapper below sets out:
+  `` rather than unconditional, for the reason the wrapper below sets out:
   under tablet the scroll box is the sticky element's scrollport and it never
   scrolls vertically, so `sticky` there is not a working sticky header but a cell
   pinned to a box that does not move. Declaring it only where it resolves against
   the page keeps the class honest about where the behaviour exists.
 
-  `top-0` rather than `top-header`: the site's bar hides on scroll down, so
+  `top-0` rather than `top-19`: the site's bar hides on scroll down, so
   offsetting by its height would leave a 64px gap above the tier row for the
   whole time the table is in view.
 
   The fill is explicit — a transparent sticky cell lets rows scroll visibly
-  behind it — and `z-raised` keeps it above them.
+  behind it — and `z-10` keeps it above them.
 */
 const HEADER_CELL_CLASS =
-  "tablet:sticky top-0 z-raised bg-surface-page px-fluid-3 py-fluid-4 align-bottom";
-const LABEL_CELL_CLASS = "px-fluid-3 py-fluid-4 text-left align-middle";
-const VALUE_CELL_CLASS = "px-fluid-3 py-fluid-4 text-center align-middle";
+  "md:sticky top-0 z-10 bg-bg px-4 py-6 align-bottom";
+const LABEL_CELL_CLASS = "px-4 py-6 text-left align-middle";
+const VALUE_CELL_CLASS = "px-4 py-6 text-center align-middle";
 
 export type ComparisonTableProps = {
   rows: readonly CoverageRow[];
@@ -120,8 +120,8 @@ export function ComparisonTable({
     below tablet, unreachable, on the page whose whole purpose is comparing
     tiers. Squeezing was never what was happening.
 
-    `tablet:overflow-x-visible` is what reconciles the two. Above tablet the
-    content band is wider than `min-w-comparison-table`, so the box never
+    `md:overflow-x-visible` is what reconciles the two. Above tablet the
+    content band is wider than `min-w-[37.5rem]`, so the box never
     scrolls and — with both axes visible again — it is not a scrollport at all
     and the header sticks to the page as before. Below tablet the table scrolls
     sideways and the sticky header is the thing given up. That is the trade in
@@ -140,11 +140,11 @@ export function ComparisonTable({
         role="region"
         aria-label={tableLabel}
         tabIndex={0}
-        className="overflow-x-auto tablet:overflow-x-visible focus-ring"
+        className="overflow-x-auto md:overflow-x-visible "
       >
-        <table className="w-full min-w-comparison-table border-collapse">
+        <table className="w-full min-w-[37.5rem] border-collapse">
           <thead>
-            <tr className="border-b border-ink">
+            <tr className="border-b border-text">
               <th scope="col" className={cx(HEADER_CELL_CLASS, "text-left")}>
                 {/*
                   The frame leaves this cell blank. A blank `th` is a column with
@@ -180,11 +180,11 @@ export function ComparisonTable({
               <tr
                 key={row.label}
                 className={cx(
-                  "border-b border-border-hairline",
+                  "border-b border-border",
                   // The frame alternates #FAFAFA against white. The system's
                   // nearest fill is `surface-light`, which every other inset
                   // surface on the site already uses.
-                  index % 2 === 0 ? "bg-surface-light" : "bg-surface-page",
+                  index % 2 === 0 ? "bg-surface" : "bg-bg",
                 )}
               >
                 <th scope="row" className={LABEL_CELL_CLASS}>
@@ -209,7 +209,7 @@ export function ComparisonTable({
         reading "Scroll sideways" after that is noise, and the keyboard path is
         the region's own focus, not this line.
       */}
-      <div className="tablet:hidden" aria-hidden="true">
+      <div className="md:hidden" aria-hidden="true">
         <Text role="small" isSecondary>
           {scrollHint}
         </Text>

@@ -29,19 +29,19 @@ import type { HeadingLevel, HeadingRole, Measure } from "@/types/ui.types";
 const ROLE_CLASS: Readonly<Record<HeadingRole, string>> = {
   /** 64 → 112. The closing conversion band only — this is the page's one
       emphasis size and spending it anywhere else makes it mean nothing. */
-  display: "font-sans text-display",
+  display: "font-sans type-h1",
   /** 40 → 64. The page's single h1. */
-  hero: "font-sans text-h1",
+  hero: "font-sans type-h1",
   /** 32 → 48. Every section-level heading. */
-  section: "font-sans text-h2",
+  section: "font-sans type-h2",
   /** 30 → 40. Timeline step. */
-  step: "font-sans text-h3",
+  step: "font-sans type-h3",
   /** 24 → 28. Deep-dive feature, card heading. */
-  feature: "font-sans text-h4",
+  feature: "font-sans type-h3",
   /** 22 → 26. Comparison column. */
-  column: "font-sans text-h5",
+  column: "font-sans type-h3",
   /** 16 → 20. Eyebrow, tab label, footer column heading. */
-  label: "font-sans text-h6",
+  label: "font-sans type-h3",
 } as const;
 
 /**
@@ -59,8 +59,8 @@ const ROLE_CLASS: Readonly<Record<HeadingRole, string>> = {
 type HeadingMeasure = Extract<Measure, "hero" | "heading" | "none">;
 
 const MEASURE_CLASS: Readonly<Record<HeadingMeasure, string>> = {
-  hero: "measure-hero",
-  heading: "measure-heading",
+  hero: "max-w-[28ch]",
+  heading: "max-w-[30ch]",
   none: "",
 } as const;
 

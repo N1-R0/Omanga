@@ -40,8 +40,10 @@ export function HealthHero() {
         {/* The stage, as on the wallet hero, with the how-cover-works film over
             the fabric. The film keeps its 1080 × 600 frame at the box's full
             height and is centred, so narrow boxes crop its empty sides, not
-            the card (the card is 456 wide, inside the 468 a 375 phone shows). */}
-        <div className="relative isolate mt-14 h-[440px] w-full overflow-hidden rounded-sm md:mt-16 md:h-[600px]">
+            the card (the card is 456 wide, inside the 468 a 375 phone shows).
+            Below 768 it runs edge to edge, square, as on Payments (owner,
+            2026-10-26): -mx-4 cancels the page gutter. */}
+        <div className="relative isolate -mx-4 mt-14 h-[440px] w-[calc(100%+2rem)] overflow-hidden md:mx-0 md:mt-16 md:h-[600px] md:w-full md:rounded-sm">
           <Image src={photo.src} alt="" fill priority sizes="(min-width: 1112px) 1080px, 100vw" className="-z-10 object-cover" style={{ objectPosition: photo.position }} />
           <FeatureLottie
             scene={scene}

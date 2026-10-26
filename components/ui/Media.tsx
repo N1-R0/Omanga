@@ -25,9 +25,9 @@ import type { Radius } from "@/types/ui.types";
 
 const RATIO_CLASS = {
   square: "aspect-square",
-  portrait: "aspect-portrait",
-  landscape: "aspect-landscape",
-  wide: "aspect-wide",
+  portrait: "aspect-[3/4]",
+  landscape: "aspect-[4/3]",
+  wide: "aspect-video",
 } as const;
 
 type Ratio = keyof typeof RATIO_CLASS;
@@ -39,9 +39,9 @@ type Ratio = keyof typeof RATIO_CLASS;
 type MediaRadius = Extract<Radius, "xs" | "sm" | "md">;
 
 const RADIUS_CLASS: Readonly<Record<MediaRadius, string>> = {
-  xs: "rounded-xs",
-  sm: "rounded-sm",
-  md: "rounded-md",
+  xs: "rounded-md",
+  sm: "rounded-xs",
+  md: "rounded-xs",
 } as const;
 
 export type MediaProps = {
@@ -88,10 +88,10 @@ export function Media({
   return (
     <div
       className={cx(
-        "relative w-full overflow-hidden bg-surface-light",
+        "relative w-full overflow-hidden bg-surface",
         RATIO_CLASS[ratio],
         radius !== undefined && RADIUS_CLASS[radius],
-        hasScrim && "scrim",
+        hasScrim && "relative after:pointer-events-none after:absolute after:inset-0 after:z-20 after:bg-neutral-950/55 after:content-['']",
       )}
     >
       <Image

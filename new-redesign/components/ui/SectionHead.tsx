@@ -12,9 +12,11 @@ type Props = {
   as?: "h2" | "h3";
   /** An optional button under the sub (owner, 2026-10-23: health cover § 2). */
   action?: ReactNode;
+  /** The heading's id, for a section's aria-labelledby. */
+  id?: string;
 };
 
-export function SectionHead({ eyebrow, title, sub, as: Heading = "h2", action }: Props) {
+export function SectionHead({ eyebrow, title, sub, as: Heading = "h2", action, id }: Props) {
   return (
     <div className="section-head">
       <p className="type-p2 inline-flex items-center gap-2 text-text">
@@ -24,7 +26,7 @@ export function SectionHead({ eyebrow, title, sub, as: Heading = "h2", action }:
       </p>
       {/* Asset: eyebrow 24px above the title block; title to sub 20px. */}
       <div className="flex flex-col gap-[var(--head-sub-gap)]">
-        <Heading className="type-h2">{title}</Heading>
+        <Heading id={id} className="type-h2">{title}</Heading>
         {sub ? <p className="type-p1 text-text-secondary">{sub}</p> : null}
       </div>
       {action ? <div className="mt-2">{action}</div> : null}

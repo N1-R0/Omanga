@@ -3128,3 +3128,19 @@ Owner: Mobbin B1 (Ramp's "Our Story").
 - Removed: the old `AboutStory`, `about-story.content` and its two photos
   (`person-wearing-colorful-fashion.jpg`, `spend more.jpg`); the reference
   has no imagery.
+
+### About § 3 Mission and vision (2026-10-27)
+
+Owner: Mobbin C1 (7shifts).
+
+- `AboutMissionVision` (new-redesign/components/sections/about): the shared
+  `SectionHead` (new eyebrow "What drives us"; heading and Ubuntu sub kept),
+  then two cards side by side, 16px radius, min-height 400 (320 on mobile):
+  Mission on `accent-subtle` blush, Vision on `accent` crimson with inverse
+  text. Title at the top, text at the foot. Stacked below 768.
+- The reference's card illustrations are left out: no illustration set, and
+  the 3D assets are retired.
+- `SectionHead` takes an optional `id` for the heading, so a section can
+  point `aria-labelledby` at it.
+- Removed: the old `AboutMissionVision` (timeline rail) and
+  `about-mission-vision.content`.

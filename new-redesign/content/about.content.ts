@@ -39,3 +39,27 @@ export const aboutStory = {
     "Then add short-term health cover from Phillips HMO for your time in Nigeria, with plans from $50 a month. Whether you're a tourist, a Nigerian living abroad or here for work, you land with money and cover sorted.",
   ],
 } as const;
+
+/**
+ * Mission and vision: Mobbin C1 (7shifts), two tall cards side by side,
+ * Mission on blush and Vision on the brand crimson (owner, 2026-10-27). The
+ * heading, Ubuntu sub and both texts are kept from the old section; the
+ * eyebrow is new, as every new-design section opens with one.
+ */
+export const aboutMissionVision = {
+  eyebrow: "What drives us",
+  title: "Our mission and vision",
+  sub: "We live by Ubuntu: together, we achieve more than we can alone.",
+  cards: [
+    {
+      title: "Our mission",
+      text: "Make it simpler for anyone to visit Nigeria and travel across Africa. We give visitors the money tools and health cover they need, support local communities and help every trip reflect the continent's hospitality.",
+      tone: "blush",
+    },
+    {
+      title: "Our vision",
+      text: "Become a leading travel services company in Africa, helping visitors see the continent's diversity, culture and natural beauty through authentic, sustainable travel.",
+      tone: "brand",
+    },
+  ],
+} as const;

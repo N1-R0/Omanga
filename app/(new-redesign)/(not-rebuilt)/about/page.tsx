@@ -3,29 +3,26 @@ import type { Metadata } from "next";
 import { aboutFaqContent } from "@/content/page-faqs.content";
 
 import { AboutImpact } from "@/components/sections/AboutImpact";
-import { AboutMissionVision } from "@/components/sections/AboutMissionVision";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 import {
   ABOUT_IMPACT_HEADING_ID,
   aboutImpactContent,
 } from "@/content/about-impact.content";
-import {
-  ABOUT_MISSION_VISION_HEADING_ID,
-  aboutMissionVisionContent,
-} from "@/content/about-mission-vision.content";
 import { buildPageGraph } from "@/lib/schema";
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { PageMetaContent } from "@/types/content.types";
 import { buildPageMetadata } from "@/lib/seo";
 import { AboutHero } from "@/new-redesign/components/sections/about/AboutHero";
 import { AboutStory } from "@/new-redesign/components/sections/about/AboutStory";
+import { AboutMissionVision } from "@/new-redesign/components/sections/about/AboutMissionVision";
 import { FaqSection } from "@/new-redesign/components/ui/FaqSection";
 import { OLD_PAGE_FAQ_SUB, oldPageFaq } from "@/new-redesign/content/old-pages.content";
 import { HomeFinalCta } from "@/new-redesign/components/sections/home/HomeFinalCta";
 
 const ABOUT_HERO_HEADING_ID = "about-hero-heading";
 const ABOUT_STORY_HEADING_ID = "about-story-heading";
+const ABOUT_MISSION_VISION_HEADING_ID = "about-mission-vision-heading";
 
 /**
  * The About page — spec `Omanga-About-Page-Redesign-v1.md`.
@@ -166,23 +163,8 @@ export default function AboutPage() {
       {/* [CHANGED, 2026-10-27] New-design story (owner): Mobbin B1, Ramp's "Our Story". */}
       <AboutStory headingId={ABOUT_STORY_HEADING_ID} />
 
-      {/*
-        Stage 4. Mission & Vision — spec § 4, on the shared timeline rail the
-        homepage's How Omanga works section already uses. Two phases, Mission then
-        Vision, alternating either side of the rail above desktop.
-
-        Light, after the dark story panel, so the page alternates. Its `h2`
-        continues the outline and its two `h3`s sit beneath it without skipping a
-        level.
-
-        [SKIPPED] § 5, Meet the Team — removed entirely by instruction, with no
-        placeholder and no replacement. The scroll passes from here straight to
-        § 6, which is why § 6 has to carry the tonal break the exec grid used to.
-      */}
-      <AboutMissionVision
-        content={aboutMissionVisionContent}
-        headingId={ABOUT_MISSION_VISION_HEADING_ID}
-      />
+      {/* [CHANGED, 2026-10-27] New-design mission and vision (owner): Mobbin C1, 7shifts. */}
+      <AboutMissionVision headingId={ABOUT_MISSION_VISION_HEADING_ID} />
 
       {/*
         Stage 5. Our Impact — spec § 6, from Figma node 2579:131863. Three pillar

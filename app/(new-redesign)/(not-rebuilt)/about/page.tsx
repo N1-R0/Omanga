@@ -2,13 +2,8 @@ import type { Metadata } from "next";
 
 import { aboutFaqContent } from "@/content/page-faqs.content";
 
-import { AboutImpact } from "@/components/sections/AboutImpact";
 import { JsonLd } from "@/components/seo/JsonLd";
 
-import {
-  ABOUT_IMPACT_HEADING_ID,
-  aboutImpactContent,
-} from "@/content/about-impact.content";
 import { buildPageGraph } from "@/lib/schema";
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { PageMetaContent } from "@/types/content.types";
@@ -16,6 +11,7 @@ import { buildPageMetadata } from "@/lib/seo";
 import { AboutHero } from "@/new-redesign/components/sections/about/AboutHero";
 import { AboutStory } from "@/new-redesign/components/sections/about/AboutStory";
 import { AboutMissionVision } from "@/new-redesign/components/sections/about/AboutMissionVision";
+import { AboutValues } from "@/new-redesign/components/sections/about/AboutValues";
 import { FaqSection } from "@/new-redesign/components/ui/FaqSection";
 import { OLD_PAGE_FAQ_SUB, oldPageFaq } from "@/new-redesign/content/old-pages.content";
 import { HomeFinalCta } from "@/new-redesign/components/sections/home/HomeFinalCta";
@@ -23,6 +19,7 @@ import { HomeFinalCta } from "@/new-redesign/components/sections/home/HomeFinalC
 const ABOUT_HERO_HEADING_ID = "about-hero-heading";
 const ABOUT_STORY_HEADING_ID = "about-story-heading";
 const ABOUT_MISSION_VISION_HEADING_ID = "about-mission-vision-heading";
+const ABOUT_VALUES_HEADING_ID = "about-values-heading";
 
 /**
  * The About page — spec `Omanga-About-Page-Redesign-v1.md`.
@@ -166,21 +163,8 @@ export default function AboutPage() {
       {/* [CHANGED, 2026-10-27] New-design mission and vision (owner): Mobbin C1, 7shifts. */}
       <AboutMissionVision headingId={ABOUT_MISSION_VISION_HEADING_ID} />
 
-      {/*
-        Stage 5. Our Impact — spec § 6, from Figma node 2579:131863. Three pillar
-        controls beside one panel, switching on hover.
-
-        Dark, after the light timeline. That contrast is doing § 5's work as well
-        as its own — see the component for why it is ink rather than § 2's blush.
-
-        Its `h2` continues the outline and the three panel `h3`s sit beneath it
-        without skipping a level. All three panels are in the server HTML, so the
-        outline is complete whether or not JavaScript runs.
-      */}
-      <AboutImpact
-        content={aboutImpactContent}
-        headingId={ABOUT_IMPACT_HEADING_ID}
-      />
+      {/* [CHANGED, 2026-10-27] New-design values (owner): Mobbin D1, Figma. */}
+      <AboutValues headingId={ABOUT_VALUES_HEADING_ID} />
 
       {/*
         Stage 6. The closing CTA band — spec § 7. `CTA` is reused unchanged; only

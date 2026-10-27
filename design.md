@@ -3144,3 +3144,18 @@ Owner: Mobbin C1 (7shifts).
   point `aria-labelledby` at it.
 - Removed: the old `AboutMissionVision` (timeline rail) and
   `about-mission-vision.content`.
+
+### About § 4 What we value (2026-10-27)
+
+Owner: Mobbin D1 (Figma's values).
+
+- `AboutValues` (new-redesign/components/sections/about): a white band
+  (`bg-surface`; the reference's tint kept neutral after the crimson Vision
+  card), `SectionHead` (eyebrow "Our values", heading kept), then three square
+  photos, 12px radius, each with a 22px H3 and a P2 line in secondary text.
+  One column below 768.
+- People, Passion and Partnership texts and photos kept from the old Impact
+  section. The photos are resized to 1600px in `public/about/value-*.jpg`
+  (0.3 to 0.4 MB each, down from 1.5 to 27 MB).
+- Removed: the old `AboutImpact` (hover tabs), `about-impact.content` and the
+  three original photos.

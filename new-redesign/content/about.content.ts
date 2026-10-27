@@ -63,3 +63,31 @@ export const aboutMissionVision = {
     },
   ],
 } as const;
+
+/**
+ * What we value: Mobbin D1 (Figma's "Our Values and Culture"), a white band
+ * with the head, then three square photos, each with its value and a line
+ * under it (owner, 2026-10-27). Values, texts and photos kept from the old
+ * Impact section; the photos are resized copies in public/about. Decorative.
+ */
+export const aboutValues = {
+  eyebrow: "Our values",
+  title: "What we value",
+  values: [
+    {
+      title: "People",
+      text: "We put people first: the visitors we serve, the communities they visit and the partners we work with.",
+      photo: { src: "/about/value-people.jpg", width: 1600, height: 1066 },
+    },
+    {
+      title: "Passion",
+      text: "We want every visitor to see the best of what Nigeria and the rest of Africa have to offer.",
+      photo: { src: "/about/value-passion.jpg", width: 1600, height: 1413 },
+    },
+    {
+      title: "Partnership",
+      text: "We work with established partners. Phillips HMO, a Nigerian health maintenance organisation (HMO), provides our health cover.",
+      photo: { src: "/about/value-partnership.jpg", width: 1094, height: 1600 },
+    },
+  ],
+} as const;

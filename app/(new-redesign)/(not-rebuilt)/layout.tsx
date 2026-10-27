@@ -1,5 +1,5 @@
 /**
- * The pages not yet rebuilt in the new design (2026-10-26): about, plans,
+ * The pages not yet rebuilt in the new design (2026-10-26): plans,
  * safety, contact, blog, rates and the legal pages. Their sections were moved
  * onto the new design system's tokens and they share the new FAQ and closing
  * panel; each page's own sections are redesigned one at a time, and a page

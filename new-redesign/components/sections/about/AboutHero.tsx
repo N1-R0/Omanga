@@ -7,13 +7,14 @@ import { aboutHero } from "@/new-redesign/content/about.content";
  * and sub centred, then a video box of a traveller walking through an
  * airport. The box starts at the content width (12px radius) and grows to
  * the full page width as you scroll (owner). Below 768 it is edge to edge and
- * square from the start, as the other heroes are.
+ * square from the start, as the other heroes are. The top padding adds the
+ * 76px header, which sits over the page top.
  */
 export function AboutHero({ headingId }: { headingId: string }) {
   const { pill, title, sub, video } = aboutHero;
 
   return (
-    <section aria-labelledby={headingId} className="pt-10 md:pt-16">
+    <section aria-labelledby={headingId} className="pt-[calc(76px+40px)] md:pt-[calc(76px+64px)]">
       <div className="container-page flex flex-col items-center text-center">
         {/* Page pill (owner, 2026-10-27): the section eyebrow's crimson marker in a bordered pill. */}
         <p className="type-p2 mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-surface py-1.5 pr-4 pl-3 text-text">

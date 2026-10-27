@@ -1,8 +1,8 @@
 # New design
 
 The site's only design system since 2026-10-26. Home (`/`), Payments
-(`/payments`) and Insurance (`/insurance`) are built in it. The other pages
-(about, plans, safety, contact, blog, rates, legal) sit in
+(`/payments`), Insurance (`/insurance`) and About (`/about`) are built in it.
+The other pages (plans, safety, contact, blog, rates, legal) sit in
 `app/(new-redesign)/(not-rebuilt)`: their sections were moved onto these
 tokens and they share the new FAQ and closing panel, but their own sections
 still need redesigning, one page at a time.

@@ -1,3 +1,4 @@
+import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { PageMetaContent } from "@/types/content.types";
 
 /**
@@ -26,6 +27,14 @@ export const insuranceMeta: PageMetaContent = {
   description:
     "Travel insurance for Nigeria that covers your health: short-term plans from Phillips HMO, from $50 a month. Compare insurance plans.",
   path: "/insurance",
+};
+
+// Kept from the old About page (UX copy pass, 2026-10-14). The wallet covers
+// 50+ African countries; health cover is Nigeria only.
+export const aboutMeta: PageMetaContent = {
+  title: "About Omanga: Travel Money and Health Insurance",
+  description: `Omanga is a Lagos company for visitors to Nigeria: a free wallet you can spend in ${COUNTRIES_SERVED_DISPLAY} African countries and short-term health cover from Phillips HMO.`,
+  path: "/about",
 };
 
 /** The FAQ sections' { q, a } pairs, in the shape lib/schema.ts reads. */

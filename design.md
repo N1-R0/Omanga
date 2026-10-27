@@ -3159,3 +3159,11 @@ Owner: Mobbin D1 (Figma's values).
   (0.3 to 0.4 MB each, down from 1.5 to 27 MB).
 - Removed: the old `AboutImpact` (hover tabs), `about-impact.content` and the
   three original photos.
+
+### About rebuilt (2026-10-27)
+
+The page moved out of `(not-rebuilt)` to `app/(new-redesign)/about`, its old
+spec comments replaced by a short header; metadata now in `seo.content.ts`
+(`aboutMeta`). The URL is unchanged, so `LIVE_PATHS` and redirects need no
+change. The hero's top padding now adds the 76px header, as the other
+rebuilt heroes do.

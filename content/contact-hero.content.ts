@@ -41,8 +41,7 @@ import type { CallToAction, Eyebrow } from "@/types/content.types";
  * ✏️ § 2's copy, transcribed with one correction.
  *
  * [CORRECTED] § 2's support paragraph reads "help with a payment, your card or
- * an insurance claim". `FORBIDDEN_COPY_TERMS` in `content/site.content.ts`
- * records that "tracked changes removed every 'card' claim from the approved
+ * an insurance claim". `content/site.content.ts` records that "tracked changes removed every 'card' claim from the approved
  * copy… Physical-card language must not reappear in copy, image alt text, or
  * component names", and project-context.md outranks a page spec — the same
  * precedence that resolves 52 to 43.

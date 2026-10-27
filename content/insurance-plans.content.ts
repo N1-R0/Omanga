@@ -226,8 +226,7 @@ export const insurancePlansContent: InsurancePlansContent = {
   action: {
     label: "Compare every benefit",
     // A bare fragment: the comparison table is the next section on this same
-    // page, so this scrolls rather than navigates. The prefixed
-    // `INSURANCE_COVERAGE_HREF` is for links arriving from `/insurance`.
+    // page, so this scrolls rather than navigates.
     href: `#${INSURANCE_COVERAGE_ANCHOR}`,
     emphasis: "text",
   },

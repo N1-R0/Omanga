@@ -56,3 +56,4 @@ public/devices/*-preview.jpg
 # Pay-in-person walkthrough: raw app screenshots (placeholder data, mock backend).
 # Kept locally only; the site ships the posters and Lotties built from them.
 /design-lab/walkthrough/
+dev-server.log

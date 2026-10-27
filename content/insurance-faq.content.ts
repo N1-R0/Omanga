@@ -9,8 +9,6 @@ import type { FaqContent } from "@/types/blog.types";
  * marked for the Omanga team's review. Prices and inclusions restate
  * `insurance-plans.content.ts`; the provider restates `legal-shared.content.ts`.
  */
-export const INSURANCE_FAQ_HEADING_ID = "insurance-faq-heading";
-
 // [CHANGED, 2026-10-14] UX copy pass: answers name Phillips HMO and Nigeria.
 // Order is load-bearing: home shows items[0], [1] and [2] by index. Two items
 // added at the end (where cover applies, extending a plan).

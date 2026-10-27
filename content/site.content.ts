@@ -2,11 +2,7 @@
 /**
  * Global content — strings that appear on more than one page.
  *
- * This module is the exemplar for the content architecture. Section modules
- * sit beside it as `<section-name>.content.ts`, each exporting one
- * `<sectionName>Content` object typed against `SectionContent<T>` from
- * `types/content.types.ts`. They are populated in the page-implementation
- * phase, not here.
+ * Section modules sit beside it as `<section-name>.content.ts`.
  *
  * Everything below is verbatim from the CEO-approved copy document via
  * project-context.md § Non-negotiable copy facts. Nothing here is drafted,
@@ -57,22 +53,9 @@ export const COUNTRIES_SERVED = 50 as const;
  */
 export const COUNTRIES_SERVED_DISPLAY = `${COUNTRIES_SERVED}+` as const;
 
-/**
- * Product vocabulary guard.
- *
- * Tracked changes removed every "card" claim from the approved copy; "one
- * card" became "a customized payment solution". Physical-card language must
- * not reappear in copy, image alt text, or component names. Recorded here as
- * documentation for the lint rule that enforces it — deliberately not a
- * string that renders.
+/*
+ * Product vocabulary: tracked changes removed every "card" claim from the
+ * approved copy ("one card" became "a customized payment solution").
+ * Physical-card language must not reappear in copy, alt text or component
+ * names.
  */
-export const FORBIDDEN_COPY_TERMS = ["card", "cards"] as const;
-
-/**
- * The "Can't find your answer?" line under every FAQ heading (site-wide FAQ
- * design, 2026-10-10). One copy, so every page says it the same way.
- */
-export const FAQ_HELP = {
-  text: "Can't find your answer?",
-  link: { label: "Contact us", href: "/contact" },
-} as const;

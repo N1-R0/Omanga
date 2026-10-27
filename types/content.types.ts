@@ -78,25 +78,6 @@ export type ImageAsset = {
 export type Eyebrow = string;
 
 /**
- * The fixed structure of a section's content.
- *
- * component-rules.md § Section rules: "Structure is fixed: optional eyebrow,
- * one heading, optional intro, content, optional action." That shape is
- * encoded here so a section module cannot introduce a second heading or a
- * differently named intro field.
- *
- * `TContent` is the section-specific payload — cards, steps, tabs. Each
- * section module narrows it to its own type.
- */
-export type SectionContent<TContent> = {
-  readonly eyebrow?: Eyebrow;
-  readonly heading: string;
-  readonly intro?: string;
-  readonly content: TContent;
-  readonly action?: CallToAction;
-};
-
-/**
  * Metadata for a route, consumed by the App Router Metadata API.
  *
  * Deliberately minimal: only the fields the SEO spec requires. Open Graph and

@@ -71,8 +71,6 @@
 export const INSURANCE_PLANS_HREF = "/plans" as const;
 
 export const INSURANCE_COVERAGE_ANCHOR = "coverage" as const;
-export const INSURANCE_COVERAGE_HREF =
-  `${INSURANCE_PLANS_HREF}#${INSURANCE_COVERAGE_ANCHOR}` as const;
 
 /**
  * The three tiers, in the approved order.

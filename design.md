@@ -3167,3 +3167,26 @@ spec comments replaced by a short header; metadata now in `seo.content.ts`
 (`aboutMeta`). The URL is unchanged, so `LIVE_PATHS` and redirects need no
 change. The hero's top padding now adds the 76px header, as the other
 rebuilt heroes do.
+
+### Header on scroll, first-load fix (2026-10-27)
+
+- Owner: once the bar has scrolled out of view, scrolling up slides it back
+  in on its own as a fixed white bar (hairline under it, dark text, colour
+  logo); scrolling down hides it. Back at the top it is the transparent bar
+  again. Open menus close when it hides. The page dimmer stays for open
+  menus only.
+- Bug: a fresh load could show dark header text over the home hero for a
+  moment, because the colour and logo transitions ran from the browser
+  default as the styles arrived. Transitions now switch on only after the
+  first frame.
+
+### Dead code removed (2026-10-27)
+
+Owner: delete old code nothing uses; keep what the `(not-rebuilt)` pages
+need. An import graph from every route found only these unused: the old
+`HowItWorks` timeline, the wallet `Glyph` icon set, five exports
+(`INSURANCE_FAQ_HEADING_ID`, `INSURANCE_COVERAGE_HREF`, `FORBIDDEN_COPY_TERMS`
+(its rule kept as a comment), `FAQ_HELP`, `SectionContent`), the `motion`
+package and a tracked `dev-server.log`. Every image in `public/` is in use,
+and the old stylesheets were already gone. The rest of `components/` and
+`content/` serves the not-rebuilt pages and goes as each is redesigned.

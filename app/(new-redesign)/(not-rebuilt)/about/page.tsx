@@ -5,13 +5,8 @@ import { aboutFaqContent } from "@/content/page-faqs.content";
 import { AboutImpact } from "@/components/sections/AboutImpact";
 import { AboutMissionVision } from "@/components/sections/AboutMissionVision";
 import { AboutStory } from "@/components/sections/AboutStory";
-import { SkyHero } from "@/components/sections/SkyHero";
 import { JsonLd } from "@/components/seo/JsonLd";
 
-import {
-  ABOUT_HERO_HEADING_ID,
-  aboutPhotoHeroContent,
-} from "@/content/about-hero.content";
 import {
   ABOUT_IMPACT_HEADING_ID,
   aboutImpactContent,
@@ -28,9 +23,12 @@ import { buildPageGraph } from "@/lib/schema";
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { PageMetaContent } from "@/types/content.types";
 import { buildPageMetadata } from "@/lib/seo";
+import { AboutHero } from "@/new-redesign/components/sections/about/AboutHero";
 import { FaqSection } from "@/new-redesign/components/ui/FaqSection";
 import { OLD_PAGE_FAQ_SUB, oldPageFaq } from "@/new-redesign/content/old-pages.content";
 import { HomeFinalCta } from "@/new-redesign/components/sections/home/HomeFinalCta";
+
+const ABOUT_HERO_HEADING_ID = "about-hero-heading";
 
 /**
  * The About page — spec `Omanga-About-Page-Redesign-v1.md`.
@@ -165,23 +163,8 @@ export default function AboutPage() {
 
         The outline below it opens at `h2` without skipping a level.
       */}
-      {/*
-        [CHANGED, 2026-10-15] `AboutHero` (copy beside a framed photo) is
-        replaced by `PhotoHero`, the home page's layout (owner request). On
-        desktop the photo is pushed right and fades into the sampled sky; on
-        small screens it starts low and fades in from the top.
-      */}
-      {/*
-        [CHANGED, 2026-10-18] `PhotoHero` -> `SkyHero`, the shared hero every
-        photo-hero page now uses (owner request), so About shows the sky photo
-        instead of its own. Same copy and heading id.
-      */}
-      <SkyHero
-        headingId={ABOUT_HERO_HEADING_ID}
-        heading={aboutPhotoHeroContent.heading}
-        intro={aboutPhotoHeroContent.intro}
-        actions={aboutPhotoHeroContent.actions}
-      />
+      {/* [CHANGED, 2026-10-26] New-design hero (owner): A1, text then a video box. */}
+      <AboutHero headingId={ABOUT_HERO_HEADING_ID} />
 
       {/*
         Stage 3. Our Story — spec § 3. Laid out from Figma node 2578:131852: the

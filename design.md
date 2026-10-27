@@ -3094,3 +3094,23 @@ and the converter stays centred on it. Reverted the same day (owner): back to
 the content-width box with a 12px radius from 768px; below 768 it runs edge
 to edge with square corners (owner). The Insurance hero's and the rate pages'
 photo boxes do the same.
+
+### About § 1 hero (2026-10-26)
+
+Owner: Mobbin A1 (Wise's About), with the heading and sub on the left and a
+video box below, airport footage. Picked V6 from a Pexels shortlist.
+
+- `AboutHero` (new-redesign/components/sections/about): copy kept from the old
+  About hero, centred (owner). From 768 the video box starts at the content
+  width with a 12px radius and grows to the full page width, square, as you
+  scroll (`ScrollGrowBox`: done when its top meets the header; fixed height
+  min(600px, 72vh) so growing never shifts the page; stays put under reduced
+  motion). Below 768 it is 4:5 and edge to edge from the start.
+- `HeroVideo` (ui): muted, looping, inline; 720p below 768, 1080p above; the
+  clip's still as poster, and it never plays under reduced motion.
+- Video: Pexels 19959356 by K (Pexels License), self-hosted in public/videos
+  (6.3 MB, 3.8 MB, 0.23 MB poster).
+- Removed with the old hero: `SkyHero`, `about-hero.content`, `hero.content`
+  and their photos (`about-hero-sky`, `hero-arms-up`, `insurance-hero-sky`).
+- Pill above the heading (owner, 2026-10-27): "About", the section eyebrow's
+  crimson marker inside a bordered white pill, 24px above the H1.

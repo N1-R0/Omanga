@@ -39,12 +39,25 @@ import { navigation, type NavMenu } from "@/new-redesign/content/navigation.cont
  * Tabs open on hover and on click. Escape closes and returns focus to the tab;
  * leaving the header with the pointer or with focus also closes.
  *
+ * [CHANGED, 2026-10-27] Scrolling (owner): the bar scrolls away with the
+ * page; once it is out of view, scrolling up slides it back in on its own as a
+ * fixed white bar, and scrolling down hides it again. Back at the top it is
+ * the transparent bar once more.
+ *
+ * [FIXED, 2026-10-27] Fresh loads flashed dark text over the home hero: the
+ * colour transitions ran from the browser's default black as the styles
+ * arrived. Transitions now switch on only after the first frame.
+ *
  * Below 1024: logo and a menu button. The primary action lives inside the menu sheet
  * (owner), pinned at its foot, after every group, Help, Log in and WhatsApp.
  */
 const menus = navigation.items;
 
 type Motion = "from-start" | "from-end" | undefined;
+/** top: in the page flow at the top. hidden / shown: fixed, out of or in view. */
+type Bar = "top" | "hidden" | "shown";
+
+const BAR_HEIGHT = 76;
 
 export function Header() {
   const [open, setOpen] = useState<number | null>(null);
@@ -55,8 +68,14 @@ export function Header() {
   const [sheet, setSheet] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const panelRefs = useRef<Record<number, HTMLDivElement | null>>({});
+  const [bar, setBar] = useState<Bar>("top");
+  // Slide only between hidden and shown, never when the bar first leaves the
+  // flow (it would visibly slide up from the top).
+  const [slide, setSlide] = useState(false);
+  const [ready, setReady] = useState(false);
   const pathname = usePathname();
-  const solid = open !== null;
+  const pinned = bar !== "top";
+  const solid = open !== null || pinned;
   // Only the home hero is dark; every other page's top is light.
   const dark = solid || pathname !== href("/");
 
@@ -67,6 +86,36 @@ export function Header() {
     setOpen(i);
     if (i !== null) setShown(i);
   };
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setReady(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
+  useEffect(() => {
+    let last = window.scrollY;
+    let current: Bar = "top";
+    const set = (next: Bar) => {
+      if (next === current) return;
+      setSlide(current !== "top" && next !== "top");
+      current = next;
+      setBar(next);
+      if (next !== "shown") setOpen(null);
+    };
+    const onScroll = () => {
+      const y = window.scrollY;
+      const dy = y - last;
+      last = y;
+      if (y <= 0) set("top");
+      else if (current === "top") {
+        if (y > BAR_HEIGHT) set("hidden");
+      } else if (dy < -2) set("shown");
+      else if (dy > 2) set("hidden");
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Measure every panel so the area can animate to an exact height.
   useEffect(() => {
@@ -111,7 +160,7 @@ export function Header() {
     };
   }, [sheet]);
 
-  const navColor = "transition-[color,background-color] duration-[var(--duration-nav)] ease-nav";
+  const navColor = ready ? "transition-[color,background-color] duration-[var(--duration-nav)] ease-nav" : "";
 
   return (
     <>
@@ -120,7 +169,7 @@ export function Header() {
         aria-hidden
         className={cx(
           "pointer-events-none fixed inset-0 z-30 hidden bg-[rgb(0_0_0/0.5)] backdrop-blur-[8px] transition-opacity duration-[var(--duration-nav)] ease-nav lg:block",
-          solid ? "opacity-100" : "opacity-0",
+          open !== null ? "opacity-100" : "opacity-0",
         )}
       />
       <header
@@ -129,13 +178,19 @@ export function Header() {
         onBlur={(e) => {
           if (!e.currentTarget.contains(e.relatedTarget as Node)) show(null);
         }}
-        className={cx("absolute inset-x-0 top-0 z-40", navColor, solid ? "bg-surface text-text" : dark ? "text-text" : "text-text-inverse")}
+        className={cx(
+          "inset-x-0 top-0 z-40",
+          pinned ? "fixed border-b border-border" : "absolute",
+          bar === "hidden" && "-translate-y-full",
+          ready && (slide ? "transition-[translate,color,background-color] duration-[var(--duration-nav)] ease-nav" : navColor),
+          solid ? "bg-surface text-text" : dark ? "text-text" : "text-text-inverse",
+        )}
       >
         <div className="container-page flex h-19 items-center gap-6">
           <Link href={href("/")} aria-label={navigation.homeLabel} className="relative shrink-0 rounded-[16px]">
             {/* Both logos are stacked and cross-faded, standing in for Wise's fill transition. */}
-            <Image src="/logo-omanga-white.svg" alt="" width={110} height={31} priority className={cx(navColor, "transition-opacity", dark ? "opacity-0" : "opacity-100")} />
-            <Image src="/logo-omanga-horizontal.svg" alt="" width={110} height={31} priority className={cx("absolute inset-0 transition-opacity duration-[var(--duration-nav)] ease-nav", dark ? "opacity-100" : "opacity-0")} />
+            <Image src="/logo-omanga-white.svg" alt="" width={110} height={31} priority className={cx(navColor, ready && "transition-opacity", dark ? "opacity-0" : "opacity-100")} />
+            <Image src="/logo-omanga-horizontal.svg" alt="" width={110} height={31} priority className={cx("absolute inset-0", ready && "transition-opacity duration-[var(--duration-nav)] ease-nav", dark ? "opacity-100" : "opacity-0")} />
           </Link>
 
           <nav aria-label={navigation.landmarkLabel} className="hidden lg:block">

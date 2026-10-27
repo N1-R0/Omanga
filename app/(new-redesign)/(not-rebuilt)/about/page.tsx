@@ -4,7 +4,6 @@ import { aboutFaqContent } from "@/content/page-faqs.content";
 
 import { AboutImpact } from "@/components/sections/AboutImpact";
 import { AboutMissionVision } from "@/components/sections/AboutMissionVision";
-import { AboutStory } from "@/components/sections/AboutStory";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 import {
@@ -15,20 +14,18 @@ import {
   ABOUT_MISSION_VISION_HEADING_ID,
   aboutMissionVisionContent,
 } from "@/content/about-mission-vision.content";
-import {
-  ABOUT_STORY_HEADING_ID,
-  aboutStoryContent,
-} from "@/content/about-story.content";
 import { buildPageGraph } from "@/lib/schema";
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { PageMetaContent } from "@/types/content.types";
 import { buildPageMetadata } from "@/lib/seo";
 import { AboutHero } from "@/new-redesign/components/sections/about/AboutHero";
+import { AboutStory } from "@/new-redesign/components/sections/about/AboutStory";
 import { FaqSection } from "@/new-redesign/components/ui/FaqSection";
 import { OLD_PAGE_FAQ_SUB, oldPageFaq } from "@/new-redesign/content/old-pages.content";
 import { HomeFinalCta } from "@/new-redesign/components/sections/home/HomeFinalCta";
 
 const ABOUT_HERO_HEADING_ID = "about-hero-heading";
+const ABOUT_STORY_HEADING_ID = "about-story-heading";
 
 /**
  * The About page — spec `Omanga-About-Page-Redesign-v1.md`.
@@ -166,23 +163,8 @@ export default function AboutPage() {
       {/* [CHANGED, 2026-10-26] New-design hero (owner): A1, text then a video box. */}
       <AboutHero headingId={ABOUT_HERO_HEADING_ID} />
 
-      {/*
-        Stage 3. Our Story — spec § 3. Laid out from Figma node 2578:131852: the
-        story centred in its own column with a photograph cropped off each band
-        edge, both hidden below desktop.
-
-        Dark, directly after the light hero, so the colour flip is the section
-        divider § 3 asks it to be. Its `h2` is visually suppressed — see the
-        component — but present, so the outline is unbroken.
-
-        [REMOVED] The full-bleed parallax band that briefly sat between the hero
-        and this section, along with its content module. Removed on instruction;
-        its asset is now this band's left-hand photograph.
-      */}
-      <AboutStory
-        content={aboutStoryContent}
-        headingId={ABOUT_STORY_HEADING_ID}
-      />
+      {/* [CHANGED, 2026-10-27] New-design story (owner): Mobbin B1, Ramp's "Our Story". */}
+      <AboutStory headingId={ABOUT_STORY_HEADING_ID} />
 
       {/*
         Stage 4. Mission & Vision — spec § 4, on the shared timeline rail the

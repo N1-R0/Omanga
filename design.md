@@ -3114,3 +3114,17 @@ video box below, airport footage. Picked V6 from a Pexels shortlist.
   and their photos (`about-hero-sky`, `hero-arms-up`, `insurance-hero-sky`).
 - Pill above the heading (owner, 2026-10-27): "About", the section eyebrow's
   crimson marker inside a bordered white pill, 24px above the H1.
+
+### About § 2 Our story (2026-10-27)
+
+Owner: Mobbin B1 (Ramp's "Our Story").
+
+- `AboutStory` (new-redesign/components/sections/about): eyebrow and H2 on
+  the left, the lead on the right at 24px (20 on mobile; off the type scale,
+  matching the reference's step between H2 and body), then the other two
+  paragraphs as two P2 columns in secondary text. Stacks below 1024; the two
+  columns stack below 768. Light, on the page background.
+- Copy kept from the old story section, now in `about.content.ts`.
+- Removed: the old `AboutStory`, `about-story.content` and its two photos
+  (`person-wearing-colorful-fashion.jpg`, `spend more.jpg`); the reference
+  has no imagery.

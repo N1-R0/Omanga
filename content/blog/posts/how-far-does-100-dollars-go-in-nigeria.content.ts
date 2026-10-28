@@ -1,4 +1,3 @@
-import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { BlogPost } from "@/types/blog.types";
 import type { ImageAsset } from "@/types/content.types";
 
@@ -44,6 +43,20 @@ import type { ImageAsset } from "@/types/content.types";
  *   ₦20 transfer fee instead of "no hidden fees", drops unconfirmed 24/7 wallet
  *   support, shorter sentences.
  *
+ * [REWRITTEN, 2026-10-28] Blog audit + rewrite pass:
+ *   - Dropped "mid-market" everywhere, including the FAQ that defined it
+ *     (no-rate-disclosure rule); the rate gap is now explained as "the rate
+ *     Google shows" vs the rate you get.
+ *   - Wallet copy matches how it works (owner, 2026-10-22 and 2026-10-28):
+ *     convert to naira, pay sellers by transfer to their bank account; leftover
+ *     naira converts back. Was "spend from your balance online or in person".
+ *   - "How to pay": owner's first-hand view (transfer first, POS often down,
+ *     cash for small things), CBN December 2025 foreign-card directive, link to
+ *     the card guide, which now owns "can I use my card in Nigeria".
+ *   - FAQ adds "Is $1 a lot in Nigeria?" (ATP People Also Ask, roadmap item 4),
+ *     priced from the buka figures already in the post.
+ *   - Comment above about the ₦20 fee is history only; no fee appears in copy.
+ *
  * [VERIFY] Prices move with fuel and the naira. Refresh the figures and the
  * rate every quarter, and before November for the December section.
  */
@@ -87,7 +100,7 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
   summary:
     "Further than at home, and not as far as people say. Here's what $20, $50, $100 and $200 really buy in Lagos right now, and the quiet ways visitors lose a chunk of it.",
   publishedDate: "2026-10-11",
-  updatedDate: "2026-10-14",
+  updatedDate: "2026-10-28",
   readingMinutes: 8,
   image: hundredDollarsImage,
   imageCredit: {
@@ -272,7 +285,7 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
             {
               term: "A bad exchange rate",
               description: [
-                "This is the big one. The mid-market rate is the rate you see on Google. Many providers convert at a worse rate and keep the difference, so a service can say \"no fees\" and still cost you. Convert $1,000 at 3% below the mid-market rate and you lose $30 without seeing a single fee. Over a few weeks, that adds up to more than any charge on a receipt.",
+                "This is the big one. Many providers convert at a worse rate than the one Google shows and keep the difference, so a service can say \"no fees\" and still cost you. Convert $1,000 at a rate 3% worse and you lose $30 without seeing a single fee. Over a few weeks, that adds up to more than any charge on a receipt. Always compare how many naira you actually receive.",
               ],
             },
             {
@@ -304,15 +317,17 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "Nigerians pay with a mix of cash, instant bank transfers and card terminals (called POS). Many sellers simply give you an account number and wait for the alert on their phone. That's easy with a Nigerian bank account and awkward without one.",
+            "Nigerians pay with a mix of instant bank transfers, card terminals (called POS) and cash. From our team in Lagos: a transfer is what most sellers ask for first. They give you an account number and wait for the alert on their phone. Card machines are common but often drop out when the network is busy, and cash is for small things. Paying by transfer is easy with a Nigerian bank account and awkward without one.",
           ],
         },
         {
           kind: "paragraph",
           content: [
-            "Your UK, US or Canadian card often works at hotels, malls and bigger restaurants, but not everywhere. Your bank may freeze it the first time it sees a Nigerian payment. Tell your bank before you travel, and keep a second card in a different bag. The UK Foreign Office warns that card fraud is common, so keep your card in sight when you pay (",
+            "Your UK, US or Canadian card usually works at hotels, malls and bigger restaurants. Since December 2025, Nigeria's central bank has told banks to make their ATMs and card machines accept foreign cards, but your own bank may still freeze the card the first time it sees a Nigerian payment. Tell your bank before you travel, and keep a second card in a different bag. The UK Foreign Office warns that card fraud is common, so keep your card in sight when you pay (",
             { text: "GOV.UK travel advice", href: FCDO_SAFETY_URL, isExternal: true },
-            ").",
+            "). Our guide to ",
+            { text: "using your card in Nigeria", href: "/blog/can-i-use-my-card-in-nigeria" },
+            " covers ATMs, fees and what to carry.",
           ],
         },
         {
@@ -336,16 +351,14 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "Most of the money visitors lose, they lose at the conversion. The Omanga wallet is built to fix that part. You fund it from USD, GBP or CAD and see the rate before you confirm. Then you spend from your balance online or in person across ",
-            COUNTRIES_SERVED_DISPLAY,
-            " African countries, Nigeria included.",
+            "Most of the money visitors lose, they lose at the conversion. The Omanga wallet is built to fix that part, and the transfer problem too. You add US dollars, pounds or Canadian dollars, convert to naira when you need it, and see the rate before you confirm. Then you pay sellers by sending naira to their bank account, with no Nigerian bank account of your own. Naira you don't spend can be converted back to dollars.",
           ],
         },
         {
           kind: "paragraph",
           content: [
-            // [CHANGED, 2026-10-14] UX copy pass: named the ₦20 fee instead of "no
-            // hidden fees"; removed 24/7 wallet support (not owner-confirmed).
+            // [CHANGED, 2026-10-14] UX copy pass: removed 24/7 wallet support
+            // (not owner-confirmed).
             "The wallet is free to open and holds 6+ currencies, with no minimums. ",
             { text: "Explore the wallet", href: "/payments" },
             ".",
@@ -396,12 +409,17 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
       {
         question: "Can I use my UK or US bank card in Nigeria?",
         answer:
-          "Often, at hotels, malls and larger businesses in big cities, but not everywhere. Your bank may block the card until you confirm the payment. Foreign transaction fees and exchange margins add up. Card fraud is common, so keep your card in sight and carry a backup.",
+          "Usually, at hotels, malls and larger businesses in big cities. Many smaller sellers prefer a bank transfer or cash. Your bank may block the card until you confirm the payment, and foreign transaction fees add up. Card fraud is common, so keep your card in sight and carry a backup.",
       },
       {
-        question: "What is the mid-market exchange rate?",
+        question: "Is $1 a lot in Nigeria?",
         answer:
-          "It is the midpoint between the buy and sell prices of a currency: the rate you see on Google or in financial news. The Omanga wallet shows you its rate before you confirm, so you can compare.",
+          "$1 is about ₦1,350. That is about the price of a plate of rice and stew at a local buka on the Lagos Mainland, where a plate costs ₦1,000 to ₦2,500.",
+      },
+      {
+        question: "Why is the rate I get lower than the rate on Google?",
+        answer:
+          "Banks, bureaux and card providers often convert at a worse rate than the one Google shows and keep the difference, and some add fees too. Compare how many naira you actually receive. The Omanga wallet shows you its rate before you confirm.",
       },
     ],
   },
@@ -409,9 +427,7 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
     label: "Explore the wallet",
     href: "/payments",
     prompt: [
-      "Fund your wallet from USD, GBP or CAD. Spend online or in person across ",
-      COUNTRIES_SERVED_DISPLAY,
-      " African countries. Free to open.",
+      "Add dollars, pounds or Canadian dollars, convert to naira and pay any Nigerian bank account by transfer. Free to open.",
     ],
   },
 };

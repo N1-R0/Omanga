@@ -27,6 +27,13 @@ import type { ImageAsset } from "@/types/content.types";
  * [CHANGED, 2026-10-14] UX copy pass (design.md § Home UX copy pass): one named
  *   provider (Phillips HMO), cover applies in Nigeria only, activation is not
  *   cover start, and per-plan hospital categories are left to /plans.
+ * [REWRITTEN, 2026-10-28] Blog audit + rewrite pass, light: plan facts and
+ *   voice kept as they were (health claims need owner / Phillips HMO sign-off).
+ *   Updated from GOV.UK (read 2026-10-28): check vaccines at least 8 weeks
+ *   ahead; yellow fever exemptions (8 months and under, 61 and over); health
+ *   advice changes, so link the live page. GOV.UK's 21 Oct 2026 note of one
+ *   imported Ebola case is not quoted: a dated case report goes stale.
+ *   Linked the new first-time visitor and card guides.
  */
 
 /**
@@ -73,7 +80,7 @@ export const healthInsuranceVisitingNigeriaPost: BlogPost = {
   summary:
     "Your cover at home almost certainly stops at the airport. What happens if you need a doctor in Nigeria, and what good health cover for your trip should include.",
   publishedDate: "2026-10-09",
-  updatedDate: "2026-10-18",
+  updatedDate: "2026-10-28",
   readingMinutes: 6,
   image: healthInsuranceImage,
   imageCredit: {
@@ -221,7 +228,15 @@ export const healthInsuranceVisitingNigeriaPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "Insurance is one part of it. Nigeria requires proof of yellow fever vaccination on arrival, and malaria is a risk all year. Book a travel clinic appointment well before your trip. Bring enough of any regular medicine to cover delays. Save your insurer's emergency number in your phone before you need it.",
+            "Insurance is one part of it. Nigeria requires proof of yellow fever vaccination on arrival; babies aged 8 months or younger and adults aged 61 or over are exempt. Malaria is a risk all year. The UK government suggests checking which vaccines you need at least 8 weeks before you travel, so book a travel clinic early. Bring enough of any regular medicine to cover delays. Save your insurer's emergency number in your phone before you need it.",
+          ],
+        },
+        {
+          kind: "paragraph",
+          content: [
+            "Health advice for Nigeria can change at short notice. Read the latest just before you fly (",
+            { text: "GOV.UK health advice", href: FCDO_HEALTH_URL, isExternal: true },
+            ").",
           ],
         },
         {
@@ -232,7 +247,14 @@ export const healthInsuranceVisitingNigeriaPost: BlogPost = {
               text: "how far $100 really goes in Nigeria",
               href: "/blog/how-far-does-100-dollars-go-in-nigeria",
             },
-            " covers real Lagos prices, cash and exchange rates.",
+            " covers real Lagos prices, and ",
+            { text: "can I use my card in Nigeria?", href: "/blog/can-i-use-my-card-in-nigeria" },
+            " explains how to pay when most sellers want a bank transfer. First trip? Start with our ",
+            {
+              text: "first-time visitor's guide to Nigeria",
+              href: "/blog/visiting-nigeria-for-the-first-time",
+            },
+            ".",
           ],
         },
       ],

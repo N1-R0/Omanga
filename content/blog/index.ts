@@ -1,9 +1,11 @@
 import type { BlogCategory, BlogPost } from "@/types/blog.types";
 
+import { canIUseMyCardInNigeriaPost } from "./posts/can-i-use-my-card-in-nigeria.content";
 import { dettyDecemberChecklistPost } from "./posts/detty-december-nigeria-checklist.content";
 import { howFarDoes100DollarsGoPost } from "./posts/how-far-does-100-dollars-go-in-nigeria.content";
 import { healthInsuranceVisitingNigeriaPost } from "./posts/health-insurance-for-visiting-nigeria.content";
 import { poundsToNairaBestRatePost } from "./posts/pounds-to-naira-best-rate.content";
+import { visitingNigeriaForTheFirstTimePost } from "./posts/visiting-nigeria-for-the-first-time.content";
 
 /**
  * Every published article. Adding a post: create a module in `./posts`, then
@@ -13,6 +15,8 @@ import { poundsToNairaBestRatePost } from "./posts/pounds-to-naira-best-rate.con
  * Newest first by `publishedDate`; ties keep the order written here.
  */
 const POSTS: readonly BlogPost[] = [
+  canIUseMyCardInNigeriaPost,
+  visitingNigeriaForTheFirstTimePost,
   howFarDoes100DollarsGoPost,
   healthInsuranceVisitingNigeriaPost,
   dettyDecemberChecklistPost,

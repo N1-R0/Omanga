@@ -27,6 +27,18 @@ import type { ImageAsset } from "@/types/content.types";
  * [CHANGED, 2026-10-14] UX copy pass (design.md § Home UX copy pass): health
  *   cover names Phillips HMO and Nigeria only (was "Nigerian health providers"
  *   with a no-upfront-payment claim); shorter sentences; plain link text.
+ * [REFRESHED, 2026-10-28] Pre-season refresh (roadmap item 2):
+ *   - Dropped "mid-market" (no-rate-disclosure rule; audit #11).
+ *   - Wallet copy matches how it works: convert to naira, pay by transfer
+ *     (was "spend from your balance online or in person").
+ *   - Cards: CBN's December 2025 directive on foreign cards (allAfrica,
+ *     2025-12-21), linked to the new card guide.
+ *   - Entry: GOV.UK now says visa on arrival is no longer available, apply
+ *     online before travel, and landing/departure cards are filled in online.
+ *   - Health: GOV.UK asks for vaccine checks 8 weeks ahead (was "several").
+ *   - Links to the first-time visitor guide and the card guide.
+ *   Not added: GOV.UK's 21 Oct 2026 note of one imported Ebola case in the FCT.
+ *   The post points to the live health advice instead of a dated case report.
  */
 
 /**
@@ -55,6 +67,8 @@ const shareImage: ImageAsset = {
 
 const FCDO_SAFETY_URL =
   "https://www.gov.uk/foreign-travel-advice/nigeria/safety-and-security";
+const FCDO_HEALTH_URL =
+  "https://www.gov.uk/foreign-travel-advice/nigeria/health";
 const FCDO_ENTRY_URL =
   "https://www.gov.uk/foreign-travel-advice/nigeria/entry-requirements";
 
@@ -65,7 +79,7 @@ export const dettyDecemberChecklistPost: BlogPost = {
     // 162 → 146 characters, so neither is cut off in search results.
     title: "Detty December 2026: Money and Health Checklist | Omanga",
     description:
-      "Flying home to Lagos for Detty December? How to handle money, avoid bad exchange rates, keep cash safe and sort your health cover before you land.",
+      "Flying to Lagos for Detty December 2026? How to pay when sellers want transfers, avoid bad exchange rates, keep cash safe and sort health cover.",
     path: "/blog/detty-december-nigeria-checklist",
     ogImage: shareImage,
   },
@@ -74,8 +88,8 @@ export const dettyDecemberChecklistPost: BlogPost = {
   summary:
     "Flights booked, outfits planned. Now the unglamorous part: how to pay for everything, keep your money safe, and make sure a bad week doesn't become an expensive one.",
   publishedDate: "2026-10-09",
-  updatedDate: "2026-10-14",
-  readingMinutes: 5,
+  updatedDate: "2026-10-28",
+  readingMinutes: 6,
   image: dettyDecemberImage,
   imageCredit: {
     name: "Ani Augustine",
@@ -85,7 +99,7 @@ export const dettyDecemberChecklistPost: BlogPost = {
     {
       kind: "paragraph",
       content: [
-        "Detty December runs from roughly late November into early January. Lagos, and more and more Abuja and other cities, fills with concerts, weddings, beach days and long family lunches. Much of the crowd is Nigerians living abroad, mostly in the UK, the US and Canada, flying home for the season. If that's you, you know the nickname: IJGB, \"I just got back\".",
+        "Detty December runs from roughly late November into early January, and the 2026 season is weeks away. Lagos, and more and more Abuja and other cities, fills with concerts, weddings, beach days and long family lunches. Much of the crowd is Nigerians living abroad, mostly in the UK, the US and Canada, flying home for the season. If that's you, you know the nickname: IJGB, \"I just got back\".",
       ],
     },
     {
@@ -103,13 +117,13 @@ export const dettyDecemberChecklistPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "The easiest mistake is converting money in a hurry: at the airport, at a hotel desk, or with a card that applies its own rate to every payment. Each one quietly costs you a few per cent. Over a month of December spending, that's real money. Move most of your budget before you travel, at a rate you can see and compare with the mid-market rate.",
+            "The easiest mistake is converting money in a hurry: at the airport, at a hotel desk, or with a card that applies its own rate to every payment. Each one quietly costs you a few per cent. Over a month of December spending, that's real money. Move most of your budget before you travel, at a rate you can see before you confirm.",
           ],
         },
         {
           kind: "paragraph",
           content: [
-            "The Omanga wallet is built for this. You fund it from USD, GBP or CAD and see the rate before you confirm. Once you're there, you spend from your balance online or in person. ",
+            "The Omanga wallet is built for this. You add US dollars, pounds or Canadian dollars, convert to naira when you need it, and see the rate before you confirm. Then you pay sellers by sending naira to their bank account, which is how most of Lagos wants to be paid. You don't need a Nigerian bank account. ",
             { text: "Explore the wallet", href: "/payments" },
             ".",
           ],
@@ -117,12 +131,17 @@ export const dettyDecemberChecklistPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "Then plan for how Lagos takes payment. Cash still matters for small spending. Many vendors ask you to pay by bank transfer. Your home card works in some places and not others. Have at least 2 ways to pay at all times. Our guide to ",
+            "Then plan for how Lagos takes payment. Most sellers ask for a bank transfer first. Cash still matters for small spending. Your home card works at hotels, malls and bigger restaurants, and since December 2025 Nigeria's central bank has told banks to make their ATMs and card machines work with foreign cards. Card machines still drop out when the network is busy, and December is busy. Have at least 2 ways to pay at all times. Our guide to ",
             {
-              text: "how far $100 really goes in Nigeria",
+              text: "using your card in Nigeria",
+              href: "/blog/can-i-use-my-card-in-nigeria",
+            },
+            " explains each option, and ",
+            {
+              text: "how far $100 goes in Nigeria",
               href: "/blog/how-far-does-100-dollars-go-in-nigeria",
             },
-            " goes through each option, with real Lagos prices.",
+            " has real Lagos prices to budget with.",
           ],
         },
       ],
@@ -159,9 +178,22 @@ export const dettyDecemberChecklistPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "Nigeria requires proof of yellow fever vaccination on arrival, and malaria is a risk all year. Book a travel clinic appointment several weeks before you fly, not the week before. Check current entry requirements, including visas, for your passport (",
+            "Nigeria requires proof of yellow fever vaccination on arrival, and malaria is a risk all year. The UK government suggests checking vaccines at least 8 weeks before you travel, so for December that means booking a travel clinic now. Health advice can change quickly, so read the latest before you fly (",
+            { text: "GOV.UK health advice", href: FCDO_HEALTH_URL, isExternal: true },
+            ").",
+          ],
+        },
+        {
+          kind: "paragraph",
+          content: [
+            "If you're travelling on a foreign passport, apply for your visa online before you go. GOV.UK says visa on arrival is no longer available, and that landing and departure cards are now filled in online too (",
             { text: "GOV.UK entry requirements", href: FCDO_ENTRY_URL, isExternal: true },
-            "). Our guide to ",
+            "). First trip? Our ",
+            {
+              text: "first-time visitor's guide to Nigeria",
+              href: "/blog/visiting-nigeria-for-the-first-time",
+            },
+            " covers the basics. And our guide to ",
             {
               text: "health insurance for visiting Nigeria",
               href: "/blog/health-insurance-for-visiting-nigeria",
@@ -179,11 +211,11 @@ export const dettyDecemberChecklistPost: BlogPost = {
           kind: "list",
           style: "number",
           items: [
-            ["Check entry requirements and visas for your passport."],
+            ["Apply for your visa online, if you need one, and fill in your landing card."],
             ["Get your yellow fever certificate and malaria advice from a travel clinic."],
             ["Arrange health cover for the full length of your trip."],
             ["Tell your bank you're travelling; pack a backup card separately."],
-            ["Fund your wallet at a rate you can see before you fly."],
+            ["Fund your wallet before you fly, so you can pay by transfer from day one."],
             ["Plan a small amount of naira for your first day."],
             ["Budget for December prices: transport, food and events all cost more."],
             ["Save your bank, wallet and insurer's support numbers on your phone."],
@@ -214,17 +246,22 @@ export const dettyDecemberChecklistPost: BlogPost = {
       {
         question: "Do I need a visa to visit Nigeria from the UK?",
         answer:
-          "If you are travelling on a British passport, yes. UK government travel advice says visitors must have a visa to enter Nigeria and should get it before travelling. If you hold a Nigerian passport, you can travel on that instead.",
+          "If you are travelling on a British passport, yes. UK government travel advice says visitors must get a visa before travelling, applied for through Nigeria's online portal, and that visa on arrival is no longer available. If you hold a Nigerian passport, you can travel on that instead.",
       },
       {
         question: "How should I take money to Nigeria for December?",
         answer:
-          "Use more than one way to pay. Move most of your budget before you fly, at a rate you can compare with the mid-market rate. Keep your home card as a backup and carry only small amounts of naira. Avoid converting at airports and hotel desks.",
+          "Use more than one way to pay. Most sellers in Lagos prefer a bank transfer, so set up a wallet you can send naira from before you fly. Keep your home card for hotels and malls, carry a backup card and only small amounts of naira. Avoid converting at airports and hotel desks.",
       },
       {
         question: "Do I need travel health insurance for Detty December?",
         answer:
           "Yes, it is strongly recommended. Health cover from the UK, US and Canada pays little or nothing for treatment in Nigeria. Omanga offers short-term health cover in Nigeria from Phillips HMO, from $50 a month.",
+      },
+      {
+        question: "Can I use my card in Lagos during Detty December?",
+        answer:
+          "Yes, at hotels, malls, supermarkets and bigger restaurants. Many smaller sellers, drivers and event vendors prefer a bank transfer, and card machines can fail when networks are busy. Carry a backup card and a way to pay by transfer.",
       },
     ],
   },

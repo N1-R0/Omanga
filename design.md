@@ -693,6 +693,29 @@ fine), then write the post from those answers. Aim for two posts a week.
 - Prices and rates in posts come from the owner's interview answers, never
   estimated.
 
+### 2026-10-28 · Blog audit, two new posts, rewrite pass
+
+Run with the claude-blog plugin (blog-audit, blog-write, blog-rewrite). The
+plugin's analyzer reads Markdown, so posts were rendered to Markdown in a
+scratch folder to score them; its "no schema" and "no author" flags are
+artefacts (the route emits BlogPosting + FAQPage; author is the organisation
+by design, see `lib/schema.ts`). Its Flesch "too easy" flag is ignored: plain
+English is the site voice for a consumer audience. Its PDF/HTML delivery gates
+don't apply to TS content modules and were not run.
+
+- New: `can-i-use-my-card-in-nigeria`, `visiting-nigeria-for-the-first-time`.
+  Owner interview 2026-10-28: sellers want a transfer first; the wallet sends
+  naira to any Nigerian bank account; no Omanga card now; no provider brand
+  names (Revolut, Monzo, Wise) even though the search cluster uses them.
+- "mid-market" and "real rate" removed from every post (no-disclosure rule).
+- Wallet copy everywhere now says convert to naira and pay by transfer, not
+  "spend online or in person".
+- The card post owns "can I use my card in Nigeria"; the $100 post keeps a
+  short FAQ answer and links to it. The visitor guide owns "is it safe"; the
+  health post keeps its short FAQ answer.
+- Not quoted: GOV.UK's 21 Oct 2026 note of one imported Ebola case in the FCT.
+  Posts link the live health page instead of a dated case report.
+
 ## Addendum · 2026-10-11 · SEO audit response (Veritas scan)
 
 - **Not indexed** was the root cause of the "not scored" result, not a site

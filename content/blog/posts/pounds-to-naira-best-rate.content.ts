@@ -16,8 +16,16 @@ import type { ImageAsset } from "@/types/content.types";
  *     each bank sets its own; the post names no bank.
  *   - Paying in local currency at the terminal, airport bureaux and ATM fees:
  *     general consumer advice, not claims about any provider.
- *   - Omanga claims restate approved copy only (GBP funding, mid-market rate
- *     shown before you confirm, ₦20 per transfer, free to open).
+ *   - Omanga claims restate approved copy only (GBP funding, rate shown
+ *     before you confirm, free to open).
+ * [REWRITTEN, 2026-10-28] Blog audit + rewrite pass:
+ *   - Dropped "mid-market" and "real rate" (no-rate-disclosure rule). The
+ *     yardstick is now "the rate Google shows" and, above all, naira received.
+ *   - Added a worked comparison (hypothetical figures, labelled as such) so
+ *     "compare naira received" is something a reader can do.
+ *   - Added "Spending naira once you're there": owner's first-hand view that
+ *     sellers want a transfer first; the wallet sends naira to any Nigerian
+ *     bank account (owner, 2026-10-28). Links to the card and first-visit guides.
  * [NEW] copy, needs sign-off. Written without an owner interview (Phase 1
  * instruction); add Omanga's own experience when there is some.
  */
@@ -54,7 +62,8 @@ export const poundsToNairaBestRatePost: BlogPost = {
   summary:
     "The rate on Google isn't always the rate you get. Where the gap comes from when you change pounds to naira, and how to keep more of your money.",
   publishedDate: "2026-10-18",
-  readingMinutes: 5,
+  updatedDate: "2026-10-28",
+  readingMinutes: 6,
   image: nairaNotesImage,
   imageCredit: {
     name: "Sunday Abegunde",
@@ -64,7 +73,7 @@ export const poundsToNairaBestRatePost: BlogPost = {
     {
       kind: "paragraph",
       content: [
-        "You check the pounds to naira rate before you fly, then change your money and get noticeably less. That gap isn't bad luck. It's the margin someone adds between the real rate and the one they give you.",
+        "You check the pounds to naira rate before you fly, then change your money and get noticeably less. That gap isn't bad luck. It's the margin someone adds on top of the rate Google shows you.",
       ],
     },
     {
@@ -82,7 +91,7 @@ export const poundsToNairaBestRatePost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "The fairest benchmark is the mid-market rate: the midpoint between the price banks buy and sell pounds at. It's the rate you see on Google. Our ",
+            "The rate Google shows is a useful starting point, but nobody changes money at exactly that rate. Our ",
             { text: "pounds to naira page", href: "/rates/pounds-to-naira" },
             " shows today's figure, a converter and today's rates against dollars and Canadian dollars.",
           ],
@@ -90,7 +99,14 @@ export const poundsToNairaBestRatePost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "Use it as your yardstick. Whatever you're offered, compare it with the mid-market rate and work out how many naira you actually receive.",
+            "Use it as your yardstick. Whatever you're offered, work out how many naira you actually receive after every fee. That one number is the only fair way to compare.",
+          ],
+        },
+        {
+          kind: "note",
+          title: "A quick example",
+          content: [
+            "Say you're changing £500. Offer A has a better headline rate but adds a £10 fee. Offer B has a slightly worse rate and no fee. Multiply what's left after the fee by the rate for each, and whichever gives more naira wins. Headline rates alone hide the fee; a \"no fee\" offer can hide a worse rate. (Figures here are for illustration only.)",
           ],
         },
       ],
@@ -142,7 +158,7 @@ export const poundsToNairaBestRatePost: BlogPost = {
           kind: "list",
           style: "number",
           items: [
-            ["Check the mid-market rate on the day you change money."],
+            ["Check the rate on Google or our rate page on the day you change money."],
             [
               "Compare what you'll receive in naira, after every fee, not the headline rate.",
             ],
@@ -160,10 +176,35 @@ export const poundsToNairaBestRatePost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            "With an Omanga wallet you add pounds, then convert them to naira. You see the rate before you confirm, so you know exactly what you'll get. The wallet is free to open. It also works in ",
+            "With an Omanga wallet you add pounds, then convert them to naira. You see the rate before you confirm, so you know exactly how many naira you'll get. The wallet is free to open, with no minimums. It also works in ",
             COUNTRIES_SERVED_DISPLAY,
             " African countries if Nigeria isn't your only stop. ",
             { text: "Explore the wallet", href: "/payments" },
+            ".",
+          ],
+        },
+      ],
+    },
+    {
+      id: "spending-naira",
+      heading: "Spending your naira once you're there",
+      blocks: [
+        {
+          kind: "paragraph",
+          content: [
+            "Getting a good rate is half of it. The other half is paying the way Nigerian sellers want. From our team in Lagos: most sellers ask for a bank transfer first. Card machines are common but often drop out, and cash is for small things. So naira sitting in a wallet you can send transfers from is more useful than a pile of notes.",
+          ],
+        },
+        {
+          kind: "paragraph",
+          content: [
+            "With Omanga, you send naira to any Nigerian bank account using the seller's account number, without a Nigerian bank account of your own. Naira you don't spend can be converted back. For cards, ATMs and what to carry, read ",
+            { text: "can I use my card in Nigeria?", href: "/blog/can-i-use-my-card-in-nigeria" },
+            " If it's your first trip, start with our ",
+            {
+              text: "first-time visitor's guide",
+              href: "/blog/visiting-nigeria-for-the-first-time",
+            },
             ".",
           ],
         },
@@ -176,7 +217,7 @@ export const poundsToNairaBestRatePost: BlogPost = {
       {
         question: "What is the best way to change pounds to naira?",
         answer:
-          "Compare any offer with the mid-market rate and look at how many naira you receive after fees. Avoid airport bureaux for large amounts and always pay in naira, not pounds. A wallet like Omanga shows you the rate before you confirm.",
+          "Compare how many naira each offer gives you after fees, not the headline rate. Avoid airport bureaux for large amounts and always pay in naira, not pounds. A wallet like Omanga shows you the rate before you confirm.",
       },
       {
         question: "Is it better to pay in pounds or naira in Nigeria?",
@@ -191,7 +232,12 @@ export const poundsToNairaBestRatePost: BlogPost = {
       {
         question: "Why is the rate I get lower than the rate on Google?",
         answer:
-          "Google shows the mid-market rate. Banks, bureaux and card providers often add a margin on top of it, and some add fees as well. The difference is what the exchange costs you.",
+          "Banks, bureaux and card providers often convert at a worse rate than the one Google shows and keep the difference, and some add fees as well. The difference is what the exchange costs you.",
+      },
+      {
+        question: "How do I pay in naira in Nigeria without a Nigerian bank account?",
+        answer:
+          "Most sellers prefer a bank transfer. With an Omanga wallet you convert pounds to naira and send it to the seller's Nigerian bank account by account number. You do not need a Nigerian bank account. Carry a little cash for small purchases.",
       },
     ],
   },

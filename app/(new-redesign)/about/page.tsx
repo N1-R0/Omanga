@@ -6,6 +6,7 @@ import { buildPageGraph } from "@/lib/schema";
 import { buildPageMetadata } from "@/lib/seo";
 
 import { AboutHero } from "@/new-redesign/components/sections/about/AboutHero";
+import { AboutOffice } from "@/new-redesign/components/sections/about/AboutOffice";
 import { AboutMissionVision } from "@/new-redesign/components/sections/about/AboutMissionVision";
 import { AboutStory } from "@/new-redesign/components/sections/about/AboutStory";
 import { AboutValues } from "@/new-redesign/components/sections/about/AboutValues";
@@ -30,6 +31,7 @@ export default function AboutPage() {
       <AboutStory headingId="about-story-heading" />
       <AboutMissionVision headingId="about-mission-vision-heading" />
       <AboutValues headingId="about-values-heading" />
+      <AboutOffice headingId="about-office-heading" />
       <FaqSection {...oldPageFaq(aboutFaqContent.heading, OLD_PAGE_FAQ_SUB.about, aboutFaqContent.items)} />
       <HomeFinalCta />
     </>

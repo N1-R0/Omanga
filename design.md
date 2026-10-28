@@ -3236,3 +3236,21 @@ schema; FAQ sections and rate pages link the matching guide and /safety
 (lib/analytics.ts). Not done: Product schema warnings on /plans (shipping and
 returns don't apply to insurance), home mobile lab LCP (font swap; no field
 data yet). Reports in omanga.biz-audit/seo-*.md.
+
+### About § 5 Our office (2026-10-28)
+
+Owner: Mobbin E5 (Tines' office locations), with the map and address that
+Contact already uses.
+
+- `AboutOffice` (new-redesign/components/sections/about), after the values:
+  `SectionHead` ("Our office" / "Find us in Lagos" / a line, all new copy),
+  the office name, the address as text from `OFFICE_ADDRESS` and a Google
+  Maps directions link on the left. On the right two 4:3 photo tiles over a
+  16:9 map tile, 12px radius, each with a white uppercase pill label; the
+  map's pill sits top right, clear of Google's controls. Stacks below 1024.
+- `OfficeMapFrame` (ui): the Contact page's consent gate in the new design:
+  no request to maps.google.com until functional cookies are allowed, a
+  placeholder with an allow button until then.
+- Photos: Pexels 37505507 (Civic Centre, Victoria Island) and 38513712
+  (Lagos along the lagoon), Pexels License, self-hosted in `public/about`
+  (0.27 and 0.29 MB).

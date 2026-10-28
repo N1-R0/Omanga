@@ -91,3 +91,26 @@ export const aboutValues = {
     },
   ],
 } as const;
+
+/**
+ * Our office: Mobbin E5 (Tines' "Office locations"), the head, a line and the
+ * office on the left, photo tiles with pill labels on the right and the map
+ * as the wide tile (owner, 2026-10-28). The address and map come from
+ * config/site.ts, as on Contact. The heading, line and labels are new copy.
+ * Photos: Pexels 37505507 (the Civic Centre, Victoria Island) and 38513712
+ * (Lagos along the lagoon), Pexels License, self-hosted. Decorative.
+ */
+export const aboutOffice = {
+  eyebrow: "Our office",
+  title: "Find us in Lagos",
+  sub: "We're a Lagos company, and our team works from Victoria Island.",
+  officeName: "Victoria Island, Lagos",
+  officeNote: "Our head office",
+  directions: "Get directions",
+  mapLabel: "Our office",
+  mapTitle: "Map of Omanga's office in Victoria Island, Lagos",
+  photos: [
+    { src: "/about/office-civic-centre.jpg", label: "Victoria Island" },
+    { src: "/about/office-lagoon.jpg", label: "Lagos" },
+  ],
+} as const;

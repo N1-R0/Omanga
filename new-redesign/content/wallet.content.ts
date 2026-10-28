@@ -110,6 +110,8 @@ export const walletFaq = {
   subLead: "Rates, fees and paying in person.",
   subLink: "Chat on WhatsApp",
   subTail: "if yours isn't here.",
+  // [ADDED, 2026-10-28] SEO audit: link the matching guide.
+  guide: { lead: "Planning a budget? See", label: "how far $100 goes in Nigeria", path: "/blog/how-far-does-100-dollars-go-in-nigeria" },
   items: [
     {
       q: "What is the Omanga travel wallet?",

@@ -4,6 +4,8 @@ import dynamic from "next/dynamic";
 
 import { ConsentGate } from "@/components/consent/ConsentGate";
 
+import { GoogleAnalytics } from "./GoogleAnalytics";
+
 /**
  * Loaded through `next/dynamic` rather than imported at the top of the file.
  *
@@ -27,7 +29,7 @@ const SpeedInsights = dynamic(
 );
 
 /**
- * Vercel Speed Insights, behind the analytics gate.
+ * Vercel Speed Insights and Google Analytics, behind the analytics gate.
  *
  * This replaces the bare `<SpeedInsights />` that both root layouts mounted
  * unconditionally. That version loaded `/_vercel/speed-insights/script.js` on
@@ -54,11 +56,17 @@ const SpeedInsights = dynamic(
  * [CHANGED, 2026-10-15] `@vercel/analytics` was installed and never mounted;
  * it has been removed from `package.json`. Page-view tracking, if ever wanted,
  * goes behind this same gate as a deliberate decision.
+ *
+ * [CHANGED, 2026-10-28] That decision was made: Google Analytics 4 now loads
+ * here too. Unlike Speed Insights it does set cookies (`_ga`, `_ga_<id>`), so
+ * CONSENT_VERSION was bumped and the consent copy, Cookie Policy and Privacy
+ * Policy were updated to say so.
  */
 export function ConsentedAnalytics() {
   return (
     <ConsentGate category="analytics">
       <SpeedInsights />
+      <GoogleAnalytics />
     </ConsentGate>
   );
 }

@@ -3190,3 +3190,26 @@ need. An import graph from every route found only these unused: the old
 package and a tracked `dev-server.log`. Every image in `public/` is in use,
 and the old stylesheets were already gone. The rest of `components/` and
 `content/` serves the not-rebuilt pages and goes as each is redesigned.
+
+### Google Analytics (2026-10-28)
+
+Owner asked for GA. GA4 property 561125776, web stream `G-YC0FXCGBX9`, loads
+inside the existing analytics consent gate next to Speed Insights, production
+builds only. Google Signals and ad personalisation are off in the tag, since
+the Cookie Policy promises no advertising cookies. GA sets `_ga` cookies, so
+`CONSENT_VERSION` went to 2 (everyone is asked again), and the consent copy,
+Cookie Policy table and Privacy Policy now name Google Analytics.
+`LEGAL_EFFECTIVE_DATE` moved to 2026-10-28. The legal copy changes are
+unreviewed, like the rest of the consent text.
+
+### SEO audit (2026-10-28)
+
+Search Console now in the loop: the site is indexed (16 pages), but every
+impression is for the brand name. Changes: /insurance title leads with
+"Health Insurance for Visiting Nigeria" (the page says it isn't travel
+insurance); the home FAQ drops "cancel any time" (§ 8.1) from page and
+schema; FAQ sections and rate pages link the matching guide and /safety
+(FaqSection `guide` prop); GA4 conversion events via one delegated listener
+(lib/analytics.ts). Not done: Product schema warnings on /plans (shipping and
+returns don't apply to insurance), home mobile lab LCP (font swap; no field
+data yet). Reports in omanga.biz-audit/seo-*.md.

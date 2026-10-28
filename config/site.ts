@@ -95,6 +95,15 @@ export const WALLET_URL = "https://omanga.useinclude.com/" as const;
 export const INSTAGRAM_URL = "https://www.instagram.com/omanga_services/" as const;
 
 /**
+ * GA4 measurement ID for the www.omanga.biz web stream (property 561125776).
+ *
+ * Public by design — it ships in the page either way — so it lives here rather
+ * than in the environment. Loaded only behind analytics consent, by
+ * `ConsentedAnalytics`.
+ */
+export const GA_MEASUREMENT_ID = "G-YC0FXCGBX9" as const;
+
+/**
  * The office address, as supplied.
  *
  * One owner, like every other contact route: the Contact page's § 5 renders it,

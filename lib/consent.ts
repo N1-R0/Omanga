@@ -94,8 +94,10 @@ export type ConsentDecisions = Readonly<Record<ConsentCategory, boolean>>;
  * costs one banner.
  *
  * Not to be bumped for copy edits, styling, or adding a page.
+ *
+ * 2 (2026-10-28): Google Analytics added to the analytics category.
  */
-export const CONSENT_VERSION = 1;
+export const CONSENT_VERSION = 2;
 
 export const CONSENT_STORAGE_KEY = "omanga.consent" as const;
 

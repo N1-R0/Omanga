@@ -23,6 +23,7 @@ import {
   validateContactEnquiry,
 } from "@/lib/contact-enquiry";
 import type { RequiredContactField } from "@/lib/contact-enquiry";
+import { trackEvent } from "@/lib/analytics";
 import { ENQUIRY_HONEYPOT_FIELD } from "@/lib/enquiry";
 
 /**
@@ -296,6 +297,7 @@ export function TalkForm({ backHref, headingId }: TalkFormProps) {
       });
 
       setStatus(response.ok ? "success" : "failure");
+      if (response.ok) trackEvent("generate_lead", { form: "contact" });
     } catch {
       // Offline, aborted, or DNS — indistinguishable to the user from a refusal.
       setStatus("failure");

@@ -6,8 +6,7 @@ import type { ConsentCategory } from "@/lib/consent";
  * Written for this site rather than adapted from a consent-tool template, and
  * each category description names what it actually controls here. A description
  * that says "we use analytics cookies to improve your experience" would be
- * boilerplate and, on this site, also false — the analytics in use sets no
- * cookie at all. Saying what is really there is both the honest option and the
+ * boilerplate. Each description names the actual tools instead. Saying what is really there is both the honest option and the
  * one a visitor can act on.
  *
  * [NOT APPROVED COPY] Unlike the rest of `content/`, none of this is transcribed
@@ -47,7 +46,7 @@ const CATEGORIES: readonly ConsentCategoryCopy[] = [
     id: "analytics",
     title: "Analytics",
     description:
-      "Anonymous measurement of how quickly pages load and which pages are visited, so we can find the slow ones. We use Vercel Speed Insights, which sets no cookies and stores nothing on your device.",
+      "Measurement of which pages are visited and how quickly they load, so we can see what people use and find the slow pages. We use Google Analytics, which sets its own cookies in your browser, and Vercel Speed Insights, which sets none.",
     consequence:
       "Turn this off and the measurement script is never loaded. Nothing about the site changes for you.",
   },

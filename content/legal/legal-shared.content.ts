@@ -18,8 +18,11 @@ import type { LegalBlock } from "@/types/legal.types";
  * move to the actual publication date: an effective date earlier than the day the
  * document first appeared is a claim that visitors were on notice when they were
  * not.
+ *
+ * [CHANGED, 2026-10-28] Moved from 2026-08-28 when Google Analytics was added
+ * to the Cookie and Privacy policies.
  */
-export const LEGAL_EFFECTIVE_DATE = "2026-08-28" as const;
+export const LEGAL_EFFECTIVE_DATE = "2026-10-28" as const;
 
 export const LEGAL_ROUTES = {
   privacy: "/privacy-policy",

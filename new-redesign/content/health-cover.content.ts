@@ -173,9 +173,13 @@ export const healthFaq = {
   subLead: "Prices, plans and how your cover works.",
   subLink: "Chat on WhatsApp",
   subTail: "if yours isn't here.",
+  // [ADDED, 2026-10-28] SEO audit: link the matching guide.
+  guide: { lead: "Not sure you need cover? Read", label: "our guide", path: "/blog/health-insurance-for-visiting-nigeria" },
   items: [
     {
-      q: "How much is travel insurance for Nigeria?",
+      // [CHANGED, 2026-10-28] Was "How much is travel insurance for Nigeria?",
+      // which this FAQ answers "No" to below ("Is this travel insurance?").
+      q: "How much is health insurance for visiting Nigeria?",
       a: "Omanga's travel health insurance for Nigeria costs $50 a month on Silver, $85 on Gold and $120 on Diamond, paid monthly for the months you're there.",
     },
     {

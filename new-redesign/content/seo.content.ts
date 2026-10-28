@@ -22,10 +22,18 @@ export const paymentsMeta: PageMetaContent = {
   path: "/payments",
 };
 
+/*
+  [CHANGED, 2026-10-28] SEO audit. Was "Travel Insurance for Nigeria: Health
+  Cover from $50", while the page's own FAQ answers "Is this travel
+  insurance?" with "No". Google's results for "travel insurance for nigeria"
+  are mostly outbound cover for Nigerians (AXA Mansard, Leadway, Insubuy), so
+  the title now leads with the visitor's query; "travel health insurance"
+  stays in the description, as in the H1.
+*/
 export const insuranceMeta: PageMetaContent = {
-  title: "Travel Insurance for Nigeria: Health Cover from $50 | Omanga",
+  title: "Health Insurance for Visiting Nigeria, from $50 | Omanga",
   description:
-    "Travel insurance for Nigeria that covers your health: short-term plans from Phillips HMO, from $50 a month. Compare insurance plans.",
+    "Travel health insurance for your trip to Nigeria: hospital care from Phillips HMO, from $50 a month for the months you're there. Compare plans.",
   path: "/insurance",
 };
 

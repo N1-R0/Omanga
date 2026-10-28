@@ -511,14 +511,19 @@ export const homeFaq = {
   subLead: "Rates, cover, safety and getting started.",
   subLink: "Chat on WhatsApp",
   subTail: "if yours isn't here.",
+  // [ADDED, 2026-10-28] SEO audit: /safety had one in-body link sitewide.
+  guide: { lead: "Wondering if Omanga is safe?", label: "Here's how it works", path: "/safety" },
   items: [
     {
       q: "What is the Omanga travel wallet?",
       a: "Omanga Payment Solutions is a multi-currency wallet for travel in Africa. Fund it from USD, GBP or CAD, hold 6+ currencies and spend in 50+ African countries, online or in person. It is free to open.",
     },
     {
-      q: "How much is travel insurance for Nigeria?",
-      a: "Omanga's travel health insurance for Nigeria costs $50 a month on Silver, $85 on Gold and $120 on Diamond. There's no commitment, and you can cancel any time.",
+      // [CHANGED, 2026-10-28] Question and answer now match the Insurance
+      // FAQ: "cancel any time" is unconfirmed (§ 8.1) and the policy terms
+      // say otherwise, and this answer ships in FAQPage structured data.
+      q: "How much is health insurance for visiting Nigeria?",
+      a: "Omanga's travel health insurance for Nigeria costs $50 a month on Silver, $85 on Gold and $120 on Diamond, paid monthly for the months you're there.",
     },
     {
       q: "Does Omanga health cover work outside Nigeria?",

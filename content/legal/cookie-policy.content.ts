@@ -18,7 +18,8 @@ import type { LegalDocumentContent } from "@/types/legal.types";
  *
  * Every row in the table below was established by inspecting the live site and
  * the dependencies, and the finding is unusual enough to be worth stating
- * plainly: omanga.biz sets no cookies of its own at all. `document.cookie` is
+ * plainly: before Google Analytics was added (2026-10-28) omanga.biz set no
+ * cookies of its own at all. `document.cookie` is
  * empty on every page, `localStorage` and `sessionStorage` were empty before this
  * consent system existed, and the only script on the page that is not the
  * application's own bundle is Vercel Speed Insights — which was audited to
@@ -66,7 +67,7 @@ export const cookiePolicyContent: LegalDocumentContent = {
       kind: "note",
       title: "The short version",
       content: [
-        "This website sets no cookies of its own and uses no advertising or tracking cookies. It stores one item in your browser to remember your cookie choice. Two optional things — a Google map and anonymous page-speed measurement — do not run at all unless you allow them.",
+        "This website uses no advertising cookies. It stores one item in your browser to remember your cookie choice. Two optional things — a Google map, and analytics from Google Analytics and Vercel — do not run at all unless you allow them.",
       ],
     },
   ],
@@ -98,7 +99,7 @@ export const cookiePolicyContent: LegalDocumentContent = {
         {
           kind: "paragraph",
           content: [
-            "This is the complete list as at the effective date of this policy. It is short because this site does not use analytics cookies, advertising networks, social media pixels, session recording or cross-site tracking of any kind.",
+            "This is the complete list as at the effective date of this policy. This site does not use advertising networks, social media pixels or session recording.",
           ],
         },
         {
@@ -124,6 +125,16 @@ export const cookiePolicyContent: LegalDocumentContent = {
               duration:
                 "Set and controlled by Google. We cannot read, set or delete them.",
               consent: "Yes — the map is not loaded until you allow it",
+            },
+            {
+              name: "_ga, _ga_YC0FXCGBX9",
+              provider: "Google Analytics (set on omanga.biz for Google)",
+              purpose:
+                "Distinguish one visitor from another so Google Analytics can count visits and see which pages are used. Google receives the pages you view, your device and browser type and an approximate location. It does not store your IP address.",
+              category: "Analytics",
+              duration:
+                "Up to 2 years. If you later turn analytics off, measurement stops but these cookies stay until you clear them.",
+              consent: "Yes — the script is not loaded until you allow it",
             },
             {
               name: "Vercel Speed Insights",
@@ -169,7 +180,7 @@ export const cookiePolicyContent: LegalDocumentContent = {
             {
               term: "Analytics",
               description: [
-                "Anonymous measurement of page performance. Refuse this and the measurement script is never loaded. Nothing else about the site changes.",
+                "Measurement of which pages are visited and how quickly they load, using Google Analytics and Vercel Speed Insights. Refuse this and neither script is loaded. Nothing else about the site changes.",
               ],
             },
             {

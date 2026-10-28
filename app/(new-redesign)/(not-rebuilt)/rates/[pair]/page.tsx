@@ -163,6 +163,24 @@ export default async function RatePage(props: PageProps<"/rates/[pair]">) {
                   About the Omanga wallet
                 </Link>
               </li>
+              {/* [ADDED, 2026-10-28] SEO audit: the money guides and /safety
+                  had no links from the rate pages. The pounds page gets the
+                  pounds guide; the dollar pages get the $100 budget guide. */}
+              {[
+                pair.code === "GBP"
+                  ? { href: "/blog/pounds-to-naira-best-rate", label: "Guide: getting a good pounds to naira rate" }
+                  : { href: "/blog/how-far-does-100-dollars-go-in-nigeria", label: "Guide: how far $100 goes in Nigeria" },
+                { href: "/safety", label: "Is Omanga safe?" },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="inline-flex rounded-full bg-surface px-4 py-2 font-sans type-p1 text-text underline-offset-4 hover:underline "
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </nav>
         </div>

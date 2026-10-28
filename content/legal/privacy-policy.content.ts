@@ -197,9 +197,9 @@ export const privacyPolicyContent: LegalDocumentContent = {
                   ],
                 },
                 {
-                  term: "Performance measurement",
+                  term: "Analytics",
                   description: [
-                    "If you allow analytics cookies, we measure how quickly pages load. This does not set a cookie and stores nothing on your device. See our ",
+                    "If you allow analytics cookies, Google Analytics records the pages you visit, your device and browser type and your approximate location, using cookies it sets in your browser, and Vercel measures how quickly pages load. See our ",
                     LEGAL_LINKS.cookies,
                     " for exactly what it collects.",
                   ],
@@ -272,7 +272,7 @@ export const privacyPolicyContent: LegalDocumentContent = {
               "To keep this website working, available and secure, including protecting the forms from automated abuse.",
             ],
             [
-              "To understand which pages are slow, if you have allowed analytics.",
+              "To understand which pages are used and which are slow, if you have allowed analytics.",
             ],
           ],
         },
@@ -428,7 +428,7 @@ export const privacyPolicyContent: LegalDocumentContent = {
                 {
                   term: "Google",
                   description: [
-                    "Provides the map on our Contact page. The map is not loaded unless you allow functional cookies. If you do, your browser connects to Google, which can set its own cookies and will receive your IP address. See our ",
+                    "Provides the map on our Contact page and Google Analytics. Neither is loaded unless you allow it — functional cookies for the map, analytics cookies for Google Analytics. If you do, your browser connects to Google, which can set its own cookies and will receive your IP address. See our ",
                     LEGAL_LINKS.cookies,
                     ".",
                   ],

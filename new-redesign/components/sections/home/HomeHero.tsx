@@ -8,8 +8,9 @@ import { homeHero } from "@/new-redesign/content/home.content";
 /**
  * 1 · Hero (img 1 layout): header over it, centred headline, one filled action.
  *
- * Background (owner, 2026-10-25): a still sky photo, a low-angle portrait
- * under deep blue, after the owner's Finara reference. It replaces the moving
+ * Background (owner, 2026-10-25): a still sky photo, after the owner's Finara
+ * reference. [CHANGED, 2026-10-29] Now an airplane wing at sunset (see
+ * homeHero.photo); the fill below is its top sky blue. It replaces the moving
  * crimson fabric (HeroFabric), which the owner no longer wanted. The sky's
  * deep blue carries white text; the section fills with the sky's own blue
  * until the photo loads, so nothing flashes.
@@ -32,7 +33,7 @@ export function HomeHero() {
     <section
       id="hero"
       aria-labelledby="hero-title"
-      className="relative isolate flex h-svh min-h-fit w-full bg-[#27465f] text-text-inverse"
+      className="relative isolate flex h-svh min-h-fit w-full bg-[#3f5c98] text-text-inverse"
     >
       <Image
         src={photo.src}

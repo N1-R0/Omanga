@@ -46,10 +46,12 @@ export const homeHero = {
   primary: { label: "Open your free wallet" },
   // Owner, 2026-10-23: was "Compare health plans".
   secondary: { label: "Get insurance plan", path: "/insurance/plans" },
-  // Owner pick, 2026-10-25 (shortlist no. 1): replaces the moving fabric.
-  // Unsplash 88sSfA6YG9o by Khamkéo (@mahkeo), Unsplash License; self-hosted
-  // and not used anywhere else on the site. Decorative, so no alt text.
-  photo: { src: "/photos/home/hero-sky.jpg", position: "60% 40%" },
+  // [CHANGED, 2026-10-29] Owner shortlisted three airplane shots (C8, A1, B4
+  // in design-lab/hero-airplane-picks.html) and kept C8: Unsplash
+  // bcGNFkRU7nA by Eleni Afiontzi (@eleniafiontzi), Unsplash License, a wing at
+  // sunset under deep blue sky; self-hosted, not used anywhere else on the site.
+  // Was Unsplash 88sSfA6YG9o by Khamkéo. Decorative, so no alt text.
+  photo: { src: "/photos/home/hero-plane-wing.jpg", position: "50% 55%" },
 } as const;
 
 /**

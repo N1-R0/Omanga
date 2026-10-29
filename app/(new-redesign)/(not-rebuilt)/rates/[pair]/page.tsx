@@ -20,20 +20,6 @@ import { WalletClosing } from "@/new-redesign/components/sections/wallet/WalletC
 import { FaqSection } from "@/new-redesign/components/ui/FaqSection";
 import { OLD_PAGE_FAQ_SUB, oldPageFaq } from "@/new-redesign/content/old-pages.content";
 
-/**
- * [ADDED, 2026-10-18] Live exchange-rate pages: /rates/pounds-to-naira,
- * /rates/dollars-to-naira, /rates/canadian-dollars-to-naira. Copy and the
- * reasons for them are in `content/rates.content.ts`.
- *
- * Statically generated, then refreshed in the background: `getNgnRates`
- * fetches with `revalidate: 3600`, so each page is rebuilt at most hourly
- * (ISR, the previous caching model; Cache Components is off). Only the three
- * pairs exist; any other /rates/* path 404s.
- *
- * No animation and no client-only content: every figure, table and answer is
- * in the server HTML, so crawlers see the rate (owner's crawlability rule).
- * The converter is the one interactive part and it renders with a value.
- */
 export const dynamicParams = false;
 
 export function generateStaticParams() {
@@ -81,9 +67,6 @@ export default async function RatePage(props: PageProps<"/rates/[pair]">) {
         updated={updated}
       />
 
-      {/* [REMOVED, 2026-10-18] R2 30-day chart, on the owner's instruction. */}
-
-      {/* M1 (Wise top currencies, mobbin b54e2297): the rate matrix. */}
       <V2Section
         labelledBy={`${headingId}-matrix`}
         className="bg-surface text-text"
@@ -134,7 +117,6 @@ export default async function RatePage(props: PageProps<"/rates/[pair]">) {
             ))}
           </ol>
 
-
           <nav
             aria-labelledby={`${headingId}-other`}
             className="flex flex-col gap-3 border-t border-border pt-10"
@@ -163,9 +145,6 @@ export default async function RatePage(props: PageProps<"/rates/[pair]">) {
                   About the Omanga wallet
                 </Link>
               </li>
-              {/* [ADDED, 2026-10-28] SEO audit: the money guides and /safety
-                  had no links from the rate pages. The pounds page gets the
-                  pounds guide; the dollar pages get the $100 budget guide. */}
               {[
                 pair.code === "GBP"
                   ? { href: "/blog/pounds-to-naira-best-rate", label: "Guide: getting a good pounds to naira rate" }

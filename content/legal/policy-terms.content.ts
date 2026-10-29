@@ -13,59 +13,6 @@ import {
 } from "@/content/legal/legal-shared.content";
 import type { LegalDocumentContent } from "@/types/legal.types";
 
-/**
- * The Policy Terms.
- *
- * ---------------------------------------------------------------------------
- * WHAT "POLICY TERMS" MEANS HERE, AND HOW THAT WAS DECIDED
- *
- * The label came from the approved footer copy with no definition attached, so
- * its scope was derived from the product rather than assumed. Three things
- * settled it:
- *
- *   1. "Policy" is the insurance word. Omanga's headline product is Holiday
- *      Insurance sold as three named plans, and a plan a customer buys is a
- *      policy. Nothing else on the site is called a policy except the privacy and
- *      cookie documents, which already have their own pages in the same footer
- *      column — so this is not a duplicate of either.
- *   2. The Terms of Use covers the website. The website is not the product. There
- *      is a real gap between "rules for using omanga.biz" and "what you actually
- *      bought", and this document is the only one positioned to fill it.
- *   3. The site sells a product whose contract is not with Omanga. Payment is
- *      taken by Paystack, the wallet runs on someone else's platform, and the
- *      insurance is underwritten by someone. A customer has no way to work out
- *      who owes them what, and that is the single most useful thing this document
- *      can explain.
- *
- * So: product terms. Insurance plans and the wallet, who provides each, where the
- * binding contract lives, and how to claim or cancel. It deliberately does not
- * restate the website rules — it points at them.
- *
- * ---------------------------------------------------------------------------
- * WHAT IS AND IS NOT STATED ABOUT COVER
- *
- * The plan contents below are transcribed from `insurance-plans.content.ts`,
- * which is the approved copy already published on the plans page. Nothing is
- * added to them. Benefit limits, monetary caps, waiting periods, pre-existing
- * condition rules, geographic scope and the exclusions list are not published
- * anywhere on this site or in this codebase, and they are the terms that decide
- * whether a claim is paid — so they are marked outstanding rather than drafted.
- *
- * Inventing an exclusions list would be the most damaging thing this whole task
- * could produce: a customer would read it, rely on it, and discover at the point
- * of a hospital admission that the real policy said something else.
- *
- * ---------------------------------------------------------------------------
- * TWO PUBLISHED PROMISES THIS DOCUMENT MUST NOT CONTRADICT
- *
- * The plans page states prices per month, and prints "No commitment · Cancel
- * anytime" under every plan card and again beneath the grid. Both are live,
- * approved, customer-facing promises. This document therefore records the
- * cancellation right as it is advertised, and asks for the mechanics to be
- * confirmed — not the other way round. A terms page that quietly introduced a
- * minimum term or a cancellation fee would contradict the page that sold the plan.
- */
-
 export const policyTermsContent: LegalDocumentContent = {
   meta: {
     title: "Policy Terms | Omanga",

@@ -2,25 +2,6 @@ import { WALLET_URL, WHATSAPP_URL } from "@/config/site";
 import type { NavIconName } from "@/new-redesign/components/layout/NavIcon";
 import { href } from "@/new-redesign/config/routes";
 
-/**
- * Global header. Destinations LOCKED 2026-10-25 (new-redesign/doc/
- * sitemap-v2.md § C): Payments and Insurance are the product menus (owner's
- * naming), then Guides and Company. Layout after wise.com (owner, 2026-10-21):
- * tabs beside the logo, Help, Log in and the primary action on the right, and
- * each tab opening a panel.
- *
- * [CHANGED, 2026-10-26] Owner: the panel follows Ramp's menu. Each link is
- * an icon tile, its name and a one-line description, in labelled groups,
- * with the featured photo card in a grey column on the right. The mobile
- * sheet stays text only. Descriptions restate approved facts only.
- *
- * The primary action is "Open your free wallet" to the web wallet, per v2. It
- * replaces "Download", which pointed at an app row for an app that isn't in
- * the stores yet; store links come back once the native app ships.
- *
- * Links use sitemap-v2 paths; `href()` sends pages not yet rebuilt to the
- * page that is live today (new-redesign/config/routes.ts).
- */
 export type NavLink = { label: string; href: string; text: string; icon: NavIconName };
 export type NavColumn = { heading: string; links: NavLink[] };
 export type NavFeature = { title: string; text: string; href: string; image: { src: string; alt: string } };

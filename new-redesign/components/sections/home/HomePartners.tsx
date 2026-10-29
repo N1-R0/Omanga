@@ -2,19 +2,6 @@ import Image from "next/image";
 
 import { homePartners } from "@/new-redesign/content/home.content";
 
-/**
- * 2 · Partner strip (img 3; design system § Partner strip).
- *
- * A thin band right under the hero, on the page's grey (owner, 2026-10-25:
- * no white background or rule): a centred P2 label, then the logos in a
- * static row. The supplied PNGs have solid white grounds, so they're
- * multiply-blended, which drops the white into the grey. They're grey at rest, as in the reference, and return to
- * their own colours on hover, so the supplied trademarks are never altered,
- * only toned.
- *
- * The logos are trimmed to the mark and sized by optical weight (each one's
- * `display` height, from its aspect ratio), then scaled to 85% below 768.
- */
 export function HomePartners() {
   const { label, logos } = homePartners;
 

@@ -15,17 +15,6 @@ export type NavIconName =
   | "tag"
   | "chat";
 
-/**
- * The shared line-icon set, drawn on a 20px grid with a 1.6 stroke, in an
- * `accent-subtle` circle. `lg` (64px circle, 24px icon) leads the icon tiles
- * (Asset's icon card); `sm` (32px circle, 18px icon) is kept for small rows.
- * The header menu used `sm` until the owner removed menu icons (2026-10-21).
- * `bare` (2026-10-25) is the 24px icon alone in the text colour, no circle,
- * for the Why Omanga cards (Vizcom reference). `tile` (2026-10-26) is the
- * header menu's: a 20px icon in ink on a 44px surface-muted square, after
- * Ramp's menu (owner reference). Decorative: the text beside it names the
- * thing.
- */
 const PATHS: Record<NavIconName, string> = {
   wallet: "M3 6.5A2.5 2.5 0 0 1 5.5 4H15v3M3 6.5V15a2 2 0 0 0 2 2h11a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H5.5A2.5 2.5 0 0 1 3 6.5Zm11 5h.01",
   globe: "M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14Zm-7-7h14M10 3c1.8 1.9 2.8 4.4 2.8 7s-1 5.1-2.8 7c-1.8-1.9-2.8-4.4-2.8-7s1-5.1 2.8-7Z",

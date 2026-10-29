@@ -1,45 +1,6 @@
 import type { BlogPost } from "@/types/blog.types";
 import type { ImageAsset } from "@/types/content.types";
 
-/**
- * Article: do you need health insurance when visiting Nigeria?
- *
- * Primary keyword: "health insurance for visiting Nigeria".
- * Secondary: "does the NHS cover me in Nigeria", "travel health insurance
- * Nigeria", "short-term health insurance Nigeria". Intent: decide whether cover
- * is needed and what kind.
- *
- * [REVISED, 2026-10-09] Rewritten for a more natural voice and checked facts.
- * Sources:
- *   - GOV.UK "Living in Nigeria": no UK–Nigeria reciprocal healthcare agreement;
- *     visitors should arrange cover incl. air ambulance and full medical.
- *   - GOV.UK Nigeria travel advice, health: pay for treatment at public
- *     hospitals, private is more expensive, no national ambulance service, 112.
- *   - medicare.gov "Travel outside the U.S.": Medicare usually doesn't pay.
- *   - Canadian provincial plans: limited, varying out-of-country cover —
- *     phrased generally because rules differ by province and have changed.
- * [SEO, 2026-10-11] FAQ adds "Is it safe to visit Nigeria as a tourist?", a
- *   People Also Ask question from AnswerThePublic ("travel to nigeria", UK).
- *   Answer points to live FCDO / State Department advice instead of judging
- *   safety, because the advice changes by state and over time.
- * Plan facts restate `insurance-plans.content.ts`, `insurance-care.content.ts`,
- * `insurance-proof.content.ts` and the legal provider names.
- * [CHANGED, 2026-10-14] UX copy pass (design.md § Home UX copy pass): one named
- *   provider (Phillips HMO), cover applies in Nigeria only, activation is not
- *   cover start, and per-plan hospital categories are left to /plans.
- * [REWRITTEN, 2026-10-28] Blog audit + rewrite pass, light: plan facts and
- *   voice kept as they were (health claims need owner / Phillips HMO sign-off).
- *   Updated from GOV.UK (read 2026-10-28): check vaccines at least 8 weeks
- *   ahead; yellow fever exemptions (8 months and under, 61 and over); health
- *   advice changes, so link the live page. GOV.UK's 21 Oct 2026 note of one
- *   imported Ebola case is not quoted: a dated case report goes stale.
- *   Linked the new first-time visitor and card guides.
- */
-
-/**
- * Cover from Unsplash (free licence), cropped to 4:3 around faces by the CDN
- * so the card and cover crops never cut through a head.
- */
 const healthInsuranceImage: ImageAsset = {
   src: "https://images.unsplash.com/photo-1666887360680-9dc27a1d2753?w=2000&h=1500&fit=crop&crop=faces",
   alt: "A nurse in blue scrubs checking an older man's blood pressure.",
@@ -47,11 +8,6 @@ const healthInsuranceImage: ImageAsset = {
   height: 1500,
 };
 
-/**
- * [ADDED, 2026-10-18] Audit quick win: the share image is the same photo,
- * cropped to 1200x630 and self-hosted (public/blog/og/), so link previews
- * don't depend on Unsplash or show a 4:3 crop.
- */
 const shareImage: ImageAsset = {
   src: "/blog/og/health-insurance-for-visiting-nigeria.jpg",
   alt: healthInsuranceImage.alt,
@@ -66,9 +22,6 @@ const MEDICARE_ABROAD_URL = "https://www.medicare.gov/coverage/travel-outside-th
 export const healthInsuranceVisitingNigeriaPost: BlogPost = {
   slug: "health-insurance-for-visiting-nigeria",
   meta: {
-    // [CHANGED, 2026-10-18] Retargeted to "travel insurance nigeria" (Semrush
-    // UK 260/mo, KD 16) instead of a second post on the same question, which
-    // would compete with this one. Slug unchanged so links keep working.
     title: "Do You Need Travel Insurance for Nigeria? | Omanga",
     description:
       "Do you need travel insurance for Nigeria? The NHS, Medicare and most provincial plans won't pay for treatment there. What your health cover should include.",
@@ -181,8 +134,6 @@ export const healthInsuranceVisitingNigeriaPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            // [CHANGED, 2026-10-14] UX copy pass: one named provider, not "established
-            // Nigerian health providers"; Nigeria-only; activation ≠ cover start.
             "Omanga's health cover is short-term cover for your time in Nigeria. It comes from Phillips HMO, a Nigerian health maintenance organisation (HMO) with its own hospital network. The cover applies in Nigeria only. You can activate a plan in about five minutes, and renew or extend it from your account.",
           ],
         },
@@ -212,8 +163,6 @@ export const healthInsuranceVisitingNigeriaPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            // [CHANGED, 2026-10-14] UX copy pass: removed "Silver and Gold open
-            // Category A and B" (conflicts with insurance-plans.content.ts).
             "Every plan includes hospital admission, diagnostics, emergency assistance and evacuation, telemedicine, roaming across Nigeria and a contact centre. Each plan opens a different set of hospital categories. ",
             { text: "Compare health plans", href: "/plans" },
             " to see which hospitals each one covers. If your trip needs something you don't see listed, such as a flight home, ask us before you buy.",
@@ -286,8 +235,6 @@ export const healthInsuranceVisitingNigeriaPost: BlogPost = {
       {
         question: "How much does Omanga Holiday Insurance cost?",
         answer:
-          // [NOTE, 2026-10-14] "Cancel any time" is published but not owner-confirmed
-          // (design.md copy to-do). Kept as it was, not repeated elsewhere.
           "Silver costs $50 a month, Gold $85 and Diamond $120. There is no commitment and you can cancel any time.",
       },
       {

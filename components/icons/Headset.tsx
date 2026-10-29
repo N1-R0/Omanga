@@ -1,8 +1,6 @@
 import { Icon } from "@/components/ui/Icon";
 import type { IconSize } from "@/types/ui.types";
 
-/** Headset. The 24/7 contact centre — a person on the other end. Path data from lucide-react (ISC). */
-
 export type HeadsetProps = {
   size: IconSize;
   label?: string;

@@ -1,8 +1,6 @@
 import { Icon } from "@/components/ui/Icon";
 import type { IconSize } from "@/types/ui.types";
 
-/** Globe. Roaming — cover that travels across borders. Path data from lucide-react (ISC). */
-
 export type GlobeProps = {
   size: IconSize;
   label?: string;

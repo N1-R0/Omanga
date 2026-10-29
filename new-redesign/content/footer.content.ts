@@ -1,18 +1,6 @@
 import { INSTAGRAM_URL, WHATSAPP_URL } from "@/config/site";
 import { href } from "@/new-redesign/config/routes";
 
-/**
- * Global footer, LOCKED in new-redesign/doc/sitemap-v2.md § C (2026-10-25).
- *
- * Legal pages keep their live URLs (/terms-of-use, /privacy-policy, …) so no
- * redirects are needed at cutover.
- *
- * Held back until the owner confirms them:
- *   - The legal entity, RC number, address and licence line in the disclosure.
- *     Nothing is invented in their place.
- *   - The app row with store links. It returns once the native app is in the
- *     stores; until then the header's "Open your free wallet" covers sign-up.
- */
 export type FooterLink = { label: string; href: string; external?: boolean };
 
 export const footer = {

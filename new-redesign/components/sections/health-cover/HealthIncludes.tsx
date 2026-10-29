@@ -2,15 +2,6 @@ import { Section } from "@/new-redesign/components/ui/Section";
 import { SectionHead } from "@/new-redesign/components/ui/SectionHead";
 import { healthIncludes } from "@/new-redesign/content/health-cover.content";
 
-/**
- * 4 · What every plan includes, after the owner's Superpower Health Gap
- * reference (2026-10-26, Mobbin 0fa649f3): the section header, then a soft
- * muted frame holding one white bordered card. The card opens with a label
- * row ("Included on Silver, Gold and Diamond"), then three grouped columns
- * split by hairlines, each a group title over its benefits: a small crimson
- * line icon, the benefit in medium ink and one secondary line under it.
- * Below 1024px the columns stack, split by horizontal hairlines.
- */
 const ICONS = {
   alert: "M10 3 2.5 16.5h15L10 3Zm0 5.5v3.5m0 2.5h.01",
   bed: "M3 5v11M3 12h14v4M17 12V9.5A1.5 1.5 0 0 0 15.5 8H9v4M6 10.5h.01",

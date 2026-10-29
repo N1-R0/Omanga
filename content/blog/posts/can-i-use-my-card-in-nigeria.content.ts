@@ -1,36 +1,6 @@
 import type { BlogPost } from "@/types/blog.types";
 import type { ImageAsset } from "@/types/content.types";
 
-/**
- * [ADDED, 2026-10-28] Roadmap item 1 (omanga.biz-audit/seo-content-roadmap.md).
- *
- * Primary keyword: "can I use my card in Nigeria". Secondary: "can I use my
- * debit / credit card in Nigeria", "do foreign cards work in Nigeria", "ATM in
- * Nigeria with a foreign card". Intent: informational, pre-trip.
- *
- * Owner interview (2026-10-28):
- *   - Sellers in Lagos want a transfer first; card terminals are common but
- *     often down; cash for small things.
- *   - From the wallet, a visitor can convert to naira and send to any Nigerian
- *     bank account by account number, with no Nigerian bank account of their own.
- *   - Omanga has no card right now: don't mention one.
- *   - No provider brand names (the search cluster names Revolut, Monzo, Wise;
- *     the post stays generic on purpose).
- *
- * Sources:
- *   - CBN circular to banks and payment acquirers, December 2025, as reported
- *     by allAfrica (2025-12-21) and BusinessDay: foreign cards to work on ATMs,
- *     POS and online; multi-factor authentication above $200 a day, $500 a
- *     week, $1,000 a month; exchange rate and charges shown before the payment.
- *     How well banks comply is not established, so the post says "should".
- *   - GOV.UK Nigeria safety advice: card fraud, ATMs, cash.
- * No rate source, refresh timing or fee amounts (no-disclosure rule).
- */
-
-/**
- * Cover from Unsplash (free licence): a card held out to a payment terminal
- * over a basket of oranges at a market stall.
- */
 const cardAtStallImage: ImageAsset = {
   src: "https://images.unsplash.com/photo-1677058272033-6fc5a7c5aef1?w=2000&h=1500&fit=crop&crop=entropy",
   alt: "A shopper holds a bank card towards a seller's card terminal over a basket of oranges at a market stall.",

@@ -2,33 +2,10 @@ import type { CSSProperties, ReactNode } from "react";
 
 import { cx } from "@/lib/cx";
 
-/**
- * The device frame (design system § Components › Phone frame), owner's spec
- * from Figma (2026-10-22): a plain rectangle, 309 × 675, 30px corner radius,
- * with the screen as its fill, and a 6px border outside it. The border is the
- * design system's glass (owner, same day): the cards' translucent white fill,
- * 1px white edge (5px fill + 1px edge = 6px), 10px backdrop blur and float
- * shadow, so the fabric behind shows through. No bezel, side buttons or
- * Dynamic Island (owner removed it).
- *
- * The screen is drawn as an app screenshot would show it: the status bar and
- * home indicator are part of the screen, not the frame. It's laid
- * out in real iPhone points, 390 × 852 (the frame's 309 : 675 ratio), and
- * scaled to fit, so app screens written for the hero phone keep their sizes.
- *
- * `--phone-scale` sizes the frame (1 = 309 × 675). The border stays 6px at any
- * scale. The parent crops it when only the top shows. Decorative by default:
- * the screen is an illustrative app state, hidden from assistive tech. Pass
- * `decorative={false}` when the screen holds working controls (the home
- * converter), so they stay reachable.
- *
- * The status bar SVGs come from the open-design `mobile-app` seed
- * (github.com/nexu-io/open-design, Apache-2.0).
- */
 const FRAME_W = 309;
 const FRAME_H = 675;
 const SCREEN_W = 390;
-const SCREEN_H = Math.round((SCREEN_W * FRAME_H) / FRAME_W); // 852
+const SCREEN_H = Math.round((SCREEN_W * FRAME_H) / FRAME_W);
 
 export function PhoneFrame({
   children,
@@ -39,14 +16,9 @@ export function PhoneFrame({
   decorative = true,
 }: {
   children: ReactNode;
-  /** Sets `--phone-scale` (e.g. "[--phone-scale:0.9] lg:[--phone-scale:1]"). */
   className?: string;
   time?: string;
-  /** The child is a full screen capture (status bar included): it fills the
-   *  frame as is, and the frame draws no status bar or home indicator. */
   bare?: boolean;
-  /** "glass" (default, the hero) or "black": the owner's original 6px solid
-   *  black stroke, used by the pay-in-person walkthrough (owner, 2026-10-22). */
   bezel?: "glass" | "black";
   decorative?: boolean;
 }) {
@@ -92,7 +64,6 @@ export function PhoneFrame({
               </span>
             </div>
             <div className="min-h-0 flex-1 overflow-hidden">{children}</div>
-            {/* Home indicator, always the last thing on the screen. */}
             <div aria-hidden className="relative h-7 shrink-0">
               <span className="absolute bottom-2 left-1/2 h-[5px] w-[134px] -translate-x-1/2 rounded-full bg-text opacity-85" />
             </div>

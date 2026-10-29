@@ -1,10 +1,3 @@
-/**
- * Home page structure, LOCKED 2026-10-21 (v4).
- * new-redesign/doc/research-and-page-structure.md § 6.1 and design-lab/home-wireframe.html.
- *
- * The order here is the page's order (all nine built 2026-10-21). Change the
- * order only with owner sign-off.
- */
 export type HomeSectionId =
   | "hero"
   | "products"
@@ -18,58 +11,30 @@ export type HomeSectionId =
 export const homeSections: ReadonlyArray<{
   id: HomeSectionId;
   label: string;
-  /** Layout reference from the owner's screenshots. */
   ref: string;
 }> = [
   { id: "hero", label: "Hero", ref: "img 1" },
-  // Owner, 2026-10-25: the partners strip sits right after the hero.
   { id: "partners", label: "Partners", ref: "img 3" },
-  // Home structure v2 §§ 3–4 in one section (owner, 2026-10-25): a centred
-  // head over the Payments card and the Insurance card.
   { id: "products", label: "Payments and insurance", ref: "owner card" },
-  // [REMOVED, 2026-10-25] "what-omanga-does": owner, it repeated "products".
   { id: "steps", label: "Sorted before you land", ref: "img 4" },
-  // [REMOVED, 2026-10-25] "prices": the Insurance card in "products" replaces it.
   { id: "why-omanga", label: "Why Omanga", ref: "img 5" },
   { id: "countries", label: "Countries", ref: "Wise" },
   { id: "faq", label: "FAQ", ref: "img 6" },
   { id: "final-cta", label: "Final CTA", ref: "img 6" },
 ];
 
-/**
- * 1 · Hero (img 1). H1 rewritten 2026-10-21 so the wallet reads Africa-wide and
- * only health cover names Nigeria (sitemap § 5 rule).
- */
 export const homeHero = {
   title: ["Pay across Africa.", "Stay covered in Nigeria."],
-  sub: "A free wallet for 50+ African countries, plus monthly health cover for your time in Nigeria. Rate shown before you pay.",
+  sub: "Omanga is a free wallet for 50+ African countries, plus monthly health cover for your time in Nigeria. Rate shown before you pay.",
   primary: { label: "Open your free wallet" },
-  // Owner, 2026-10-23: was "Compare health plans".
   secondary: { label: "Get insurance plan", path: "/insurance/plans" },
-  // [CHANGED, 2026-10-29] Owner shortlisted three airplane shots (C8, A1, B4
-  // in design-lab/hero-airplane-picks.html) and kept C8: Unsplash
-  // bcGNFkRU7nA by Eleni Afiontzi (@eleniafiontzi), Unsplash License, a wing at
-  // sunset under deep blue sky; self-hosted, not used anywhere else on the site.
-  // Was Unsplash 88sSfA6YG9o by Khamkéo. Decorative, so no alt text.
   photo: { src: "/photos/home/hero-plane-wing.jpg", position: "50% 55%" },
 } as const;
 
-/**
- * 3 · Payments and insurance (home structure v2 §§ 3–4, owner 2026-10-25):
- * one section, a centred head (eyebrow, H2, sub, after the owner's
- * "Send Money Anywhere" reference) over two product cards.
- */
 export const homeProducts = {
   eyebrow: "What you get",
   title: "Your money and your health, sorted for the trip",
   sub: "Convert and pay across Africa, and get insurance in Nigeria from Phillips HMO.",
-  /**
-   * Metrics strip between the Payments and Insurance cards (owner,
-   * 2026-10-25, after a "Growing every day" reference). Approved facts only:
-   * the reference's user and transaction counts have no Omanga figure
-   * behind them, so the three are the wallet's reach, its currencies and the
-   * plan count. The label avoids a growth claim.
-   */
   metricsLabel: "At a glance",
   metrics: [
     { value: "50", suffix: "+", label: "African countries to pay in" },
@@ -78,36 +43,12 @@ export const homeProducts = {
   ],
 } as const;
 
-/**
- * 4 · Insurance (home structure v2 § 4), owner 2026-10-25: two cards side
- * by side, after the owner's "Trusted Across Borders / AI Money Manager"
- * reference, so the pair reads as the Payments card inverted.
- *   - Left, a photo card: the title and sub over the photo's foot, the plans
- *     as white pill buttons, the picked plan's price on the right.
- *   - Right, a white card: a small plan summary drawn as app UI in the
- *     middle, and the plan's name and description at the foot.
- * The pills drive the price and the whole right card. Gold starts picked
- * (the featured plan).
- *
- * Plan names, prices, descriptions, categories and inclusions come from
- * `homePrices`, the same figures the live plans page shows. "Insurance", not
- * "health cover", as the category (owner naming). Nothing on claims or
- * deposits (owner question § 8.4). The summary UI names no person and
- * quotes no chat: it's the plan's own facts.
- */
 export const homeInsurance = {
   eyebrow: "Insurance",
   title: "Insurance plans for your time in Nigeria",
   sub: "Go to a hospital in your plan's network and Phillips HMO handles your care.",
   plansLabel: "Plans",
   perMonth: "/ month",
-  /**
-   * The white half's chat, one Jitter Lottie per plan (owner, 2026-10-25):
-   * the customer's question pops in, Omanga types, the reply lists three
-   * inclusions, then the plan row pops in as a second Omanga message. File
-   * "Omanga — Home insurance chat", artboards "Insurance chat · {plan}".
-   * `stillFrame` is the settled frame shown with reduced motion.
-   */
   chats: {
     Silver: { src: "/lottie/home/insurance-chat-silver.json", stillFrame: 360 },
     Gold: { src: "/lottie/home/insurance-chat-gold.json", stillFrame: 360 },
@@ -117,35 +58,13 @@ export const homeInsurance = {
   planTitle: (plan: string) => `${plan} plan`,
   cta: (plan: string) => `Get ${plan}`,
   path: "/insurance/plans",
-  // Owner's pick, 2026-10-25: Unsplash _t15AWPJNmg by Sandisk (Unsplash
-  // License), self-hosted, not used anywhere else on the site. Decorative.
   photo: { src: "/photos/home/insurance-phone-friends.jpg", position: "60% 30%" },
 } as const;
 
-/**
- * 3 · Payments card (home structure v2 § 3), in "products".
- *
- * [CHANGED, 2026-10-25] Owner: no rate source ("mid-market"), no refresh
- * timing and no fee amounts anywhere on the site. The title, the fact cards
- * (₦20, Hourly) and the rate note are gone for that reason.
- *
- * Layout (owner, 2026-10-25): the phone on the left, the head on the right;
- * on mobile the head comes first, then the whole phone, as on LemFi's
- * international-money-transfer page. The screen follows the owner's card
- * reference: "You convert" and "You get" halves with the rate pill on the
- * seam, a card of three plain facts, then one button. The facts replace the
- * reference's delivery, speed and fee rows, which Omanga can't state.
- *
- * "You convert", not Wise's "exactly": whether converting costs anything is
- * owner question § 8.5. Four currencies, the ones lib/rates.ts crossMatrix
- * covers; more wait on § 8.5.
- */
 export const homeRates = {
   eyebrow: "Payments",
   title: "Convert your money, then pay across Africa",
   sub: "Hold pounds, dollars or Canadian dollars, convert to naira when you need it, and see the rate before you confirm.",
-  // Owner, 2026-10-25: the phone stands in a photo box. Unsplash PdGBci-4jR8
-  // (Alessio Soggetti), self-hosted, not used anywhere else on the site.
   photo: { src: "/photos/home/rates-mountains.jpg", position: "50% 60%" },
   screen: {
     title: "Convert",
@@ -174,21 +93,8 @@ export const homeRates = {
   },
 } as const;
 
-/**
- * 2 · Partners (img 3). The same three partners and label the live site shows
- * (content/trust.content.ts). The Fuspay logo was restored by the owner on
- * 2026-10-19; copy about who runs the wallet stays off public pages. Logos only:
- * partner roles are still an open owner question, so there are no captions and
- * no roles in the alt text.
- */
 export const homePartners = {
   label: "Our partners",
-  /**
-   * Trimmed copies of the live site's PNGs (public/photos/partners, cut to the
-   * mark with no baked-in whitespace). `display` is the desktop height in px,
-   * balanced by aspect ratio (26 × √(3.7 ÷ aspect)) so the wide Phillips mark
-   * doesn't outweigh the other two.
-   */
   logos: [
     { src: "/photos/partners/phillips-hmo.png", alt: "Phillips HMO", width: 1228, height: 205, display: 20 },
     { src: "/photos/partners/fuspay.png", alt: "Fuspay", width: 770, height: 216, display: 26 },
@@ -196,44 +102,6 @@ export const homePartners = {
   ],
 } as const;
 
-/**
- * 3 · What Omanga does (img 2).
- *
- * [CHANGED, 2026-10-21] Owner asked for the items to read like a competitor's
- * (Wise, Grey): a benefit-led title, one concrete sentence, and an action
- * link. Every claim is already approved copy: ₦20 flat per transfer, 6+
- * currencies and 50+ countries (wallet FAQ), mid-market rate refreshed
- * hourly, plan prices, and Phillips HMO handling care. Kept out: "card"
- * (copy rule), speed claims, "cancel any time" (§ 8.1) and any claims-process
- * detail such as "show your cover" (§ 8.4). Lagos and Nairobi are cities in
- * the published 11-country sample (Nigeria, Kenya).
- *
- * [CHANGED, 2026-10-21] Owner: the ₦20 send item is replaced by a wallet item
- * after Grey's "Open a global multi-currency account", and it now leads, so
- * the list runs open → convert → spend → cover → care. "Wallet", not "bank
- * account": Omanga isn't a bank and no licence is named (copy rules). ₦20
- * stays in the converter and Why Omanga.
- *
- * [CHANGED, 2026-10-21] Owner's call: the convert title uses Grey's "best
- * rates". Flagged: "best" is a comparative claim with no comparison behind it
- * yet, so the body keeps the provable fact (the mid-market rate, hourly). Back
- * it with a dated comparison against named providers before cutover.
- *
- * Copy from the locked wireframe, with one cut:
- * the sub no longer says "without paying a deposit up front". That's an
- * unconfirmed insurance fact (owner question § 8.4).
- *
- * Screens are illustrative app states, not real accounts: no names, no
- * invented merchants, no speed claims, and no "card" (copy rule).
- */
-/**
- * A Lottie version of a motion scene (owner, 2026-10-22): vector, 60fps, so
- * it stays sharp where the MP4s went soft. Exported from the Jitter
- * "· Lottie test (transparent)" artboards, so it has no satin: the panel's U2
- * texture shows through behind it. `stillFrame` is the frame shown for
- * reduced motion (the scene's result). `phoneZoom` overrides the 1.35×
- * zoom the accordion applies below 1024px.
- */
 export type FeatureLottie = { src: string; stillFrame: number; phoneZoom?: number };
 
 export type FeatureScreen =
@@ -272,7 +140,6 @@ export const homeFeatures = {
       title: "Spend in 50+ African countries",
       text: "Pay online or in person from your wallet balance, from Lagos to Nairobi.",
       link: { label: "See the countries", path: "/payments/countries" },
-      // Its card is wider (the map), so phones zoom it less than the 1.35× default.
       lottie: { src: "/lottie/home/spend.json", stillFrame: 556, phoneZoom: 1.05 },
       screen: {
         kind: "rows",
@@ -321,29 +188,13 @@ export const homeFeatures = {
   convertScreen: { title: "Convert", add: "You add", get: "You get", rate: "Rate", amount: 200 },
 } as const;
 
-/**
- * 4 · Sorted before you land (img 4). The approved three steps. The wireframe's
- * "No Nigerian ID needed [confirm]" is left out until the owner confirms it
- * (§ 8.5).
- */
 export const homeSteps = {
   eyebrow: "How it works",
-  // [CHANGED, 2026-10-25] Home structure v2 § 4 title. The sub drops "ready
-  // the moment you land": when cover starts is unconfirmed (§ 8.1).
   title: "Set up at home before you fly",
   sub: "A few minutes on your phone is all it takes. Your wallet is funded and your plan is picked before you leave.",
-  // Journey rail ends (owner-approved wireframe, design-lab/home-steps-v2.html).
   from: "Home",
   to: "Lagos",
-  /** How far the middle card (and the rail's middle stop) sits below the others, px. */
   dip: 40,
-  /**
-   * [CHANGED, 2026-10-25] Owner-approved wireframe: each card is a white
-   * Card whose top well shows a slice of the Payments card's mountain photo
-   * (Unsplash PdGBci-4jR8; owner asked for it here too), cut in three so the
-   * row reads as one landscape, with a small app screen floating on it.
-   * Nothing on rates, fees or speed.
-   */
   photo: "/photos/home/rates-mountains.jpg",
   steps: [
     {
@@ -366,17 +217,6 @@ export const homeSteps = {
   cta: { label: "Open your free wallet" },
 } as const;
 
-/**
- * 5 · Health cover prices (pricing reference). Plan facts, descriptions,
- * included lists and checkout links are the live site's approved copy
- * (content/insurance-plans.content.ts, config/site.ts PLAN_CHECKOUT_URLS). The
- * Paystack pages were read on 2026-09-20 and are recurring monthly
- * subscriptions.
- *
- * The trip-length switch only multiplies the monthly price; it promises no
- * discount. "No commitment. Cancel any time." is published copy that the owner
- * hasn't confirmed (§ 8.1), kept as on the live site and not strengthened.
- */
 export const homePrices = {
   eyebrow: "Health cover in Nigeria",
   title: "Simple monthly cover for your trip",
@@ -424,15 +264,6 @@ export const homePrices = {
   link: { label: "Compare all plan details", path: "/insurance/plans" },
 } as const;
 
-/**
- * 6 · Why Omanga (img 5). Wireframe copy, tightened to confirmed facts only:
- *   - "No hidden markup" is out: whether converting costs anything is owner
- *     question § 8.5.
- *   - "No pay-then-claim" is out: the claims process is § 8.4. The tile uses
- *     the approved "Phillips HMO handles your care" line instead.
- *   - The sub no longer says "every partner named", since the owner keeps the
- *     wallet's operator off public pages.
- */
 export const homeWhy = {
   eyebrow: "Why Omanga",
   title: "Honest about rates, clear about who does what",
@@ -448,21 +279,8 @@ export const homeWhy = {
   link: { label: "Is Omanga safe?", path: "/safety" },
 } as const;
 
-/**
- * 7 · Countries (Wise "works nearly everywhere").
- *
- * "Pay in" lists the same 11 African countries the live site shows as its
- * sample of 50+ (content/coverage.content.ts COVERAGE_FLAGS). The full list is
- * owner question § 8.5, so there's no inline "show all": the link goes to
- * /payments/countries, the page that will hold it. Each country links there too
- * until /payments/[country] pages exist (sitemap-v2.md marks them later).
- *
- * "Exchange rates" lists the live site's three rate pages (content/rates.content.ts).
- */
 export const homeCountries = {
   eyebrow: "Countries",
-  // [CHANGED, 2026-10-21] Owner: too short; see homeSteps. Facts from the
-  // approved wallet FAQ (50+ countries, online or in person).
   title: "One wallet for 50+ countries across Africa",
   sub: "Hold and convert your money, then pay online or in person wherever you travel. Today's naira rates are a tab away.",
   tabs: [
@@ -497,23 +315,12 @@ export const homeCountries = {
   ],
 } as const;
 
-/**
- * 8 · FAQ (img 6). Every answer is published copy from the live site, so no
- * new claims:
- *   content/payments-faq.content.ts, content/insurance-faq.content.ts,
- *   content/safety.content.ts.
- * Three wireframe questions had no approved answer and were swapped for
- * approved ones: "Do I need a Nigerian bank account?", "Is health cover
- * required to enter Nigeria?" and "What happens to leftover money?". They come
- * back once the owner supplies the facts (§ 8.4, § 8.5).
- */
 export const homeFaq = {
   eyebrow: "Questions",
   title: "Everything you need before you go",
   subLead: "Rates, cover, safety and getting started.",
   subLink: "Chat on WhatsApp",
   subTail: "if yours isn't here.",
-  // [ADDED, 2026-10-28] SEO audit: /safety had one in-body link sitewide.
   guide: { lead: "Wondering if Omanga is safe?", label: "Here's how it works", path: "/safety" },
   items: [
     {
@@ -521,9 +328,6 @@ export const homeFaq = {
       a: "Omanga Payment Solutions is a multi-currency wallet for travel in Africa. Fund it from USD, GBP or CAD, hold 6+ currencies and spend in 50+ African countries, online or in person. It is free to open.",
     },
     {
-      // [CHANGED, 2026-10-28] Question and answer now match the Insurance
-      // FAQ: "cancel any time" is unconfirmed (§ 8.1) and the policy terms
-      // say otherwise, and this answer ships in FAQPage structured data.
       q: "How much is health insurance for visiting Nigeria?",
       a: "Omanga's travel health insurance for Nigeria costs $50 a month on Silver, $85 on Gold and $120 on Diamond, paid monthly for the months you're there.",
     },
@@ -550,21 +354,12 @@ export const homeFaq = {
   ],
 } as const;
 
-/**
- * 9 · Final CTA (img 6). "Land with everything sorted" is the story's ending,
- * locked in the sitemap § 5 closing band. The app screen is an illustrative
- * home state; the naira figure matches the converter's £200 example.
- */
 export const homeFinalCta = {
   eyebrow: "Get started",
   title: "Land with everything sorted",
   text: "Open your free wallet today and add cover when you book your trip.",
   primary: { label: "Open your free wallet" },
   secondary: { label: "Compare health plans", path: "/insurance/plans" },
-  // [CHANGED, 2026-10-25] Owner: new image for the closing panel. Unsplash
-  // KB9r_hTzyeQ by Johny Goerend (Unsplash License), a plane wing over clouds
-  // at dawn, self-hosted, not used anywhere else on the site. Was the
-  // crimson aurora texture.
   texture: { src: "/photos/home/final-cta-wing.jpg" },
   screen: {
     kind: "rows",

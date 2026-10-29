@@ -2,18 +2,6 @@ import { InsuranceCard } from "@/new-redesign/components/sections/home/Insurance
 import { PaymentsCard } from "@/new-redesign/components/sections/home/PaymentsCard";
 import { homeProducts } from "@/new-redesign/content/home.content";
 
-/**
- * 3 · Payments and insurance (home structure v2 §§ 3–4 in one section, owner
- * 2026-10-25). A centred head after the owner's "Send Money Anywhere"
- * reference: the eyebrow with its crimson marker, the H2, a two-line sub.
- * Under it, the Payments card, a metrics strip (owner, 2026-10-25) and the
- * Insurance cards. The cards' titles are H3s under this H2.
- *
- * Metrics strip: a small uppercase label, then three figures with hairline
- * dividers between them, after the owner's "Growing every day" reference.
- * The figure is H1-sized, its "+" smaller and raised. Below 768px they
- * stack with rules between them.
- */
 export function HomeProducts() {
   const { eyebrow, title, sub, metricsLabel, metrics } = homeProducts;
 

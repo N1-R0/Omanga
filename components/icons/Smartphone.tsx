@@ -1,8 +1,6 @@
 import { Icon } from "@/components/ui/Icon";
 import type { IconSize } from "@/types/ui.types";
 
-/** Phone. The mobile app. Path data from lucide-react (ISC). */
-
 export type SmartphoneProps = {
   size: IconSize;
   label?: string;

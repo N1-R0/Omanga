@@ -1,8 +1,6 @@
 import { Icon } from "@/components/ui/Icon";
 import type { IconSize } from "@/types/ui.types";
 
-/** Newspaper. The health-tips newsletter. Path data from lucide-react (ISC). */
-
 export type NewspaperProps = {
   size: IconSize;
   label?: string;

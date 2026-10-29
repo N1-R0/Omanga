@@ -1,21 +1,10 @@
 import { href } from "@/new-redesign/config/routes";
-import Image from "next/image";
 
 import { FeatureLottie } from "@/new-redesign/components/sections/home/FeatureLottie";
 import { Button } from "@/new-redesign/components/ui/Button";
 import { healthHero } from "@/new-redesign/content/health-cover.content";
+import { Photo } from "@/new-redesign/components/ui/Photo";
 
-/**
- * 1 · Insurance hero (owner, 2026-10-23): the Payments hero's layout, so the
- * two product pages read as a pair. The grey page, everything centred: the
- * H1, the sub, one primary action, then a photo box at the same sizes (600px
- * tall, 440 below 768). Owner, 2026-10-26: the photo is a deep blue mountain
- * range, a sibling of the Payments hero's ridges; it replaced the moving
- * crimson fabric.
- *
- * The box holds no phone: it plays the how-cover-works film instead
- * (owner's storyboard, 2026-10-23).
- */
 export function HealthHero() {
   const { title, sub, primary, scene, photo } = healthHero;
 
@@ -37,14 +26,8 @@ export function HealthHero() {
           </Button>
         </div>
 
-        {/* The stage, as on the wallet hero, with the how-cover-works film over
-            the fabric. The film keeps its 1080 × 600 frame at the box's full
-            height and is centred, so narrow boxes crop its empty sides, not
-            the card (the card is 456 wide, inside the 468 a 375 phone shows).
-            Below 768 it runs edge to edge, square, as on Payments (owner,
-            2026-10-26): -mx-4 cancels the page gutter. */}
         <div className="relative isolate -mx-4 mt-14 h-[440px] w-[calc(100%+2rem)] overflow-hidden md:mx-0 md:mt-16 md:h-[600px] md:w-full md:rounded-sm">
-          <Image src={photo.src} alt="" fill priority sizes="(min-width: 1112px) 1080px, 100vw" className="-z-10 object-cover" style={{ objectPosition: photo.position }} />
+          <Photo src={photo.src} alt="" fill preload sizes="(min-width: 1112px) 1080px, 100vw" className="-z-10 object-cover" style={{ objectPosition: photo.position }} />
           <FeatureLottie
             scene={scene}
             active

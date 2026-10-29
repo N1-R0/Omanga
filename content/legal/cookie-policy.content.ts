@@ -10,42 +10,6 @@ import {
 } from "@/content/legal/legal-shared.content";
 import type { LegalDocumentContent } from "@/types/legal.types";
 
-/**
- * The Cookie Policy.
- *
- * ---------------------------------------------------------------------------
- * THE INVENTORY IS THE AUDIT, NOT A TEMPLATE
- *
- * Every row in the table below was established by inspecting the live site and
- * the dependencies, and the finding is unusual enough to be worth stating
- * plainly: before Google Analytics was added (2026-10-28) omanga.biz set no
- * cookies of its own at all. `document.cookie` is
- * empty on every page, `localStorage` and `sessionStorage` were empty before this
- * consent system existed, and the only script on the page that is not the
- * application's own bundle is Vercel Speed Insights — which was audited to
- * confirm it touches no browser storage of any kind.
- *
- * The temptation with a document like this is to list the cookies a site of this
- * type usually has: a session cookie, a CSRF token, a Google Analytics `_ga`
- * pair, a Meta `_fbp`. None of them exists here. Listing them would be inventing
- * tracking to describe, which is both false and, on a page whose only job is to
- * be an accurate inventory, self-defeating.
- *
- * So the table has three entries, one of which is a browser-storage item rather
- * than a cookie and one of which belongs to Google rather than to us. That is the
- * complete and accurate picture, and the policy says so.
- *
- * ---------------------------------------------------------------------------
- * ON GOOGLE'S COOKIE NAMES
- *
- * The map embed loads from `maps.google.com`, so any cookies it sets belong to a
- * Google domain and cannot be read from this origin — which is precisely why they
- * are a third-party concern. The specific names and lifetimes are Google's to
- * define and change, so the row describes the category and points at Google's own
- * documentation rather than asserting a list of names and durations that would be
- * a guess and would go stale.
- */
-
 const CONSENT_STORAGE_DESCRIPTION =
   "Remembers the cookie choice you made, so we can honour it and so you are not asked again on every page.";
 

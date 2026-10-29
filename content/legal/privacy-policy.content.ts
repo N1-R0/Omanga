@@ -14,66 +14,9 @@ import {
 } from "@/content/legal/legal-shared.content";
 import type { LegalDocumentContent } from "@/types/legal.types";
 
-/**
- * The Privacy Policy.
- *
- * ---------------------------------------------------------------------------
- * SCOPE, WHICH IS THE MOST IMPORTANT DECISION IN THIS DOCUMENT
- *
- * This policy covers omanga.biz and the enquiries it receives. It does not
- * pretend to cover the wallet or the insurance checkout, and that is a finding of
- * the audit rather than a limitation of effort:
- *
- *   - There is no account system, no login and no user database in this
- *     application. Nothing here stores a customer record.
- *   - The wallet lives at a different origin entirely, on a platform Omanga does
- *     not operate. Every "open a wallet" call to action leaves this site.
- *   - Insurance is paid for on Paystack's own hosted pages. No card details ever
- *     reach this application, and there is no payment code in it to receive them.
- *   - The two forms deliver one email to a Zoho mailbox and write nothing to any
- *     store. `app/api/enquiry/route.ts` is explicit: "No CRM, no database, no
- *     third-party form service, no newsletter list."
- *
- * The template version of this document would describe KYC verification, account
- * balances, transaction histories and card data, because that is what a fintech
- * privacy policy usually describes. Every one of those sentences would be false
- * of this website. A policy that over-claims its own processing is not a cautious
- * policy — it misdescribes who holds what, which is the single thing a data
- * subject uses it to work out where to send a request.
- *
- * So the document says clearly what this site does, and says just as clearly that
- * the wallet and the checkout are separate services with separate controllers,
- * and that their policies govern there. Those controllers are now named — Fuspay
- * Technologies for the wallet and Phillips HMO for the insurance — with the
- * regulator that authorises each. Their licence numbers remain marked as
- * outstanding, because a number is either verified or invented.
- *
- * ---------------------------------------------------------------------------
- * ON NAMING LAWS
- *
- * The NDPA 2023 and the NDPC are stated as applying, which is safe: Omanga
- * operates from Lagos and processes personal data in Nigeria. Section references
- * (ss. 24–27 for principles and lawful bases, ss. 34–38 for data subject rights)
- * were verified against the NDPC's own published description of the Act.
- *
- * The GDPR is deliberately NOT claimed as applying. Article 3(2) turns on whether
- * Omanga *intends* to offer services to people in the EU or UK, which is a
- * business fact this codebase cannot establish — the site is in English, prices
- * are in dollars, and the audience is travellers to Africa, all of which is
- * consistent with either answer. The document therefore describes the position
- * accurately and flags it for counsel, rather than either asserting compliance
- * with a regime whose obligations have not been implemented, or denying the
- * application of a law that may well bite.
- */
-
 export const privacyPolicyContent: LegalDocumentContent = {
   meta: {
     title: "Privacy Policy | Omanga",
-    /*
-      Held under 165 characters so Google does not truncate it mid-sentence. The
-      longer version ran to 181 and was cut at "the third parties who prov…",
-      which loses the clause that makes the sentence worth reading.
-    */
     description:
       "How Omanga collects, uses and protects your personal information on omanga.biz — our enquiry forms, cookies, and the third parties we work with.",
     path: "/privacy-policy",

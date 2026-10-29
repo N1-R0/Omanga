@@ -8,27 +8,6 @@ import { APP } from "@/new-redesign/components/sections/wallet/AppUi";
 import { CurrencyPicker } from "@/new-redesign/components/ui/CurrencyPicker";
 import { homeRates as copy } from "@/new-redesign/content/home.content";
 
-/**
- * The working converter, drawn as an Omanga app "Convert" screen for the
- * PhoneFrame in real iPhone points (390 wide), after the owner's card
- * reference (2026-10-25):
- *   - one card split in two, "You convert" over "You get": a small grey
- *     label, then the plain currency picker on the left and the amount, large,
- *     on the right;
- *   - a dark rate pill sitting on the seam between the halves;
- *   - a second card of icon rows (three plain facts, no speed or fee claims);
- *   - one full-width dark button.
- * Colours are the app's (AppUi APP), as on the other drawn screens.
- *
- * Picking the currency already on the other side swaps the two rather than
- * showing X → X. Rates are the GBP/USD/CAD/NGN cross matrix. The pickers
- * open left-aligned so their 340px popover stays inside the screen.
- *
- * The button goes to the web wallet: converting happens there, not here.
- *
- * Home only. The Payments hero used a frosted-card variant of this until
- * 2026-10-26, when the compact `Converter` replaced it.
- */
 type Props = {
   matrix: Readonly<Record<MatrixCurrency, Readonly<Record<MatrixCurrency, number>>>>;
 };
@@ -37,13 +16,10 @@ const nf = (decimals: number) => new Intl.NumberFormat("en-GB", { minimumFractio
 
 const symbolOf = (code: string) => copy.currencies.find((c) => c.code === code)?.symbol ?? "";
 
-/** Drop the minor unit from 10,000 up so a seven-figure naira sum fits. */
 const money = (n: number) => nf(n >= 10_000 ? 0 : 2).format(n);
 
-/** Show small rates (NGN → GBP is 0.00056) with enough digits to mean something. */
 const rateText = (n: number) => (n >= 1 ? nf(2).format(n) : n.toPrecision(3));
 
-/** Material Icons (Apache-2.0): account-balance, visibility, account-balance-wallet. */
 const FACT_ICONS = {
   bank: "M4 10h3v7H4zm6.5 0h3v7h-3zM2 19h20v3H2zm15-9h3v7h-3zm-5-9L2 6v2h20V6z",
   eye: "M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z",
@@ -84,12 +60,10 @@ export function RateConvertScreen({ matrix }: Props) {
     />
   );
 
-  // Compact enough that the button sits in the visible top of the phone.
   const half = "relative flex flex-col gap-3 px-5 py-5";
   const label = "text-[18px]";
   const figure = "min-w-0 flex-1 truncate text-right font-semibold tracking-[-0.03em] tabular-nums";
   const got = valid ? `${symbolOf(to)}${money(value * rate)}` : "—";
-  /** Step the size down for long figures (seven-figure naira) so they fit beside the picker. */
   const sizeFor = (text: string) => (text.length <= 7 ? 38 : text.length <= 9 ? 32 : 28);
 
   return (
@@ -108,8 +82,6 @@ export function RateConvertScreen({ matrix }: Props) {
             {picker("from")}
             <div className={`${figure} flex items-center justify-end`} style={{ fontSize: sizeFor(symbolOf(from) + amount) }}>
               <span aria-hidden>{symbolOf(from)}</span>
-              {/* The input sizes to its text (a hidden copy sets the width), so
-                  the symbol sits right against the figure. */}
               <span className="inline-grid min-w-0">
                 <span aria-hidden className="invisible col-start-1 row-start-1 whitespace-pre">
                   {amount || " "}
@@ -121,7 +93,6 @@ export function RateConvertScreen({ matrix }: Props) {
                   value={amount}
                   onChange={(e) => setAmount(e.target.value.replace(/[^\d.,]/g, ""))}
                   aria-describedby={`${amountId}-rate`}
-                  // size 1 keeps the input's own width out of the column's sizing.
                   size={1}
                   className="col-start-1 row-start-1 w-full min-w-0 bg-transparent text-right outline-none"
                 />
@@ -130,7 +101,6 @@ export function RateConvertScreen({ matrix }: Props) {
           </div>
         </div>
 
-        {/* The seam, with the rate pill on it. */}
         <div className="relative h-[3px]" style={{ background: APP.hairline }}>
           <span
             id={`${amountId}-rate`}
@@ -173,7 +143,6 @@ export function RateConvertScreen({ matrix }: Props) {
         href={WALLET_URL}
         target="_blank"
         rel="noopener noreferrer"
-        // Right under the facts: the photo box crops the phone below it.
         className="mt-5 flex h-14 items-center justify-center rounded-full text-[18px] font-medium text-[#fff] transition-opacity hover:opacity-90"
         style={{ background: APP.text }}
       >

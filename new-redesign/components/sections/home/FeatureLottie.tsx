@@ -5,18 +5,6 @@ import { type CSSProperties, useEffect, useRef, useState } from "react";
 
 import type { FeatureLottie as Scene } from "@/new-redesign/content/home.content";
 
-/**
- * A feature item's Lottie scene, filling its panel over the U2 texture
- * (home.content.ts FeatureLottie). Like the retired MP4 player, it plays only
- * while its row is open and the panel is on screen, and it starts from the
- * first frame each time the row opens. Nothing loads until the panel first
- * nears the viewport. With reduced motion it holds `stillFrame`.
- *
- * Uses lottie-web's SVG-only build: the light build drops the drop shadows,
- * and the canvas renderer drew nothing for Jitter's exports (design.md).
- *
- * Decorative: the row's title and text already say what the scene shows.
- */
 export function FeatureLottie({ scene, active, className, style }: { scene: Scene; active: boolean; className?: string; style?: CSSProperties }) {
   const ref = useRef<HTMLDivElement>(null);
   const anim = useRef<AnimationItem | null>(null);
@@ -46,7 +34,6 @@ export function FeatureLottie({ scene, active, className, style }: { scene: Scen
     };
   }, []);
 
-  // Load once the panel is near, and only for the open row or a row that has been opened.
   useEffect(() => {
     const el = ref.current;
     if (!el || !near || !active || anim.current) return;
@@ -57,14 +44,13 @@ export function FeatureLottie({ scene, active, className, style }: { scene: Scen
         fetch(scene.src).then((r) => r.json()),
       ]);
       if (cancelled) return;
+      if (window.matchMedia("(pointer: coarse), (max-width: 767px)").matches) stripFilters(data);
       anim.current = lottie.loadAnimation({
         container: el,
         renderer: "svg",
         loop: true,
         autoplay: false,
         animationData: data,
-        // Fit, not cover: the scene is transparent over the panel's own texture,
-        // so letterboxing never shows, and cover cropped the card at tablet widths.
         rendererSettings: { preserveAspectRatio: "xMidYMid meet" },
       });
       setReady(true);
@@ -76,7 +62,6 @@ export function FeatureLottie({ scene, active, className, style }: { scene: Scen
 
   useEffect(() => () => anim.current?.destroy(), []);
 
-  // Rewind when the row opens, so each visit starts from the first beat.
   useEffect(() => {
     if (ready && active) anim.current?.goToAndStop(0, true);
   }, [ready, active]);
@@ -90,4 +75,16 @@ export function FeatureLottie({ scene, active, className, style }: { scene: Scen
   }, [ready, active, onScreen, still, scene.stillFrame]);
 
   return <div ref={ref} aria-hidden className={className} style={style} />;
+}
+
+type LottieLayer = { ef?: { ty: number }[]; layers?: LottieLayer[] };
+
+function stripFilters(data: { layers: LottieLayer[]; assets?: LottieLayer[] }) {
+  const strip = (layers: LottieLayer[] = []) => {
+    for (const layer of layers) {
+      if (layer.ef) layer.ef = layer.ef.filter((e) => e.ty !== 25 && e.ty !== 29);
+    }
+  };
+  strip(data.layers);
+  for (const asset of data.assets ?? []) strip(asset.layers);
 }

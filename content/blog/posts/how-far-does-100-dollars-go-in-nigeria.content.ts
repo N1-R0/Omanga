@@ -1,67 +1,6 @@
 import type { BlogPost } from "@/types/blog.types";
 import type { ImageAsset } from "@/types/content.types";
 
-/**
- * Article: how far does $100 go in Nigeria?
- *
- * [ADDED, 2026-10-11] Replaces "How to pay in Nigeria as a visitor" on the
- * owner's instruction (one new post in, one old post out). The old slug
- * 301-redirects here from `next.config.ts`, and this post absorbs the old
- * post's cards / cash / exchange-rate advice so nothing it ranked for is lost.
- *
- * Why this question: "travel to nigeria" on AnswerThePublic, run in the UK,
- * US, Canada and Ireland. Questions about what dollars are worth there were the
- * only money topic that came up in all four markets: "Is $100 USD a lot in
- * Nigeria?", "How far does $100 go in Nigeria?", "Is $20 / $50 / $200 / $500 a
- * lot in Nigeria?", "Is Nigeria expensive for tourists?", "How much does a meal
- * cost in Nigeria?". See design.md § Blog SEO workflow.
- *
- * Primary keyword: "how far does $100 go in Nigeria". Secondary: "is $100 a lot
- * in Nigeria", "is $20 a lot of money in Nigeria", "is Nigeria expensive for
- * tourists", "cost of a meal in Lagos". Intent: pre-trip budgeting.
- *
- * Voice: written as one person talking to another — second person, short
- * scenes the reader recognises (landing at the airport, the first Bolt ride,
- * December prices). No invented anecdotes or customers: every "you" scene is
- * hypothetical, and every number is sourced.
- *
- * Sources (all checked 2026-10-11):
- *   - Rate: CBN official (NFEM) ~₦1,330/$ and parallel ~₦1,375–1,390/$ in early
- *     October 2026 (Vanguard, Techeconomy, ngnrates.com). The post rounds to
- *     ~₦1,350 and says so. Re-check before each refresh.
- *   - Meals, rides, SIM, data, daily budgets: 24 Hours Market, "Cost of Living
- *     in Lagos (2026 Visitor Guide)", Feb 2026.
- *   - Tourist vs local prices ("about double"): spendsanity.com Lagos guide.
- *   - MTN 10GB / 30 days at ₦4,500: 2026 Nigerian data-plan guides.
- *   - December: Tribune, "Detty December diaspora budget guide", Jul 2026
- *     (₦3,000 Lekki–VI ride reaching ₦12,000–15,000 after concerts; shortlets
- *     ₦120,000–250,000 a night in regular months). BusinessDay on 2025 season
- *     short-let price rises.
- *   - Card fraud, ATMs, carrying cash: GOV.UK Nigeria travel advice (linked).
- * Omanga claims restate the approved Payments copy only.
- * [CHANGED, 2026-10-14] UX copy pass (design.md § Home UX copy pass): names the
- *   ₦20 transfer fee instead of "no hidden fees", drops unconfirmed 24/7 wallet
- *   support, shorter sentences.
- *
- * [REWRITTEN, 2026-10-28] Blog audit + rewrite pass:
- *   - Dropped "mid-market" everywhere, including the FAQ that defined it
- *     (no-rate-disclosure rule); the rate gap is now explained as "the rate
- *     Google shows" vs the rate you get.
- *   - Wallet copy matches how it works (owner, 2026-10-22 and 2026-10-28):
- *     convert to naira, pay sellers by transfer to their bank account; leftover
- *     naira converts back. Was "spend from your balance online or in person".
- *   - "How to pay": owner's first-hand view (transfer first, POS often down,
- *     cash for small things), CBN December 2025 foreign-card directive, link to
- *     the card guide, which now owns "can I use my card in Nigeria".
- *   - FAQ adds "Is $1 a lot in Nigeria?" (ATP People Also Ask, roadmap item 4),
- *     priced from the buka figures already in the post.
- *   - Comment above about the ₦20 fee is history only; no fee appears in copy.
- *
- * [VERIFY] Prices move with fuel and the naira. Refresh the figures and the
- * rate every quarter, and before November for the December section.
- */
-
-/** Carried over from the post this replaces; same Unsplash photo and crop. */
 const hundredDollarsImage: ImageAsset = {
   src: "https://images.unsplash.com/photo-1687422809654-579d81c29d32?w=2000&h=1500&fit=crop&crop=faces",
   alt: "A smiling street vendor in a yellow dress and headscarf holding a phone at her fruit stand.",
@@ -69,11 +8,6 @@ const hundredDollarsImage: ImageAsset = {
   height: 1500,
 };
 
-/**
- * [ADDED, 2026-10-18] Audit quick win: the share image is the same photo,
- * cropped to 1200x630 and self-hosted (public/blog/og/), so link previews
- * don't depend on Unsplash or show a 4:3 crop.
- */
 const shareImage: ImageAsset = {
   src: "/blog/og/how-far-does-100-dollars-go-in-nigeria.jpg",
   alt: hundredDollarsImage.alt,
@@ -87,8 +21,6 @@ const FCDO_SAFETY_URL =
 export const howFarDoes100DollarsGoPost: BlogPost = {
   slug: "how-far-does-100-dollars-go-in-nigeria",
   meta: {
-    // [CHANGED, 2026-10-18] Copy audit: title 68 → 59 and description
-    // 167 → 145 characters, so neither is cut off in search results.
     title: "How Far Does $100 Go in Nigeria? Lagos Prices 2026 | Omanga",
     description:
       "Is $100 a lot in Nigeria? What $20, $50, $100 and $200 really buy in Lagos in 2026, why December costs more, and how to avoid bad exchange rates.",
@@ -137,7 +69,6 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
           kind: "paragraph",
           content: [
             "In early October 2026, the official rate was around ₦1,330 to the dollar. Street rates were a little higher, around ₦1,375 to ₦1,390. The gap is much smaller than it was 2 years ago, which is good news for visitors. This guide uses a round ₦1,350. For today's figure, see our ",
-            // [ADDED, 2026-10-18] Internal link to the live rate page.
             { text: "dollars to naira rate", href: "/rates/dollars-to-naira" },
             ".",
           ],
@@ -357,8 +288,6 @@ export const howFarDoes100DollarsGoPost: BlogPost = {
         {
           kind: "paragraph",
           content: [
-            // [CHANGED, 2026-10-14] UX copy pass: removed 24/7 wallet support
-            // (not owner-confirmed).
             "The wallet is free to open and holds 6+ currencies, with no minimums. ",
             { text: "Explore the wallet", href: "/payments" },
             ".",

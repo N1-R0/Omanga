@@ -14,10 +14,6 @@ import { HealthScope } from "@/new-redesign/components/sections/health-cover/Hea
 import { healthFaq, healthProof } from "@/new-redesign/content/health-cover.content";
 import { faqItems, insuranceMeta } from "@/new-redesign/content/seo.content";
 
-/**
- * Insurance at /insurance (sitemap-v2.md § C). Copy lives in
- * new-redesign/content/health-cover.content.ts.
- */
 export const metadata: Metadata = buildPageMetadata(insuranceMeta);
 
 export default function InsurancePage() {

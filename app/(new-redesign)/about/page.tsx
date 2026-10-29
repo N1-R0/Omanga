@@ -15,12 +15,6 @@ import { FaqSection } from "@/new-redesign/components/ui/FaqSection";
 import { OLD_PAGE_FAQ_SUB, oldPageFaq } from "@/new-redesign/content/old-pages.content";
 import { aboutMeta } from "@/new-redesign/content/seo.content";
 
-/**
- * About at /about (sitemap-v2.md § About Omanga), rebuilt in the new design
- * section by section (owner, 2026-10-26 to 27; picks in design.md). Copy
- * lives in new-redesign/content/about.content.ts; the FAQ keeps its questions
- * from content/page-faqs.content.ts.
- */
 export const metadata: Metadata = buildPageMetadata(aboutMeta);
 
 export default function AboutPage() {

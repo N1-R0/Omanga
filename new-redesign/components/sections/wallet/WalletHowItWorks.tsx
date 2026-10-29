@@ -1,17 +1,6 @@
 import { StepWalkthrough } from "@/new-redesign/components/sections/wallet/StepWalkthrough";
 import { walletHowItWorks } from "@/new-redesign/content/wallet.content";
 
-/**
- * 3 · How it works (owner, 2026-10-25, after a "Your Wealth. Your Rules."
- * reference): the head and the steps in the left column beside the animated
- * app on the right (StepWalkthrough; owner moved the head beside the box,
- * 2026-10-26). From 1024px the section fills the viewport (owner,
- * 2026-10-26): it is one screen tall, content centred, and the photo box
- * grows with the screen (StepWalkthrough). One walkthrough for the whole trip: add money,
- * convert, pay by transfer, going home. It replaced three sections that
- * repeated each other. Each step is a Jitter Lottie of the app's screens,
- * rebuilt as vectors.
- */
 export function WalletHowItWorks() {
   const { eyebrow, title, sub, steps, photo } = walletHowItWorks;
 

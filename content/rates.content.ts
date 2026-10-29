@@ -3,30 +3,11 @@ import type { FundingCurrency } from "@/lib/rates";
 import type { FaqItem } from "@/types/blog.types";
 import type { PageMetaContent } from "@/types/content.types";
 
-/**
- * [ADDED, 2026-10-18] Live exchange-rate pages, one per funding currency
- * (owner request, from design-lab/copy-seo-review-2026-10-18.md § 5.1).
- *
- * Why these pages: the pounds↔naira search cluster is the largest money
- * search Omanga's audience makes (Semrush UK: ~180K/mo; "naira to pounds"
- * 14.8K, "pounds to naira" 12.1K). Wise's biggest traffic source is exactly
- * this kind of page. Each page targets both directions of one pair, so
- * "naira to pounds" and "pounds to naira" are one page, not two thin ones.
- *
- * Facts stay inside what is approved: Omanga converts USD, GBP and CAD to
- * naira at the mid-market rate, you see the rate before you confirm, and
- * transfers cost ₦20. The rate shown is the public reference rate from
- * `lib/rates.ts`, never a quote; the page says so. No "card" anywhere.
- */
-
 export type RatePair = {
-  /** URL segment, the way people search it. */
   readonly slug: string;
   readonly code: FundingCurrency;
   readonly symbol: string;
-  /** Plural, as in "pounds to naira". */
   readonly plural: string;
-  /** Full name, as in "British pounds". */
   readonly fullName: string;
 };
 
@@ -62,7 +43,6 @@ const titleCase = (s: string) => s.split(" ").map(capitalise).join(" ");
 
 export function rateMeta(pair: RatePair): PageMetaContent {
   return {
-    // "Pounds to Naira Today: GBP to NGN Exchange Rate | Omanga"
     title: `${titleCase(pair.plural)} to Naira Today: ${pair.code} to NGN Rate | Omanga`,
     description: `Today's ${pair.plural} to naira rate, plus a ${pair.code} to NGN converter. Change ${pair.plural} to naira in a free Omanga wallet.`,
     path: `/rates/${pair.slug}`,
@@ -73,8 +53,6 @@ export function rateCopy(pair: RatePair) {
   return {
     eyebrow: `${pair.code} to NGN exchange rate`,
     heading: `${capitalise(pair.plural)} to naira today`,
-    // [CHANGED, 2026-10-18] The M1 matrix (owner pick) replaces the two
-    // amount tables. The R2 chart was added and then removed the same day.
     matrixHeading: "Naira, dollar and pound rates today",
     matrixCaption: `Reference rates between US dollars, British pounds, Canadian dollars and Nigerian naira, including naira to ${pair.plural}`,
     stepsHeading: `Change ${pair.plural} to naira with Omanga`,
@@ -92,8 +70,6 @@ export function rateCopy(pair: RatePair) {
         body: `Pay in Nigeria or send money to a bank account. Your wallet works in ${COUNTRIES_SERVED_DISPLAY} African countries.`,
       },
     ],
-    // [REMOVED, 2026-10-25] "What is the mid-market rate?" Owner: the rate
-    // source and refresh timing aren't public information.
     sourceNote:
       "Reference rate only. Your exact rate is shown in the Omanga app before you confirm.",
     otherRatesHeading: "Other naira rates",
@@ -104,10 +80,6 @@ export function rateCopy(pair: RatePair) {
 const naira = (n: number) =>
   `₦${n.toLocaleString("en-GB", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
-/**
- * FAQ answers carry the live figure, so each question is answered on the page
- * and in `FAQPage` with the same characters (see `buildFaqPage`).
- */
 export function rateFaq(pair: RatePair, rate: number, date: string): FaqItem[] {
   return [
     {

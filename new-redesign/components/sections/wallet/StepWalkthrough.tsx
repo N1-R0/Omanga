@@ -1,26 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 
 import { cx } from "@/lib/cx";
 import { FeatureLottie } from "@/new-redesign/components/sections/home/FeatureLottie";
+import { Photo } from "@/new-redesign/components/ui/Photo";
 
-/**
- * A step walkthrough (owner, 2026-10-25, after a "Your Wealth. Your Rules."
- * reference): the section head sits at the top of the left column and the
- * steps stack at its foot as white cards, level with the photo box (owner,
- * 2026-10-26: the head belongs beside the box, not above it). The active one
- * opens to show its line and a timer bar along its foot. On the right, a
- * photo box plays that step's Lottie from its first frame. When the timer
- * fills (after the step's `ms`, the Lottie's length) the next step opens and
- * its Lottie starts, looping after the last; clicking a step jumps to it.
- *
- * The timer and the Lottie restart together on every step change, so text,
- * bar and animation stay in step. Nothing advances while the section is off
- * screen. Under reduced motion nothing autoplays: the active step shows its
- * Lottie's settled frame, its bar is full, and clicking changes step.
- */
 type Step = { title: string; text: string; lottie: string; ms: number; stillFrame: number };
 
 export function StepWalkthrough({ steps, photo, label, head }: { steps: readonly Step[]; photo: string; label: string; head?: ReactNode }) {
@@ -43,7 +28,6 @@ export function StepWalkthrough({ steps, photo, label, head }: { steps: readonly
     };
   }, []);
 
-  // The step timer: fills over the step's `ms`, then moves on.
   useEffect(() => {
     if (still || !visible) return;
     const ms = steps[active].ms;
@@ -61,7 +45,6 @@ export function StepWalkthrough({ steps, photo, label, head }: { steps: readonly
     };
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-    // `progress` is read once to resume a paused step, not to restart on every tick.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active, still, visible, steps]);
 
@@ -117,7 +100,7 @@ export function StepWalkthrough({ steps, photo, label, head }: { steps: readonly
       </div>
 
       <div className="relative isolate flex h-[460px] items-center justify-center overflow-hidden rounded-sm md:h-[560px] lg:order-2 lg:h-[max(600px,calc(100svh-96px))]">
-        <Image src={photo} alt="" fill sizes="(min-width: 1024px) 540px, 100vw" className="-z-10 object-cover" />
+        <Photo src={photo} alt="" fill sizes="(min-width: 1024px) 540px, 100vw" className="-z-10 object-cover" />
         <FeatureLottie key={steps[active].lottie} scene={{ src: steps[active].lottie, stillFrame: steps[active].stillFrame }} active={visible || still} className="aspect-[560/760] h-full" />
       </div>
     </div>

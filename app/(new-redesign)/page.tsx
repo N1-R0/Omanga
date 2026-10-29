@@ -15,12 +15,6 @@ import { FaqSection } from "@/new-redesign/components/ui/FaqSection";
 import { homeFaq, homeSections, type HomeSectionId } from "@/new-redesign/content/home.content";
 import { faqItems, homeMeta } from "@/new-redesign/content/seo.content";
 
-/**
- * Home at /. Pages hold section composition only; copy lives in
- * new-redesign/content. Sections render in the locked order from
- * home.content.ts; the Record makes a section missing from SECTIONS a type
- * error. Metadata and structured data as on the old home, plus the FAQ.
- */
 export const metadata: Metadata = buildPageMetadata(homeMeta);
 
 const SECTIONS: Record<HomeSectionId, () => React.ReactNode> = {

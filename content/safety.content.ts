@@ -2,26 +2,6 @@ import { CONTACT_EMAIL, WHATSAPP_NUMBER_DISPLAY } from "@/config/site";
 import type { FaqItem } from "@/types/blog.types";
 import type { PageMetaContent } from "@/types/content.types";
 
-/**
- * [ADDED, 2026-10-18] "Is Omanga safe?" (Phase 1 of the copy and SEO plan,
- * design-lab/copy-seo-review-2026-10-18.md § 5.3). Revolut and Wise both run
- * a page titled with this question; it answers the trust check a first-time
- * visitor makes before handing over money.
- *
- * [CHANGED, 2026-10-18] Owner: the wallet's operating partner and backend
- * set-up aren't public, so this page is general: what you see before you
- * pay, who provides cover (Phillips HMO, customer-facing), account tips.
- * Earlier the same day: regulator and licence wording is softened
- * site-wide until the licences are confirmed (SEO audit: no CBN record found
- * for "Fuspay"; HMOs are usually NHIA-licensed, not NAICOM). The page names
- * the partners only. Restore regulators, licence numbers and register links
- * once confirmed. Other claims are approved: Fuspay operates the wallet,
- * Phillips HMO provides cover in Nigeria only, mid-market rate
- * shown before you confirm, ₦20 per transfer, free to open, no card. Nothing
- * about how funds are held, insured or segregated is stated: unconfirmed.
- * The account-safety tips are general advice, not Omanga policy claims.
- * [NEW] copy, needs sign-off.
- */
 export const SAFETY_HEADING_ID = "safety-heading" as const;
 
 export const safetyMeta: PageMetaContent = {

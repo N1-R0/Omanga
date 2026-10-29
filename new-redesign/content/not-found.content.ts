@@ -1,7 +1,3 @@
-/**
- * The 404 page (cutover, 2026-10-26): the old page's copy in the new design,
- * with the links pointed at the sitemap-v2 pages (href() resolves them).
- */
 export const notFound = {
   meta: {
     title: "Page not found | Omanga",

@@ -1,11 +1,3 @@
-/* =============================================================================
-   Omanga new redesign — Global stylesheet
-   -----------------------------------------------------------------------------
-   The site's only stylesheet (the old design system was deleted 2026-10-26).
-   It scans the pages, this folder and the older shared components in
-   components/, which were moved onto these tokens.
-   ========================================================================== */
-
 @import "tailwindcss" source(none);
 @source "..";
 @source "../../app/(new-redesign)";
@@ -17,24 +9,13 @@
 @import "./utilities.css";
 @import "./animations.css";
 
-/* Scroll-pinned sections (home steps, 2026-10-25): only on screens wide and
-   tall enough to hold the whole pinned section in one view. */
 @custom-variant pin (@media (min-width: 1024px) and (min-height: 800px));
 
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
-    scroll-behavior: smooth;
-    /* `clip`, not `hidden`: stops a stray wide child widening the page
-       without creating a scroll container, so sticky elements still work. */
     overflow-x: clip;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
   }
 
   body {

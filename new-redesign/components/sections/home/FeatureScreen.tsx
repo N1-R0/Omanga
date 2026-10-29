@@ -1,13 +1,5 @@
 import { homeFeatures, type FeatureScreen as Screen } from "@/new-redesign/content/home.content";
 
-/**
- * One mini app screen for the "What Omanga does" panel: a white card with an
- * 8px radius, always placed inside the glass frame by its parent (design
- * system § glass). Illustrative states only.
- *
- * The convert screen uses today's GBP → NGN mid-market rate, so it agrees
- * with the converter in the hero.
- */
 const nf = (d: number) => new Intl.NumberFormat("en-GB", { minimumFractionDigits: d, maximumFractionDigits: d });
 
 export function FeatureScreen({ screen, gbpToNgn }: { screen: Screen; gbpToNgn: number }) {

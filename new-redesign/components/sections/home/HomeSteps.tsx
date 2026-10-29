@@ -5,25 +5,6 @@ import { Card } from "@/new-redesign/components/ui/Card";
 import { Flag } from "@/new-redesign/components/ui/Flag";
 import { homeSteps } from "@/new-redesign/content/home.content";
 
-/**
- * 4 · Set up at home before you fly (home structure v2 § 4), built from the
- * owner-approved wireframe (design-lab/home-steps-v2.html, 2026-10-25).
- *
- * A centred head with the pill CTA under the sub (owner, 2026-10-25), then
- * the journey rail (StepsRail) and three white Cards.
- *
- * Pinned scrolling (owner, 2026-10-25): on screens at least 1024 × 800 (the
- * `pin` variant) the section is 260vh tall and its content sticks to the
- * viewport, so scrolling flies the plane from Home to Lagos before the page
- * moves on. Smaller screens scroll normally.
- *
- * The middle card sits `dip` px lower from 1024px, so the rail's dotted path
- * curves down to its stop. Each card's top well shows a third of the
- * Payments card's mountain photo (owner asked for it here), so the row reads
- * as one landscape, with a small app screen in the glass frame on it (owner:
- * the screens sit on glass). Below 1024px the cards stack, the rail hides
- * and each title carries its number instead.
- */
 const SLICE = ["0%", "50%", "100%"];
 
 export function HomeSteps() {

@@ -1,40 +1,6 @@
 import type { BlogPost } from "@/types/blog.types";
 import type { ImageAsset } from "@/types/content.types";
 
-/**
- * [ADDED, 2026-10-28] Roadmap item 3 (omanga.biz-audit/seo-content-roadmap.md).
- *
- * Primary keyword: "visiting Nigeria for the first time". Secondary, from the
- * AnswerThePublic "visiting nigeria" search (GB, 2026-10-28) and autocomplete:
- * "visiting Nigeria from the UK / USA", "foreigners visiting Nigeria", "is it
- * safe to travel to Nigeria". Each one is answered in a section or the FAQ.
- * Intent: informational, pre-trip, first-time visitors.
- *
- * Owner interview (2026-10-28): sellers want a transfer first, card terminals
- * are common but often down, cash for small things; the wallet sends naira to
- * any Nigerian bank account; no Omanga card; no provider brand names.
- *
- * Sources (read 2026-10-28):
- *   - GOV.UK entry requirements: visa before travel through the online portal,
- *     no visa on arrival, passport valid 6 months after arrival, yellow fever
- *     certificate (exempt: 8 months and under, 61 and over), landing and
- *     departure cards online.
- *   - GOV.UK health: pay for treatment at public hospitals, private costs
- *     more; check vaccines at least 8 weeks ahead; malaria, dengue, yellow fever.
- *   - GOV.UK safety: card fraud, ATMs, cash.
- *   - GOV.UK travel advice summary: which states the FCDO advises against;
- *     Lagos is not among them on 2026-10-28. Stated with the date and a link,
- *     never as Omanga's own safety claim (roadmap rule).
- *   - CBN foreign-card directive, December 2025 (allAfrica).
- *   - Prices: the $100 post's October 2026 Lagos research.
- * Not stated: State Department level (travel.state.gov refused the fetch;
- * linked instead), visa fees (they vary and resellers disagree).
- */
-
-/**
- * Cover from Unsplash (free licence): Lagos from the air, a bridge over the
- * lagoon with boats and the city behind.
- */
 const lagosAerialImage: ImageAsset = {
   src: "https://images.unsplash.com/photo-1765475467677-579353b25ce0?w=2000&h=1500&fit=crop",
   alt: "Lagos from the air: a bridge crosses the lagoon, speedboats leave white wakes, and towers line the far shore.",

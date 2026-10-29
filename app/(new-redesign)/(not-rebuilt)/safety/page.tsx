@@ -15,14 +15,6 @@ import { FaqSection } from "@/new-redesign/components/ui/FaqSection";
 import { OLD_PAGE_FAQ_SUB, oldPageFaq } from "@/new-redesign/content/old-pages.content";
 import { HomeFinalCta } from "@/new-redesign/components/sections/home/HomeFinalCta";
 
-/**
- * [ADDED, 2026-10-18] /safety, "Is Omanga safe?". Copy and its limits are in
- * `content/safety.content.ts`. Static: no data, no animation.
- *
- * Layout follows Wise's safety page: the question as the h1, three plain
- * pillars, then a short "what it is and isn't" list, account tips and the
- * usual FAQ and closing panel.
- */
 export const metadata: Metadata = buildPageMetadata(safetyMeta);
 
 export default function SafetyPage() {

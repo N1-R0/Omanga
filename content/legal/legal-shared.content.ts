@@ -1,30 +1,9 @@
 import { CONTACT_EMAIL, OFFICE_ADDRESS } from "@/config/site";
 import type { LegalBlock } from "@/types/legal.types";
 
-/**
- * Facts and fragments shared by all five legal documents.
- *
- * The five pages cross-reference each other constantly and repeat the same
- * contact route, the same company-identity gap and the same effective date. Each
- * of those has one definition here, so a change lands in five documents at once
- * and they cannot fall out of step — which for a set of documents that describe
- * each other is not a tidiness point but an accuracy one.
- */
-
-/**
- * The date the five documents took effect.
- *
- * [TO CONFIRM] Set to the date they were written. If publication slips, this must
- * move to the actual publication date: an effective date earlier than the day the
- * document first appeared is a claim that visitors were on notice when they were
- * not.
- *
- * [CHANGED, 2026-10-28] Moved from 2026-08-28 when Google Analytics was added
- * to the Cookie and Privacy policies.
- */
 export const LEGAL_EFFECTIVE_DATE = "2026-10-28" as const;
 
-export const LEGAL_ROUTES = {
+const LEGAL_ROUTES = {
   privacy: "/privacy-policy",
   terms: "/terms-of-use",
   policyTerms: "/policy-terms",
@@ -46,28 +25,13 @@ export const LEGAL_LINKS = {
   plans: { text: "plans page", href: "/plans" },
 } as const;
 
-export const MAILTO = `mailto:${CONTACT_EMAIL}` as const;
+const MAILTO = `mailto:${CONTACT_EMAIL}` as const;
 
 export const CONTACT_EMAIL_LINK = {
   text: CONTACT_EMAIL,
   href: MAILTO,
 } as const;
 
-/**
- * The identity gap, written once.
- *
- * Nigerian company law and every privacy regime worth naming require a data
- * controller to identify itself — a registered name, a registration number and a
- * registered office. None of the three is established anywhere in this project:
- * `config/site.ts` records that they are open blockers and deliberately holds no
- * placeholder for them, and the address it does hold is flagged `[VERIFY]` as
- * possibly a trading address rather than the registered one.
- *
- * So the documents say "Omanga", which is the trading name the site uses
- * throughout and is true, and this callout states plainly what is still missing.
- * Writing "Omanga Limited (RC 1234567)" would have made the page look finished by
- * inventing the two facts a reader most needs to be able to rely on.
- */
 export const COMPANY_IDENTITY_CONFIRM: LegalBlock = {
   kind: "confirm",
   title: "Company identity to be confirmed before publication",
@@ -78,25 +42,10 @@ export const COMPANY_IDENTITY_CONFIRM: LegalBlock = {
   ],
 } as const;
 
-/** The wallet operator, named identically wherever the wallet is described. */
 export const WALLET_PROVIDER_NAME = "Fuspay Technologies" as const;
 
-/** The insurance provider, named identically wherever cover is described. */
 export const INSURANCE_PROVIDER_NAME = "Phillips HMO" as const;
 
-/**
- * Who is authorised to do what, written once.
- *
- * Payments and insurance are both licensed activities in Nigeria. Omanga holds
- * neither licence and does not claim to: it presents these services and routes
- * customers to the providers who are authorised to deliver them. Naming the
- * providers and their regulators is what lets a customer check that for
- * themselves, and is the fact the earlier draft of these documents was missing.
- *
- * The licence numbers are still outstanding and are marked as such below rather
- * than left implied. "Licensed by the CBN" is a verifiable claim about a named
- * company; a licence number invented to make the sentence look complete is not.
- */
 export const REGULATORY_STATUS_BLOCKS: readonly LegalBlock[] = [
   {
     kind: "paragraph",
@@ -130,15 +79,6 @@ export const REGULATORY_STATUS_BLOCKS: readonly LegalBlock[] = [
   },
 ] as const;
 
-/**
- * The age rule, written once.
- *
- * The Nigeria Data Protection Act 2023 treats anyone under 18 as a child and
- * requires the consent of a parent or guardian before their data is processed.
- * The same threshold therefore governs eligibility, which is why this sentence
- * appears identically in the Privacy Policy, the Terms of Use and the Policy
- * Terms rather than being written three times and allowed to drift.
- */
 export const MINIMUM_AGE_BLOCK: LegalBlock = {
   kind: "paragraph",
   content: [
@@ -146,13 +86,6 @@ export const MINIMUM_AGE_BLOCK: LegalBlock = {
   ],
 } as const;
 
-/**
- * How the five documents relate, stated identically in each of them.
- *
- * A reader who lands on one of the five has no way to know the other four exist
- * or which one answers their question. Repeating the map in each document is the
- * cheapest fix and the one that works regardless of which page they arrived on.
- */
 export const DOCUMENT_MAP_BLOCKS: readonly LegalBlock[] = [
   {
     kind: "paragraph",
@@ -205,7 +138,6 @@ export const DOCUMENT_MAP_BLOCKS: readonly LegalBlock[] = [
   },
 ] as const;
 
-/** The contact routes, identical across the five documents. */
 export const CONTACT_BLOCKS: readonly LegalBlock[] = [
   {
     kind: "paragraph",
@@ -223,13 +155,6 @@ export const CONTACT_BLOCKS: readonly LegalBlock[] = [
   },
 ] as const;
 
-/**
- * [TO CONFIRM] A dedicated privacy contact.
- *
- * Every enquiry currently arrives in one general mailbox. A data subject request
- * has statutory deadlines attached to it and needs to be recognised as one on
- * arrival, which a shared inbox with no routing rule cannot be relied on to do.
- */
 export const PRIVACY_CONTACT_CONFIRM: LegalBlock = {
   kind: "confirm",
   title: "Privacy contact route to be confirmed",

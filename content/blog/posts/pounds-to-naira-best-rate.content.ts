@@ -2,33 +2,6 @@ import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { BlogPost } from "@/types/blog.types";
 import type { ImageAsset } from "@/types/content.types";
 
-/**
- * [ADDED, 2026-10-18] Phase 1 post (design-lab/copy-seo-review-2026-10-18.md
- * § 5.5). Targets the pounds↔naira cluster (Semrush UK: "pounds to naira"
- * 12.1K/mo, "pound to naira" 5.4K, "pounds to naira today" 2.9K) with the
- * question people ask next: how to get a good rate. Sends readers to the live
- * rate page for the figure itself, so the post never goes stale on numbers.
- *
- * Sources and limits:
- *   - The rate figure is not stated; the live page carries it.
- *   - Official vs street rate: the $100 post's dated October 2026 research.
- *   - UK card fees: stated as "often around 3%" and "check your bank", since
- *     each bank sets its own; the post names no bank.
- *   - Paying in local currency at the terminal, airport bureaux and ATM fees:
- *     general consumer advice, not claims about any provider.
- *   - Omanga claims restate approved copy only (GBP funding, rate shown
- *     before you confirm, free to open).
- * [REWRITTEN, 2026-10-28] Blog audit + rewrite pass:
- *   - Dropped "mid-market" and "real rate" (no-rate-disclosure rule). The
- *     yardstick is now "the rate Google shows" and, above all, naira received.
- *   - Added a worked comparison (hypothetical figures, labelled as such) so
- *     "compare naira received" is something a reader can do.
- *   - Added "Spending naira once you're there": owner's first-hand view that
- *     sellers want a transfer first; the wallet sends naira to any Nigerian
- *     bank account (owner, 2026-10-28). Links to the card and first-visit guides.
- * [NEW] copy, needs sign-off. Written without an owner interview (Phase 1
- * instruction); add Omanga's own experience when there is some.
- */
 const nairaNotesImage: ImageAsset = {
   src: "https://images.unsplash.com/photo-1678693362793-e2fffac536d0?w=2000&h=1500&fit=crop",
   alt: "A hand holding a fan of blue ₦1,000 naira notes.",
@@ -36,11 +9,6 @@ const nairaNotesImage: ImageAsset = {
   height: 1500,
 };
 
-/**
- * [ADDED, 2026-10-18] Audit quick win: the share image is the same photo,
- * cropped to 1200x630 and self-hosted (public/blog/og/), so link previews
- * don't depend on Unsplash or show a 4:3 crop.
- */
 const shareImage: ImageAsset = {
   src: "/blog/og/pounds-to-naira-best-rate.jpg",
   alt: nairaNotesImage.alt,

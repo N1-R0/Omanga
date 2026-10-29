@@ -5,13 +5,6 @@ import { SectionHead } from "@/new-redesign/components/ui/SectionHead";
 import { cx } from "@/lib/cx";
 import { healthScope } from "@/new-redesign/content/health-cover.content";
 
-/**
- * 2 · What this is and isn't (design system § Is / isn't cards, owner
- * wireframe 2026-10-23): the section header, then two equal cards. "What it
- * is" is a white Card with green checks; "What it isn't" sits on
- * surface-muted with grey crosses, so the pair reads as a contrast without
- * warning colours. They stack below 768px, "is" first.
- */
 type Kind = "is" | "isnt";
 
 function Mark({ kind, size }: { kind: Kind; size: number }) {

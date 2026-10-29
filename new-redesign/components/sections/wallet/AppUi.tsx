@@ -1,8 +1,3 @@
-/**
- * Shared pieces for the drawn Omanga app screens (the hero phone, the feature
- * cards): the app's light-theme colours (omanga-mobile constants/colors.ts,
- * kept as hex because they're the app's, not site tokens).
- */
 export const APP = {
   card: "#FAFAFA",
   hairline: "#EEECEC",

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -10,58 +9,18 @@ import { NavIcon } from "@/new-redesign/components/layout/NavIcon";
 import { Button } from "@/new-redesign/components/ui/Button";
 import { href } from "@/new-redesign/config/routes";
 import { navigation, type NavMenu } from "@/new-redesign/content/navigation.content";
+import { pauseSmoothScroll } from "@/new-redesign/components/layout/SmoothScroll";
+import { Photo } from "@/new-redesign/components/ui/Photo";
 
-/**
- * Global header, after wise.com (owner, 2026-10-21). Measured from Wise at
- * 1440: a 76px bar, tabs beside the logo, Help, Log in and the action on the
- * right.
- *
- * [CHANGED, 2026-10-26] The panel follows Ramp's menu (owner reference): a
- * column-width white card hanging from the bar, rounded at the foot. On the
- * left, labelled groups side by side, each link an icon tile, its name and a
- * one-line description. On the right, a grey "Featured" column with the
- * photo, title and line. It was a full-width sheet with a photo card and
- * plain text columns.
- *
- * Motion is Wise's too (styles/animations.css): the bar's colours and the
- * logo cross-fade over 350ms on Wise's curve; the panel area grows from 0 to
- * the panel's height; the panel fades in after a 200ms delay; moving to
- * another tab slides the new panel 10px in from that side over 600ms; and a
- * blurred dimmer covers the page. Every panel stays mounted (inert when
- * closed) so its height can be measured and it can fade out while the area
- * collapses.
- *
- * Over the home hero the bar is transparent with white text. Other pages open
- * on a light hero (the wallet's, 2026-10-22), so there the transparent bar
- * uses dark text and the colour logo (`dark`). While a panel is open the bar
- * turns white, so bar and panel read as one sheet, as on Wise.
- *
- * Tabs open on hover and on click. Escape closes and returns focus to the tab;
- * leaving the header with the pointer or with focus also closes.
- *
- * [CHANGED, 2026-10-27] Scrolling (owner): the bar scrolls away with the
- * page; once it is out of view, scrolling up slides it back in on its own as a
- * fixed white bar, and scrolling down hides it again. Back at the top it is
- * the transparent bar once more.
- *
- * [FIXED, 2026-10-27] Fresh loads flashed dark text over the home hero: the
- * colour transitions ran from the browser's default black as the styles
- * arrived. Transitions now switch on only after the first frame.
- *
- * Below 1024: logo and a menu button. The primary action lives inside the menu sheet
- * (owner), pinned at its foot, after every group, Help, Log in and WhatsApp.
- */
 const menus = navigation.items;
 
 type Motion = "from-start" | "from-end" | undefined;
-/** top: in the page flow at the top. hidden / shown: fixed, out of or in view. */
 type Bar = "top" | "hidden" | "shown";
 
 const BAR_HEIGHT = 76;
 
 export function Header() {
   const [open, setOpen] = useState<number | null>(null);
-  // The last panel shown, kept so the area can collapse around it on close.
   const [shown, setShown] = useState<number | null>(null);
   const [motion, setMotion] = useState<Motion>(undefined);
   const [heights, setHeights] = useState<Record<number, number>>({});
@@ -69,18 +28,13 @@ export function Header() {
   const headerRef = useRef<HTMLElement>(null);
   const panelRefs = useRef<Record<number, HTMLDivElement | null>>({});
   const [bar, setBar] = useState<Bar>("top");
-  // Slide only between hidden and shown, never when the bar first leaves the
-  // flow (it would visibly slide up from the top).
   const [slide, setSlide] = useState(false);
   const [ready, setReady] = useState(false);
   const pathname = usePathname();
   const pinned = bar !== "top";
   const solid = open !== null || pinned;
-  // Only the home hero is dark; every other page's top is light.
   const dark = solid || pathname !== href("/");
 
-  /** Open tab `i`, or close with null. Sets the slide direction when moving
-   *  between tabs; the first open only fades. */
   const show = (i: number | null) => {
     setMotion(open !== null && i !== null && i !== open ? (i > open ? "from-end" : "from-start") : undefined);
     setOpen(i);
@@ -117,7 +71,6 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Measure every panel so the area can animate to an exact height.
   useEffect(() => {
     const ro = new ResizeObserver(() => {
       const next: Record<number, number> = {};
@@ -144,7 +97,6 @@ export function Header() {
       document.removeEventListener("pointerdown", onDown);
       document.removeEventListener("keydown", onKey);
     };
-    // `show` reads `open`, which is in the deps; re-binding per open is fine.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
@@ -152,10 +104,12 @@ export function Header() {
     if (!sheet) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    pauseSmoothScroll(true);
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setSheet(false);
     document.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = prev;
+      pauseSmoothScroll(false);
       document.removeEventListener("keydown", onKey);
     };
   }, [sheet]);
@@ -164,7 +118,6 @@ export function Header() {
 
   return (
     <>
-      {/* Page dimmer behind the open panel, as on Wise. */}
       <div
         aria-hidden
         className={cx(
@@ -188,9 +141,8 @@ export function Header() {
       >
         <div className="container-page flex h-19 items-center gap-6">
           <Link href={href("/")} aria-label={navigation.homeLabel} className="relative shrink-0 rounded-[16px]">
-            {/* Both logos are stacked and cross-faded, standing in for Wise's fill transition. */}
-            <Image src="/logo-omanga-white.svg" alt="" width={110} height={31} priority className={cx(navColor, ready && "transition-opacity", dark ? "opacity-0" : "opacity-100")} />
-            <Image src="/logo-omanga-horizontal.svg" alt="" width={110} height={31} priority className={cx("absolute inset-0", ready && "transition-opacity duration-[var(--duration-nav)] ease-nav", dark ? "opacity-100" : "opacity-0")} />
+            <Photo src="/logo-omanga-white.svg" alt="" width={110} height={31} loading="eager" className={cx(navColor, ready && "transition-opacity", dark ? "opacity-0" : "opacity-100")} />
+            <Photo src="/logo-omanga-horizontal.svg" alt="" width={110} height={31} loading="eager" className={cx("absolute inset-0", ready && "transition-opacity duration-[var(--duration-nav)] ease-nav", dark ? "opacity-100" : "opacity-0")} />
           </Link>
 
           <nav aria-label={navigation.landmarkLabel} className="hidden lg:block">
@@ -214,8 +166,6 @@ export function Header() {
                         className={tabClass}
                         aria-expanded={open === i}
                         aria-controls={`nav-panel-${i}`}
-                        // Hover has already opened it for a mouse, so a mouse click
-                        // (detail > 0) keeps it open; Enter/Space (detail 0) toggles.
                         onClick={(e) => show(e.detail > 0 || open !== i ? i : null)}
                       >
                         {item.label}
@@ -246,9 +196,6 @@ export function Header() {
               </a>
             ))}
             <span className="ml-1 hidden lg:inline-flex">
-              {/* White over the crimson fabric hero, like the hero's primary
-                  (owner, 2026-10-21); back to the brand fill when the bar
-                  turns white with a menu open. */}
               <Button href={navigation.cta.href} external variant={dark ? "primary" : "inverse"}>
                 {navigation.cta.label}
               </Button>
@@ -266,7 +213,6 @@ export function Header() {
           </div>
         </div>
 
-        {/* Panel area: grows to the active panel's height (Wise's viewport). */}
         <div
           className={cx(
             "absolute inset-x-0 top-full hidden overflow-hidden text-text transition-[height] duration-[var(--duration-nav)] ease-nav lg:block",
@@ -301,7 +247,6 @@ export function Header() {
 function Panel({ menu, onNavigate }: { menu: NavMenu; onNavigate: () => void }) {
   const { feature, columns } = menu;
   return (
-    // Bottom padding leaves room for the card's shadow inside the clipped area.
     <div className="container-page pb-8">
       <div className="flex overflow-hidden rounded-b-[16px] border border-t-0 border-border bg-surface shadow-float">
         <div className="flex flex-1 gap-8 p-8">
@@ -329,8 +274,7 @@ function Panel({ menu, onNavigate }: { menu: NavMenu; onNavigate: () => void }) 
           <p className="text-[12px] leading-none font-medium tracking-[0.08em] text-text-secondary uppercase">{navigation.featuredLabel}</p>
           <Link href={feature.href} onClick={onNavigate} className="group mt-5 block">
             <span className="relative block aspect-[16/9] overflow-hidden rounded-[12px]">
-              {/* Eager: the panel sits clipped at height 0, so a lazy image never starts loading. */}
-              <Image src={feature.image.src} alt={feature.image.alt} fill sizes="256px" loading="eager" className="object-cover transition-transform duration-[var(--duration-base)] group-hover:scale-[1.03]" />
+              <Photo src={feature.image.src} alt={feature.image.alt} fill sizes="256px" loading="eager" className="object-cover transition-transform duration-[var(--duration-base)] group-hover:scale-[1.03]" />
             </span>
             <span className="type-p3 mt-5 block text-text">{feature.title}</span>
             <span className="type-p2 mt-1 block text-text-secondary">{feature.text}</span>
@@ -349,14 +293,14 @@ function MobileSheet({ onClose }: { onClose: () => void }) {
     <div id="mobile-menu" role="dialog" aria-modal="true" aria-label={navigation.landmarkLabel} className="fixed inset-0 z-50 flex flex-col bg-surface text-text lg:hidden">
       <div className="container-page flex h-19 shrink-0 items-center justify-between">
         <Link href={href("/")} aria-label={navigation.homeLabel} onClick={onClose}>
-          <Image src="/logo-omanga-horizontal.svg" alt="" width={110} height={31} />
+          <Photo src="/logo-omanga-horizontal.svg" alt="" width={110} height={31} />
         </Link>
         <button ref={closeRef} type="button" className="inline-flex size-11 items-center justify-center rounded-[8px]" aria-label={navigation.menuCloseLabel} onClick={onClose}>
           <CloseIcon />
         </button>
       </div>
 
-      <nav aria-label={navigation.landmarkLabel} className="container-page flex-1 overflow-y-auto pb-6">
+      <nav aria-label={navigation.landmarkLabel} data-lenis-prevent className="container-page flex-1 overflow-y-auto pb-6">
         {menus.map((item) => (
           <div key={item.label} className="border-t border-border py-4">
             {"columns" in item ? (

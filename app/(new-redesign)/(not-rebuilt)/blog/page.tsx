@@ -8,14 +8,6 @@ import { buildPageGraph } from "@/lib/schema";
 import { buildPageMetadata } from "@/lib/seo";
 import { HomeFinalCta } from "@/new-redesign/components/sections/home/HomeFinalCta";
 
-/**
- * The blog index.
- *
- * [ADDED, 2026-10-09] Resolves the `[PENDING ROUTE]` on the header's "Blog"
- * entry. The articles exist to rank for non-brand searches ("how to pay in
- * Nigeria as a visitor") and to build the authority that also lifts the brand
- * query "omanga" — see design.md § Blog.
- */
 export const metadata: Metadata = buildPageMetadata(blogIndexContent.meta);
 
 const HEADING_ID = "blog-heading";

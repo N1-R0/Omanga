@@ -5,11 +5,6 @@ import { OFFICE_MAP_EMBED_URL } from "@/config/site";
 import { consentContent } from "@/content/consent.content";
 import { Button } from "@/new-redesign/components/ui/Button";
 
-/**
- * The office's Google map, behind the functional-cookie consent (as on
- * Contact): without it no request reaches maps.google.com and a placeholder
- * offers to allow it. Fills its parent.
- */
 export function OfficeMapFrame({ title }: { title: string }) {
   const { hasConsent, save, decisions } = useConsent();
 

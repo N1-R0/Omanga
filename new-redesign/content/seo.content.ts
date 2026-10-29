@@ -1,13 +1,6 @@
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 import type { PageMetaContent } from "@/types/content.types";
 
-/**
- * Search titles and descriptions for the pages live in the new design
- * (cutover, 2026-10-26). Titles are the old pages' keyword-tested ones
- * (Semrush pass 2026-10-18, design-lab/copy-seo-review-2026-10-18.md), so
- * rankings carry over. Descriptions follow the owner's naming ("insurance",
- * not "health cover") and the no-rate, no-fee rule.
- */
 export const homeMeta: PageMetaContent = {
   title: "Omanga: Travel Money and Health Insurance for Nigeria",
   description:
@@ -22,14 +15,6 @@ export const paymentsMeta: PageMetaContent = {
   path: "/payments",
 };
 
-/*
-  [CHANGED, 2026-10-28] SEO audit. Was "Travel Insurance for Nigeria: Health
-  Cover from $50", while the page's own FAQ answers "Is this travel
-  insurance?" with "No". Google's results for "travel insurance for nigeria"
-  are mostly outbound cover for Nigerians (AXA Mansard, Leadway, Insubuy), so
-  the title now leads with the visitor's query; "travel health insurance"
-  stays in the description, as in the H1.
-*/
 export const insuranceMeta: PageMetaContent = {
   title: "Health Insurance for Visiting Nigeria, from $50 | Omanga",
   description:
@@ -37,13 +22,10 @@ export const insuranceMeta: PageMetaContent = {
   path: "/insurance",
 };
 
-// Kept from the old About page (UX copy pass, 2026-10-14). The wallet covers
-// 50+ African countries; health cover is Nigeria only.
 export const aboutMeta: PageMetaContent = {
   title: "About Omanga: Travel Money and Health Insurance",
   description: `Omanga is a Lagos company for visitors to Nigeria: a free wallet you can spend in ${COUNTRIES_SERVED_DISPLAY} African countries and short-term health cover from Phillips HMO.`,
   path: "/about",
 };
 
-/** The FAQ sections' { q, a } pairs, in the shape lib/schema.ts reads. */
 export const faqItems = (items: ReadonlyArray<{ q: string; a: string }>) => items.map(({ q, a }) => ({ question: q, answer: a }));

@@ -10,11 +10,6 @@ import { HomeFinalCta } from "@/new-redesign/components/sections/home/HomeFinalC
 import { FaqSection } from "@/new-redesign/components/ui/FaqSection";
 import { OLD_PAGE_FAQ_SUB, oldPageFaq } from "@/new-redesign/content/old-pages.content";
 
-/**
- * A blog article. Every article is prerendered from `BLOG_POSTS`; any other
- * slug is a 404 rather than an on-demand render, since there is no data source
- * that could produce one.
- */
 export const dynamicParams = false;
 
 export function generateStaticParams() {

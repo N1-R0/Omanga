@@ -5,16 +5,6 @@ import { CookieSettingsButton } from "@/new-redesign/components/consent/CookieSe
 import { href } from "@/new-redesign/config/routes";
 import { footer } from "@/new-redesign/content/footer.content";
 
-/**
- * Global footer (sitemap-v2.md § C, LOCKED; layout after Asset's footer,
- * design system § Final CTA and footer).
- *
- * Left: logo and blurb (the app row returns once the native app ships). Right:
- * the five locked link columns in a three-column grid. Under a rule:
- * who provides what, then ©, Cookie preferences and socials.
- *
- * The year is read at render; these pages are static, so it's fixed at build.
- */
 export function Footer() {
   const year = new Date().getFullYear();
 

@@ -1,14 +1,7 @@
-import Image from "next/image";
-
 import { SectionHead } from "@/new-redesign/components/ui/SectionHead";
 import { aboutValues } from "@/new-redesign/content/about.content";
+import { Photo } from "@/new-redesign/components/ui/Photo";
 
-/**
- * 4 · What we value (owner, 2026-10-27; Mobbin D1, Figma's values): a white
- * band (the reference's tint, kept neutral after the crimson Vision card),
- * the section head, then three square photos (12px radius) with an H3 and a
- * line of text under each. One column below 768, three from 768.
- */
 export function AboutValues({ headingId }: { headingId: string }) {
   const { eyebrow, title, values } = aboutValues;
 
@@ -21,7 +14,7 @@ export function AboutValues({ headingId }: { headingId: string }) {
           {values.map((value) => (
             <li key={value.title}>
               <div className="relative aspect-square overflow-hidden rounded-sm bg-surface-muted">
-                <Image
+                <Photo
                   src={value.photo.src}
                   alt=""
                   fill

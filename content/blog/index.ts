@@ -7,13 +7,6 @@ import { healthInsuranceVisitingNigeriaPost } from "./posts/health-insurance-for
 import { poundsToNairaBestRatePost } from "./posts/pounds-to-naira-best-rate.content";
 import { visitingNigeriaForTheFirstTimePost } from "./posts/visiting-nigeria-for-the-first-time.content";
 
-/**
- * Every published article. Adding a post: create a module in `./posts`, then
- * add it here — the index page, the `[slug]` route, `generateStaticParams` and
- * the sitemap all read this list, so there is nothing else to register.
- *
- * Newest first by `publishedDate`; ties keep the order written here.
- */
 const POSTS: readonly BlogPost[] = [
   canIUseMyCardInNigeriaPost,
   visitingNigeriaForTheFirstTimePost,
@@ -31,20 +24,12 @@ export function getBlogPost(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((post) => post.slug === slug);
 }
 
-/**
- * Display names for post categories. The `BlogCategory` values stay as stored;
- * readers see the site's own nouns.
- */
-// [CHANGED, 2026-10-14] UX copy pass: "Payments"/"Insurance" -> "Money"/"Health
-// cover", matching the nouns used across the site (wallet, health cover).
 export const BLOG_CATEGORY_LABELS: Readonly<Record<BlogCategory, string>> = {
   Payments: "Money",
   Insurance: "Health cover",
   Travel: "Travel",
 };
 
-// [CHANGED, 2026-10-14] UX copy pass: Nigeria-only framing (health cover is
-// Nigeria only), searchable title under 60 characters, readers' benefit first.
 export const blogIndexContent = {
   meta: {
     title: "Omanga Blog: Nigeria Travel, Money and Health Guides",

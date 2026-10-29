@@ -1,11 +1,5 @@
 import { aboutStory } from "@/new-redesign/content/about.content";
 
-/**
- * 2 · Our story (owner, 2026-10-27; Mobbin B1, Ramp's "Our Story"): the
- * eyebrow and H2 in the left column, the lead in the right at 24px (between
- * H2 and P1, the reference's step), then the other two paragraphs as two
- * columns of secondary text. One column below 768, two columns from 1024.
- */
 export function AboutStory({ headingId }: { headingId: string }) {
   const { eyebrow, title, lead, body } = aboutStory;
 
@@ -14,7 +8,6 @@ export function AboutStory({ headingId }: { headingId: string }) {
       <div className="container-page grid gap-8 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
         <div className="flex flex-col gap-[var(--head-gap)]">
           <p className="type-p2 inline-flex items-center gap-2 text-text">
-            {/* The section eyebrow's marker, as in SectionHead. */}
             <span aria-hidden className="h-2 w-3.5 rounded-full bg-accent" />
             {eyebrow}
           </p>

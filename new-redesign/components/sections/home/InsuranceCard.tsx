@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -9,25 +8,8 @@ import { FeatureLottie } from "@/new-redesign/components/sections/home/FeatureLo
 import { Card } from "@/new-redesign/components/ui/Card";
 import { href } from "@/new-redesign/config/routes";
 import { homeInsurance as copy, homePrices } from "@/new-redesign/content/home.content";
+import { Photo } from "@/new-redesign/components/ui/Photo";
 
-/**
- * Insurance in "Payments and insurance" (HomeProducts; home structure v2
- * § 4). One white parent Card, like the Payments card (owner, 2026-10-25):
- * same padding and box heights, with the photo box on the left and the chat
- * half on the right from 1024px. Below that the photo comes first, so the
- * pills sit above the chat they drive.
- *
- * Photo box, after the owner's "Trusted Across Borders" reference: a dark
- * fade up from its foot, the title (the H3) and sub, the three plans as pill
- * buttons (a radio group) and the picked plan's price on the right. The
- * picked pill is solid white, the others white outlines.
- *
- * Chat half: the picked plan's Jitter chat (customer asks, Omanga types and
- * replies, the plan row pops in) plays in the space above, remounted from
- * its first frame whenever the plan changes. Under it sit the plan's name,
- * description and buy link, plus its price and hospitals for screen readers,
- * since the chat is decorative.
- */
 export function InsuranceCard() {
   const plans = homePrices.plans;
   const [picked, setPicked] = useState(plans.findIndex((p) => p.featured));
@@ -38,7 +20,7 @@ export function InsuranceCard() {
     <article aria-labelledby="insurance-title">
       <Card className="grid gap-6 p-3 md:p-4 lg:grid-cols-2 lg:gap-0">
         <div className="relative isolate flex h-[486px] flex-col justify-end overflow-hidden rounded-sm text-text-inverse md:h-[540px] lg:h-[566px]">
-          <Image src={copy.photo.src} alt="" fill sizes="(min-width: 1024px) 540px, 100vw" className="-z-20 object-cover" style={{ objectPosition: copy.photo.position }} />
+          <Photo src={copy.photo.src} alt="" fill sizes="(min-width: 1024px) 540px, 100vw" className="-z-20 object-cover" style={{ objectPosition: copy.photo.position }} />
           <span aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-2/3 bg-gradient-to-t from-[rgb(20_4_9/0.85)] via-[rgb(20_4_9/0.45)] to-transparent" />
 
           <div className="flex flex-col gap-2 p-5 md:p-8">

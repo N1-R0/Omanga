@@ -13,11 +13,6 @@ import { ProofStrip } from "@/new-redesign/components/ui/ProofStrip";
 import { faqItems, paymentsMeta } from "@/new-redesign/content/seo.content";
 import { walletFaq, walletProof } from "@/new-redesign/content/wallet.content";
 
-/**
- * Payments at /payments (sitemap-v2.md § C). Copy lives in
- * new-redesign/content/wallet.content.ts. The wallet Service node states fees
- * with the FAQ's own fees answer, so schema and page say the same thing.
- */
 export const metadata: Metadata = buildPageMetadata(paymentsMeta);
 
 export default function PaymentsPage() {

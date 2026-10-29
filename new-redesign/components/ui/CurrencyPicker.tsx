@@ -5,18 +5,6 @@ import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { cx } from "@/lib/cx";
 import { Flag } from "@/new-redesign/components/ui/Flag";
 
-/**
- * Currency picker after Wise's "You send exactly" dropdown (owner, 2026-10-21).
- *
- * The trigger is a grey chip: flag, code, chevron. It opens a white popover
- * with a search field ("Type a currency / country"), an "All currencies"
- * label over a rule, and one row per currency (round flag, code, name). The
- * selected row is outlined and ticked.
- *
- * Keyboard: the search field gets focus on open. ↑/↓ move the highlight
- * (aria-activedescendant), Enter picks, Escape closes and returns focus to
- * the chip. Clicking outside or tabbing away closes it.
- */
 export type CurrencyOption = {
   code: string;
   name: string;
@@ -28,19 +16,10 @@ type Props = {
   value: string;
   options: readonly CurrencyOption[];
   onChange: (code: string) => void;
-  /** Accessible name for the chip, e.g. "You add currency, GBP. Change". */
   label: string;
   copy: { searchPlaceholder: string; searchLabel: string; allLabel: string; empty: string };
-  /** Which edge of the chip the popover lines up with. */
   align?: "left" | "right";
-  /** "chip" (default): the grey chip. "plain": no fill, a 28px flag and a
-   *  large code, always shown, as in the owner's converter reference for the
-   *  home phone (HomeRates, 2026-10-25). Its 390pt screen has room for the
-   *  code, so the narrow-viewport rule below doesn't apply. */
   trigger?: "chip" | "plain";
-  /** false drops the search field: the list itself takes focus and the
-   *  arrow keys. For short lists in tight spaces (the home phone's four
-   *  currencies, owner 2026-10-25), where the field only adds height. */
   searchable?: boolean;
 };
 
@@ -102,8 +81,6 @@ export function CurrencyPicker({ value, options, onChange, label, copy, align = 
   return (
     <div
       ref={rootRef}
-      // Below 768 the popover anchors to the nearest positioned ancestor (the
-      // converter field) and spans it, so it never runs off a 375px screen.
       className="shrink-0 md:relative"
       onBlur={(e) => {
         if (open && !e.currentTarget.contains(e.relatedTarget as Node)) close(false);
@@ -117,7 +94,6 @@ export function CurrencyPicker({ value, options, onChange, label, copy, align = 
         aria-expanded={open}
         onClick={() => {
           if (open) return close(false);
-          // Start the highlight on the selected row, as Wise does.
           setActive(Math.max(0, options.findIndex((o) => o.code === value)));
           setOpen(true);
         }}
@@ -129,8 +105,6 @@ export function CurrencyPicker({ value, options, onChange, label, copy, align = 
         )}
       >
         <Flag src={current.flag} size={trigger === "plain" ? 28 : 20} />
-        {/* Flag only below 768 so a seven-figure sum fits beside it; the code
-            is in the button's accessible name and in the converter's rate line. */}
         <span aria-hidden className={trigger === "plain" ? undefined : "hidden md:inline"}>
           {current.code}
         </span>
@@ -178,11 +152,10 @@ export function CurrencyPicker({ value, options, onChange, label, copy, align = 
             id={listId}
             role="listbox"
             aria-label={copy.allLabel}
-            // Without the search field the list takes focus and the keys.
             tabIndex={searchable ? undefined : 0}
             aria-activedescendant={!searchable && results[active] ? `${listId}-${results[active].code}` : undefined}
             onKeyDown={searchable ? undefined : onKeyDown}
-            className="mt-2 flex max-h-72 outline-none flex-col gap-1 overflow-y-auto">
+            data-lenis-prevent className="mt-2 flex max-h-72 outline-none flex-col gap-1 overflow-y-auto">
             {results.length === 0 ? <li className="type-p2 px-3 py-3 text-text-secondary">{copy.empty}</li> : null}
             {results.map((o, i) => {
               const selected = o.code === value;

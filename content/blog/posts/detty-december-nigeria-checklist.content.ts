@@ -1,51 +1,6 @@
 import type { BlogPost } from "@/types/blog.types";
 import type { ImageAsset } from "@/types/content.types";
 
-/**
- * Article: Detty December checklist for visiting Nigeria.
- *
- * Primary keyword: "Detty December". Secondary: "Detty December Lagos",
- * "travelling to Nigeria in December", "Detty December checklist".
- * Intent: diaspora visitor planning a December trip.
- *
- * Seasonal. Searches peak in November and December, so this needs to be live
- * and indexed by early November. Refresh the year in the title and dates each
- * autumn rather than publishing a new URL — the slug carries no year so the
- * page keeps the links and ranking it earns.
- *
- * [REVISED, 2026-10-09] Rewritten for a more natural voice and checked facts.
- * Sources: Wikipedia "Detty December (Nigeria)" and African Business (season,
- * IJGB, rising prices and airfares); GOV.UK Nigeria travel advice (ATMs, card
- * fraud, cash); Nigerian NCDC and travel-health sources (yellow fever
- * certificate, year-round malaria). No event names, dates or prices are stated:
- * they change every year and are not Omanga's to confirm.
- *
- * [SEO, 2026-10-11] FAQ adds the visa question ("Can a UK citizen come to
- * Nigeria without a visa?" in People Also Ask, via AnswerThePublic, "travel to
- * nigeria", UK). Answer restates GOV.UK entry requirements: visitors need a
- * visa, obtained before travel.
- * [CHANGED, 2026-10-14] UX copy pass (design.md § Home UX copy pass): health
- *   cover names Phillips HMO and Nigeria only (was "Nigerian health providers"
- *   with a no-upfront-payment claim); shorter sentences; plain link text.
- * [REFRESHED, 2026-10-28] Pre-season refresh (roadmap item 2):
- *   - Dropped "mid-market" (no-rate-disclosure rule; audit #11).
- *   - Wallet copy matches how it works: convert to naira, pay by transfer
- *     (was "spend from your balance online or in person").
- *   - Cards: CBN's December 2025 directive on foreign cards (allAfrica,
- *     2025-12-21), linked to the new card guide.
- *   - Entry: GOV.UK now says visa on arrival is no longer available, apply
- *     online before travel, and landing/departure cards are filled in online.
- *   - Health: GOV.UK asks for vaccine checks 8 weeks ahead (was "several").
- *   - Links to the first-time visitor guide and the card guide.
- *   Not added: GOV.UK's 21 Oct 2026 note of one imported Ebola case in the FCT.
- *   The post points to the live health advice instead of a dated case report.
- */
-
-/**
- * Cover from Unsplash (free licence): a night party in Abuja. Cropped to 4:3 by
- * the CDN on `crop=entropy` (the busiest region — hands, confetti, lights), since
- * the crowd faces away and a face crop has nothing to anchor on.
- */
 const dettyDecemberImage: ImageAsset = {
   src: "https://images.unsplash.com/photo-1762237807370-41a599e6ab86?w=2000&h=1500&fit=crop&crop=entropy",
   alt: "A crowd at a night party in Abuja with hands raised as confetti falls under bright stage lights.",
@@ -53,11 +8,6 @@ const dettyDecemberImage: ImageAsset = {
   height: 1500,
 };
 
-/**
- * [ADDED, 2026-10-18] Audit quick win: the share image is the same photo,
- * cropped to 1200x630 and self-hosted (public/blog/og/), so link previews
- * don't depend on Unsplash or show a 4:3 crop.
- */
 const shareImage: ImageAsset = {
   src: "/blog/og/detty-december-nigeria-checklist.jpg",
   alt: dettyDecemberImage.alt,
@@ -75,8 +25,6 @@ const FCDO_ENTRY_URL =
 export const dettyDecemberChecklistPost: BlogPost = {
   slug: "detty-december-nigeria-checklist",
   meta: {
-    // [CHANGED, 2026-10-18] Copy audit: title 66 → 56 and description
-    // 162 → 146 characters, so neither is cut off in search results.
     title: "Detty December 2026: Money and Health Checklist | Omanga",
     description:
       "Flying to Lagos for Detty December 2026? How to pay when sellers want transfers, avoid bad exchange rates, keep cash safe and sort health cover.",
@@ -168,8 +116,6 @@ export const dettyDecemberChecklistPost: BlogPost = {
           kind: "paragraph",
           content: [
             "Late nights, street food, heat and heavy traffic are all part of the season. So, now and then, is a trip to a clinic. The NHS, Medicare and Canadian provincial plans won't pay for treatment in Nigeria, and hospitals there often expect payment before they treat you. ",
-            // [CHANGED, 2026-10-14] UX copy pass: was "works through Nigerian health
-            // providers, so care doesn't depend on paying upfront" (unconfirmed).
             "Omanga's short-term health cover comes from Phillips HMO, which has its own hospital network in Nigeria. It applies in Nigeria only, and you can activate a plan in about five minutes. ",
             { text: "Explore health cover", href: "/insurance" },
             ".",
@@ -266,10 +212,8 @@ export const dettyDecemberChecklistPost: BlogPost = {
     ],
   },
   cta: {
-    // [CHANGED, 2026-10-26] /get-started is gone; home shows both products.
     label: "Choose what to set up",
     href: "/",
-    // [CHANGED, 2026-10-14] UX copy pass: "in one Omanga account" not confirmed.
     prompt: ["A wallet for your spending and health cover for your time in Nigeria."],
   },
 };

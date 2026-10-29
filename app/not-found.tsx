@@ -13,15 +13,6 @@ import { href } from "@/new-redesign/config/routes";
 import { notFound } from "@/new-redesign/content/not-found.content";
 import "@/new-redesign/styles/globals.css";
 
-/**
- * The 404 page, in the new design (cutover, 2026-10-26).
- *
- * It carries its own `<html>` because the app has two root layouts and no
- * app/layout.tsx: an unmatched URL belongs to neither group, so Next renders
- * this file at the root with no layout around it. Next sends a real 404.
- *
- * `noindex, follow`: the footer's links are worth following from here.
- */
 export const metadata: Metadata = {
   title: { absolute: notFound.meta.title },
   description: notFound.meta.description,

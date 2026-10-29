@@ -12,37 +12,6 @@ import {
 } from "@/content/legal/legal-shared.content";
 import type { LegalDocumentContent } from "@/types/legal.types";
 
-/**
- * The Terms of Use.
- *
- * ---------------------------------------------------------------------------
- * SCOPE: THIS WEBSITE, NOT THE PRODUCTS
- *
- * These terms govern the website. What the wallet and the insurance policies
- * actually promise is the Policy Terms document's job, and keeping the two apart
- * is the whole reason both exist — see `policy-terms.content.ts` for why that
- * split was chosen rather than duplicating one into the other.
- *
- * The practical consequence, and the thing that keeps this document honest: the
- * site has no accounts, takes no payments and stores no user data, so most of
- * what a standard SaaS terms-of-use covers has nothing to attach to here. There
- * is no account termination clause, because there are no accounts to terminate.
- * There is no subscription or billing clause, because nothing is billed on this
- * site. Writing those sections anyway would describe a product that does not
- * exist, and would conflict with the Policy Terms on where payment obligations
- * actually live.
- *
- * ---------------------------------------------------------------------------
- * LIMITATION OF LIABILITY
- *
- * Drafted to exclude what can be excluded and to say so in plain terms, with the
- * carve-outs that no contract can exclude — death or personal injury caused by
- * negligence, and fraud — stated explicitly. A clause purporting to exclude
- * everything is routinely struck down and takes the rest of the section with it,
- * so the narrower version is also the more effective one. It still needs a
- * lawyer's eye, which section 15 says.
- */
-
 export const termsOfUseContent: LegalDocumentContent = {
   meta: {
     title: "Terms of Use | Omanga",
@@ -74,20 +43,6 @@ export const termsOfUseContent: LegalDocumentContent = {
       id: "about-these-terms",
       heading: "1. About these terms",
       blocks: [
-        /*
-          The domain is written out, not interpolated from `SITE_URL`.
-
-          `SITE_URL` reads `NEXT_PUBLIC_SITE_URL`, which is set per environment so
-          that preview deployments do not emit production canonicals. That is
-          correct for a canonical tag and wrong for this sentence: it made the
-          Terms read "your use of http://localhost:3000" on a local build, and
-          would name a vercel.app address on a preview deployment.
-
-          A legal document has to identify the site by the domain it is actually
-          published at, and that is a fixed fact about the business rather than a
-          property of the build. It is also not a link — a document does not
-          hyperlink to the site it is already on.
-        */
         {
           kind: "paragraph",
           content: [

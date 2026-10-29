@@ -4,13 +4,6 @@ import { useConsent } from "@/components/consent/ConsentProvider";
 import { consentContent } from "@/content/consent.content";
 import { Button } from "@/new-redesign/components/ui/Button";
 
-/**
- * Cookie banner in the new design (cutover, 2026-10-26), on every page. Same
- * behaviour and copy as the old one: shown until a choice is recorded, Accept
- * and Reject side by side with equal weight, Manage opening the preferences.
- * A white corner card from 1024px, a bar across the foot below.
- *
- */
 export function CookieBanner() {
   const { isReady, record, acceptAll, rejectAll, openPreferences } = useConsent();
   if (!isReady || record !== null) return null;

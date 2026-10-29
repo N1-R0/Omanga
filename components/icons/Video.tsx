@@ -1,21 +1,8 @@
 import { Icon } from "@/components/ui/Icon";
 import type { IconSize } from "@/types/ui.types";
 
-/**
- * Camera. Telemedicine — a consultation held over video.
- *
- * Path data from `lucide-react`, which is already a dependency and is ISC
- * licensed. Transcribed into the system's own `Icon` wrapper rather than
- * imported as a component, for the reason `Icon` exists: it fixes the size to
- * 16, 24 or 32, the stroke to 1.5 and the colour to `currentColor`, so a glyph
- * "cannot ship at the wrong size or with a baked-in colour". Lucide's own
- * component ships at stroke 2 and would be the one icon on the site drawn
- * heavier than the rest.
- */
-
 export type VideoProps = {
   size: IconSize;
-  /** Omit unless the mark is the only content of an interactive element. */
   label?: string;
 };
 

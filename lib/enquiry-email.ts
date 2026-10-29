@@ -1,42 +1,5 @@
 import { BRAND_COLOR, INK_COLOR, SITE_NAME } from "@/config/site";
 
-/**
- * The enquiry notification email — subject, plain-text body and HTML body.
- *
- * Server-only by use rather than by decoration: nothing in the client bundle
- * imports it. Extracted from the Route Handler once the HTML template arrived,
- * because a mail template and a request lifecycle are different concerns and the
- * handler should stay readable as a sequence of guards.
- *
- * Both bodies are returned and both are sent. `nodemailer` assembles them into
- * one `multipart/alternative` message, so a client that refuses HTML — a
- * terminal reader, a watch, a screen reader in plain-text mode, a rule piping
- * mail into a ticketing system — still gets the whole enquiry rather than a
- * stripped-out husk. The text part is not a fallback nobody sees; it is what
- * some readers will actually get.
- *
- * ---------------------------------------------------------------------------
- * HTML email is not HTML
- *
- * There is no cascade to rely on. Gmail discards `<style>` blocks entirely, so
- * every declaration here is inline. Outlook renders through Word's engine, which
- * has no flexbox, no grid, no `float` worth trusting and no reliable `padding`
- * on a `div` — so layout is tables, which is the one primitive every client
- * still agrees on. `role="presentation"` on each keeps them out of the
- * accessibility tree, since they are scaffolding and not data.
- *
- * Web fonts are not loaded. The site's Kantumruy Pro cannot be fetched by a mail
- * client, and a client that fails to load a font falls back unpredictably
- * mid-layout. A system stack renders identically to what the reader already sees
- * everywhere else in their inbox, which is the correct look for a notification.
- *
- * Colours are literals for the same reason `config/site.ts` already keeps them
- * as literals for the theme-colour tag and the Open Graph image: this runs
- * outside the stylesheet and cannot read a CSS custom property. That file's
- * comment names two such consumers; this is the third.
- */
-
-/** Neutrals that exist only in this template. */
 const PAGE_FILL = "#f4f4f5";
 const CARD_FILL = "#ffffff";
 const HAIRLINE = "#e5e5e5";
@@ -47,18 +10,6 @@ const FONT_STACK =
 
 const NOT_PROVIDED = "Not provided";
 
-/**
- * Escapes a submitted value for interpolation into markup.
- *
- * The security control of this module, and new with the HTML body: the plain
- * text version could carry any character harmlessly, whereas a `<` from a
- * submitted name becomes a tag in the recipient's mail client. Values arrive
- * here already stripped of control characters and length-capped by `sanitise`
- * in `lib/enquiry.ts`, which stops header injection — this stops the other half.
- *
- * `&` is replaced first. Reversing the order would double-escape every entity
- * the later replacements introduce.
- */
 function escapeHtml(value: string): string {
   return value
     .replace(/&/g, "&amp;")
@@ -71,19 +22,8 @@ function escapeHtml(value: string): string {
 export type Row = {
   readonly label: string;
   readonly value: string;
-  /** Marked in the output, and rendered as "Not provided" when empty. */
   readonly isOptional: boolean;
-  /** Renders the value as a link. Used for the reply address. */
   readonly href?: string;
-  /**
-   * Render the value as a block of prose rather than a single line — preserving
-   * the submitter's own line breaks.
-   *
-   * Added for the Contact form's message field, which is the first multi-line
-   * value the rail carries. `white-space: pre-wrap` is what keeps their
-   * paragraphing; without it a message arrives as one run of text and reads as
-   * though they typed it that way.
-   */
   readonly isMultiline?: boolean;
 };
 
@@ -122,19 +62,11 @@ function renderHtmlRow({
               </tr>`;
 }
 
-/**
- * Everything one form's email needs beyond the shared shell.
- *
- * `replyName` and `previewValue` are separate because they do different jobs:
- * the first completes the "reply to reach X" line, the second is the line clients
- * show beside the subject in the message list.
- */
 export type FormEmail = {
   readonly title: string;
   readonly rows: readonly Row[];
   readonly replyName: string;
   readonly previewValue: string;
-  /** Named in the footer, so a reader knows which form produced the mail. */
   readonly sourceLabel: string;
 };
 
@@ -152,11 +84,6 @@ function renderHtml(email: FormEmail): string {
   const { title, replyName, previewValue, sourceLabel } = email;
   const rows = email.rows.map(renderHtmlRow).join("");
 
-  /*
-    Preview text: the line most clients show beside the subject in the message
-    list. Zero-height and colour-matched to the background so it never renders in
-    the body, which is the only way to control it.
-  */
   const preview = escapeHtml(
     `${replyName} — ${previewValue === "" ? NOT_PROVIDED : previewValue}`,
   );
@@ -220,13 +147,6 @@ export type EnquiryEmail = {
   readonly html: string;
 };
 
-/**
- * Assembles one form's notification email from the shared shell.
- *
- * The only exported renderer. A second form supplies its own rows and title and
- * gets the identical shell, which is what stops two table-layout templates
- * drifting apart in a mail client nobody tests in.
- */
 export function composeFormEmail(email: FormEmail): EnquiryEmail {
   return {
     subject: `${email.title} — ${email.replyName}`,

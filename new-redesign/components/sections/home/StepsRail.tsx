@@ -4,27 +4,8 @@ import { useEffect, useRef, useState } from "react";
 
 import { cx } from "@/lib/cx";
 
-/**
- * The steps' journey rail (owner-approved wireframe, 2026-10-25): "Home" on
- * the left, "Lagos" on the right, and a dotted path between them with a stop
- * over each card's centre. The path dips to the middle stop because the
- * middle card sits lower (owner: "curvy" lines), then rises again.
- *
- * A plane follows the path with the scroll, turning with its curve. The
- * travelled part of the path goes dark grey; each stop fills crimson with a
- * white number once the plane reaches it.
- *
- * Progress: when the section is pinned (the `pin` variant, HomeSteps), it is
- * how far the page has scrolled through the section's extra height, so the
- * plane finishes just as the section unpins. When it isn't pinned, it runs
- * while the rail moves from 85% to 40% of the viewport height. With reduced
- * motion it sits at the end, every stop filled.
- *
- * Desktop only (the cards stack below 1024px). Decorative: the cards carry
- * the steps and their numbers.
- */
-const GAP = 16; // the cards' grid gap, so the stops sit over their centres
-const Y = 12; // the path's resting height inside the drawing
+const GAP = 16;
+const Y = 12;
 
 export function StepsRail({ from, to, count, dip: DIP }: { from: string; to: string; count: number; dip: number }) {
   const ref = useRef<HTMLDivElement>(null);

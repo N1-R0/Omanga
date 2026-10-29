@@ -3,41 +3,13 @@ import type { ReactNode } from "react";
 import { cx } from "@/lib/cx";
 import type { Measure, TextRole } from "@/types/ui.types";
 
-/**
- * Body copy.
- *
- * Four roles. The fourth — `prose` — was added for the About page's Our Story
- * panel and is the only one that is not a size this component started with; the
- * note on `TextRole` and on `--text-prose` records why the gap was real. The
- * guard the old "three roles only" line existed to hold still applies: anything
- * that needs a fifth size is either a heading or a design question.
- *
- * Colour is inherited from the section surface. Secondary text is expressed as
- * opacity, never as a separate grey — which is what keeps it legible on both the
- * light and the dark surface without a second token.
- */
-
 const ROLE_CLASS: Readonly<Record<TextRole, string>> = {
-  /** 22 → 28. Prose that is the subject of its own band, not an intro to one. */
   prose: "font-sans type-p1",
-  /** 18 → 20. Section intros — the paragraph directly under a section heading. */
   lead: "font-sans type-p1",
-  /** 16 → 18. The document default. */
   body: "font-sans type-p1",
-  /** 14 → 16. Helper lines, footer links, legal and metadata. */
   small: "font-sans type-p2",
 } as const;
 
-/**
- * Measure caps, in characters. design.md § 2.
- *
- * Applied here, on the paragraph itself, because `ch` resolves against the
- * font-size of the element carrying it. A cap on a wrapper at the root size is
- * not the measure it claims to be.
- *
- * A body element only ever takes a body measure; `hero` and `heading` belong to
- * `Heading` and passing one here is a type error.
- */
 type BodyMeasure = Extract<Measure, "body" | "narrow" | "feature" | "none">;
 
 const MEASURE_CLASS: Readonly<Record<BodyMeasure, string>> = {
@@ -47,23 +19,13 @@ const MEASURE_CLASS: Readonly<Record<BodyMeasure, string>> = {
   none: "",
 } as const;
 
-/** Elements body copy is ever legitimately rendered as. */
 type TextElement = "p" | "span" | "div";
 
 export type TextProps = {
   children: ReactNode;
   role: TextRole;
-  /**
-   * Line-length cap. Defaults to `none` so the parent decides — a paragraph
-   * inside a card should fill the card, not stop at 70 characters.
-   */
   measure?: BodyMeasure;
-  /**
-   * Secondary copy: the same colour at 80% opacity. Measured at 4.9:1 on the
-   * light surface and 14:1 on the dark one, so both clear AA.
-   */
   isSecondary?: boolean;
-  /** Defaults to `p`. Use `span` for inline text, `div` only inside a `p`. */
   as?: TextElement;
 };
 

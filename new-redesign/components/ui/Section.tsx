@@ -1,10 +1,5 @@
 import type { ReactNode } from "react";
 
-/**
- * One home-page section: 72px vertical padding (48 on mobile) and the 1080
- * column. `id` is the in-page anchor and matches the locked structure in
- * new-redesign/doc/research-and-page-structure.md § 6.1.
- */
 type Props = {
   id: string;
   label: string;

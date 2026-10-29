@@ -6,39 +6,8 @@ import { useEffect } from "react";
 import { GA_MEASUREMENT_ID, PLAN_CHECKOUT_URLS, WALLET_URL } from "@/config/site";
 import { trackEvent } from "@/lib/analytics";
 
-/**
- * Google Analytics 4 via `gtag.js`, written with `next/script` rather than
- * `@next/third-parties` to avoid a dependency for two script tags.
- *
- * Only ever rendered inside the analytics `ConsentGate`, so the tag is not
- * requested until a visitor allows analytics.
- *
- * Client-side navigations are counted by GA4's enhanced measurement ("page
- * changes based on browser history events", on by default for the stream), so
- * no route listener is needed here.
- *
- * WITHDRAWAL. Once `gtag.js` has run it cannot be unloaded. When consent is
- * withdrawn this component unmounts, and the cleanup sets Google's documented
- * `ga-disable-<id>` flag, which stops every further hit from this page. The flag
- * is cleared again on mount, so granting consent later in the same page resumes
- * measurement. The `_ga` cookies already set stay until the visitor clears them;
- * the Cookie Policy says so.
- *
- * ADVERTISING OFF. Google Signals and ad personalisation are switched off in the
- * config call, because the Cookie Policy promises no advertising cookies; with
- * them on, gtag also calls Google's `ads/ga-audiences` endpoint.
- *
- * DEVELOPMENT. Not rendered outside production builds, so local testing does not
- * land in the property's reports.
- */
 const DISABLE_FLAG = `ga-disable-${GA_MEASUREMENT_ID}`;
 
-/**
- * [ADDED, 2026-10-28] Conversion clicks (SEO audit § analytics). One delegated
- * listener classifies a clicked link by its destination, so no CTA component
- * needs its own tracking code and a new CTA is measured as soon as it links
- * somewhere listed here. Event names are documented in lib/analytics.ts.
- */
 const PLAN_BY_URL = new Map<string, string>(
   Object.entries(PLAN_CHECKOUT_URLS).map(([plan, url]) => [url, plan]),
 );

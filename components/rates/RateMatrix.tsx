@@ -5,13 +5,6 @@ import { RATE_PAIRS } from "@/content/rates.content";
 import type { MatrixCurrency } from "@/lib/rates";
 import { cx } from "@/lib/cx";
 
-/**
- * [ADDED, 2026-10-18] M1: the rate matrix for the rate pages (Wise "Top
- * currencies", mobbin section b54e2297). One unit of each row's currency in
- * each column's currency. Replaces the two amount tables. Row headings for
- * USD, GBP and CAD link to their own rate pages; the page's own row is
- * highlighted.
- */
 const CODES: readonly MatrixCurrency[] = ["USD", "GBP", "CAD", "NGN"];
 
 const FLAGS: Readonly<Record<MatrixCurrency, string>> = {
@@ -21,9 +14,6 @@ const FLAGS: Readonly<Record<MatrixCurrency, string>> = {
   NGN: "/flags/nigeria.svg",
 };
 
-/* [CHANGED, 2026-10-18] One precision per magnitude, so a column reads
-   evenly: naira figures to 2 places, pound/dollar crosses to 4, tiny
-   naira-to-foreign figures to 6. */
 const format = (n: number) => {
   const places = n >= 100 ? 2 : n >= 0.01 ? 4 : 6;
   return n.toLocaleString("en-GB", {

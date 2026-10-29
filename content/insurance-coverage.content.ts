@@ -1,75 +1,5 @@
-// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
 import { INSURANCE_COVERAGE_ANCHOR } from "@/content/insurance.content";
 
-/**
- * What each plan covers — spec § 6. Anchor `#coverage`.
- *
- * The page's reference artefact and, per spec § 11.3, its long-tail engine:
- * every row label is a real query and the table gives them structure prose
- * cannot.
- *
- * ---------------------------------------------------------------------------
- * [BLOCKER ×4] Four cells are absent, not empty.
- *
- * The source plan cards state benefits cumulatively — Gold reads "Everything in
- * Silver +", Diamond "Everything in Gold +" — and a table cannot inherit. The
- * spec marks these four `[VERIFY]` and says plainly: "Get the four flagged
- * values from Omanga before build. Do not infer them."
- *
- *   - Admission days per trip — Gold, Diamond
- *   - Eye care — Silver, Diamond
- *   - Surgical limits — Silver
- *
- * They are omitted rather than filled, so a missing cell renders as missing.
- * Spec § 6 calls the admission-days gap "likely the single most commercially
- * significant unknown on the page"; hiding it behind an inherited value would
- * be the one outcome worse than the hole.
- *
- * ---------------------------------------------------------------------------
- * [BLOCKER] Hospital categories are undefined.
- *
- * Spec § 6: "'Category A + B' appears on all three live cards with no
- * definition anywhere on the page… it is the one thing a non-Nigerian traveller
- * cannot decode. This blocks conversion more than any copy change." § 6.3's copy
- * states which categories each tier opens but not what they mean. No definition
- * is invented here. It needs either inline text or a linked glossary.
- *
- * ---------------------------------------------------------------------------
- * [MOVED] § 6.3 is no longer part of this section. "How care works" is now its
- * own band with its own `h2` and image — see
- * `content/insurance-care.content.ts`, where the deviation and the spec § 11.4
- * link conflict are both recorded.
- *
- * [MOVED] § 6.2 has also gone, to `content/insurance-inclusions.content.ts` —
- * the Figma frame gives the five universal inclusions a section of their own.
- * This module holds § 6.1, the comparison table, and nothing else.
- *
- * ---------------------------------------------------------------------------
- * [DESIGN] Spec § 6.1 § Table notes: sticky header row on scroll, and on mobile
- * one accordion per plan rather than horizontal scroll — a four-column table is
- * unusable at 375px. Recorded here because it constrains the component that
- * consumes this data, not the data itself.
- *
- * [DEVIATION from that note] Horizontal scroll ships below tablet, which the
- * note rules out. The note's own premise is right — this data does not fit four
- * columns at 375px, and it cannot be made to: the table's min-content width is
- * about 560 against a 340 content band, and stripping the header buttons and
- * halving the cell padding still leaves it over budget. Until the accordion
- * exists the choice is therefore between scrolling the overflow and clipping it,
- * and it had been clipping it — `body` sets `overflow-x: clip`, so the Diamond
- * column was simply absent below tablet with no way to reach it. Scrolling an
- * awkward table beats hiding the top tier on the page that sells it.
- *
- * The accordion remains the target and stays [OUTSTANDING] in `ComparisonTable`.
- */
-
-/**
- * One row of the comparison.
- *
- * Per-plan cells are optional and every absence is a blocker above. There is
- * deliberately no "inherit from the tier below" mechanism: that is exactly the
- * inference the spec forbids.
- */
 export type CoverageRow = {
   readonly label: string;
   readonly silver?: string;
@@ -79,39 +9,14 @@ export type CoverageRow = {
 
 export type InsuranceCoverageContent = {
   readonly anchorId: typeof INSURANCE_COVERAGE_ANCHOR;
-  /**
-   * Accessible name for the table's first column, which is visually empty.
-   * A `th` with no content is a column with no name.
-   */
   readonly featureColumnLabel: string;
-  /**
-   * Accessible name for the table's scroll region.
-   *
-   * Below tablet the table sits in a focusable horizontally-scrollable box. A
-   * scroll container that takes focus has to say what it is, or a screen-reader
-   * user meets an unnamed tab stop between two paragraphs.
-   */
   readonly tableLabel: string;
-  /**
-   * Visible cue that the table scrolls sideways, shown below tablet only.
-   *
-   * Overflow with no affordance is overflow nobody finds — the Diamond column is
-   * off-screen at 375px and nothing about a clipped edge says "drag me".
-   */
   readonly scrollHint: string;
   readonly heading: string;
   readonly intro: string;
-  /** Most-decisive first; the universal rows last. Order is the spec's. */
   readonly rows: readonly CoverageRow[];
 };
 
-/**
- * The mark used for a benefit that is present on every tier.
- *
- * A string in the content rather than an icon chosen by the component, because
- * it is the cell's value. Whatever renders it must also give it an accessible
- * name — a bare "✓" announces as nothing useful.
- */
 export const INCLUDED = "Included" as const;
 
 const ROWS: readonly CoverageRow[] = [
@@ -122,13 +27,6 @@ const ROWS: readonly CoverageRow[] = [
     diamond: "$120",
   },
   {
-    /*
-      [CORRECTED] The spec gives Silver "Category A + B" and states that
-      "'Category A + B' appears on all three live cards". The live cards read
-      Category A, Category A + B, Category A + B + C — a clean three-step ladder
-      that the spec flattened at the bottom. Live values ship; see
-      `insurance-plans.content.ts`.
-    */
     label: "Hospital access",
     silver: "Category A",
     gold: "Category A + B",
@@ -141,12 +39,10 @@ const ROWS: readonly CoverageRow[] = [
     diamond: "Private ward",
   },
   {
-    // Gold and Diamond unstated at source. Spec § 12 question 1.
     label: "Hospital admission days per trip",
     silver: "15 days",
   },
   {
-    // "Inpatient" replaced with the plain meaning: care while admitted.
     label: "Psychiatric care in hospital",
     silver: "First 2 days",
     gold: "First 3 days",
@@ -171,12 +67,10 @@ const ROWS: readonly CoverageRow[] = [
     diamond: "Enhanced + unlimited CT",
   },
   {
-    // Silver and Diamond unstated at source. Spec § 12 question 3.
     label: "Eye care",
     gold: "Extended",
   },
   {
-    // Silver unstated at source. Spec § 12 question 3.
     label: "Surgical limits",
     gold: "Higher",
     diamond: "Maximum",
@@ -188,7 +82,6 @@ const ROWS: readonly CoverageRow[] = [
     diamond: INCLUDED,
   },
   {
-    // [CHANGED, 2026-10-18] Owner: "24/7" unconfirmed.
     label: "Emergency assistance",
     silver: INCLUDED,
     gold: INCLUDED,
@@ -205,8 +98,6 @@ const ROWS: readonly CoverageRow[] = [
 export const insuranceCoverageContent: InsuranceCoverageContent = {
   anchorId: INSURANCE_COVERAGE_ANCHOR,
   featureColumnLabel: "Benefit",
-  // [CHANGED, 2026-10-14] UX copy pass: shorter h2 and intro; row labels match
-  // the plan cards' wording ("Diagnostics", "Essential prescription drugs").
   tableLabel: "Health plan comparison",
   scrollHint: "Scroll sideways to see every plan.",
   heading: "What each health plan covers",

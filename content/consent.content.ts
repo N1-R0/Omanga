@@ -1,28 +1,10 @@
 import type { ConsentCategory } from "@/lib/consent";
 
-/**
- * Every user-facing string in the cookie banner and preferences dialog.
- *
- * Written for this site rather than adapted from a consent-tool template, and
- * each category description names what it actually controls here. A description
- * that says "we use analytics cookies to improve your experience" would be
- * boilerplate. Each description names the actual tools instead. Saying what is really there is both the honest option and the
- * one a visitor can act on.
- *
- * [NOT APPROVED COPY] Unlike the rest of `content/`, none of this is transcribed
- * from the CEO-approved copy document — that document has no consent UI in it,
- * because the site had no consent UI. It is drafted here to be accurate against
- * the audit. It is user-facing legal-adjacent text on a YMYL site and should get
- * the same review pass the five legal pages need.
- */
-
 export type ConsentCategoryCopy = {
   readonly id: ConsentCategory;
   readonly title: string;
   readonly description: string;
-  /** What the visitor loses by refusing. Omitted where nothing is lost. */
   readonly consequence?: string;
-  /** Rendered instead of a control for the category that cannot be refused. */
   readonly lockedNote?: string;
 };
 
@@ -81,20 +63,6 @@ export type ConsentPreferencesCopy = {
   readonly policyLink: { readonly label: string; readonly href: string };
 };
 
-/**
- * Shown where a blocked third-party embed would be.
- *
- * A placeholder rather than an empty space, because a visitor who refused
- * functional cookies months ago and now wants the map needs to be able to see
- * that something is missing and get it back. Silence would read as a broken
- * page.
- *
- * The action grants the functional category and nothing else, which is the
- * narrowest thing it can do — the map is currently the only member of that
- * category, so "load this map" and "allow functional" describe the same
- * decision. If a second functional embed is ever added, this button stops being
- * specific enough and must be replaced by one that opens the preferences dialog.
- */
 export type ConsentEmbedPlaceholderCopy = {
   readonly heading: string;
   readonly body: string;
@@ -111,27 +79,14 @@ export const consentContent: {
   readonly banner: ConsentBannerCopy;
   readonly preferences: ConsentPreferencesCopy;
   readonly mapPlaceholder: ConsentEmbedPlaceholderCopy;
-  /** The footer control that reopens the dialog after a decision. */
   readonly reopenLabel: string;
 } = {
   mapPlaceholder: MAP_PLACEHOLDER,
   banner: {
     landmarkLabel: "Cookie consent",
     heading: "Your choice about cookies",
-    /*
-      No pre-checked boxes, no "by continuing to browse you agree", and no
-      dismissal that counts as acceptance. Each of the three buttons is an
-      explicit act, and closing the page without pressing one leaves everything
-      optional switched off.
-    */
-    // [CHANGED, 2026-10-15] Shortened for the compact mobile bar (SEO audit
-    // visual #1: the banner covered ~45% of a 375px viewport). Same facts: what
-    // is necessary, what is optional, and that optional stays off by default.
     body: "We use necessary cookies to run this site. Optional ones, for embedded content and anonymous performance measurement, stay off unless you accept.",
     acceptLabel: "Accept all",
-    // [CHANGED, 2026-10-15] Was "Reject non-essential"; wrapped to two lines in
-    // the half-width mobile button. Pairs with "Accept all"; necessary cookies
-    // cannot be rejected anyway, as the body says.
     rejectLabel: "Reject all",
     manageLabel: "Manage preferences",
     policyLink: { label: "Cookie Policy", href: "/cookie-policy" },

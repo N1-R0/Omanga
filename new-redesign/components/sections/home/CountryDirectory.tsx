@@ -8,13 +8,6 @@ import { Flag } from "@/new-redesign/components/ui/Flag";
 import { href } from "@/new-redesign/config/routes";
 import { homeCountries } from "@/new-redesign/content/home.content";
 
-/**
- * Tabs and the flag-and-link grid (design system § Country directory),
- * after Wise's "works nearly everywhere".
- *
- * WAI-ARIA tabs: one tab stop, ←/→ (and Home/End) move and select, and each
- * panel is labelled by its tab. Only the selected panel is rendered.
- */
 export function CountryDirectory() {
   const { tabs } = homeCountries;
   const [active, setActive] = useState(0);

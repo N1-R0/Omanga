@@ -4,15 +4,6 @@ import { Card } from "@/new-redesign/components/ui/Card";
 import { href } from "@/new-redesign/config/routes";
 import { homeWhy } from "@/new-redesign/content/home.content";
 
-/**
- * 6 · Why Omanga, after the owner's Vizcom reference (2026-10-25, Mobbin
- * section 39a1103e): the head on the left and the safety link as a pill
- * button on the right, then six tall white Cards in a 3 × 2 grid (2 columns
- * from 768px, stacked below). Each card has a bare line icon at the top and
- * the point in large type at the foot, with one short line under it, so the
- * point reads first. Every point states something confirmed; see the
- * content note for what was cut.
- */
 export function HomeWhy() {
   const { eyebrow, title, sub, tiles, link } = homeWhy;
 

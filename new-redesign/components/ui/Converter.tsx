@@ -8,25 +8,9 @@ import { Button } from "@/new-redesign/components/ui/Button";
 import { CurrencyPicker } from "@/new-redesign/components/ui/CurrencyPicker";
 import { converter as copy } from "@/new-redesign/content/converter.content";
 
-/**
- * The compact converter (owner, 2026-10-26: "a small scale converter" for the
- * rate pages' hero, then the Payments hero). Mobbin research: OKX Convert and
- * Uniswap stack two grey panels with a round swap button on the seam; Wise
- * puts the rate between the amounts and ends on one full-width action. So:
- *
- *   - a white card (16px), meant to sit in a glass frame on a photo;
- *   - "You convert" and "You get" panels, each the amount and a currency chip;
- *   - the swap button on the seam;
- *   - the rate and its date, then one primary button to the web wallet.
- *
- * Rates are the GBP/USD/CAD/NGN cross matrix. Picking the currency already on
- * the other side swaps the two rather than showing X → X.
- */
 type Props = {
   matrix: Readonly<Record<MatrixCurrency, Readonly<Record<MatrixCurrency, number>>>>;
-  /** The currency it opens on; each rate page passes its own. */
   initialFrom?: MatrixCurrency;
-  /** The reference rate's date, already formatted. */
   updated: string;
 };
 
@@ -34,13 +18,10 @@ const symbolOf = (code: string) => copy.currencies.find((c) => c.code === code)?
 
 const nf = (decimals: number) => new Intl.NumberFormat("en-GB", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
 
-/** Drop the minor unit from 10,000 up so a seven-figure naira sum fits. */
 const money = (n: number) => nf(n >= 10_000 ? 0 : 2).format(n);
 
-/** Small rates (NGN → GBP is 0.00056) keep enough digits to mean something. */
 const rateText = (n: number) => (n >= 1 ? nf(2).format(n) : n.toPrecision(3));
 
-/** Keep digits and one decimal point, and group the whole part as it's typed. */
 function formatTyped(raw: string) {
   const clean = raw.replace(/[^\d.]/g, "");
   const [whole, ...rest] = clean.split(".");
@@ -111,7 +92,6 @@ export function Converter({ matrix, initialFrom = "GBP", updated }: Props) {
           </div>
         </div>
 
-        {/* The swap button on the seam (OKX, Uniswap). */}
         <button
           type="button"
           onClick={swap}

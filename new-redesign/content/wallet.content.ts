@@ -1,54 +1,22 @@
 import type { FeatureScreen } from "@/new-redesign/content/home.content";
 
-/**
- * Payments `/payments` (was `/wallet`). Structure: research-and-page-structure.md § 6.2.
- * Sections are built one at a time, hero first (2026-10-22).
- *
- * Owner answers 2026-10-22: in person you pay by transfer; leftover naira can
- * be converted to dollars. Still open: which currencies the wallet holds and
- * the full fee list (§ 8.5), and whether the site may mention cards (§ 8.2),
- * so nothing here says "card".
- */
-
-/**
- * 1 · Hero (Nova reference, owner 2026-10-22): centred H1, sub,
- * one filled action, then the app home screen in a phone, standing in a
- * box of the home hero's moving crimson fabric and cut off by its bottom edge.
- */
 export const walletHero = {
   title: ["Travel money,", "ready when you land"],
   sub: "Add pounds, dollars or Canadian dollars, convert them to naira, and pay by transfer.",
   primary: { label: "Open your free wallet" },
-  // Owner, 2026-10-25: the stage is a full-width photo band. Unsplash
-  // mqO0Rf-PUMs by Paul Pastourmatzis (Unsplash License), layered blue ridges
-  // in mist, self-hosted, not used anywhere else on the site. Decorative.
   photo: { src: "/photos/wallet/hero-ridges.jpg", position: "50% 55%" },
 } as const;
 
-/**
- * 2 · Proof strip (owner reference, 2026-10-22): four facts on a dark band.
- * Each one is already stated on the site or confirmed by the owner. "3
- * currencies" replaces the plan's "6+" (unconfirmed, § 8.5); update it when
- * the currency list arrives.
- */
 export const walletProof = {
   label: "Wallet facts",
   items: [
     { title: "Pay in 50+ countries", text: "One wallet for trips across Africa, wherever you land." },
     { title: "Add from 3 currencies", text: "Pounds, US dollars or Canadian dollars, converted when you choose." },
-    // [CHANGED, 2026-10-25] Owner: the first "Free to open" (left by the fee
-    // cleanup) repeated the second; it's now the pay-by-transfer fact.
     { title: "Pay by transfer", text: "Pay shops, drivers and hotels in naira, the way Nigeria pays." },
     { title: "Free to open", text: "No minimum to add, so start with what your trip needs." },
   ],
 } as const;
 
-/**
- * 7 · Countries, after Cartesia's globe + list (owner, 2026-10-22). The globe
- * is drawn live with cobe from each country's `location` (lat, lng). The
- * countries are the 11 home names; the rest of the "50+" is behind the link
- * (full list is owner question § 8.5). Copy keeps to the approved claim.
- */
 export const walletCountries = {
   eyebrow: "Countries",
   title: "Pay in 50+ countries across Africa",
@@ -70,16 +38,6 @@ export const walletCountries = {
   cta: { label: "See all 50+ countries", path: "/payments/countries" },
 } as const;
 
-/**
- * 3 · How it works (owner, 2026-10-25): one step walkthrough for the whole
- * trip, replacing "What you can do", "Paying in person" and "Going home",
- * which repeated each other. Each step plays its own Jitter Lottie (file
- * "Omanga — Payments how it works", one artboard per step, vector screens
- * rebuilt from the app, not screenshots) while its timer fills; `ms` is the
- * Lottie's length and `stillFrame` its settled frame for reduced motion.
- * Example amounts at example rates; no fees, no names (the payee's name is
- * a placeholder bar), no funding method.
- */
 export const walletHowItWorks = {
   eyebrow: "How it works",
   title: "From home to Nigeria, and back again",
@@ -90,27 +48,15 @@ export const walletHowItWorks = {
     { title: "Pay by transfer", text: "Pay a shop, a driver or a hotel. Enter their account, check the name, then send.", lottie: "/lottie/wallet/how-3.json", ms: 6000, stillFrame: 348 },
     { title: "Going home", text: "Convert what's left into dollars and keep them in your dollar wallet for the next trip.", lottie: "/lottie/wallet/how-4.json", ms: 6000, stillFrame: 348 },
   ],
-  // The home page's mountain photo (owner, 2026-10-25: every container uses it).
   photo: "/photos/home/rates-mountains.jpg",
 } as const;
 
-/**
- * 11 · FAQ, in the home FAQ's UI (owner, 2026-10-23). `id="faq"` is the
- * footer's Fees link target. Answers are approved copy, no new claims:
- *   - content/payments-faq.content.ts (what it is, fees, rate, pounds to
- *     naira, where to spend);
- *   - content/safety.content.ts ("Is Omanga safe to use?", wallet half only);
- *   - owner answers 2026-10-22 (pay in person by transfer; leftover naira
- *     converts to dollars), worded as sections 4 and 8 already say them.
- * Health-cover questions stay on home and /health-cover.
- */
 export const walletFaq = {
   eyebrow: "Questions",
   title: "Wallet questions, answered",
   subLead: "Rates, fees and paying in person.",
   subLink: "Chat on WhatsApp",
   subTail: "if yours isn't here.",
-  // [ADDED, 2026-10-28] SEO audit: link the matching guide.
   guide: { lead: "Planning a budget? See", label: "how far $100 goes in Nigeria", path: "/blog/how-far-does-100-dollars-go-in-nigeria" },
   items: [
     {
@@ -144,22 +90,12 @@ export const walletFaq = {
   ],
 } as const;
 
-/**
- * 12 · Closing band (owner, 2026-10-23): the shared CTA panel with the G1
- * aurora, like home's final CTA. "Open your free wallet" is the page's one
- * primary action again; health cover is a single text link, the only place
- * the page mentions it (the cover section was dropped). "A few minutes" is
- * approved home copy. The screen is an illustrative wallet: balances only,
- * no cover row, no status line.
- */
 export const walletClosing = {
   eyebrow: "Get started",
   title: "Your naira, ready before you land",
   text: "Open your free wallet in a few minutes, add pounds or dollars, and pay by transfer from day one.",
   primary: { label: "Open your free wallet" },
   secondary: { label: "Add health cover for your trip", path: "/insurance/plans" },
-  // [CHANGED, 2026-10-25] Owner: the home page's mountain photo, not the
-  // crimson aurora texture.
   texture: { src: "/photos/home/rates-mountains.jpg" },
   screen: {
     kind: "rows",

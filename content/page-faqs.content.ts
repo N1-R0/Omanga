@@ -2,16 +2,6 @@ import { insuranceFaqContent } from "@/content/insurance-faq.content";
 import { paymentsFaqContent } from "@/content/payments-faq.content";
 import type { FaqContent, FaqItem } from "@/types/blog.types";
 
-/**
- * [ADDED, 2026-10-18] Page-specific FAQ lists (copy audit,
- * design-lab/copy-seo-review-2026-10-18.md § 7).
- *
- * Home, About, Contact and Get Started all rendered the same six questions,
- * so four pages carried identical FAQ blocks and identical FAQPage schema.
- * About and Contact now pick the questions their visitors ask. Every answer
- * is an existing approved answer, picked by its question text (not by index)
- * so reordering the source lists cannot swap answers.
- */
 const ALL: readonly FaqItem[] = [
   ...paymentsFaqContent.items,
   ...insuranceFaqContent.items,
@@ -25,7 +15,6 @@ function pick(questions: readonly string[]): FaqItem[] {
   });
 }
 
-/** About: who Omanga is and who stands behind each product. */
 export const aboutFaqContent: FaqContent = {
   heading: "Questions about Omanga",
   items: pick([
@@ -38,7 +27,6 @@ export const aboutFaqContent: FaqContent = {
   ]),
 };
 
-/** Contact: the practical questions people write in about. */
 export const contactFaqContent: FaqContent = {
   heading: "Answers to common questions",
   items: pick([
@@ -51,11 +39,6 @@ export const contactFaqContent: FaqContent = {
   ]),
 };
 
-/**
- * Plans: questions about choosing and keeping a plan. Was the full
- * insurance FAQ, which duplicated /insurance word for word (owner approved
- * the split 2026-10-18).
- */
 export const plansFaqContent: FaqContent = {
   heading: "Choosing a health plan: common questions",
   items: pick([

@@ -6,20 +6,6 @@ import { SectionHead } from "@/new-redesign/components/ui/SectionHead";
 import { href } from "@/new-redesign/config/routes";
 import { healthPlans } from "@/new-redesign/content/health-cover.content";
 
-/**
- * 3 · Choose your plan, after the owner's Vercel reference (2026-10-26,
- * Mobbin 1671eb10): the three plans as columns of one bordered panel, split
- * by hairlines. The popular plan (Gold) is the only white column, with a dark
- * "Popular" tab sitting on the panel's top edge and the one filled button;
- * Silver and Diamond stay on the page grey with secondary buttons. Each
- * column runs name, line, price, hospital category, then the benefits, with
- * the button pinned to its foot so the three line up. A row across the
- * panel's foot links to the full comparison.
- *
- * Buy buttons go straight to that plan's Paystack page. Below 1024px the
- * columns stack, split by horizontal hairlines, and the tab moves inline
- * beside the plan name.
- */
 function Tick() {
   return (
     <svg aria-hidden width="18" height="18" viewBox="0 0 20 20" fill="none" className="mt-0.5 shrink-0 text-text-secondary">

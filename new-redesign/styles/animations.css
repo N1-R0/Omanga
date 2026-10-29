@@ -1,20 +1,3 @@
-/* =============================================================================
-   Omanga new redesign — Motion
-   -----------------------------------------------------------------------------
-   Header mega menu, copied from wise.com's navigation (measured 2026-10-21):
-
-     bar colours        350ms  --ease-nav
-     viewport height    0 → panel height, 350ms --ease-nav
-     panel open         opacity 0 → 1, 200ms, after a 200ms delay
-     panel close        opacity → 0, 200ms ease, while the height collapses
-     switching tabs     new panel slides 10px and fades in over 600ms
-                        (66% of the way it has stopped moving); old panel
-                        leaves instantly
-     page dimmer        black 50% + 8px blur, opacity over 350ms
-
-   Every duration is a token that drops to 0 under prefers-reduced-motion.
-   ========================================================================== */
-
 @keyframes nav-enter-from-right {
   0% {
     opacity: 0;

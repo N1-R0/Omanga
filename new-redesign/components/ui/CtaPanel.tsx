@@ -1,19 +1,11 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import { FeatureScreen } from "@/new-redesign/components/sections/home/FeatureScreen";
 import { Button } from "@/new-redesign/components/ui/Button";
 import { Card } from "@/new-redesign/components/ui/Card";
 import type { FeatureScreen as Screen } from "@/new-redesign/content/home.content";
+import { Photo } from "@/new-redesign/components/ui/Photo";
 
-/**
- * The CTA panel (design system § Final CTA and footer), after Asset's CTA: a
- * white card with the line and the one primary action, beside a brand
- * texture panel with an app screen in the glass frame. Home's final CTA uses
- * it, and so does the wallet page's health-cover band (owner, 2026-10-23).
- *
- * The screen has no live rate in it, so this needs no data fetch.
- */
 export function CtaPanel({
   id,
   eyebrow,
@@ -62,7 +54,7 @@ export function CtaPanel({
         </Card>
 
         <div className="relative flex h-[280px] items-center justify-center overflow-hidden rounded-sm lg:h-[360px]">
-          <Image src={texture} alt="" fill sizes="(min-width: 1024px) 460px, 100vw" className="object-cover" />
+          <Photo src={texture} alt="" fill sizes="(min-width: 1024px) 460px, 100vw" className="object-cover" />
           <div className="glass relative w-[72%] max-w-[280px]">
             <FeatureScreen screen={screen} gbpToNgn={0} />
           </div>

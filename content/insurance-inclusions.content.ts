@@ -1,36 +1,4 @@
-// [CHANGED, 2026-10-10] Copy pass to the site copy rules (design-lab/type-and-copy-research.md); facts unchanged.
-/**
- * Included on every plan — spec § 6.2, as a section of its own.
- *
- * [CHANGED] § 6.2 is a sub-block of "What each plan covers" in the spec, an
- * `h3` beneath the comparison table. The Figma frame draws it as a standalone
- * three-column feature grid with its own rhythm, so it is lifted out and given
- * its own `h2`. The table section keeps § 6.1 alone.
- *
- * The five inclusions are the spec's, verbatim, and they are the same five § 5's
- * footnote names beneath the plan grid — telemedicine, roaming, 24/7 support,
- * the mobile app and the newsletter. Stated twice on the page deliberately: once
- * as a one-line reassurance under the prices, once here in full.
- *
- * ---------------------------------------------------------------------------
- * [REPLACED] The frame's icons are not the ones shipping.
- *
- * It draws a 40px line icon above each term, and its five assets are the
- * template's own — named `Lock-2.svg`, `Search.svg`, `Code.svg`,
- * `Offsite Bold.svg` and `Frame.svg`, rendering as a padlock, a magnifier, a
- * pair of angle brackets, an offsite arrow and a receipt. A padlock above
- * "Telemedicine" and `</>` above "24/7 dedicated contact centre" describe
- * nothing; they survived from whatever the frame was built over.
- *
- * Replaced with glyphs that mean what the terms say, drawn from `lucide-react`
- * — already a dependency, ISC licensed, and the set the legacy insurance pages
- * already used for these same five concepts. Which glyph goes with which term
- * is a design decision, not copy, so the mapping lives in the section component
- * and this module carries only a stable `id` to key it by.
- */
-
 export type Inclusion = {
-  /** Keys the icon mapping in the section. Never rendered. */
   readonly id: string;
   readonly term: string;
   readonly description: string;
@@ -42,8 +10,6 @@ export type InsuranceInclusionsContent = {
 };
 
 export const insuranceInclusionsContent: InsuranceInclusionsContent = {
-  // [CHANGED, 2026-10-14] UX copy pass: shorter heading; descriptions say
-  // only what is confirmed, and nothing implies cover outside Nigeria.
   heading: "Included in every plan",
   inclusions: [
     {
@@ -59,7 +25,6 @@ export const insuranceInclusionsContent: InsuranceInclusionsContent = {
     },
     {
       id: "contact-centre",
-      // [CHANGED, 2026-10-18] Owner: hours unconfirmed.
       term: "Contact centre",
       description: "Call or message for help with your plan or your care.",
     },
@@ -71,7 +36,6 @@ export const insuranceInclusionsContent: InsuranceInclusionsContent = {
     {
       id: "mobile-app",
       term: "Mobile app",
-      // Claims dropped: how claims work is unconfirmed (design.md Copy to-do).
       description: "Manage, renew or extend your plan from your phone.",
     },
   ],

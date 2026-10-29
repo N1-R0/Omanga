@@ -1,22 +1,9 @@
 import { COUNTRIES_SERVED_DISPLAY } from "@/content/site.content";
 
-/**
- * About page (/about), rebuilt in the new design one section at a time
- * (owner, 2026-10-26).
- */
-
-/**
- * Hero: Mobbin A1 (Wise "Meet money without borders"), the heading and sub on
- * the left and a wide video box below. Copy kept from the previous About hero.
- */
 export const aboutHero = {
-  // Pill above the heading (owner, 2026-10-27).
   pill: "About",
   title: "Money and health cover for your trip to Nigeria",
-  sub: "A Lagos company for anyone visiting Nigeria: one account for your travel wallet and your health cover.",
-  // Pexels 19959356, "A woman walking through an airport with luggage" by K
-  // (Pexels License, free, no credit needed), 9s, self-hosted. 720p for
-  // phones, 1080p above; the poster is the clip's own still. Decorative.
+  sub: "Omanga is a Lagos company for anyone visiting Nigeria: one account for your travel wallet and your health cover.",
   video: {
     small: "/videos/about-hero-airport-720.mp4",
     large: "/videos/about-hero-airport-1080.mp4",
@@ -24,12 +11,6 @@ export const aboutHero = {
   },
 } as const;
 
-/**
- * Our story: Mobbin B1 (Ramp's "Our Story"), the eyebrow and heading on the
- * left, the lead large on the right with the other two paragraphs as two
- * columns under it (owner, 2026-10-27). Copy kept from the old story section;
- * its two side photos are dropped, as the reference has none.
- */
 export const aboutStory = {
   eyebrow: "Our story",
   title: "Why we built Omanga",
@@ -40,12 +21,6 @@ export const aboutStory = {
   ],
 } as const;
 
-/**
- * Mission and vision: Mobbin C1 (7shifts), two tall cards side by side,
- * Mission on blush and Vision on the brand crimson (owner, 2026-10-27). The
- * heading, Ubuntu sub and both texts are kept from the old section; the
- * eyebrow is new, as every new-design section opens with one.
- */
 export const aboutMissionVision = {
   eyebrow: "What drives us",
   title: "Our mission and vision",
@@ -64,12 +39,6 @@ export const aboutMissionVision = {
   ],
 } as const;
 
-/**
- * What we value: Mobbin D1 (Figma's "Our Values and Culture"), a white band
- * with the head, then three square photos, each with its value and a line
- * under it (owner, 2026-10-27). Values, texts and photos kept from the old
- * Impact section; the photos are resized copies in public/about. Decorative.
- */
 export const aboutValues = {
   eyebrow: "Our values",
   title: "What we value",
@@ -92,14 +61,6 @@ export const aboutValues = {
   ],
 } as const;
 
-/**
- * Our office: Mobbin E5 (Tines' "Office locations"), the head, a line and the
- * office on the left, photo tiles with pill labels on the right and the map
- * as the wide tile (owner, 2026-10-28). The address and map come from
- * config/site.ts, as on Contact. The heading, line and labels are new copy.
- * Photos: Pexels 37505507 (the Civic Centre, Victoria Island) and 38513712
- * (Lagos along the lagoon), Pexels License, self-hosted. Decorative.
- */
 export const aboutOffice = {
   eyebrow: "Our office",
   title: "Find us in Lagos",

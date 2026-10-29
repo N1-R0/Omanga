@@ -5,25 +5,10 @@ import { BLOG_CATEGORY_LABELS } from "@/content/blog";
 import { cx } from "@/lib/cx";
 import type { BlogPost } from "@/types/blog.types";
 
-/**
- * The article cards on `/blog`, and the "more articles" row under each post.
- *
- * Layout follows the common blog-index pattern (Mobbin refs: Assembly,
- * Codecademy, Etsy, Binance): the newest article as a wide featured card —
- * image beside text from the tablet breakpoint — then a grid of image-on-top
- * cards with category, title, summary and date. `isFeatured={false}` renders
- * the grid only, for the related row.
- *
- * Each card is one link with the title as its text, so the accessible name is
- * the article title rather than a repeated "Read guide". The link's
- * `::after` stretches over the card so the whole card is clickable.
- */
 export type BlogPostListProps = {
   posts: readonly BlogPost[];
   readLabel: string;
-  /** Show the first post as a wide featured card. The index page only. */
   isFeatured?: boolean;
-  /** Heading level for card titles: `h2` on the index, `h3` under an article. */
   titleLevel?: "h2" | "h3";
 };
 
@@ -51,11 +36,6 @@ function PostCard({ post, readLabel, titleLevel: Title, isFeatured }: CardProps)
         isFeatured && "md:grid md:grid-cols-2",
       )}
     >
-      {/*
-        Featured, from tablet up: the photo fills its half of the card at the
-        text column's height instead of holding 4:3, which left a gap under it.
-        The image is taken out of flow so it cannot set the row height itself.
-      */}
       <div className={cx("overflow-hidden", isFeatured && "md:h-full")}>
         <div
           className={cx(
@@ -80,7 +60,6 @@ function PostCard({ post, readLabel, titleLevel: Title, isFeatured }: CardProps)
           isFeatured && "md:justify-center md:p-10",
         )}
       >
-        {/* [CHANGED, 2026-10-14] UX copy pass: category shown with the site's nouns. */}
         <p className="font-sans type-p2 text-accent-text">
           {BLOG_CATEGORY_LABELS[post.category]} · {post.readingMinutes} min read
         </p>
@@ -96,10 +75,6 @@ function PostCard({ post, readLabel, titleLevel: Title, isFeatured }: CardProps)
 
         <p className="font-sans type-p1 opacity-80">{post.summary}</p>
 
-        {/*
-          `opacity-80` sits on the date only: it fades by opacity, so on the
-          row it also faded the brand-coloured label below 4.5:1 (Lighthouse).
-        */}
         <p className="mt-auto flex items-center justify-between gap-4 pt-3 font-sans type-p2">
           <time dateTime={post.publishedDate} className="opacity-80">
             {new Date(post.publishedDate).toLocaleDateString("en-GB", DATE_FORMAT)}

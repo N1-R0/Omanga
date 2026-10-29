@@ -3,20 +3,6 @@ import type { ReactNode } from "react";
 
 import { cx } from "@/lib/cx";
 
-/**
- * Buttons and button-styled links (design system § Components › Buttons).
- *
- *   primary    brand fill. One per view.
- *   secondary  white with a strong border.
- *   ghost      text only, turns brand on hover.
- *   inverse    white fill, for photos, textures and dark surfaces.
- *   onPhoto    text only in white, the secondary action beside a primary on a
- *              photo (keeps one filled button per view).
- *
- * Min height 44, padding 12 × 20, fully rounded ([CHANGED, 2026-10-25] owner:
- * buttons are pills from now on; they were radius 8). A link is
- * rendered when `href` is given, otherwise a <button>.
- */
 type Variant = "primary" | "secondary" | "ghost" | "inverse" | "onPhoto";
 
 const VARIANT: Record<Variant, string> = {

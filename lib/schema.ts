@@ -16,9 +16,6 @@ import type { PageMetaContent } from "@/types/content.types";
 
 type SchemaNode = Readonly<Record<string, unknown>>;
 
-/**
- * A `schema.org` graph, ready to serialise into a `application/ld+json` block.
- */
 export type JsonLdGraph = {
   readonly "@context": "https://schema.org";
   readonly "@graph": readonly SchemaNode[];
@@ -37,42 +34,16 @@ const ORGANIZATION: SchemaNode = {
   "@type": "Organization",
   "@id": ORGANIZATION_ID,
   name: SITE_NAME,
-  /*
-    [ADDED, 2026-10-15] Mirrors the WebSite node, which carries the same two
-    names the other way round (SEO audit: the two nodes read as different
-    entities). Not `legalName`: the registered name is still unconfirmed
-    (legal-shared.content.ts, "Company identity").
-  */
   alternateName: SITE_TAGLINE,
   url: SITE_URL,
-  /*
-    [CHANGED, 2026-10-15] A raster logo. Google accepts SVG here but documents
-    raster (min 112 × 112) as the safe choice. `/apple-icon.png` is the 180px
-    brand mark Next already serves from `app/apple-icon.png`.
-  */
   logo: {
     "@type": "ImageObject",
     "@id": `${SITE_URL}/#logo`,
-    url: absoluteUrl("/apple-icon.png"),
-    width: 180,
-    height: 180,
+    url: absoluteUrl("/logo-omanga-512.png"),
+    width: 512,
+    height: 512,
   },
   image: { "@id": `${SITE_URL}/#logo` },
-  /*
-    [ADDED, 2026-08-29] `email` and `areaServed` at organisation level.
-
-    Both were already on the `contactPoint` below, which is where a support
-    channel belongs — but a consumer of this graph reading the Organization node
-    alone got a name, a URL and a logo. Neither value is new or unverified: the
-    address is deliberately still absent, for the reason `config/site.ts` records
-    at `OFFICE_ADDRESS` (a trading address must not be marked up as the
-    registered one).
-
-    [ADDED, 2026-10-09] `sameAs` with the client-supplied Instagram profile.
-    "Omanga" alone is dominated in search by an unrelated public figure; linking
-    the organisation to its own profile is one of the signals Google uses to
-    tell the brand apart. Other platforms are added only once supplied.
-  */
   email: CONTACT_EMAIL,
   areaServed: AREA_SERVED,
   sameAs: [INSTAGRAM_URL],
@@ -88,25 +59,12 @@ const WEBSITE: SchemaNode = {
   "@type": "WebSite",
   "@id": WEBSITE_ID,
   url: SITE_URL,
-  // Google's site-name system reads `name` first, then `alternateName`; without
-  // these the result header fell back to the bare domain "omanga.biz".
   name: SITE_TAGLINE,
   alternateName: SITE_NAME,
   inLanguage: SITE_LOCALE,
   publisher: { "@id": ORGANIZATION_ID },
 };
 
-/**
- * The two entities that actually deliver the regulated services.
- *
- * No `url`: their websites are not recorded anywhere in this project, and a
- * guessed domain in structured data is a factual claim about a third party. The
- * names are the confirmed ones and are imported from `legal-shared.content.ts`
- * so the schema and the legal pages cannot disagree about who provides what.
- *
- * [CHANGED, 2026-10-15] Each now has an `@id`, so a service on one page and a
- * reference on another resolve to the same entity (SEO audit, schema #1).
- */
 const INSURANCE_PROVIDER_ID = `${SITE_URL}/#phillips-hmo`;
 
 const INSURANCE_PROVIDER: SchemaNode = {
@@ -116,33 +74,6 @@ const INSURANCE_PROVIDER: SchemaNode = {
   logo: absoluteUrl("/philip-hmo-logo.png"),
 };
 
-/**
- * [FIXED, 2026-08-29] `provider` was Omanga on both services. It is not.
- *
- * Omanga presents these services, arranges them and supports the customer.
- * The wallet is operated by Fuspay Technologies, a CBN-licensed microfinance
- * bank, and the insurance is provided by Phillips HMO, regulated by NAICOM —
- * facts confirmed while the legal pages were written, and the whole reason those
- * pages are careful never to imply Omanga holds either licence.
- *
- * Structured data saying `provider: Omanga` said exactly what the visible pages
- * were written to avoid: that Omanga provides a regulated payment service and
- * underwrites insurance. On a YMYL site that is not a tidiness point — it is a
- * machine-readable claim of authorisation, made to the search engines whose
- * quality raters are looking for precisely this.
- *
- * `brand` keeps Omanga attached, which is accurate: these are Omanga-branded
- * services delivered by licensed partners.
- *
- * [CHANGED, 2026-10-15] SEO audit, schema #1 and #2:
- * - Both nodes have an `@id` and are emitted only where the page is about them
- *   (`services` in `PageGraphOptions`): the home page lists both, /payments the
- *   wallet, /insurance and /plans the cover. They were repeated on every page,
- *   blog posts and legal pages included, which was noise.
- * - The wallet is a `FinancialProduct` (a `Service` subtype), with its fee
- *   stated. The fee text is passed in from the payments FAQ, the copy the page
- *   renders, so the two cannot drift.
- */
 export type ServiceKey = "wallet" | "insurance";
 
 function buildServiceNodes(
@@ -158,9 +89,6 @@ function buildServiceNodes(
         description: `A multi-currency travel wallet. Fund it from USD, GBP or CAD and spend in ${COUNTRIES_SERVED_DISPLAY} African countries.`,
         category: "Multi-currency travel wallet",
         url: absoluteUrl("/payments"),
-        // [CHANGED, 2026-10-18] No `provider`: the operating partner isn't
-        // public (owner). Omanga stays as `brand` only, so the markup still
-        // doesn't claim Omanga holds the payment licence.
         brand: { "@id": ORGANIZATION_ID },
         areaServed: AREA_SERVED,
         ...(walletFees === undefined
@@ -179,7 +107,6 @@ function buildServiceNodes(
       url: absoluteUrl("/insurance"),
       provider: { "@id": INSURANCE_PROVIDER_ID },
       brand: { "@id": ORGANIZATION_ID },
-      // [CHANGED, 2026-10-14] Cover applies in Nigeria only (owner-confirmed).
       areaServed: { "@type": "Country", name: "Nigeria" },
     },
     INSURANCE_PROVIDER,
@@ -204,37 +131,11 @@ function buildWebPage(
   };
 }
 
-/* -----------------------------------------------------------------------------
-   Breadcrumbs
-   -------------------------------------------------------------------------- */
-
-/**
- * A `BreadcrumbList` for a page one level below the homepage.
- *
- * Every route on this site is exactly one level deep, so the trail is always
- * Home → this page. The builder takes the crumb label rather than deriving it
- * from the page title: a title is written for a search result — "Travel Health
- * Insurance for Africa — Plans from $50 | Omanga" — and a breadcrumb is a
- * navigational label. Google renders the breadcrumb in place of the URL in the
- * result, so a title used as a crumb reads as a duplicate of the heading above it.
- *
- * Emitted for every page except the homepage, where a one-item trail pointing at
- * itself is noise.
- *
- * Nothing is fabricated: the trail describes the site's actual, flat structure
- * rather than inventing a category level that does not exist in the URL.
- */
 function buildBreadcrumb(
   meta: PageMetaContent,
   crumb: string,
   parent?: BreadcrumbParent,
 ): SchemaNode {
-  /*
-    [ADDED, 2026-10-09] `parent`. Blog articles live at `/blog/<slug>`, the
-    first two-level URLs on the site, so their trail is Home → Blog → article.
-    The parent is passed explicitly rather than derived from the path, for the
-    same reason the crumb label is.
-  */
   const trail = [
     { name: "Home", item: SITE_URL },
     ...(parent === undefined
@@ -260,41 +161,16 @@ export type BreadcrumbParent = {
 };
 
 export type PageGraphOptions = {
-  /**
-   * The breadcrumb label for this page. Omit on the homepage.
-   */
   readonly crumb?: string;
-  /** A level between Home and this page. Blog articles only. */
   readonly parent?: BreadcrumbParent;
-  /**
-   * Extra nodes for this page only — currently the three plan `Product`s.
-   */
   readonly nodes?: readonly SchemaNode[];
-  /**
-   * [ADDED, 2026-10-15] The services this page is about. Omit on pages that
-   * are about neither (legal, blog, contact). See `buildServiceNodes`.
-   */
   readonly services?: readonly ServiceKey[];
-  /** The wallet's fee line, as the page renders it. Only with `"wallet"`. */
   readonly walletFees?: string;
-  /**
-   * [ADDED, 2026-10-15] `AboutPage` / `ContactPage` for /about and /contact
-   * (SEO audit, schema #10). Both are `WebPage` subtypes.
-   */
   readonly pageType?: PageType;
 };
 
 export type PageType = "WebPage" | "AboutPage" | "ContactPage";
 
-/**
- * Graph for a page: the organisation, the site, the page itself, the
- * services it is about, and optionally a breadcrumb trail and page-specific nodes.
- *
- * Fields blocked in project-context.md — postal address, telephone,
- * registration number, `AggregateRating` — remain omitted rather than filled.
- * `Product`/`Offer` has come off that list because the prices are published and
- * verifiable on the page; see `buildPlanProducts`.
- */
 export function buildPageGraph(
   meta: PageMetaContent,
   {
@@ -315,11 +191,7 @@ export function buildPageGraph(
       WEBSITE,
       crumb === undefined
         ? webPage
-        : /*
-             Linking the page to its trail with `breadcrumb` is what makes the
-             association explicit rather than leaving two unrelated nodes in the
-             graph for Google to pair up by proximity.
-           */
+        :
           { ...webPage, breadcrumb: { "@id": `${absoluteUrl(meta.path)}#breadcrumb` } },
       ...(crumb === undefined ? [] : [buildBreadcrumb(meta, crumb, parent)]),
       ...services.flatMap((key) => buildServiceNodes(key, walletFees)),
@@ -328,35 +200,15 @@ export function buildPageGraph(
   };
 }
 
-/* -----------------------------------------------------------------------------
-   Insurance plans
-   -------------------------------------------------------------------------- */
-
 export type PlanOffer = {
   readonly name: string;
   readonly description: string;
   readonly price: number;
   readonly currency: string;
   readonly url: string;
-  /**
-   * The billing period as the card renders it — "month".
-   *
-   * Passed in rather than hardcoded for the same reason every other field is:
-   * it comes from `insurancePlansContent`, so if the plans ever become one-time
-   * or annual, the markup follows the page instead of contradicting it.
-   */
   readonly billingPeriod: string;
 };
 
-/**
- * `billingPeriod` as a UN/CEFACT unit code, which is what schema.org's
- * `unitCode` expects.
- *
- * Only the periods the content layer can currently express are mapped. An
- * unrecognised value returns `undefined`, and the caller then omits
- * `priceSpecification` entirely rather than guessing a period — an offer with no
- * stated recurrence is incomplete, but one with the wrong recurrence is false.
- */
 const UNIT_CODES: Readonly<Record<string, string>> = {
   day: "DAY",
   week: "WEE",
@@ -364,59 +216,6 @@ const UNIT_CODES: Readonly<Record<string, string>> = {
   year: "ANN",
 };
 
-/**
- * A `Product` with an `Offer` for each insurance plan.
- *
- * This is the one structured-data addition with direct commercial value: it puts
- * "$50" into the search result itself. It was deferred in a comment on
- * `app/(redesign)/plans/page.tsx` pending a section that has since shipped, so it
- * was unblocked and unowned rather than undecided.
- *
- * ---------------------------------------------------------------------------
- * EVERY FIELD IS TAKEN FROM WHAT THE PAGE ALREADY RENDERS
- *
- * Google requires structured data to match the visible content, and marking up a
- * price that differs from the one on the page is a manual-action risk rather than
- * a ranking one. So `name`, `description`, `price` and `currency` all come from
- * `insurance-plans.content.ts` — the same module the cards render from — and are
- * passed in rather than restated here, so they cannot drift.
- *
- * What is deliberately NOT emitted, because it does not exist:
- *
- *   aggregateRating   there are no reviews. Inventing one is the single most
- *                     common structured-data manual action there is.
- *   review            same.
- *   priceValidUntil   no expiry is published, and guessing a date would either
- *                     expire the offer early or claim a validity nobody set.
- *   sku / gtin        these are service plans, not stocked goods.
- *
- * `availability` is `InStock`, which is true — all three can be bought today, and
- * each `url` is that tier's own Paystack checkout page.
- *
- * ---------------------------------------------------------------------------
- * [RESOLVED, 2026-09-20] The currency `[VERIFY]`, and a defect it uncovered.
- *
- * All three Paystack pages were opened and read. Two facts came back.
- *
- * The first closes the question as asked: the buyer is charged in USD, not a
- * converted NGN amount. Each page reads "You will be charged monthly payments of
- * USD 50 / 85 / 120 each". The tier-to-URL mapping carried over from the legacy
- * file — the other `[VERIFY]`, on `PLAN_CHECKOUT_URLS` in `config/site.ts` — is
- * correct too: Silver $50, Gold $85, Diamond $120, no swapped pair.
- *
- * The second was not what the note went looking for. These are **recurring
- * monthly subscriptions**, not one-time purchases. The visible page has always
- * said so — `PlanCard` renders `/month` from `billingPeriod` and the footnote
- * says "Cancel anytime" — but this markup did not. A bare `price: 50` on a
- * `Product` describes a $50 thing you buy once, so the structured data and the
- * card above it were making different claims about the same offer, which is the
- * precise failure this comment block was written to prevent.
- *
- * `priceSpecification` fixes it. `UnitPriceSpecification` with `billingDuration:
- * 1` and `unitCode: "MON"` is schema.org's way of saying "$50 per month", and
- * `price`/`priceCurrency` stay on the `Offer` alongside it because consumers that
- * ignore the specification still need a headline figure to read.
- */
 export function buildPlanProducts(
   plans: readonly PlanOffer[],
 ): readonly SchemaNode[] {
@@ -427,17 +226,6 @@ export function buildPlanProducts(
       "@type": "Product",
       name: `Omanga ${plan.name} Holiday Insurance`,
       description: plan.description,
-      /*
-        [FIXED, 2026-10-26] Search Console, merchant listings: "Missing field
-        image" (critical) and "Invalid object type for field brand" on all
-        three plans. There is no per-plan picture, so each carries the site's
-        share image. `brand` is a named `Brand`; an `@id` reference to the
-        Organization isn't an accepted type there.
-
-        Left out on purpose, though Search Console suggests them:
-        `shippingDetails` (nothing ships) and `hasMerchantReturnPolicy` (the
-        refund and cancellation terms aren't confirmed, § 8.1).
-      */
       image: absoluteUrl("/og.png"),
       brand: { "@type": "Brand", name: "Omanga" },
       category: "Travel health insurance",
@@ -455,11 +243,6 @@ export function buildPlanProducts(
                 "@type": "UnitPriceSpecification",
                 price: plan.price,
                 priceCurrency: plan.currency,
-                /*
-                  `billingDuration` and `billingIncrement` are both 1: the buyer
-                  is charged once per one month. `referenceQuantity` carries the
-                  same fact in the form older consumers read.
-                */
                 billingDuration: 1,
                 billingIncrement: 1,
                 unitCode,
@@ -475,19 +258,6 @@ export function buildPlanProducts(
   });
 }
 
-/* -----------------------------------------------------------------------------
-   Blog and FAQ
-   -------------------------------------------------------------------------- */
-
-/**
- * `FAQPage` for a block of questions rendered on the page.
- *
- * Google limits FAQ rich results to authoritative government and health sites,
- * so this is not emitted for the dropdowns. It is emitted because it states the
- * question-and-answer pairs unambiguously to every consumer that reads the
- * graph — including the AI answer engines that now cite pages directly. The
- * answers are the same strings the page renders; a mismatch is a violation.
- */
 export function buildFaqPage(
   meta: PageMetaContent,
   items: readonly FaqItem[],
@@ -503,11 +273,6 @@ export function buildFaqPage(
   };
 }
 
-/**
- * `BlogPosting` for an article. Author and publisher are the organisation:
- * articles are written as Omanga, not by a named person, and a fabricated
- * author is exactly the kind of claim this file refuses elsewhere.
- */
 export function buildBlogPosting(post: BlogPost): SchemaNode {
   const url = absoluteUrl(post.meta.path);
 

@@ -8,39 +8,6 @@ import {
 } from "@/content/legal/legal-shared.content";
 import type { LegalDocumentContent } from "@/types/legal.types";
 
-/**
- * The Complaints Procedure.
- *
- * ---------------------------------------------------------------------------
- * TIMESCALES
- *
- * A complaints procedure is largely made of numbers, and every one of them is an
- * operational commitment the business has to keep. The 24 to 48 hour turnaround
- * published here is the business's own standard, stated by the CEO, and applies
- * to every complaint regardless of what it is about.
- *
- * The section on what happens next therefore also says what we do when a
- * complaint cannot be closed in that window — tell the customer where it stands
- * within 48 hours. A single flat number with no overflow path is a promise that
- * breaks the first time a provider is slow, and breaking it is worse than never
- * having made it.
- *
- * ---------------------------------------------------------------------------
- * REGULATORY ESCALATION
- *
- * Three external bodies are named, one per kind of complaint: the NDPC for data
- * protection, NAICOM for insurance, and the CBN for payments. Each is named
- * because the provider it supervises is now named — Phillips HMO is a
- * NAICOM-regulated insurance provider, Fuspay Technologies is a CBN-licensed
- * microfinance bank — so the escalation route is a fact about a known entity
- * rather than a guess about an unknown one.
- *
- * Their contact routes are still marked outstanding. Naming the right regulator
- * is verifiable from the provider's licence; reproducing a regulator's complaints
- * address from memory is not, and a wrong address sends a customer with a real
- * complaint to an office that will turn them away.
- */
-
 export const complaintsProcedureContent: LegalDocumentContent = {
   meta: {
     title: "Complaints Procedure | Omanga",

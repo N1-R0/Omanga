@@ -1,28 +1,10 @@
 import { LegalRichText } from "@/components/legal/LegalRichText";
 import type { LegalBlock as LegalBlockValue } from "@/types/legal.types";
 
-/**
- * One block of a legal document.
- *
- * A `switch` over the discriminated union, so adding a block kind to
- * `types/legal.types.ts` fails to compile here until it is given a rendering.
- * That is the whole reason the union is discriminated: a new kind cannot be
- * introduced in a content module and silently render as nothing.
- */
-
 const PROSE_CLASS = "font-sans type-p1 text-text max-w-[70ch]";
 
 const LIST_CLASS = "flex flex-col gap-3 font-sans type-p1 text-text";
 
-/**
- * Callouts are set apart with a rule and an inset rather than a tinted panel.
- *
- * The palette has no informational-surface token, and inventing one for this
- * would put a colour on the site that appears nowhere else. A left rule in the
- * brand colour reads as "set apart" at every viewport, survives printing, and
- * carries no colour-only meaning — the label above it says what kind of note it
- * is in words.
- */
 const CALLOUT_CLASS =
   "flex flex-col gap-2 border-l-2 pl-4 max-w-[70ch]";
 
@@ -69,12 +51,6 @@ export function LegalBlock({ block }: LegalBlockProps) {
       return (
         <ListElement
           className={LIST_CLASS}
-          /*
-            `list-inside` with a hanging indent would need a marker style the
-            design system does not define. A flex column with an explicit marker
-            character keeps wrapped lines aligned under the text rather than under
-            the bullet, which is what the rest of the site's lists do.
-          */
         >
           {block.items.map((item, index) => (
             <li key={index} className="flex gap-3 max-w-[70ch]">
@@ -106,13 +82,6 @@ export function LegalBlock({ block }: LegalBlockProps) {
 
     case "cookieTable":
       return (
-        /*
-          The scroll container is the element with the caption's `id` as its
-          accessible name and `tabIndex={0}`, so a keyboard user can scroll it
-          without a pointer. A horizontally scrollable region that cannot be
-          focused is unreachable by keyboard, which is the usual way a responsive
-          table fails an audit.
-        */
         <div
           className={TABLE_WRAPPER_CLASS}
           role="region"

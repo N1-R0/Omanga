@@ -10,14 +10,6 @@ import { useFocusReturn } from "@/hooks/useFocusReturn";
 import { NECESSARY_CATEGORY, type ConsentDecisions } from "@/lib/consent";
 import { Button } from "@/new-redesign/components/ui/Button";
 
-/**
- * Cookie preferences dialog in the new design (cutover, 2026-10-26), opened
- * from the banner's Manage and the footer's Cookie settings. Same behaviour as
- * the old dialog: a modal over a scrim, one row per category (necessary is
- * locked on), Save, Accept all and Reject all, Escape or the scrim to close,
- * focus returned on close.
- *
- */
 export function ConsentPreferences() {
   const { isPreferencesOpen } = useConsent();
   return isPreferencesOpen ? <PreferencesDialog /> : null;
@@ -46,7 +38,7 @@ function PreferencesDialog() {
           aria-labelledby={headingId}
           aria-describedby={descriptionId}
           tabIndex={-1}
-          className="flex max-h-full w-full max-w-[560px] flex-col gap-6 overflow-y-auto rounded-[16px] bg-surface p-6 shadow-float md:p-8"
+          data-lenis-prevent className="flex max-h-full w-full max-w-[560px] flex-col gap-6 overflow-y-auto rounded-[16px] bg-surface p-6 shadow-float md:p-8"
         >
           <div className="flex flex-col gap-2">
             <h2 id={headingId} className="type-h3">

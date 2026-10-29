@@ -3254,3 +3254,23 @@ Contact already uses.
 - Photos: Pexels 37505507 (Civic Centre, Victoria Island) and 38513712
   (Lagos along the lagoon), Pexels License, self-hosted in `public/about`
   (0.27 and 0.29 MB).
+
+## Addendum · 2026-10-29 · Speed, smooth scroll, no code comments (owner)
+
+- Code comments: owner had every comment removed from the codebase. Decisions,
+  photo credits and history now live here and in git, not in source files.
+  Lint/TypeScript directive comments (`eslint-disable`, `@ts-expect-error`) stay.
+- Home hero photo: Unsplash bcGNFkRU7nA by Eleni Afiontzi (wing at sunset),
+  owner pick C8 of a shortlist (C8, A1, B4). Previous: 88sSfA6YG9o by Khamkéo.
+- Lottie on phones: `FeatureLottie` strips drop-shadow (ty 25) and Gaussian
+  blur (ty 29) effects when `(pointer: coarse), (max-width: 767px)` matches.
+  The insurance hero film had 11 SVG filters redrawn at 60fps, which lagged.
+  Desktop keeps them.
+- Images: `Photo` (ui) wraps next/image and adds a blur placeholder from
+  `new-redesign/config/blur.ts`. Regenerate it after adding or replacing a
+  photo: `node scripts/blur-placeholders.mjs`. Hero images use `preload`
+  (Next 16 replaces `priority`). Formats are WebP only, since AVIF encodes
+  slowly on first request; optimized images are cached for 7 days.
+- Smooth scrolling: Lenis 1.3.27 (`SmoothScroll` in the root layout), wheel
+  only, off with reduced motion. Inner scrollers carry `data-lenis-prevent`;
+  the mobile menu pauses it while open. CSS `scroll-behavior: smooth` removed.

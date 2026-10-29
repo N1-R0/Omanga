@@ -1,19 +1,11 @@
-import Image from "next/image";
-
 import { OFFICE_ADDRESS } from "@/config/site";
 import { OfficeMapFrame } from "@/new-redesign/components/ui/OfficeMapFrame";
 import { SectionHead } from "@/new-redesign/components/ui/SectionHead";
 import { aboutOffice } from "@/new-redesign/content/about.content";
+import { Photo } from "@/new-redesign/components/ui/Photo";
 
 const DIRECTIONS_URL = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(OFFICE_ADDRESS)}`;
 
-/**
- * 5 · Our office (owner, 2026-10-28; Mobbin E5, Tines' office locations): the
- * head, the office name, address and a directions link on the left; on the
- * right two photo tiles over the map as the wide tile, each with a white pill
- * label (12px radius, as photos are). The address is always text, so nothing
- * hangs on the map, which loads only with consent. Stacks below 1024.
- */
 function Pill({ children, corner = "bottom-3 left-3" }: { children: string; corner?: string }) {
   return (
     <span className={`type-p3 pointer-events-none absolute ${corner} rounded-full bg-surface px-3 py-1 text-text uppercase shadow-float`}>
@@ -46,13 +38,12 @@ export function AboutOffice({ headingId }: { headingId: string }) {
         <div className="grid grid-cols-2 gap-3">
           {photos.map((photo) => (
             <div key={photo.src} className="relative aspect-[4/3] overflow-hidden rounded-sm bg-surface-muted">
-              <Image src={photo.src} alt="" fill sizes="(min-width: 1024px) 300px, 50vw" className="object-cover" />
+              <Photo src={photo.src} alt="" fill sizes="(min-width: 1024px) 300px, 50vw" className="object-cover" />
               <Pill>{photo.label}</Pill>
             </div>
           ))}
           <div className="relative col-span-2 aspect-[16/9] overflow-hidden rounded-sm border border-border bg-surface">
             <OfficeMapFrame title={mapTitle} />
-            {/* Top right: the map's own controls hold the other corners. */}
             <Pill corner="top-3 right-3">{mapLabel}</Pill>
           </div>
         </div>

@@ -7,29 +7,11 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { cx } from "@/lib/cx";
 import { Flag } from "@/new-redesign/components/ui/Flag";
 
-/**
- * The globe + list (design system § Country globe), after Cartesia's "Fluent
- * and native, worldwide" section (owner, 2026-10-22).
- *
- * Left: a 3D dotted globe drawn with cobe (WebGL, MIT, ~5KB), facing Africa
- * and swaying slowly left and right on a loop, with a crimson marker per
- * country. Right: the country list. Hovering or focusing a row picks that
- * country: its marker grows and a white chip names it. Nothing cycles on its
- * own (owner removed the auto-advance, 2026-10-23).
- *
- * The chip is tied to the marker with CSS anchor positioning: cobe puts a 1px
- * anchor named `--cobe-{id}` on each marker. Browsers without anchor
- * positioning skip the chip; the row highlight still shows the pick.
- *
- * The sway pauses off screen. Under reduced motion the globe is still.
- */
 type Country = { name: string; flag: string; location: readonly [number, number] };
 
-// Crimson accent (brand-600, #ae2448) and the white of the sphere, 0–1 RGB.
 const ACCENT: [number, number, number] = [0.682, 0.141, 0.282];
 const WHITE: [number, number, number] = [1, 1, 1];
 
-// Africa's centre (≈ 2°N, 18°E) as cobe angles; the sway is ±0.3 rad over 14s.
 const FACE_PHI = Math.PI - ((18 * Math.PI) / 180 - Math.PI / 2);
 const FACE_THETA = 0.12;
 const SWAY = 0.3;
@@ -105,7 +87,6 @@ export function CountryGlobe({
     };
   }, []);
 
-  // Markers redraw on the next frame; the active one is larger.
   useEffect(() => {
     globe.current?.update({
       markers: countries.map((c, i) => ({
@@ -121,7 +102,6 @@ export function CountryGlobe({
   return (
     <div className="grid items-center gap-10 lg:grid-cols-[5fr_4fr] lg:gap-16">
       <div aria-hidden className="relative mx-auto aspect-square w-full max-w-[560px]">
-        {/* Its own box, so cobe's anchors (appended here) come before the chip. */}
         <div className="absolute inset-0">
           <canvas ref={canvas} className="size-full" />
         </div>

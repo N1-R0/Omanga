@@ -11,23 +11,6 @@ import {
 import type { InsurancePlan } from "@/content/insurance-plans.content";
 import { cx } from "@/lib/cx";
 
-/**
- * The plan comparison on phones: one plan at a time.
- *
- * [ADDED, 2026-10-10] Pick P1 from `design-lab/plans-mobile.html` (after
- * GoPay's plan selector on Mobbin, a66d3a8b). Below tablet the 13-row table
- * cannot fit, so a Silver / Gold / Diamond switch pins to the top of the
- * viewport while the section is read, and one card lists everything the chosen
- * plan covers. Same rows, same values as the desktop table, so the two cannot
- * disagree.
- *
- * A real tab pattern for assistive tech: `tablist` / `tab` / `tabpanel`,
- * arrow keys move between plans. Opens on the featured plan (a visual lift only;
- * nothing here says "most popular" — see `InsurancePlan.isFeatured`).
- *
- * The first row is the monthly price; it is shown large above the list rather
- * than as a list item.
- */
 type PlanKey = "silver" | "gold" | "diamond";
 
 export type PlanSwitcherProps = {
@@ -56,7 +39,6 @@ export function PlanSwitcher({ rows, plans, label }: PlanSwitcherProps) {
 
   return (
     <div>
-      {/* Pinned while the card is read; the page fill keeps rows from showing through. */}
       <div className="sticky top-0 z-10 bg-bg py-3">
         <div
           role="tablist"
@@ -116,16 +98,11 @@ export function PlanSwitcher({ rows, plans, label }: PlanSwitcherProps) {
                 <dd className="text-right font-sans type-p2 font-semibold">
                   {value === undefined ? (
                     <>
-                      {/*
-                        A blank cell in the table, shown the same way: the data
-                        does not say "not covered", only that nothing is listed.
-                      */}
                       <span aria-hidden="true" className="font-normal opacity-80">—</span>
                       <span className="sr-only">Not listed</span>
                     </>
                   ) : value === INCLUDED ? (
                     <span className="inline-flex items-center gap-1.5">
-                      {/* Green on the tick only: the token fails contrast as text. */}
                       <span className="inline-flex text-success-text">
                         <Check size="sm" />
                       </span>

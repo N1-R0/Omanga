@@ -10,31 +10,8 @@ import type { HeadingLevel, Tone } from "@/types/ui.types";
 import { ComparisonTable } from "./ComparisonTable";
 import { PlanSwitcher } from "./PlanSwitcher";
 
-/**
- * What each plan covers — spec § 6.1.
- *
- * [CHANGED] § 6.2 has moved out. The spec nests "Included on every plan" under
- * this heading as an `h3`; the Figma frame draws it as a standalone
- * three-column grid, so it is now `InsuranceInclusions` with its own `h2`. This
- * section is the comparison table and nothing else.
- *
- * The page's reference artefact: the table a visitor scrolls back to when
- * deciding between two tiers, and per spec § 11.3 its long-tail engine — every
- * row label is a real query and the table gives them structure prose cannot.
- *
- * The plans are read from the plans module rather than duplicated here, so the
- * three column headers and their buttons cannot drift from the three cards
- * above them.
- *
- * [DECISION] The anchor sits on a wrapper, not on the heading. `#coverage`
- * arrives from § 5's "see the full comparison" link and from `/insurance`, and
- * `scroll-mt-header` is what stops the target landing underneath the site's
- * sticky bar.
- */
-
 const SECTION_TONE: Tone = "light";
 
-/** Sits one level below the page's `h1`, which § 5's heading carries. */
 const HEADING_LEVEL: HeadingLevel = "h2";
 
 export type InsuranceCoverageProps = {
@@ -67,10 +44,6 @@ export function InsuranceCoverage({
           </Reveal>
 
           <Reveal index={1}>
-            {/*
-              [CHANGED, 2026-10-10] Phones get the plan switcher (pick P1); the
-              table is tablet and up, where it fits without sideways scrolling.
-            */}
             <div className="md:hidden">
               <PlanSwitcher rows={content.rows} plans={plans} label={content.tableLabel} />
             </div>

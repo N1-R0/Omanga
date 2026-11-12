@@ -23,7 +23,7 @@ export function HomeHero() {
         style={{ objectPosition: photo.position }}
       />
 
-      <div className="container-page flex flex-col items-center pt-[calc(76px+clamp(24px,6vh,72px))] text-center">
+      <div className="container-page flex flex-col items-center pt-[calc(76px+clamp(56px,14vh,160px))] text-center">
         <div className="flex max-w-[640px] flex-col items-center gap-4">
           <h1 id="hero-title" className="type-h1">
             {title.map((line) => (

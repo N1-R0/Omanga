@@ -9,7 +9,7 @@ export function WalletCountries() {
   return (
     <section id="countries" aria-label={eyebrow} className="section-y bg-surface">
       <div className="container-page">
-        <SectionHead eyebrow={eyebrow} title={title} sub={sub} />
+        <SectionHead title={title} sub={sub} />
         <CountryGlobe countries={countries} listLabel={listLabel} cta={{ label: cta.label, href: href(cta.path) }} />
       </div>
     </section>

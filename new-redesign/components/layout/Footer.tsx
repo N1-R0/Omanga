@@ -14,12 +14,12 @@ export function Footer() {
         <div className="grid gap-10 lg:grid-cols-[264px_1fr] lg:gap-16">
           <div className="flex flex-col gap-4">
             <Link href={href("/")} aria-label={footer.homeLabel} className="self-start rounded-[16px]">
-              <Image src="/logo-omanga-horizontal.svg" alt="" width={110} height={31} />
+              <Image src="/logo-omanga-2026.svg" alt="" width={109} height={22} />
             </Link>
             <p className="type-p2 text-text-secondary">{footer.blurb}</p>
           </div>
 
-          <nav aria-label="Footer" className="grid grid-cols-2 gap-x-12 gap-y-10 md:grid-cols-3">
+          <nav aria-label="Footer" className="grid grid-cols-2 gap-x-12 gap-y-10 md:grid-cols-4">
             {footer.columns.map((col) => (
               <div key={col.heading} className="flex flex-col gap-4">
                 <p className="type-p3">{col.heading}</p>
@@ -43,12 +43,19 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="mt-10 flex flex-col gap-4 border-t border-border pt-6 md:flex-row md:items-center md:justify-between">
-          <div className="flex flex-col gap-1">
-            <p className="type-p2 text-text-secondary">{footer.whosWho}</p>
+        <div className="mt-10 flex flex-col gap-4 border-t border-border pt-6 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
+          <div className="flex flex-col gap-3">
+            <p className="type-p2 max-w-[720px] text-text-secondary">{footer.whosWho}</p>
             <p className="type-p2 text-text-secondary">{footer.copyright(year)}</p>
           </div>
-          <ul className="flex gap-4">
+          <ul className="flex flex-wrap gap-x-4 gap-y-2 lg:shrink-0">
+            {footer.legal.map((l) => (
+              <li key={l.label}>
+                <Link href={l.href} className="type-p3 text-text hover:text-accent-text">
+                  {l.label}
+                </Link>
+              </li>
+            ))}
             <li>
               <CookieSettingsButton className="type-p3 text-text hover:text-accent-text" />
             </li>

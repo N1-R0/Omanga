@@ -1,10 +1,7 @@
 const LIVE_PATHS: Record<string, string> = {
-  "/insurance/plans": "/plans",
   "/guides": "/blog",
-  "/help": "/contact",
   "/payments/countries": "/payments#countries",
-  "/rates": "/rates/pounds-to-naira",
-  "/insurance/get-care": "/policy-terms#claims",
+  "/insurance/get-care": "/insurance/policy-terms#claims",
 };
 
 export function href(path: string): string {

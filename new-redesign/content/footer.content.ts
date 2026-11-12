@@ -1,4 +1,4 @@
-import { INSTAGRAM_URL, WHATSAPP_URL } from "@/config/site";
+import { INSTAGRAM_URL, SITE_TAGLINE } from "@/config/site";
 import { href } from "@/new-redesign/config/routes";
 
 export type FooterLink = { label: string; href: string; external?: boolean };
@@ -10,47 +10,44 @@ export const footer = {
     {
       heading: "Payments",
       links: [
-        { label: "Payments overview", href: href("/payments") },
-        { label: "Pounds to naira", href: href("/rates/pounds-to-naira") },
-        { label: "Dollars to naira", href: href("/rates/dollars-to-naira") },
-        { label: "Canadian dollars to naira", href: href("/rates/canadian-dollars-to-naira") },
+        { label: "Multi-currency wallet", href: href("/payments/multi-currency-wallet") },
+        { label: "Send money", href: href("/payments/send-money") },
+        { label: "Mobile money", href: href("/payments/mobile-money") },
+        { label: "Exchange rates", href: href("/rates") },
       ],
     },
     {
       heading: "Insurance",
       links: [
-        { label: "Insurance overview", href: href("/insurance") },
-        { label: "Plans and prices", href: href("/insurance/plans") },
-        { label: "Claims", href: href("/insurance/get-care") },
+        { label: "Health cover in Nigeria", href: href("/insurance") },
+        { label: "Plans", href: href("/insurance/plans") },
+        { label: "Policy terms", href: href("/insurance/policy-terms") },
       ],
     },
     {
       heading: "Company",
       links: [
         { label: "About Omanga", href: href("/about") },
-        { label: "Is Omanga safe?", href: href("/safety") },
+        { label: "Safety and trust", href: href("/safety") },
         { label: "Guides", href: href("/guides") },
       ],
     },
     {
-      heading: "Support",
+      heading: "Help",
       links: [
-        { label: "Help and contact", href: href("/help") },
-        { label: "Chat on WhatsApp", href: WHATSAPP_URL, external: true },
+        { label: "Help and FAQs", href: href("/help") },
+        { label: "Contact us", href: href("/contact") },
         { label: "Complaints", href: href("/complaints-procedure") },
       ],
     },
-    {
-      heading: "Legal",
-      links: [
-        { label: "Terms of use", href: href("/terms-of-use") },
-        { label: "Privacy policy", href: href("/privacy-policy") },
-        { label: "Insurance policy terms", href: href("/policy-terms") },
-        { label: "Cookie policy", href: href("/cookie-policy") },
-      ],
-    },
   ] satisfies ReadonlyArray<{ heading: string; links: FooterLink[] }>,
-  whosWho: "Insurance plans are provided by Phillips HMO. Omanga is not the insurer.",
-  copyright: (year: number) => `© ${year} Omanga. All rights reserved.`,
+  legal: [
+    { label: "Terms of use", href: href("/terms-of-use") },
+    { label: "Privacy policy", href: href("/privacy-policy") },
+    { label: "Cookie policy", href: href("/cookie-policy") },
+  ] satisfies FooterLink[],
+  whosWho:
+    "Omanga Integrated Destination Services is a Lagos company. Fuspay Technologies, a microfinance bank licensed by the Central Bank of Nigeria, runs the wallet. Phillips HMO provides the health cover and is regulated by the National Insurance Commission (NAICOM). Card payments are processed by Paystack. Omanga is not a bank or the insurer.",
+  copyright: (year: number) => `© ${year} ${SITE_TAGLINE}`,
   socials: [{ label: "Instagram", href: INSTAGRAM_URL }],
 } as const;

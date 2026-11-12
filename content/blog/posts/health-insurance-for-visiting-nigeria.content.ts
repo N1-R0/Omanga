@@ -164,7 +164,7 @@ export const healthInsuranceVisitingNigeriaPost: BlogPost = {
           kind: "paragraph",
           content: [
             "Every plan includes hospital admission, diagnostics, emergency assistance and evacuation, telemedicine, roaming across Nigeria and a contact centre. Each plan opens a different set of hospital categories. ",
-            { text: "Compare health plans", href: "/plans" },
+            { text: "Compare health plans", href: "/insurance/plans" },
             " to see which hospitals each one covers. If your trip needs something you don't see listed, such as a flight home, ask us before you buy.",
           ],
         },
@@ -246,7 +246,7 @@ export const healthInsuranceVisitingNigeriaPost: BlogPost = {
   },
   cta: {
     label: "Compare health plans",
-    href: "/plans",
+    href: "/insurance/plans",
     prompt: [
       "Short-term health cover from Phillips HMO for your time in Nigeria. Activate a plan in about five minutes.",
     ],

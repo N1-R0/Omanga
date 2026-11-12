@@ -6,17 +6,13 @@ import { homeRates } from "@/new-redesign/content/home.content";
 import { Photo } from "@/new-redesign/components/ui/Photo";
 
 export async function PaymentsCard() {
-  const { eyebrow, title, sub, photo } = homeRates;
+  const { title, sub, photo } = homeRates;
   const { rates } = await getNgnRates();
 
   return (
     <article id="rates" aria-labelledby="rates-title">
         <Card className="grid items-center gap-8 p-3 md:p-4 lg:grid-cols-2 lg:gap-0">
           <div className="flex max-w-[440px] flex-col gap-[var(--head-gap)] px-3 pt-5 md:px-6 lg:mx-auto lg:px-0 lg:pt-0">
-            <p className="type-p2 inline-flex items-center gap-2">
-              <span aria-hidden className="h-2 w-3.5 rounded-full bg-accent" />
-              {eyebrow}
-            </p>
             <div className="flex flex-col gap-[var(--head-sub-gap)]">
               <h3 id="rates-title" className="type-h2 text-balance">
                 {title}

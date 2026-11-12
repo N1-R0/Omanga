@@ -5,7 +5,6 @@ import { Photo } from "@/new-redesign/components/ui/Photo";
 
 export function RateHero({
   headingId,
-  eyebrow,
   heading,
   note,
   code,
@@ -13,7 +12,6 @@ export function RateHero({
   updated,
 }: {
   headingId: string;
-  eyebrow: string;
   heading: string;
   note: string;
   code: FundingCurrency;
@@ -26,10 +24,6 @@ export function RateHero({
     <section aria-labelledby={headingId} className="-mt-19 bg-surface pt-19">
       <div className="container-page grid items-center gap-10 py-12 md:py-16 lg:grid-cols-[1fr_minmax(0,500px)] lg:gap-16 lg:py-20">
         <div className="flex flex-col items-start">
-          <p className="type-p2 inline-flex items-center gap-2">
-            <span aria-hidden className="h-2 w-3.5 rounded-full bg-accent" />
-            {eyebrow}
-          </p>
           <h1 id={headingId} className="type-h1 mt-5 max-w-[12ch] text-balance">
             {heading}
           </h1>

@@ -21,15 +21,15 @@ export const navigation = {
         image: { src: "/photos/nav/wallet-phone.jpg", alt: "Woman smiling at her phone" },
       },
       columns: [
-        { heading: "Payments", links: [{ label: "Payments overview", href: href("/payments"), text: "Hold, convert and pay in naira", icon: "wallet" }] },
         {
-          heading: "Rates",
+          heading: "Payments",
           links: [
-            { label: "Pounds to naira", href: href("/rates/pounds-to-naira"), text: "GBP to NGN", icon: "rate" },
-            { label: "Dollars to naira", href: href("/rates/dollars-to-naira"), text: "USD to NGN", icon: "rate" },
-            { label: "Canadian dollars to naira", href: href("/rates/canadian-dollars-to-naira"), text: "CAD to NGN", icon: "rate" },
+            { label: "Multi-currency wallet", href: href("/payments/multi-currency-wallet"), text: "A wallet for each currency", icon: "wallet" },
+            { label: "Send money", href: href("/payments/send-money"), text: "Pay any Nigerian bank account", icon: "plane" },
+            { label: "Mobile money", href: href("/payments/mobile-money"), text: "Send across Africa", icon: "globe" },
           ],
         },
+        { heading: "Rates", links: [{ label: "Exchange rates", href: href("/rates"), text: "Pounds, dollars and Canadian dollars to naira", icon: "rate" }] },
       ],
     },
     {
@@ -44,11 +44,11 @@ export const navigation = {
         {
           heading: "Insurance",
           links: [
-            { label: "Insurance overview", href: href("/insurance"), text: "Health insurance for your trip", icon: "shield" },
-            { label: "Claims", href: href("/insurance/get-care"), text: "How to make a claim", icon: "care" },
+            { label: "Health cover in Nigeria", href: href("/insurance"), text: "Health insurance for your trip", icon: "shield" },
+            { label: "Compare plans", href: href("/insurance/plans"), text: "Silver, Gold and Diamond from $50", icon: "tag" },
+            { label: "Policy terms", href: href("/insurance/policy-terms"), text: "What is covered and how to claim", icon: "list" },
           ],
         },
-        { heading: "Pricing", links: [{ label: "Plans and prices", href: href("/insurance/plans"), text: "Silver, Gold and Diamond from $50", icon: "tag" }] },
       ],
     },
     { label: "Guides", href: href("/guides") },
@@ -65,13 +65,31 @@ export const navigation = {
           heading: "Company",
           links: [
             { label: "About Omanga", href: href("/about"), text: "Who we are and who provides what", icon: "info" },
-            { label: "Is Omanga safe?", href: href("/safety"), text: "How we keep you and your money safe", icon: "lock" },
+            { label: "Safety and trust", href: href("/safety"), text: "How we keep you and your money safe", icon: "lock" },
+          ],
+        },
+      ],
+    },
+    {
+      label: "Help",
+      feature: {
+        title: "Help and FAQs",
+        text: "Answers about your wallet, transfers, rates and health cover.",
+        href: href("/help"),
+        image: { src: "/photos/nav/wallet-phone.jpg", alt: "Woman smiling at her phone" },
+      },
+      columns: [
+        {
+          heading: "Help",
+          links: [
+            { label: "Help and FAQs", href: href("/help"), text: "Find an answer by topic", icon: "book" },
+            { label: "Contact us", href: href("/contact"), text: "WhatsApp, email or visit the office", icon: "chat" },
+            { label: "Complaints", href: href("/complaints-procedure"), text: "How we handle a complaint", icon: "info" },
           ],
         },
       ],
     },
   ] as NavItem[],
-  help: { label: "Help", href: href("/help") },
   login: { label: "Log in", href: WALLET_URL },
   cta: { label: "Open your free wallet", href: WALLET_URL },
   featuredLabel: "Featured",

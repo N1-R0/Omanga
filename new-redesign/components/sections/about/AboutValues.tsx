@@ -3,12 +3,12 @@ import { aboutValues } from "@/new-redesign/content/about.content";
 import { Photo } from "@/new-redesign/components/ui/Photo";
 
 export function AboutValues({ headingId }: { headingId: string }) {
-  const { eyebrow, title, values } = aboutValues;
+  const { title, values } = aboutValues;
 
   return (
     <section aria-labelledby={headingId} className="section-y bg-surface">
       <div className="container-page">
-        <SectionHead id={headingId} eyebrow={eyebrow} title={title} />
+        <SectionHead id={headingId} title={title} />
 
         <ul className="grid gap-10 md:grid-cols-3 md:gap-6">
           {values.map((value) => (

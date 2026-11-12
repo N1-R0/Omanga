@@ -6,7 +6,7 @@ export const LEGAL_EFFECTIVE_DATE = "2026-10-28" as const;
 const LEGAL_ROUTES = {
   privacy: "/privacy-policy",
   terms: "/terms-of-use",
-  policyTerms: "/policy-terms",
+  policyTerms: "/insurance/policy-terms",
   complaints: "/complaints-procedure",
   cookies: "/cookie-policy",
 } as const;
@@ -22,7 +22,7 @@ export const LEGAL_LINKS = {
   cookies: { text: "Cookie Policy", href: LEGAL_ROUTES.cookies },
   contact: { text: "Contact page", href: "/contact" },
   insurance: { text: "insurance page", href: "/insurance" },
-  plans: { text: "plans page", href: "/plans" },
+  plans: { text: "plans page", href: "/insurance/plans" },
 } as const;
 
 const MAILTO = `mailto:${CONTACT_EMAIL}` as const;

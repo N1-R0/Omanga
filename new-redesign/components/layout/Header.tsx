@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import { cx } from "@/lib/cx";
@@ -30,10 +29,8 @@ export function Header() {
   const [bar, setBar] = useState<Bar>("top");
   const [slide, setSlide] = useState(false);
   const [ready, setReady] = useState(false);
-  const pathname = usePathname();
   const pinned = bar !== "top";
   const solid = open !== null || pinned;
-  const dark = solid || pathname !== href("/");
 
   const show = (i: number | null) => {
     setMotion(open !== null && i !== null && i !== open ? (i > open ? "from-end" : "from-start") : undefined);
@@ -136,13 +133,12 @@ export function Header() {
           pinned ? "fixed border-b border-border" : "absolute",
           bar === "hidden" && "-translate-y-full",
           ready && (slide ? "transition-[translate,color,background-color] duration-[var(--duration-nav)] ease-nav" : navColor),
-          solid ? "bg-surface text-text" : dark ? "text-text" : "text-text-inverse",
+          "bg-surface text-text",
         )}
       >
         <div className="container-page flex h-19 items-center gap-6">
           <Link href={href("/")} aria-label={navigation.homeLabel} className="relative shrink-0 rounded-[16px]">
-            <Photo src="/logo-omanga-white.svg" alt="" width={110} height={31} loading="eager" className={cx(navColor, ready && "transition-opacity", dark ? "opacity-0" : "opacity-100")} />
-            <Photo src="/logo-omanga-horizontal.svg" alt="" width={110} height={31} loading="eager" className={cx("absolute inset-0", ready && "transition-opacity duration-[var(--duration-nav)] ease-nav", dark ? "opacity-100" : "opacity-0")} />
+            <Photo src="/logo-omanga-2026.svg" alt="" width={229} height={46} loading="eager" className="h-[22px] w-auto" />
           </Link>
 
           <nav aria-label={navigation.landmarkLabel} className="hidden lg:block">
@@ -153,9 +149,7 @@ export function Header() {
                   navColor,
                   open === i
                     ? "bg-accent-subtle text-brand-700"
-                    : dark
-                      ? "text-text hover:bg-surface-muted"
-                      : "text-text-inverse hover:bg-neutral-0/15",
+                    : "text-text hover:bg-surface-muted",
                 );
                 return (
                   <li key={item.label} onMouseEnter={() => show("columns" in item ? i : null)}>
@@ -182,21 +176,21 @@ export function Header() {
           </nav>
 
           <div className="ml-auto flex items-center gap-1">
-            {[navigation.help, navigation.login].map((l) => (
+            {[navigation.login].map((l) => (
               <a
                 key={l.label}
                 href={l.href}
                 className={cx(
                   "type-p3 hidden rounded-[8px] px-3 py-2 lg:inline-flex",
                   navColor,
-                  dark ? "text-text hover:bg-surface-muted" : "text-text-inverse hover:bg-neutral-0/15",
+                  "text-text hover:bg-surface-muted",
                 )}
               >
                 {l.label}
               </a>
             ))}
             <span className="ml-1 hidden lg:inline-flex">
-              <Button href={navigation.cta.href} external variant={dark ? "primary" : "inverse"}>
+              <Button href={navigation.cta.href} external variant="primary">
                 {navigation.cta.label}
               </Button>
             </span>
@@ -249,6 +243,16 @@ function Panel({ menu, onNavigate }: { menu: NavMenu; onNavigate: () => void }) 
   return (
     <div className="container-page pb-8">
       <div className="flex overflow-hidden rounded-b-[16px] border border-t-0 border-border bg-surface shadow-float">
+        <div className="w-[320px] shrink-0 border-r border-border bg-surface-muted p-8">
+          <p className="text-[12px] leading-none font-medium tracking-[0.08em] text-text-secondary uppercase">{navigation.featuredLabel}</p>
+          <Link href={feature.href} onClick={onNavigate} className="group mt-5 block">
+            <span className="relative block aspect-[16/9] overflow-hidden rounded-[12px]">
+              <Photo src={feature.image.src} alt={feature.image.alt} fill sizes="256px" loading="eager" className="object-cover transition-transform duration-[var(--duration-base)] group-hover:scale-[1.03]" />
+            </span>
+            <span className="type-p3 mt-5 block text-text">{feature.title}</span>
+            <span className="type-p2 mt-1 block text-text-secondary">{feature.text}</span>
+          </Link>
+        </div>
         <div className="flex flex-1 gap-8 p-8">
           {columns.map((col) => (
             <div key={col.heading} className="min-w-0 flex-1">
@@ -270,16 +274,6 @@ function Panel({ menu, onNavigate }: { menu: NavMenu; onNavigate: () => void }) 
           ))}
         </div>
 
-        <div className="w-[320px] shrink-0 border-l border-border bg-surface-muted p-8">
-          <p className="text-[12px] leading-none font-medium tracking-[0.08em] text-text-secondary uppercase">{navigation.featuredLabel}</p>
-          <Link href={feature.href} onClick={onNavigate} className="group mt-5 block">
-            <span className="relative block aspect-[16/9] overflow-hidden rounded-[12px]">
-              <Photo src={feature.image.src} alt={feature.image.alt} fill sizes="256px" loading="eager" className="object-cover transition-transform duration-[var(--duration-base)] group-hover:scale-[1.03]" />
-            </span>
-            <span className="type-p3 mt-5 block text-text">{feature.title}</span>
-            <span className="type-p2 mt-1 block text-text-secondary">{feature.text}</span>
-          </Link>
-        </div>
       </div>
     </div>
   );
@@ -293,7 +287,7 @@ function MobileSheet({ onClose }: { onClose: () => void }) {
     <div id="mobile-menu" role="dialog" aria-modal="true" aria-label={navigation.landmarkLabel} className="fixed inset-0 z-50 flex flex-col bg-surface text-text lg:hidden">
       <div className="container-page flex h-19 shrink-0 items-center justify-between">
         <Link href={href("/")} aria-label={navigation.homeLabel} onClick={onClose}>
-          <Photo src="/logo-omanga-horizontal.svg" alt="" width={110} height={31} />
+          <Photo src="/logo-omanga-2026.svg" alt="" width={229} height={46} className="h-[22px] w-auto" />
         </Link>
         <button ref={closeRef} type="button" className="inline-flex size-11 items-center justify-center rounded-[8px]" aria-label={navigation.menuCloseLabel} onClick={onClose}>
           <CloseIcon />
@@ -324,7 +318,7 @@ function MobileSheet({ onClose }: { onClose: () => void }) {
           </div>
         ))}
         <div className="flex flex-col border-t border-border py-4">
-          {[navigation.help, navigation.login, navigation.whatsapp].map((l) => (
+          {[navigation.login, navigation.whatsapp].map((l) => (
             <a key={l.label} href={l.href} className="type-p1 py-1.5">
               {l.label}
             </a>

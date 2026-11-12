@@ -15,7 +15,6 @@ export const OLD_PAGE_FAQ_SUB = {
 
 export function oldPageFaq(title: string, subLead: string, items: readonly FaqItem[]) {
   return {
-    eyebrow: "Questions",
     title,
     subLead,
     ...FAQ_SUB,

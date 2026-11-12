@@ -18,7 +18,7 @@ export const policyTermsContent: LegalDocumentContent = {
     title: "Policy Terms | Omanga",
     description:
       "The terms of Omanga's holiday insurance plans and travel wallet — what each plan includes, who provides it, how to cancel, and how to claim.",
-    path: "/policy-terms",
+    path: "/insurance/policy-terms",
   },
   eyebrow: "Legal",
   title: "Policy Terms",

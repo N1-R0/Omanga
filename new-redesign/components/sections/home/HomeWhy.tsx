@@ -5,17 +5,13 @@ import { href } from "@/new-redesign/config/routes";
 import { homeWhy } from "@/new-redesign/content/home.content";
 
 export function HomeWhy() {
-  const { eyebrow, title, sub, tiles, link } = homeWhy;
+  const { title, sub, tiles, link } = homeWhy;
 
   return (
     <section id="why-omanga" aria-labelledby="why-title" className="section-y bg-bg">
       <div className="container-page">
         <div className="mb-[var(--section-head)] flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div className="flex max-w-[520px] flex-col gap-[var(--head-gap)]">
-            <p className="type-p2 inline-flex items-center gap-2">
-              <span aria-hidden className="h-2 w-3.5 rounded-full bg-accent" />
-              {eyebrow}
-            </p>
             <div className="flex flex-col gap-[var(--head-sub-gap)]">
               <h2 id="why-title" className="type-h2 text-balance">
                 {title}

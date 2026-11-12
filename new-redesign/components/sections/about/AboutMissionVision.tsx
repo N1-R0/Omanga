@@ -3,12 +3,12 @@ import { SectionHead } from "@/new-redesign/components/ui/SectionHead";
 import { aboutMissionVision } from "@/new-redesign/content/about.content";
 
 export function AboutMissionVision({ headingId }: { headingId: string }) {
-  const { eyebrow, title, sub, cards } = aboutMissionVision;
+  const { title, sub, cards } = aboutMissionVision;
 
   return (
     <section aria-labelledby={headingId} className="section-y">
       <div className="container-page">
-        <SectionHead id={headingId} eyebrow={eyebrow} title={title} sub={sub} />
+        <SectionHead id={headingId} title={title} sub={sub} />
 
         <div className="grid gap-4 md:grid-cols-2">
           {cards.map((card) => {

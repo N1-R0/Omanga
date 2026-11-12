@@ -20,7 +20,7 @@ export function HealthPlans() {
 
   return (
     <Section id="plans" label={eyebrow}>
-      <SectionHead eyebrow={eyebrow} title={title} sub={sub} />
+      <SectionHead title={title} sub={sub} />
 
       <div className="rounded-xs border border-border lg:mt-6">
         <ul className="grid lg:grid-cols-3">

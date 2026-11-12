@@ -31,7 +31,7 @@ const plansMeta: PageMetaContent = {
   title: "Health Insurance Plans in Nigeria from $50 a Month | Omanga",
   description:
     "Compare health insurance plans in Nigeria for your trip: Silver, Gold and Diamond from Phillips HMO at $50, $85 or $120 a month. Choose your plan.",
-  path: "/plans",
+  path: "/insurance/plans",
 };
 
 export const metadata: Metadata = buildPageMetadata(plansMeta);
@@ -76,7 +76,6 @@ export default function PlansPage() {
 
       <CtaPanel
         id="final-cta"
-        eyebrow={plansClosing.eyebrow}
         title={plansClosing.title}
         text={plansClosing.text}
         primary={{ label: plansClosing.primary.label, href: WALLET_URL, external: true }}

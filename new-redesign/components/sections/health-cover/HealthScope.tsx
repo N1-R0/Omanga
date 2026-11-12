@@ -51,7 +51,6 @@ export function HealthScope() {
   return (
     <Section id="scope" label={eyebrow}>
       <SectionHead
-        eyebrow={eyebrow}
         title={title}
         sub={sub}
         action={

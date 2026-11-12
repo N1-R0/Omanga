@@ -4,11 +4,7 @@ export const aboutHero = {
   pill: "About",
   title: "Money and health cover for your trip to Nigeria",
   sub: "Omanga is a Lagos company for anyone visiting Nigeria: one account for your travel wallet and your health cover.",
-  video: {
-    small: "/videos/about-hero-airport-720.mp4",
-    large: "/videos/about-hero-airport-1080.mp4",
-    poster: "/videos/about-hero-airport-poster.jpg",
-  },
+  photo: { src: "/about/hero-lagos-lagoon.jpg", alt: "Aerial view of the Lagos lagoon, a bridge and the city skyline" },
 } as const;
 
 export const aboutStory = {
@@ -70,8 +66,4 @@ export const aboutOffice = {
   directions: "Get directions",
   mapLabel: "Our office",
   mapTitle: "Map of Omanga's office in Victoria Island, Lagos",
-  photos: [
-    { src: "/about/office-civic-centre.jpg", label: "Victoria Island" },
-    { src: "/about/office-lagoon.jpg", label: "Lagos" },
-  ],
 } as const;

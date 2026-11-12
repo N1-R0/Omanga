@@ -1,6 +1,5 @@
 import { Container } from "@/components/layout/Container";
 import { Stack } from "@/components/layout/Stack";
-import { Badge } from "@/components/ui/Badge";
 import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
 import type { ContactHeroContent } from "@/content/contact-hero.content";
@@ -39,8 +38,6 @@ export function ContactHero({
           <div>
             <Stack gap="3xl" align="start">
               <Stack gap="xl" align="start">
-                <Badge tone="light">{content.eyebrow}</Badge>
-
                 <Heading id={headingId} level="h1" role="hero" measure="hero">
                   {content.heading}
                 </Heading>

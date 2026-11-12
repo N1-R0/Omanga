@@ -29,10 +29,6 @@ export default function NotFound() {
             <section className="pt-40 pb-24 md:pt-48 md:pb-32">
               <div className="container-page flex max-w-[640px] flex-col gap-8">
                 <div className="flex flex-col gap-[var(--head-sub-gap)]">
-                  <p className="type-p2 inline-flex items-center gap-2">
-                    <span aria-hidden className="h-2 w-3.5 rounded-full bg-accent" />
-                    {notFound.eyebrow}
-                  </p>
                   <h1 className="type-h1">{notFound.title}</h1>
                   <p className="type-p1 text-text-secondary">{notFound.text}</p>
                 </div>

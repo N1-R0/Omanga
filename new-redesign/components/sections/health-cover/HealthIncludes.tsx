@@ -18,7 +18,7 @@ export function HealthIncludes() {
 
   return (
     <Section id="included" label={eyebrow}>
-      <SectionHead eyebrow={eyebrow} title={title} sub={sub} />
+      <SectionHead title={title} sub={sub} />
 
       <div className="rounded-[20px] bg-surface-muted p-2 md:p-3">
         <div className="rounded-xs border border-border bg-surface">

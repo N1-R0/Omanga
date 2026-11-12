@@ -4,12 +4,11 @@ import { href } from "@/new-redesign/config/routes";
 import { walletClosing } from "@/new-redesign/content/wallet.content";
 
 export function WalletClosing() {
-  const { eyebrow, title, text, primary, secondary, texture, screen } = walletClosing;
+  const { title, text, primary, secondary, texture, screen } = walletClosing;
 
   return (
     <CtaPanel
       id="final-cta"
-      eyebrow={eyebrow}
       title={title}
       text={text}
       primary={{ label: primary.label, href: WALLET_URL, external: true }}

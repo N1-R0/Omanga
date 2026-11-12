@@ -192,28 +192,23 @@ export const homeSteps = {
   eyebrow: "How it works",
   title: "Set up at home before you fly",
   sub: "A few minutes on your phone is all it takes. Your wallet is funded and your plan is picked before you leave.",
-  from: "Home",
-  to: "Lagos",
-  dip: 40,
-  photo: "/photos/home/rates-mountains.jpg",
   steps: [
     {
       title: "Open your free wallet",
       text: "Sign up with your email in a few minutes.",
-      screen: { kind: "signup", title: "Create account", label: "Email", value: "you@example.com", action: "Continue" },
+      tile: "bg-sun-300",
     },
     {
       title: "Add money",
       text: "Fund in pounds, dollars or Canadian dollars, and convert when you're ready.",
-      screen: { kind: "add", title: "Add money", wallet: "GBP wallet", flag: "/flags/united-kingdom.svg", amount: "£200", action: "Add money" },
+      tile: "bg-flame-500",
     },
     {
       title: "Pick your insurance plan",
       text: "Choose Silver, Gold or Diamond from Phillips HMO.",
-      screen: { kind: "plan", title: "Your plan", plans: ["Silver", "Gold", "Diamond"], picked: "Gold", row: "Gold · $85 / month", sub: "Category A + B hospitals" },
+      tile: "bg-blue-600",
     },
   ],
-  stepOf: (n: number, total: number) => `${n} of ${total}`,
   cta: { label: "Open your free wallet" },
 } as const;
 

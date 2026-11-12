@@ -21,7 +21,6 @@ export function LegalDocument({ content }: LegalDocumentProps) {
       <Container>
         <div className="flex flex-col gap-16">
           <header className="flex flex-col gap-4">
-            <p className="font-sans type-h3 text-accent-text">{content.eyebrow}</p>
 
             <h1 className="font-sans type-h1 max-w-[30ch]">
               {content.title}

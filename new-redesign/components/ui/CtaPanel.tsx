@@ -8,7 +8,6 @@ import { Photo } from "@/new-redesign/components/ui/Photo";
 
 export function CtaPanel({
   id,
-  eyebrow,
   title,
   text,
   primary,
@@ -17,7 +16,6 @@ export function CtaPanel({
   screen,
 }: {
   id: string;
-  eyebrow: string;
   title: string;
   text: string;
   primary: { label: string; href: string; external?: boolean };
@@ -31,10 +29,6 @@ export function CtaPanel({
         <Card className="flex flex-col justify-center p-6 md:p-10">
           <div className="flex max-w-[400px] flex-col gap-8">
             <div className="flex flex-col gap-4">
-              <p className="type-p2 inline-flex items-center gap-2">
-                <span aria-hidden className="h-2 w-3.5 rounded-full bg-accent" />
-                {eyebrow}
-              </p>
               <h2 id={`${id}-title`} className="type-h2">
                 {title}
               </h2>

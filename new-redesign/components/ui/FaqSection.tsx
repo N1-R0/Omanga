@@ -7,7 +7,6 @@ import { Section } from "@/new-redesign/components/ui/Section";
 import { SectionHead } from "@/new-redesign/components/ui/SectionHead";
 
 type Props = {
-  eyebrow: string;
   title: string;
   subLead: string;
   subLink: string;
@@ -16,11 +15,10 @@ type Props = {
   items: ReadonlyArray<{ q: string; a: string }>;
 };
 
-export function FaqSection({ eyebrow, title, subLead, subLink, subTail, guide, items }: Props) {
+export function FaqSection({ title, subLead, subLink, subTail, guide, items }: Props) {
   return (
     <Section id="faq" label={title}>
       <SectionHead
-        eyebrow={eyebrow}
         title={title}
         sub={
           <>

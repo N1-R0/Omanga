@@ -3274,3 +3274,91 @@ Contact already uses.
 - Smooth scrolling: Lenis 1.3.27 (`SmoothScroll` in the root layout), wheel
   only, off with reduced motion. Inner scrollers carry `data-lenis-prevent`;
   the mobile menu pauses it while open. CSS `scroll-behavior: smooth` removed.
+
+## Addendum · 2026-11-12 · Site structure to sitemap v3 (owner)
+
+- Owner dropped the Nov 2026 restart. The live site is enhanced in place; only
+  `docs/copy.md` and the sitemap (`docs/phase-3-research-ia.md`, Part D) carry over.
+- Moved `/plans` to `/insurance/plans` and `/policy-terms` to
+  `/insurance/policy-terms`, with 301s in `next.config.ts`.
+- New pages: `/rates` (hub, live reference rates, links to the three pair pages)
+  and `/help` (FAQ hub by topic, FAQPage schema). Both in the sitemap.
+- Header dropdowns and footer follow copy.md Global sections 1–2. Help is now a
+  menu (Help and FAQs, Contact us, Complaints). Footer: four columns, legal row,
+  "who provides each service" block, copyright in the company's legal name.
+- Until their pages exist, `/payments/multi-currency-wallet` and
+  `/payments/send-money` alias to `/payments`, and `/payments/mobile-money` to
+  `/payments#countries` (`new-redesign/config/routes.ts`). Remove each alias when
+  its page ships.
+- Claims is not in sitemap v3; it stays as the `#claims` section of Policy terms.
+- `/get-the-app` is not built: no "Get the app" actions until the app is in the
+  stores.
+- `/help` drops every copy.md answer still marked `[NEED: ...]` (transfer
+  failure, mobile money countries) and the "Search for an answer" line, since
+  there is no search. Add them back once the owner confirms the facts.
+- Header logo (owner, 2026-11-12): swapped to the CEO logo of 2026-11-11 (Libre
+  Caslon Text SemiBold wordmark, burgundy mark with lilac swoosh). Files
+  `public/logo-omanga-2026.svg` (colour, Figma om 79:62) and
+  `public/logo-omanga-2026-white.svg` (Figma om 79:40), exported with outlined
+  text since Google Fonts has no SemiBold of Libre Caslon Text. 22px tall
+  (110px wide) at every width, the old logo's footprint (owner: 46px was too big). Footer uses it too (owner, 2026-11-12). Favicon,
+  app icon and schema logo (`logo-omanga-512.png`) still use the old mark.
+- Brand colour (owner, 2026-11-12): brand-600 / accent is now `#792838`
+  (was `#ae2448`). The rest of the brand scale was regenerated on the same hue
+  (348°), keeping its old steps. `BRAND_COLOR` (theme colour), the AppUi accent
+  and the old red in 13 Lottie files (263 colour values) were swapped too.
+  The old logo SVGs are no longer referenced.
+- Eyebrow dots (owner, 2026-11-12): the small burgundy pill before every
+  section label ("Questions", "Get started", etc.) is removed site-wide. The
+  label text stays for now.
+- About office (owner, 2026-11-12): the two photo cards (Victoria Island,
+  Lagos) are removed and their files deleted; the section shows the map only,
+  4:3 on phones and 16:10 from `md`.
+
+## Addendum · 2026-11-12 · Payments feature pages (sitemap v3)
+
+- New: `/payments/multi-currency-wallet`, `/payments/send-money`,
+  `/payments/mobile-money`, from copy.md sections 3–5. Shared template
+  `FeaturePage` (breadcrumb hero with a wallet screen on the ridges photo,
+  optional steps, text notes, FAQ, closing panel). Content in
+  `new-redesign/content/payments-features.content.ts`. Their aliases to
+  `/payments` are removed; all three are in the sitemap.
+- Left out until the owner confirms (copy.md `[NEED]`): "Do I need a Nigerian
+  bank account?", "What happens if a transfer fails?", mobile money networks,
+  local-number rule and per-country limits. Mobile money therefore has no FAQ.
+- Mobile money "Where you can send" reuses the wallet country globe and list
+  (the same 50+ countries the site already shows). Its meta description says
+  "across Africa" in place of the `[NEED: countries]` placeholder.
+- Hero screens use neutral placeholders ("Bank account", "Name shown here")
+  rather than invented names or bank brands.
+- About hero (owner, 2026-11-12): the airport video is replaced by its own
+  still frame, `public/about/hero-airport.jpg` (1920×1080). The two MP4s and the
+  `HeroVideo` component are deleted.
+- Mega menu (owner, 2026-11-12): the Featured panel (photo, title, line) moved
+  from the right of each dropdown to the left; link columns sit to its right.
+- Header (owner, 2026-11-12): white background with dark text and the colour
+  logo on every page from the top, including over the home hero photo. The
+  transparent-over-hero state and the white logo file are removed.
+- Home "Set up at home before you fly" (owner, 2026-11-12, Mobbin sample:
+  Preply "How it works"): left-aligned heading with the CTA on the right, then
+  three columns, each a "Step N" outline tag, a 4:3 colour tile holding the
+  existing app screen, title and line. Tiles use the CEO accent palette:
+  Sun `#FDCA40`, Flame `#F95738`, Blue `#3772FF` (new tokens `sun-300`,
+  `flame-500`, `blue-600`, plus `mist`). The pinned scroll, dotted Home→Lagos
+  route (`StepsRail`, deleted), staggered middle card and photo slices are gone.
+- Page margins (owner, 2026-11-12, matched to wise.com `.eds-container`):
+  content up to 1440px wide (was 1080px); side gutter 16px on phones, 5.2vw
+  from 768px, 6.5vw from 1280px. Measured result: 53px at 1024, 94px at
+  1440, 240px at 1920, identical to Wise.
+- Home steps tiles: the app screen mock-ups are removed (owner: "less AI");
+  the Sun / Flame / Blue tiles stay empty until new visuals are chosen.
+- Section labels (owner, 2026-11-12): every small label above a heading is
+  removed site-wide ("Why Omanga", "How it works", "Questions", "Get started",
+  the About pill, "At a glance", and the eyebrows on Safety, Guides, Contact,
+  legal and 404 pages). `SectionHead`, `CtaPanel`, `FaqSection` and `RateHero`
+  no longer take an `eyebrow` prop. Some content files keep an `eyebrow` string
+  where it still names the section for screen readers (`aria-label`).
+- About hero photo (owner, 2026-11-12: "use any good image"): Unsplash
+  EMjpo0YjHPw by Malik Buraimoh, aerial view of the Lagos lagoon and bridge
+  (Unsplash License), `public/about/hero-lagos-lagoon.jpg`, 2400×1800. Replaces
+  the airport still. Home steps: the "Step N" tags are removed.

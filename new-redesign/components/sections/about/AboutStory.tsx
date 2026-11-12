@@ -1,16 +1,12 @@
 import { aboutStory } from "@/new-redesign/content/about.content";
 
 export function AboutStory({ headingId }: { headingId: string }) {
-  const { eyebrow, title, lead, body } = aboutStory;
+  const { title, lead, body } = aboutStory;
 
   return (
     <section aria-labelledby={headingId} className="section-y">
       <div className="container-page grid gap-8 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
         <div className="flex flex-col gap-[var(--head-gap)]">
-          <p className="type-p2 inline-flex items-center gap-2 text-text">
-            <span aria-hidden className="h-2 w-3.5 rounded-full bg-accent" />
-            {eyebrow}
-          </p>
           <h2 id={headingId} className="type-h2">
             {title}
           </h2>

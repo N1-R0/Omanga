@@ -59,7 +59,6 @@ export default async function RatePage(props: PageProps<"/rates/[pair]">) {
 
       <RateHero
         headingId={headingId}
-        eyebrow={copy.eyebrow}
         heading={copy.heading}
         note={copy.sourceNote}
         code={pair.code}

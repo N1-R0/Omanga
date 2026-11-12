@@ -24,9 +24,6 @@ export default function BlogIndexPage() {
         <Container>
           <div className="flex flex-col gap-12">
             <header className="flex flex-col gap-4">
-              <p className="font-sans type-h3 text-accent-text">
-                {blogIndexContent.eyebrow}
-              </p>
               <h1 id={HEADING_ID} className="font-sans type-h1 max-w-[30ch]">
                 {blogIndexContent.heading}
               </h1>

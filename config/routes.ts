@@ -17,11 +17,16 @@ export type PublicRoute = {
 const MARKETING_ROUTES: readonly PublicRoute[] = [
   { path: "/", priority: 1, lastModified: REDESIGN_LIVE },
   { path: "/insurance", priority: 0.7, lastModified: REDESIGN_LIVE },
-  { path: "/plans", priority: 0.7, lastModified: MARKETING_UPDATED },
+  { path: "/insurance/plans", priority: 0.7, lastModified: MARKETING_UPDATED },
   { path: "/payments", priority: 0.7, lastModified: REDESIGN_LIVE },
+  { path: "/payments/multi-currency-wallet", priority: 0.7, lastModified: "2026-11-12" },
+  { path: "/payments/send-money", priority: 0.7, lastModified: "2026-11-12" },
+  { path: "/payments/mobile-money", priority: 0.7, lastModified: "2026-11-12" },
   { path: "/about", priority: 0.7, lastModified: MARKETING_UPDATED },
   { path: "/contact", priority: 0.7, lastModified: MARKETING_UPDATED },
   { path: "/safety", priority: 0.7, lastModified: MARKETING_UPDATED },
+  { path: "/help", priority: 0.7, lastModified: "2026-11-12" },
+  { path: "/rates", priority: 0.7, lastModified: "rates" },
   ...RATE_PAIRS.map((pair) => ({
     path: `/rates/${pair.slug}`,
     priority: 0.7 as const,
@@ -36,7 +41,7 @@ const LEGAL_ROUTES: readonly PublicRoute[] = [
     lastModified: LEGAL_EFFECTIVE_DATE,
   },
   { path: "/terms-of-use", priority: 0.3, lastModified: LEGAL_EFFECTIVE_DATE },
-  { path: "/policy-terms", priority: 0.3, lastModified: LEGAL_EFFECTIVE_DATE },
+  { path: "/insurance/policy-terms", priority: 0.3, lastModified: LEGAL_EFFECTIVE_DATE },
   {
     path: "/complaints-procedure",
     priority: 0.3,

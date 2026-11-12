@@ -35,9 +35,6 @@ export default function SafetyPage() {
       >
         <Container>
           <div className="flex flex-col items-center gap-4 py-16 text-center">
-            <p className="font-sans type-p2 font-semibold tracking-wide text-text-inverse/80 uppercase">
-              {c.eyebrow}
-            </p>
             <h1
               id={SAFETY_HEADING_ID}
               className=" type-h1 font-semibold text-balance"

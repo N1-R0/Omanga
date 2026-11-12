@@ -46,6 +46,8 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       { source: "/get-started", destination: "/", permanent: true },
+      { source: "/plans", destination: "/insurance/plans", permanent: true },
+      { source: "/policy-terms", destination: "/insurance/policy-terms", permanent: true },
     ];
   },
 

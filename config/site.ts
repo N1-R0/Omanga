@@ -32,7 +32,7 @@ export const PLAN_CHECKOUT_URLS = {
   Diamond: "https://paystack.shop/pay/e-qmgo0nlw",
 } as const;
 
-export const BRAND_COLOR = "#ae2448" as const;
+export const BRAND_COLOR = "#792838" as const;
 export const INK_COLOR = "#161717" as const;
 
 export function absoluteUrl(path: string): string {

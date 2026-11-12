@@ -1,5 +1,6 @@
 import { WALLET_URL } from "@/config/site";
 import { Button } from "@/components/ui/Button";
+import { Photo } from "@/components/ui/Photo";
 import { homeSteps } from "@/content/home.content";
 
 export function HomeSteps() {
@@ -27,7 +28,9 @@ export function HomeSteps() {
         <ol className="grid gap-10 md:grid-cols-3 md:gap-6">
           {steps.map((step) => (
             <li key={step.title} className="flex flex-col">
-              <div aria-hidden className={`aspect-[4/3] rounded-[16px] ${step.tile}`} />
+              <div className="relative aspect-[4/3] overflow-hidden rounded-[16px] bg-surface-muted">
+                <Photo src={step.photo.src} alt={step.photo.alt} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
+              </div>
               <h3 className="type-h3 mt-6 text-[20px] leading-tight">{step.title}</h3>
               <p className="type-p1 mt-2 text-text-secondary">{step.text}</p>
             </li>

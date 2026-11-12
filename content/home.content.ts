@@ -196,17 +196,17 @@ export const homeSteps = {
     {
       title: "Open your free wallet",
       text: "Sign up with your email in a few minutes.",
-      tile: "bg-sun-300",
+      photo: { src: "/photos/home/step-wallet-sofa.jpg", alt: "A man on a sofa signing up on his phone" },
     },
     {
       title: "Add money",
       text: "Fund in pounds, dollars or Canadian dollars, and convert when you're ready.",
-      tile: "bg-flame-500",
+      photo: { src: "/photos/home/step-money-pounds.jpg", alt: "British pound notes spread across a table" },
     },
     {
       title: "Pick your insurance plan",
       text: "Choose Silver, Gold or Diamond from Phillips HMO.",
-      tile: "bg-blue-600",
+      photo: { src: "/photos/home/step-plan-doctor.jpg", alt: "A doctor reviewing notes on a tablet" },
     },
   ],
   cta: { label: "Open your free wallet" },

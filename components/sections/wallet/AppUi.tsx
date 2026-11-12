@@ -5,6 +5,6 @@ export const APP = {
   text: "#191617",
   secondary: "#5D5B5B",
   tertiary: "#6F6D6D",
-  accent: "#792838",
+  accent: "#712F3B",
 };
 

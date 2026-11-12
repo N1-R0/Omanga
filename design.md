@@ -3380,3 +3380,27 @@ Contact already uses.
 - Deleted as unused: `public/logo-omanga-horizontal.svg`,
   `public/logo-omanga-white.svg`, `new-redesign/doc/` (October research and
   sitemap v2) and the local `design-lab/`.
+
+## Addendum · 2026-11-12 · Brand colour #712F3B (owner)
+
+Owner set the brand colour to `#712F3B` (was `#792838`). It sits at brand-600,
+the accent step. The rest of the ramp keeps the old steps' OKLCH lightness and
+chroma ratios with the new hue; 500–950 shift lightness by the same delta as
+600. Updated in `styles/tokens.css`, `BRAND_COLOR` in `config/site.ts`, the wallet
+mock accent and the 2026 logo SVG. White on brand measures 9.67, brand on the
+#F7F7F7 page 9.03.
+
+## Addendum · 2026-11-12 · Home steps photos and "Why Omanga" layout (owner)
+
+- **Steps:** the three colour tiles (sun, flame, blue) became Unsplash photos,
+  self-hosted in `public/photos/home/`: `step-wallet-sofa.jpg` (CRSf5dsbPbk,
+  man on a sofa with his phone), `step-money-pounds.jpg` (rrTRZdCu7No, pound
+  notes), `step-plan-doctor.jpg` (J5UTvRgse7Q, doctor with a tablet). 16px
+  radius, 4:3, same as the tiles.
+- **Why Omanga:** rebuilt after the owner's "What reviewed means" reference.
+  White section, centred heading, borderless `surface-muted` cards with the
+  icon, title and text all centred. Icons are 56px line icons (`NavIcon`
+  size `xl`, stroke 0.8 in the 20 box ≈ 2.2px) in text colour, not brand,
+  to match the reference. The sub moved below the cards as the footnote, and
+  "Is Omanga safe?" is now an underlined text link under it instead of a
+  pill button. Secondary text on `#E8E8E8` measures 4.76.

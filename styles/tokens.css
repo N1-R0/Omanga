@@ -1,17 +1,17 @@
 @theme {
   --color-*: initial;
 
-  --color-brand-50: #fbf1f3;
-  --color-brand-100: #f7e0e5;
-  --color-brand-200: #f1c6ce;
-  --color-brand-300: #e3a0ad;
-  --color-brand-400: #cc667a;
-  --color-brand-500: #a1364b;
-  --color-brand-600: #792838;
-  --color-brand-700: #63212e;
-  --color-brand-800: #4e1a24;
-  --color-brand-900: #3b141c;
-  --color-brand-950: #240c11;
+  --color-brand-50: #faf2f2;
+  --color-brand-100: #f5e1e3;
+  --color-brand-200: #edc8cc;
+  --color-brand-300: #dda4ab;
+  --color-brand-400: #c36e7a;
+  --color-brand-500: #974050;
+  --color-brand-600: #712f3b;
+  --color-brand-700: #5c2630;
+  --color-brand-800: #491e25;
+  --color-brand-900: #37171c;
+  --color-brand-950: #210d10;
 
   --color-sun-300: #fdca40;
   --color-flame-500: #f95738;

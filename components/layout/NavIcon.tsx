@@ -33,8 +33,8 @@ const PATHS: Record<NavIconName, string> = {
   chat: "M4 4.5h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H9l-4 3v-3H4a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1Zm3 5h.01m3 0h.01m3 0h.01",
 };
 
-export function NavIcon({ name, size = "sm" }: { name: NavIconName; size?: "sm" | "lg" | "bare" | "tile" }) {
-  const px = size === "sm" ? 18 : size === "tile" ? 20 : 24;
+export function NavIcon({ name, size = "sm" }: { name: NavIconName; size?: "sm" | "lg" | "bare" | "tile" | "xl" }) {
+  const px = size === "sm" ? 18 : size === "tile" ? 20 : size === "xl" ? 56 : 24;
   if (size === "tile") {
     return (
       <span aria-hidden className="inline-flex size-11 shrink-0 items-center justify-center rounded-[10px] bg-surface-muted text-text">
@@ -44,9 +44,9 @@ export function NavIcon({ name, size = "sm" }: { name: NavIconName; size?: "sm" 
       </span>
     );
   }
-  if (size === "bare") {
+  if (size === "bare" || size === "xl") {
     return (
-      <svg aria-hidden width={px} height={px} viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+      <svg aria-hidden width={px} height={px} viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth={size === "xl" ? 0.8 : 1.5} strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
         <path d={PATHS[name]} />
       </svg>
     );

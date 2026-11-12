@@ -1,0 +1,46 @@
+import Link from "next/link";
+
+import { WHATSAPP_URL } from "@/config/site";
+import { href } from "@/config/routes";
+import { FaqList } from "@/components/sections/home/FaqList";
+import { Section } from "@/components/ui/Section";
+import { SectionHead } from "@/components/ui/SectionHead";
+
+type Props = {
+  title: string;
+  subLead: string;
+  subLink: string;
+  subTail: string;
+  guide?: { lead: string; label: string; path: string };
+  items: ReadonlyArray<{ q: string; a: string }>;
+};
+
+export function FaqSection({ title, subLead, subLink, subTail, guide, items }: Props) {
+  return (
+    <Section id="faq" label={title}>
+      <SectionHead
+        title={title}
+        sub={
+          <>
+            {subLead}{" "}
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="text-accent-text underline underline-offset-4">
+              {subLink}
+            </a>{" "}
+            {subTail}
+            {guide ? (
+              <>
+                {" "}
+                {guide.lead}{" "}
+                <Link href={href(guide.path)} className="text-accent-text underline underline-offset-4">
+                  {guide.label}
+                </Link>
+                .
+              </>
+            ) : null}
+          </>
+        }
+      />
+      <FaqList items={items} />
+    </Section>
+  );
+}

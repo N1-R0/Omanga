@@ -3,15 +3,15 @@ import Link from "next/link";
 
 import { ConsentProvider } from "@/components/consent/ConsentProvider";
 import { ConsentedAnalytics } from "@/components/consent/ConsentedAnalytics";
-import { ConsentPreferences } from "@/new-redesign/components/consent/ConsentPreferences";
-import { CookieBanner } from "@/new-redesign/components/consent/CookieBanner";
-import { Footer } from "@/new-redesign/components/layout/Footer";
-import { Header } from "@/new-redesign/components/layout/Header";
-import { Button } from "@/new-redesign/components/ui/Button";
-import { fontVariables } from "@/new-redesign/config/fonts";
-import { href } from "@/new-redesign/config/routes";
-import { notFound } from "@/new-redesign/content/not-found.content";
-import "@/new-redesign/styles/globals.css";
+import { ConsentPreferences } from "@/components/consent/ConsentPreferences";
+import { CookieBanner } from "@/components/consent/CookieBanner";
+import { Footer } from "@/components/layout/Footer";
+import { Header } from "@/components/layout/Header";
+import { Button } from "@/components/ui/Button";
+import { fontVariables } from "@/config/fonts";
+import { href } from "@/config/routes";
+import { notFound } from "@/content/not-found.content";
+import "@/styles/globals.css";
 
 export const metadata: Metadata = {
   title: { absolute: notFound.meta.title },

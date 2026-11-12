@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { PUBLIC_ROUTES } from "@/config/routes";
+import { PUBLIC_ROUTES } from "@/config/public-routes";
 import { absoluteUrl } from "@/config/site";
 import { getNgnRates } from "@/lib/rates";
 

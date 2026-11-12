@@ -8,9 +8,9 @@ import { Video } from "@/components/icons/Video";
 import { Grid } from "@/components/layout/Grid";
 import { Section } from "@/components/layout/Section";
 import { Stack } from "@/components/layout/Stack";
-import { Heading } from "@/components/ui/Heading";
-import { Reveal } from "@/components/ui/Reveal";
-import { Text } from "@/components/ui/Text";
+import { Heading } from "@/components/legacy/ui/Heading";
+import { Reveal } from "@/components/legacy/ui/Reveal";
+import { Text } from "@/components/legacy/ui/Text";
 import type {
   Inclusion,
   InsuranceInclusionsContent,

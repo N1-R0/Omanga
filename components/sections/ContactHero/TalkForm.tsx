@@ -5,15 +5,15 @@ import { useEffect, useRef, useState } from "react";
 
 import { ArrowRight } from "@/components/icons/ArrowRight";
 import { Stack } from "@/components/layout/Stack";
-import { Button } from "@/components/ui/Button";
-import { Checkbox } from "@/components/ui/Checkbox";
-import { Heading } from "@/components/ui/Heading";
-import { Input } from "@/components/ui/Input";
-import { RadioGroup } from "@/components/ui/RadioGroup";
-import { Select } from "@/components/ui/Select";
-import { Text } from "@/components/ui/Text";
-import { TextLink } from "@/components/ui/TextLink";
-import { Textarea } from "@/components/ui/Textarea";
+import { Button } from "@/components/legacy/ui/Button";
+import { Checkbox } from "@/components/legacy/ui/Checkbox";
+import { Heading } from "@/components/legacy/ui/Heading";
+import { Input } from "@/components/legacy/ui/Input";
+import { RadioGroup } from "@/components/legacy/ui/RadioGroup";
+import { Select } from "@/components/legacy/ui/Select";
+import { Text } from "@/components/legacy/ui/Text";
+import { TextLink } from "@/components/legacy/ui/TextLink";
+import { Textarea } from "@/components/legacy/ui/Textarea";
 import { contactFormContent } from "@/content/contact-form.content";
 import type { LinkedMessage } from "@/content/contact-form.content";
 import {

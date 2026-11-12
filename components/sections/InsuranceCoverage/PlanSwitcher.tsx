@@ -3,7 +3,7 @@
 import { useId, useState } from "react";
 
 import { Check } from "@/components/icons/Check";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/legacy/ui/Button";
 import {
   INCLUDED,
   type CoverageRow,

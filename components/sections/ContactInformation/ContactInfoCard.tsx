@@ -1,8 +1,8 @@
 import { WhatsAppMark } from "@/components/icons/WhatsAppMark";
-import { Card } from "@/components/ui/Card";
-import { Heading } from "@/components/ui/Heading";
-import { Text } from "@/components/ui/Text";
-import { TextLink } from "@/components/ui/TextLink";
+import { Card } from "@/components/legacy/ui/Card";
+import { Heading } from "@/components/legacy/ui/Heading";
+import { Text } from "@/components/legacy/ui/Text";
+import { TextLink } from "@/components/legacy/ui/TextLink";
 import type { ContactInfoCard as ContactInfoCardContent } from "@/content/contact-information.content";
 
 const CARD_VARIANT = "product-secondary" as const;

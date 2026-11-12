@@ -1,9 +1,9 @@
 import { ArrowRight } from "@/components/icons/ArrowRight";
 import { WhatsAppMark } from "@/components/icons/WhatsAppMark";
 import { Stack } from "@/components/layout/Stack";
-import { Button } from "@/components/ui/Button";
-import { Heading } from "@/components/ui/Heading";
-import { Text } from "@/components/ui/Text";
+import { Button } from "@/components/legacy/ui/Button";
+import { Heading } from "@/components/legacy/ui/Heading";
+import { Text } from "@/components/legacy/ui/Text";
 import type { SupportBlockContent } from "@/content/contact-hero.content";
 
 export type SupportBlockProps = {

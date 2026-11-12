@@ -1,7 +1,7 @@
 "use client";
 
 import { useConsent } from "@/components/consent/ConsentProvider";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/legacy/ui/Button";
 import { consentContent } from "@/content/consent.content";
 import { OFFICE_MAP_EMBED_URL } from "@/config/site";
 

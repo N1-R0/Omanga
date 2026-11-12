@@ -1,0 +1,42 @@
+@import "tailwindcss" source(none);
+@source "../app";
+@source "../components";
+@source "../content";
+@source "../config";
+@source "../lib";
+
+@import "./tokens.css";
+@import "./typography.css";
+@import "./utilities.css";
+@import "./animations.css";
+
+@custom-variant pin (@media (min-width: 1024px) and (min-height: 800px));
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.32px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--color-brand-100);
+    color: var(--color-text);
+  }
+}

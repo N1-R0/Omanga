@@ -1,9 +1,9 @@
 import { Check } from "@/components/icons/Check";
 import { Stack } from "@/components/layout/Stack";
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
-import { Heading } from "@/components/ui/Heading";
-import { Text } from "@/components/ui/Text";
+import { Badge } from "@/components/legacy/ui/Badge";
+import { Button } from "@/components/legacy/ui/Button";
+import { Heading } from "@/components/legacy/ui/Heading";
+import { Text } from "@/components/legacy/ui/Text";
 import type {
   InsurancePlan,
   InsurancePlansContent,

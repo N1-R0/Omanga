@@ -5,8 +5,8 @@ import { BlogPostList } from "@/components/blog/BlogPostList";
 import { LegalBlock } from "@/components/legal/LegalBlock";
 import { LegalContents } from "@/components/legal/LegalContents";
 import { LegalRichText } from "@/components/legal/LegalRichText";
-import { Button } from "@/components/ui/Button";
-import { Media } from "@/components/ui/Media";
+import { Button } from "@/components/legacy/ui/Button";
+import { Media } from "@/components/legacy/ui/Media";
 import { BLOG_CATEGORY_LABELS } from "@/content/blog";
 import type { BlogPost } from "@/types/blog.types";
 

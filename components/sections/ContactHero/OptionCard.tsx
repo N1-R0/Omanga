@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 import { ArrowRight } from "@/components/icons/ArrowRight";
-import { Heading } from "@/components/ui/Heading";
-import { Text } from "@/components/ui/Text";
+import { Heading } from "@/components/legacy/ui/Heading";
+import { Text } from "@/components/legacy/ui/Text";
 import type { ContactOption } from "@/content/contact-options.content";
 import { CONTACT_ENQUIRY_PARAM } from "@/content/contact-options.content";
 

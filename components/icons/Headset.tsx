@@ -1,4 +1,4 @@
-import { Icon } from "@/components/ui/Icon";
+import { Icon } from "@/components/legacy/ui/Icon";
 import type { IconSize } from "@/types/ui.types";
 
 export type HeadsetProps = {

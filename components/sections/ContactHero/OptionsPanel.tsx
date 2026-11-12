@@ -1,7 +1,7 @@
 import { Stack } from "@/components/layout/Stack";
-import { Heading } from "@/components/ui/Heading";
-import { Text } from "@/components/ui/Text";
-import { TextLink } from "@/components/ui/TextLink";
+import { Heading } from "@/components/legacy/ui/Heading";
+import { Text } from "@/components/legacy/ui/Text";
+import { TextLink } from "@/components/legacy/ui/TextLink";
 import { CONTACT_EMAIL } from "@/config/site";
 import { contactFormContent } from "@/content/contact-form.content";
 import type { ContactOptionsContent } from "@/content/contact-options.content";

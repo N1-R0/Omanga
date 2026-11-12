@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 
-import { TextLink } from "@/components/ui/TextLink";
+import { TextLink } from "@/components/legacy/ui/TextLink";
 import type { LegalRichText as LegalRichTextValue } from "@/types/legal.types";
 
 export type LegalRichTextProps = {

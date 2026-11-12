@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Omanga website
 
-## Getting Started
-
-First, run the development server:
+Next.js (App Router, Turbopack) site for omanga.biz. One design system, one
+source tree. Decisions and history live in `design.md`; copy and sitemap in
+`docs/copy.md` and `docs/phase-3-research-ia.md` (local, not in git).
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev     # local dev server
+npm run build   # production build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Where things are
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Path | What |
+|---|---|
+| `app/(site)/layout.tsx` | Root layout: `<html>`, fonts, stylesheet, header, footer, cookie banner, consented analytics |
+| `app/(site)/page.tsx` | Home |
+| `app/(site)/payments`, `insurance`, `about` | Pages built in the current design |
+| `app/(site)/(not-rebuilt)/` | Pages still on older sections (plans, policy terms, rates, safety, help, contact, blog, legal); its layout starts them below the header |
+| `app/not-found.tsx`, `app/sitemap.ts`, `app/robots.ts`, `app/api/` | 404, sitemap, robots, contact enquiry API |
+| `components/layout/` | Header, footer, nav icons, smooth scroll; plus the older `Container`, `Grid`, `Section`, `Stack` |
+| `components/ui/` | Current primitives: `Button`, `Card`, `Section`, `SectionHead`, `FaqSection`, `CtaPanel`, `Converter`, `Photo`… |
+| `components/sections/` | One component per section of the current pages, plus the older contact and insurance sections |
+| `components/legacy/ui/` | Older primitives (forms, `Heading`, `Text`, `Badge`…) still used by the not-rebuilt pages |
+| `components/consent/`, `blog/`, `legal/`, `rates/`, `seo/`, `icons/` | Cookie consent, blog, legal documents, rate table, JSON-LD, icons |
+| `content/` | All copy, one file per page or area; `seo.content.ts` for titles and descriptions |
+| `config/routes.ts` | `href()`: internal links, with `LIVE_PATHS` aliases for pages not built yet |
+| `config/public-routes.ts` | Route list for `sitemap.xml` |
+| `config/site.ts`, `fonts.ts`, `blur.ts` | Site constants, self-hosted fonts, image blur placeholders |
+| `styles/` | `globals.css` (entry), `tokens.css`, `typography.css`, `utilities.css`, `animations.css`, `fonts/` |
+| `lib/` | SEO metadata, schema, rates, consent, analytics, enquiry handling |
+| `scripts/blur-placeholders.mjs` | Regenerate `config/blur.ts` after adding or replacing a photo |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Rules
 
-## Learn More
+- Use only the token classes; Tailwind's default colours are switched off.
+- Type comes from `type-*` utilities only. One filled primary button per view.
+- Buttons are pills; cards have a 16px radius, photos inside them 12px.
+- Copy lives in `content/`, not in components. No code comments; decisions go in `design.md`.
 
-To learn more about Next.js, take a look at the following resources:
+## Rebuilding a page in `(not-rebuilt)`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Build it in `app/(site)` at its sitemap path, with metadata from `lib/seo.ts`
+   and structured data from `lib/schema.ts`.
+2. Delete the old page and the `components/` and `content/` files only it used.
+3. If the URL changes, delete its `LIVE_PATHS` line, add a 301 in
+   `next.config.ts` and update `config/public-routes.ts`.

@@ -1,7 +1,7 @@
 import { Check } from "@/components/icons/Check";
 import { Stack } from "@/components/layout/Stack";
-import { Button } from "@/components/ui/Button";
-import { Text } from "@/components/ui/Text";
+import { Button } from "@/components/legacy/ui/Button";
+import { Text } from "@/components/legacy/ui/Text";
 import {
   INCLUDED,
   type CoverageRow,

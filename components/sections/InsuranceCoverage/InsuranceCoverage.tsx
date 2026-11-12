@@ -1,8 +1,8 @@
 import { Section } from "@/components/layout/Section";
 import { Stack } from "@/components/layout/Stack";
-import { Heading } from "@/components/ui/Heading";
-import { Reveal } from "@/components/ui/Reveal";
-import { Text } from "@/components/ui/Text";
+import { Heading } from "@/components/legacy/ui/Heading";
+import { Reveal } from "@/components/legacy/ui/Reveal";
+import { Text } from "@/components/legacy/ui/Text";
 import type { InsuranceCoverageContent } from "@/content/insurance-coverage.content";
 import type { InsurancePlansContent } from "@/content/insurance-plans.content";
 import type { HeadingLevel, Tone } from "@/types/ui.types";

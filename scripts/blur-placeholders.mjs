@@ -4,7 +4,7 @@ import sharp from "sharp";
 
 const root = path.resolve("public");
 const dirs = ["photos", "about", "blog"];
-const out = "new-redesign/config/blur.ts";
+const out = "config/blur.ts";
 
 async function walk(dir) {
   const entries = await readdir(dir, { withFileTypes: true });

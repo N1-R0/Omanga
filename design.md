@@ -3362,3 +3362,21 @@ Contact already uses.
   EMjpo0YjHPw by Malik Buraimoh, aerial view of the Lagos lagoon and bridge
   (Unsplash License), `public/about/hero-lagos-lagoon.jpg`, 2400×1800. Replaces
   the airport still. Home steps: the "Step N" tags are removed.
+
+## Addendum · 2026-11-12 · One source tree, self-hosted fonts (owner)
+
+- Vercel production build failed: `next/font/google` could not resolve Host
+  Grotesk on Vercel's build machine. Fonts are now self-hosted with
+  `next/font/local` from `styles/fonts/` (Host Grotesk 400–500 and Inter
+  400–700, latin variable woff2, the same files Google served).
+- `new-redesign/` is merged into the root: its `components`, `content`,
+  `config` and `styles` now live in the root folders of the same name; the
+  route group `app/(new-redesign)` is now `app/(site)`. Name clashes resolved:
+  the older `components/ui/*` moved to `components/legacy/ui/`, the sitemap
+  route list `config/routes.ts` became `config/public-routes.ts` (the `href()`
+  helper keeps `config/routes.ts`), and the two `rates.content.ts` files are
+  one. The folder map is in `README.md`. Earlier entries in this file still
+  use the old paths.
+- Deleted as unused: `public/logo-omanga-horizontal.svg`,
+  `public/logo-omanga-white.svg`, `new-redesign/doc/` (October research and
+  sitemap v2) and the local `design-lab/`.

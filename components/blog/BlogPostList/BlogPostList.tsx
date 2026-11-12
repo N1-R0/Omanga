@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Media } from "@/components/ui/Media";
+import { Media } from "@/components/legacy/ui/Media";
 import { BLOG_CATEGORY_LABELS } from "@/content/blog";
 import { cx } from "@/lib/cx";
 import type { BlogPost } from "@/types/blog.types";

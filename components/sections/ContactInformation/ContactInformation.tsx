@@ -1,8 +1,8 @@
 import { Grid } from "@/components/layout/Grid";
 import { Section } from "@/components/layout/Section";
 import { Stack } from "@/components/layout/Stack";
-import { Heading } from "@/components/ui/Heading";
-import { Reveal } from "@/components/ui/Reveal";
+import { Heading } from "@/components/legacy/ui/Heading";
+import { Reveal } from "@/components/legacy/ui/Reveal";
 import type { ContactInformationContent } from "@/content/contact-information.content";
 import type { Tone } from "@/types/ui.types";
 
